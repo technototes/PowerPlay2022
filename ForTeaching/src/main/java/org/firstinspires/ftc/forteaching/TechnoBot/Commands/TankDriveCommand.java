@@ -5,6 +5,7 @@ import com.technototes.library.control.CommandAxis;
 import com.technototes.library.control.CommandButton;
 
 import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.TankDriveSubsystem;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -35,7 +36,14 @@ public class TankDriveCommand implements Command {
         double lp = left.getAsDouble();
         double rp = right.getAsDouble();
         // TODO: Make shouldStraighten work by adjusting the power accordingly (need the IMU too)
-        subsys.drive(lp, rp);
+        if (shouldStraighten != null && shouldStraighten.getAsBoolean()) {
+            double dir = subsys.inertialMovementUnit.gyroHeading(AngleUnit.DEGREES);
+            dir = Math.cbrt(-AngleUnit.normalizeDegrees(dir) / 180);
+            // Spin toward 180 degrees
+            subsys.drive(dir, dir);
+        } else {
+            subsys.drive(lp, -rp);
+        }
     }
 
     // This command is never finished, cuz it's the manual drive mode
