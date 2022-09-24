@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.sixteen750.command.Claw;
+package org.firstinspires.ftc.sixteen750.command.claw;
 
 import com.technototes.library.command.Command;
 

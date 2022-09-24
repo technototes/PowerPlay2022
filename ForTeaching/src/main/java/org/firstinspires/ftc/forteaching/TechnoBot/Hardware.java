@@ -12,6 +12,7 @@ import com.technototes.library.hardware.motor.Motor;
 import com.technototes.library.hardware.sensor.IMU;
 import com.technototes.library.hardware.sensor.Rev2MDistanceSensor;
 import com.technototes.library.hardware.servo.Servo;
+import com.technototes.vision.hardware.Webcam;
 
 public class Hardware {
     // Put all the names of the devices in here:
@@ -26,6 +27,7 @@ public class Hardware {
         public static String COLOR = "color";
         public static String CLAW = "claw";
         public static String SLIDER = "slider_motor";
+        public static String CAMERA = "Webcam";
     }
 
     // We make this public so subsystems & whatnot can get them
@@ -38,6 +40,7 @@ public class Hardware {
     public RevColorSensorV3 colorSensor;
     public Servo clawServo;
     public DcMotorEx sliderMotor;
+    public Webcam camera;
 
     public Hardware(HardwareMap hwmap) {
         if (TheBot.Connected.DriveTrain) {
@@ -56,6 +59,9 @@ public class Hardware {
         }
         if (TheBot.Connected.Slider) {
             sliderMotor = hwmap.get(DcMotorEx.class, DeviceNames.SLIDER);
+        }
+        if (TheBot.Connected.Camera) {
+            camera = new Webcam(DeviceNames.CAMERA);
         }
     }
 }

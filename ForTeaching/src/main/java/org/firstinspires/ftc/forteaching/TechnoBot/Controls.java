@@ -64,9 +64,7 @@ public class Controls {
     }
 
     private void bindDrivebaseControls() {
-        CommandScheduler
-                .getInstance()
-                .scheduleJoystick(
-                        new TankDriveCommand(robot.tankDriveBase, leftTankStick, rightTankStick));
+        CommandScheduler.getInstance().scheduleJoystick(
+                new TankDriveCommand(robot.tankDriveBase, leftTankStick, rightTankStick, snapToAngle));
     }
 }
