@@ -35,7 +35,7 @@ public class TankDriveCommand implements Command {
         double lp = left.getAsDouble();
         double rp = right.getAsDouble();
         // TODO: Make shouldStraighten work by adjusting the power accordingly (need the IMU too)
-        subsys.drive(lp, rp);
+        subsys.drive(lp, -rp);
     }
 
     // This command is never finished, cuz it's the manual drive mode

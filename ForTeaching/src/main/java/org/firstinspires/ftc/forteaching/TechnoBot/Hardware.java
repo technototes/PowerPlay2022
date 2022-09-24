@@ -24,6 +24,8 @@ public class Hardware {
         public static String SERVO = "servo";
         public static String BUMP = "bump";
         public static String COLOR = "color";
+        public static String CLAW = "claw";
+        public static String SLIDER = "slider_motor";
     }
 
     // We make this public so subsystems & whatnot can get them
@@ -34,6 +36,8 @@ public class Hardware {
     public Servo spinnerServo;
     public RevTouchSensor bumpSensor;
     public RevColorSensorV3 colorSensor;
+    public Servo clawServo;
+    public DcMotorEx sliderMotor;
 
     public Hardware(HardwareMap hwmap) {
         if (TheBot.Connected.DriveTrain) {
@@ -46,6 +50,12 @@ public class Hardware {
             spinnerServo = new Servo(DeviceNames.SERVO);
             bumpSensor = hwmap.get(RevTouchSensor.class, DeviceNames.BUMP);
             colorSensor = hwmap.get(RevColorSensorV3.class, DeviceNames.COLOR);
+        }
+        if (TheBot.Connected.Claw) {
+            clawServo = new Servo(DeviceNames.CLAW);
+        }
+        if (TheBot.Connected.Slider) {
+            sliderMotor = hwmap.get(DcMotorEx.class, DeviceNames.SLIDER);
         }
     }
 }
