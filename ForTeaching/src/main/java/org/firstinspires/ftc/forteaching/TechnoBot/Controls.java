@@ -28,7 +28,7 @@ public class Controls {
         rightTankStick = gpad.rightStickY;
         moveServoLeft = gpad.leftBumper;
         moveServoRight = gpad.rightBumper;
-        snapToAngle = gpad.x;
+        snapToAngle = gpad.cross;
         // Now that we've got our controls lined up, we need to configure the controls to behave
         // the way we want them to:
         if (TheBot.Connected.DriveTrain) {
@@ -37,9 +37,7 @@ public class Controls {
     }
 
     private void bindDrivebaseControls() {
-        CommandScheduler
-                .getInstance()
-                .scheduleJoystick(
-                        new TankDriveCommand(robot.tankDriveBase, leftTankStick, rightTankStick));
+        CommandScheduler.getInstance().scheduleJoystick(
+                new TankDriveCommand(robot.tankDriveBase, leftTankStick, rightTankStick, snapToAngle));
     }
 }
