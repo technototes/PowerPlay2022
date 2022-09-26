@@ -4,17 +4,19 @@ import com.technototes.library.command.Command;
 
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 
-public class ClawCloseCommand implements Command {
+public class ClawCarryCommand implements Command {
     private ClawSubsystem subsystem;
 
-    public ClawCloseCommand(ClawSubsystem s) {
+    public ClawCarryCommand(ClawSubsystem s) {
         subsystem = s;
         addRequirements(s);
     }
 
+
     @Override
     public void execute() {
-        subsystem.close();
-
+        subsystem.carry();
     }
 }
+
+
