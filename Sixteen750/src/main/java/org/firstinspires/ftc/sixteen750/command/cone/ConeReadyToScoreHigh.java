@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.sixteen750.Commands.Cone;
+package org.firstinspires.ftc.sixteen750.command.cone;
 
 import com.technototes.library.command.Command;
 
@@ -7,8 +7,8 @@ import org.firstinspires.ftc.sixteen750.subsystem.ConeSubsystem;
 public class ConeReadyToScoreHigh implements Command {
     private ConeSubsystem subsystem;
 
-    public ConeReadyToScoreHigh(ConeSubsystem s){
-       subsystem = s;
+    public ConeReadyToScoreHigh(ConeSubsystem s) {
+        subsystem = s;
     }
 
     @Override

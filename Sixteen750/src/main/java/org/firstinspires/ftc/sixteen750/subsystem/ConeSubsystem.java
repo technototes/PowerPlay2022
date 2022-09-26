@@ -15,36 +15,37 @@ public class ConeSubsystem implements Subsystem {
         distanceSensor = d;
 
     }
+
     public void readyIntake() {
         claw.open();
         claw.carry();
-        lift.intake;
+        lift.intake();
     }
-   public void readyToScore() {
+
+    public void readyToScore() {
         claw.release();
         lift.carry();
-   }
-   public void readyToScoreHigh() {
+    }
+
+    public void readyToScoreHigh() {
         claw.release();
         lift.highJunction();
-   }
+    }
 
 
+    public void scoreMediumJuction() {
+        lift.mediumJunction();
+        claw.release();
+        claw.open();
+        claw.carry();
+        lift.carry();
+    }
 
-
-        public void scoreMediumJuction() {
-            lift.mediumJunction();
-            claw.release();
-            claw.open();
-            claw.carry();
-            lift.carry();
-        }
-        public void scoreLowJunction() {
-            lift.lowJunction();
-            claw.release();
-            claw.open();
-            claw.carry();
-            lift.carry();
-        }
+    public void scoreLowJunction() {
+        lift.lowJunction();
+        claw.release();
+        claw.open();
+        claw.carry();
+        lift.carry();
     }
 }

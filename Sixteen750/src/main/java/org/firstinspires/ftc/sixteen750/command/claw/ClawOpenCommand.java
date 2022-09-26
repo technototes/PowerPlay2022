@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:Sixteen750/src/main/java/org/firstinspires/ftc/sixteen750/Commands/Claw/ClawOpenCommand.java
-package org.firstinspires.ftc.sixteen750.Commands.Claw;
-========
 package org.firstinspires.ftc.sixteen750.command.claw;
->>>>>>>> main:Sixteen750/src/main/java/org/firstinspires/ftc/sixteen750/command/claw/ClawOpenCommand.java
 
 import com.technototes.library.command.Command;
 
