@@ -19,7 +19,7 @@ public class MotorAsServoSubsystem implements Subsystem, Supplier<Double>, Logga
         public static double UPPER_LIMIT = 2000.0;
         public static double DEAD_ZONE = 10.0;
         public static double MAX_MOTOR_SPEED = 0.8;
-        public static double MIN_MOTOR_SPEED = -0.3; // Gravity
+        public static double MIN_MOTOR_SPEED = -0.4; // Gravity
         public static PIDCoefficients PID = new PIDCoefficients(0.008, 0, 0.0005);
     }
 
@@ -45,15 +45,14 @@ public class MotorAsServoSubsystem implements Subsystem, Supplier<Double>, Logga
         pidController.setTargetPosition(MotorAsServoConstants.LOWER_LIMIT);
     }
 
-    public void stop() {
+    public void halt() {
         // By resetting the pidController, it stops the periodic function from making changes
         pidController.reset();
     }
 
     private void setEncMotor(double val) {
         setPosition(val);
-        curEnc = val;
-        pAndActual = String.format("%d (%d)", (int) curEnc, motor.get().intValue());
+        pAndActual = String.format("%d (%d)", (int) val, motor.get().intValue());
     }
 
     public void increaseEncMotor() {
@@ -92,9 +91,6 @@ public class MotorAsServoSubsystem implements Subsystem, Supplier<Double>, Logga
         return pidController.getTargetPosition();
     }
 
-    @Log(name = "EncodedMotor")
-    public volatile double curEnc = 0.0;
-
-    @Log(name="Pos and Actual Pos")
+    @Log(name = "EncMotor Pos (Actual)")
     public volatile String pAndActual = "(unknown)";
 }

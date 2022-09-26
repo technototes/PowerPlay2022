@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.forteaching.TechnoBot.OpModes;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.structure.CommandOpMode;
@@ -12,6 +11,7 @@ import org.firstinspires.ftc.forteaching.TechnoBot.Hardware;
 import org.firstinspires.ftc.forteaching.TechnoBot.TheBot;
 
 @TeleOp(name = "← Red: \uD83D\uDFE5 → Blue: \uD83D\uDFE6")
+@SuppressWarnings("unused")
 public class TechnoManualControl extends CommandOpMode {
     public Hardware hardware;
     public TheBot robot;

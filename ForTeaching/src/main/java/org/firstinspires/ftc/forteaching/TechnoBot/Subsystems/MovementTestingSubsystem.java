@@ -12,15 +12,14 @@ import com.technototes.library.subsystem.Subsystem;
 public class MovementTestingSubsystem implements Subsystem, Loggable {
     @Config
     public static class TestingValues {
-        public static double SERVO_DELTA = 0.01;
+        public static double SERVO_DELTA = 0.09;
         public static double SERVO_HIGH = 0.72;
         public static double SERVO_LOW = 0.0;
         public static double SERVO_MID = (SERVO_HIGH + SERVO_LOW) / 2.0;
-        public static double ENCODED_MOTOR_DELTA = 150;
+        public static double ENCODED_MOTOR_DELTA = 250;
         public static double MOTOR_DELTA = 0.01;
     }
 
-    public MotorAsServoSubsystem encodedMotor;
     public Motor<DcMotorEx> normalMotor;
     public Servo servo;
 
@@ -53,6 +52,7 @@ public class MovementTestingSubsystem implements Subsystem, Loggable {
     }
 
     private void setMotor(double val) {
+        normalMotor.coast();
         normalMotor.setSpeed(val);
         curMotor = val;
     }
@@ -67,6 +67,12 @@ public class MovementTestingSubsystem implements Subsystem, Loggable {
 
     public void neutralMotorSpeed() {
         setMotor(0);
+    }
+
+    public void brakeMotor() {
+        normalMotor.brake();
+        normalMotor.setSpeed(0);
+        curMotor = 0;
     }
 
     @Log.Number(name = "Servo")
