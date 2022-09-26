@@ -1,16 +1,19 @@
-package org.firstinspires.ftc.sixteen750.command.cone;
+package org.firstinspires.ftc.sixteen750.command.compound;
 
 import com.technototes.library.command.SequentialCommandGroup;
 
-import org.firstinspires.ftc.sixteen750.Commands.Claw.ClawOpenCommand;
+import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawReleaseCommand;
+import org.firstinspires.ftc.sixteen750.command.cone.ConeReadyToIntakeCommand;
+import org.firstinspires.ftc.sixteen750.command.lift.LiftHighJunctionCommand;
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.ConeSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 
 public class ScoreHighJunctionCommandGroup extends SequentialCommandGroup {
     public ScoreHighJunctionCommandGroup(LiftSubsystem lift, ClawSubsystem claw, ConeSubsystem cone) {
         super(
-                new LiftHighJunction(lift),
+                new LiftHighJunctionCommand(lift),
                 new ClawReleaseCommand(claw),
                 new ClawOpenCommand(claw),
                 new ConeReadyToIntakeCommand(cone)

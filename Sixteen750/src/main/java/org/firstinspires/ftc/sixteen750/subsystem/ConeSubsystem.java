@@ -29,12 +29,12 @@ public class ConeSubsystem implements Subsystem {
 
     public void readyToScoreHigh() {
         claw.release();
-        lift.highJunction();
+        lift.highPole();
     }
 
 
     public void scoreMediumJuction() {
-        lift.mediumJunction();
+        lift.midPole();
         claw.release();
         claw.open();
         claw.carry();
@@ -42,7 +42,7 @@ public class ConeSubsystem implements Subsystem {
     }
 
     public void scoreLowJunction() {
-        lift.lowJunction();
+        lift.lowPole();
         claw.release();
         claw.open();
         claw.carry();
