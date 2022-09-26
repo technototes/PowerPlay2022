@@ -11,7 +11,7 @@ import org.firstinspires.ftc.forteaching.TechnoBot.Controls;
 import org.firstinspires.ftc.forteaching.TechnoBot.Hardware;
 import org.firstinspires.ftc.forteaching.TechnoBot.TheBot;
 
-@TeleOp(name = "← Red: \uD83D\uDFE5 → Blue: \uD83D\uDFE6", group = "TechnoLib")
+@TeleOp(name = "← Red: \uD83D\uDFE5 → Blue: \uD83D\uDFE6")
 public class TechnoManualControl extends CommandOpMode {
     public Hardware hardware;
     public TheBot robot;
@@ -19,7 +19,7 @@ public class TechnoManualControl extends CommandOpMode {
 
     @Config
     public static class OpModeConfig {
-        public static boolean TestVision = false;
+        public static boolean TestVision = true;
     }
 
     @Override
