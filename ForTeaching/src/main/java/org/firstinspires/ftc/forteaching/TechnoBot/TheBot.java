@@ -7,6 +7,8 @@ import com.technototes.library.util.Color;
 
 import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.MotorAsServoSubsystem;
 import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.MovementTestingSubsystem;
+import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.ClawSubsystem;
+import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.LiftSubsystem;
 import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.TankDriveSubsystem;
 import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.VisionSubsystem;
 
@@ -20,11 +22,15 @@ public class TheBot implements Loggable {
         public static boolean Sensors = false;
         public static boolean Camera = false;
         public static boolean MovementTesters = true;
+        public static boolean Claw = true;
+        public static boolean Slider = true;
     }
 
     // Add all our subsystems in here:
     public TankDriveSubsystem tankDriveBase;
     // public SensingSubsystem sensing;
+    public ClawSubsystem clawSubsystem;
+    public LiftSubsystem liftSubsystem;
     @Log(name = "Vision", entryColor = Color.PINK)
     public VisionSubsystem visionSystem;
 
@@ -37,6 +43,12 @@ public class TheBot implements Loggable {
         }
         if (Connected.Sensors) {
             // sensing = new SensingSubsystem(hw.colorSensor, hw.bumpSensor, hw.distanceSensor);
+        }
+        if (Connected.Claw) {
+            clawSubsystem = new ClawSubsystem(hw.clawServo, null, null);
+        }
+        if (Connected.Slider) {
+            liftSubsystem = new LiftSubsystem(hw.sliderMotor);
         }
         if (Connected.Camera) {
             visionSystem = new VisionSubsystem(hw.camera);

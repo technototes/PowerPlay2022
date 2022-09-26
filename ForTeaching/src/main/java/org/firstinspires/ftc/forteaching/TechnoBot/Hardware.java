@@ -28,6 +28,8 @@ public class Hardware {
         public static String BUMP = "bump";
         public static String COLOR = "color";
 
+        public static String CLAW = "claw";
+        public static String SLIDER = "slider_motor";
         public static String CAMERA = "Webcam";
 
         public static String TEST_SERVO = "claw";
@@ -44,6 +46,9 @@ public class Hardware {
     public Servo spinnerServo;
     public RevTouchSensor bumpSensor;
     public RevColorSensorV3 colorSensor;
+
+    public Servo clawServo;
+    public DcMotorEx sliderMotor;
 
     public Webcam camera;
 
@@ -62,6 +67,12 @@ public class Hardware {
             spinnerServo = new Servo(DeviceNames.SERVO);
             bumpSensor = hwmap.get(RevTouchSensor.class, DeviceNames.BUMP);
             colorSensor = hwmap.get(RevColorSensorV3.class, DeviceNames.COLOR);
+        }
+        if (TheBot.Connected.Claw) {
+            clawServo = new Servo(DeviceNames.CLAW);
+        }
+        if (TheBot.Connected.Slider) {
+            sliderMotor = hwmap.get(DcMotorEx.class, DeviceNames.SLIDER);
         }
         if (TheBot.Connected.Camera) {
             camera = new Webcam(DeviceNames.CAMERA);

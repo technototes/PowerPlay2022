@@ -1,12 +1,16 @@
-package org.firstinspires.ftc.sixteen750.subsystem;
+package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.technototes.library.logger.Log;
+import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.library.hardware.servo.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-public class ClawSubsystem implements Subsystem {
+@Config
+public class ClawSubsystem implements Subsystem, Loggable {
     public static double OPEN_SERVO_POSITION = .8;
     public static double CLOSE_SERVO_POSITION = .5;
     public static double CARRY_SERVO_POSITION = .4;
@@ -17,7 +21,7 @@ public class ClawSubsystem implements Subsystem {
 
     public ClawSubsystem(Servo claw, Servo flipper, DistanceSensor s){
         clawServo = claw;
-        flipperServo = flipper;
+        //flipperServo = flipper;
         sensor = s;
 
     }
@@ -29,10 +33,10 @@ public class ClawSubsystem implements Subsystem {
     }
     public void carry(){
         close();
-        flipperServo.setPosition(CARRY_SERVO_POSITION);
+        //flipperServo.setPosition(CARRY_SERVO_POSITION);
     }
     public void release(){
-        flipperServo.setPosition(RELEASE_SERVO_POSITION);
+        //flipperServo.setPosition(RELEASE_SERVO_POSITION);
         open();
     }
     public boolean isConeClose() {
@@ -46,4 +50,6 @@ public class ClawSubsystem implements Subsystem {
         return clawServo;
     }
 
+    @Log
+    public int info = 0;
 }
