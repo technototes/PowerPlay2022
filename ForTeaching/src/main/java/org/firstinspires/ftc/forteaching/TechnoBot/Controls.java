@@ -61,6 +61,7 @@ public class Controls {
 
         motorTestUp = gpad.triangle;
         motorTestDown = gpad.cross;
+
         stop = gpad.rightBumper;
         halt = gpad.leftBumper;
 
@@ -132,7 +133,7 @@ public class Controls {
                 MakeEncCommand(Operations.Stop),
                 MakeMotorCommand(Operations.Stop),
                 MakeServoCommand(Operations.Stop)));
-        halt.whenPressed(new SequentialCommandGroup(
+        halt.whenPressed(new ParallelCommandGroup(
                 MakeMotorCommand(Operations.Halt),
                 MakeEncCommand(Operations.Halt),
                 MakeServoCommand(Operations.Halt)));

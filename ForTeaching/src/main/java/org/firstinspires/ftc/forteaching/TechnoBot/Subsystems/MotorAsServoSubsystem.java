@@ -3,6 +3,7 @@ package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.Range;
 import com.technototes.library.hardware.motor.EncodedMotor;
@@ -16,7 +17,7 @@ public class MotorAsServoSubsystem implements Subsystem, Supplier<Double>, Logga
     @Config
     public static class MotorAsServoConstants {
         public static double LOWER_LIMIT = 0.0;
-        public static double UPPER_LIMIT = 2000.0;
+        public static double UPPER_LIMIT = 2250.0;
         public static double DEAD_ZONE = 10.0;
         public static double MAX_MOTOR_SPEED = 0.8;
         public static double MIN_MOTOR_SPEED = -0.4; // Gravity
@@ -45,9 +46,14 @@ public class MotorAsServoSubsystem implements Subsystem, Supplier<Double>, Logga
         pidController.setTargetPosition(MotorAsServoConstants.LOWER_LIMIT);
     }
 
-    public void halt() {
+    public void stop() {
         // By resetting the pidController, it stops the periodic function from making changes
         pidController.reset();
+    }
+
+    public void halt() {
+        // Just set the target position to the current position to get the motor to stop, yes?
+        pidController.setTargetPosition(motor.get());
     }
 
     private void setEncMotor(double val) {

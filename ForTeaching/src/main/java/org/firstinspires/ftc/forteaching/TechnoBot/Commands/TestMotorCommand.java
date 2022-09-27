@@ -12,6 +12,7 @@ public class TestMotorCommand implements Command {
     public TestMotorCommand(MovementTestingSubsystem ss, Operations op) {
         movement = ss;
         addRequirements(movement);
+        which = op;
     }
 
     @Override

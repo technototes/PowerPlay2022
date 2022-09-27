@@ -14,6 +14,7 @@ public class TestEncodedMotorCommand implements Command {
     public TestEncodedMotorCommand(MotorAsServoSubsystem ss, Operations op) {
         motorAsServo = ss;
         addRequirements(motorAsServo);
+        which = op;
     }
 
     @Override

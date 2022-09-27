@@ -16,8 +16,10 @@ public class MovementTestingSubsystem implements Subsystem, Loggable {
         public static double SERVO_HIGH = 0.72;
         public static double SERVO_LOW = 0.0;
         public static double SERVO_MID = (SERVO_HIGH + SERVO_LOW) / 2.0;
-        public static double ENCODED_MOTOR_DELTA = 250;
+        public static double ENCODED_MOTOR_DELTA = 125; // 125 ticks per inch, actually :)
         public static double MOTOR_DELTA = 0.01;
+        public static double SERVO_PWM_LOW = 100;
+        public static double SERVO_PWM_HIGH = 3500;
     }
 
     public Motor<DcMotorEx> normalMotor;
@@ -25,6 +27,7 @@ public class MovementTestingSubsystem implements Subsystem, Loggable {
 
     public MovementTestingSubsystem(Motor<DcMotorEx> normalM, Servo srvo) {
         servo = srvo;
+        servo.scalePWM(TestingValues.SERVO_PWM_LOW, TestingValues.SERVO_PWM_HIGH);
         normalMotor = normalM;
     }
 

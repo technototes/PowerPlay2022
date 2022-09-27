@@ -22,8 +22,8 @@ public class TheBot implements Loggable {
         public static boolean Sensors = false;
         public static boolean Camera = false;
         public static boolean MovementTesters = true;
-        public static boolean Claw = true;
-        public static boolean Slider = true;
+        public static boolean Claw = false;
+        public static boolean Slider = false;
     }
 
     // Add all our subsystems in here:
