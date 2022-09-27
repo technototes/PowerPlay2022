@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.forteaching.TankDriveDemo;
 
+@Disabled
 @TeleOp(name = "TankCubed", group = "demo")
 public class StickCubedTank extends OpMode {
 

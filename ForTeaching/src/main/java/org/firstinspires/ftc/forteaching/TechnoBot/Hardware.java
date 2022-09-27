@@ -8,6 +8,7 @@ import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.motor.Motor;
 import com.technototes.library.hardware.sensor.IMU;
 import com.technototes.library.hardware.sensor.Rev2MDistanceSensor;
@@ -21,22 +22,39 @@ public class Hardware {
         public static String LEFT_MOTOR = "motorL";
         public static String RIGHT_MOTOR = "motorR";
         public static String IMU = "imu";
+
         public static String REV2M_DIST = "distance";
         public static String SERVO = "servo";
         public static String BUMP = "bump";
         public static String COLOR = "color";
+
+        public static String CLAW = "claw";
+        public static String SLIDER = "slider_motor";
         public static String CAMERA = "Webcam";
+
+        public static String TEST_SERVO = "claw";
+        public static String TEST_ENCODED_MOTOR = "slider_motor";
+        public static String TEST_MOTOR = "motorL";
     }
 
     // We make this public so subsystems & whatnot can get them
     public Motor<DcMotorEx> leftDriveMotor;
     public Motor<DcMotorEx> rightDriveMotor;
     public IMU inertialMovementUnit;
+
     public Rev2MDistanceSensor distanceSensor;
     public Servo spinnerServo;
     public RevTouchSensor bumpSensor;
     public RevColorSensorV3 colorSensor;
+
+    public Servo clawServo;
+    public DcMotorEx sliderMotor;
+
     public Webcam camera;
+
+    public Servo servoForTesting;
+    public EncodedMotor<DcMotorEx> encodedMotorForTesting;
+    public Motor<DcMotorEx> normalMotorForTesting;
 
     public Hardware(HardwareMap hwmap) {
         if (TheBot.Connected.DriveTrain) {
@@ -50,8 +68,19 @@ public class Hardware {
             bumpSensor = hwmap.get(RevTouchSensor.class, DeviceNames.BUMP);
             colorSensor = hwmap.get(RevColorSensorV3.class, DeviceNames.COLOR);
         }
+        if (TheBot.Connected.Claw) {
+            clawServo = new Servo(DeviceNames.CLAW);
+        }
+        if (TheBot.Connected.Slider) {
+            sliderMotor = hwmap.get(DcMotorEx.class, DeviceNames.SLIDER);
+        }
         if (TheBot.Connected.Camera) {
             camera = new Webcam(DeviceNames.CAMERA);
+        }
+        if (TheBot.Connected.MovementTesters) {
+            servoForTesting = new Servo(DeviceNames.TEST_SERVO);
+            encodedMotorForTesting = new EncodedMotor<DcMotorEx>(DeviceNames.TEST_ENCODED_MOTOR);
+            normalMotorForTesting = new Motor<DcMotorEx>(DeviceNames.TEST_MOTOR);
         }
     }
 }
