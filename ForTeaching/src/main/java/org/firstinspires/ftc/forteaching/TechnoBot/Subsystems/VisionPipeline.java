@@ -66,12 +66,12 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
 
     public void inputToCr(Mat input) {
         Imgproc.cvtColor(input, customColorSpace, Imgproc.COLOR_RGB2HSV);
-        int countA = countColor(customColorSpace, VisionConstants.AQUA_A, VisionConstants.AQUA_B);
         int countY = countColor(customColorSpace, VisionConstants.YELLOW_A, VisionConstants.YELLOW_B);
+        int countA = countColor(customColorSpace, VisionConstants.AQUA_A, VisionConstants.AQUA_B);
         int countP = countColor(customColorSpace, VisionConstants.PURPLE_A, VisionConstants.PURPLE_B);
-        leftDetected = countA >= countY && countA >= countP;
-        middleDetected = countY >= countA && countY > countP;
-        rightDetected = !leftDetected && !middleDetected;
+        middleDetected = countA >= countY && countA >= countP;
+        rightDetected = countP >= countA && countP >= countY;
+        leftDetected = !rightDetected && !middleDetected;
     }
 
     public void init(Mat firstFrame) {

@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.forteaching.TankDriveDemo;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
+@Disabled
 @TeleOp(name = "StickTankDrive", group = "demo")
 public class StickTankDrive extends OpMode {
     private static final double DEAD_ZONE = 0.1;
