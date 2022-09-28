@@ -17,7 +17,6 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
 
     @Config
     public abstract static class DrivebaseConstant implements MecanumConstants {
-
         @TicksPerRev
         public static final double TICKS_PER_REV = 28;
 
@@ -31,6 +30,7 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
         public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(20, 0, 3,
                 MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
 
+        //TODO: change these when got the actual robot
         @WheelRadius
         public static double WHEEL_RADIUS = 1.88976; // in
         @GearRatio
@@ -39,6 +39,7 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
         public static double TRACK_WIDTH = 10; // in
         @WheelBase
         public static double WHEEL_BASE = 8.5; // in
+
         @KV
         public static double kV = 1.0 / MecanumConstants.rpmToVelocity(MAX_RPM, WHEEL_RADIUS, GEAR_RATIO);
         @KA
@@ -79,7 +80,8 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
             EncodedMotor<DcMotorEx> fr,
             EncodedMotor<DcMotorEx> rl,
             EncodedMotor<DcMotorEx> rr,
-            IMU i, MecanumConstants c
+            IMU i,
+            MecanumConstants c
     ) {
         super(fl, fr, rl, rr, i, c);
     }
