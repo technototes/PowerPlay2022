@@ -51,7 +51,7 @@ public class Controls {
         // This is where you set up the buttons for what you want them to control:
         leftTankStick = gpad.leftStickY;
         rightTankStick = gpad.rightStickY;
-        snapToAngle = gpad.cross;
+        snapToAngle = THISISNTAVARIABLE.THISISNTAMETHOD();
 
         servoTestUp = gpad.dpadUp;
         servoTestDown = gpad.dpadDown;
