@@ -122,8 +122,7 @@ android {
 }
 
 repositories {
-    flatDir {
-        dirs rootProject.file('libs')
-    }
+    // For Vuforia only, not really necessary: commented out to stop the warning from gradle
+    // flatDir { dirs rootProject.file('libs') }
 }
 

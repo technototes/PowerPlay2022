@@ -11,16 +11,15 @@ repositories {
 
     // Specifically for Road Runner and FTC Dashboard
     maven { url = 'https://maven.brott.dev/' }
-    maven { url = 'https://acmerobotics.z13.web.core.windows.net/' }  // don't remove unless maven.brott.dev redirecting to something else
+    // don't remove this extra maven url unless maven.brott.dev is redirecting to something else
     // `maven.brott.dev` is 302 redirecting to `acmerobotics.z13.web.core.windows.net`
     // if unable to access `maven.brott.dev` the above code can fail-over to `acmerobotics.z13.web.core.windows.net`
     // if experiencing DNS poisoning, try to add this to etc/hosts `52.239.247.97 acmerobotics.z13.web.core.windows.net`
     // alternatively you can add `142.251.33.115 maven.brott.dev` to your etc/hosts, `nslookup ghs.googlehosted.com` to get the latest IP address
+    maven { url = 'https://acmerobotics.z13.web.core.windows.net/' }
 
-    // For Vuforia only, not really necessary, the only functionality is making 'flatDir/flatDir2' warning from gradle
-    flatDir {
-        dirs rootProject.file('libs')
-    }
+    // For Vuforia only, not really necessary: commented out to stop the warning from gradle
+    // flatDir { dirs rootProject.file('libs') }
 }
 
 // Removed the TensorFlow dependencies, cuz we're not using it
@@ -40,7 +39,7 @@ dependencies {
     implementation 'org.firstinspires.ftc:gameAssets-PowerPlay:1.0.0'
 
     // TechnoLib:
-    implementation 'com.github.technototes:TechnoLib:1.1.1'
+    implementation 'com.github.technototes:TechnoLib:1.1.2'
 
     // RoadRunner:
     implementation 'com.acmerobotics.roadrunner:core:0.5.5'
