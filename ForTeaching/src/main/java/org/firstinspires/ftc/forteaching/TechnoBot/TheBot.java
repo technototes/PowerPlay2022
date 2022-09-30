@@ -20,8 +20,8 @@ public class TheBot implements Loggable {
     public static class Connected {
         public static boolean DriveTrain = false;
         public static boolean Sensors = false;
-        public static boolean Camera = false;
-        public static boolean MovementTesters = true;
+        public static boolean Camera = true;
+        public static boolean MovementTesters = false;
         public static boolean Claw = false;
         public static boolean Slider = false;
     }
