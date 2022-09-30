@@ -10,7 +10,5 @@ public class Robot implements Loggable {
         public static boolean DRIVE_CONNECTED = false;
     }
 
-    public Robot(Hardware hardware){
-
-    }
+    public Robot(Hardware hardware) {}
 }

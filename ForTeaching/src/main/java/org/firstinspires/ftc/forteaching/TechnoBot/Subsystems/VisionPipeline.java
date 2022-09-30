@@ -1,10 +1,6 @@
 package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
 
-import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.util.Range;
-import com.technototes.library.logger.Log;
-import com.technototes.library.logger.LogConfig;
-import com.technototes.library.logger.Loggable;
+import java.util.function.Supplier;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -13,7 +9,12 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-import java.util.function.Supplier;
+import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.util.Range;
+
+import com.technototes.library.logger.Log;
+import com.technototes.library.logger.LogConfig;
+import com.technototes.library.logger.Loggable;
 
 public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>, Loggable {
 
@@ -56,9 +57,11 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
     @LogConfig.Run(duringRun = false, duringInit = true)
     @Log.Boolean(name = "left")
     public volatile boolean leftDetected = false;
+
     @LogConfig.Run(duringRun = false, duringInit = true)
     @Log.Boolean(name = "middle")
     public volatile boolean middleDetected = true;
+
     @LogConfig.Run(duringRun = false, duringInit = true)
     @Log.Boolean(name = "right")
     public volatile boolean rightDetected = false;
@@ -81,8 +84,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                     count++;
                     // Draw a dot on the image at this point - input was put into img
                     // The color choice makes things stripey
-                    img.put(j + VisionConstants.Y, i + VisionConstants.X,
-                            ((j + i) & 3) != 0 ? edge1.val : edge2.val);
+                    img.put(j + VisionConstants.Y, i + VisionConstants.X, ((j + i) & 3) != 0 ? edge1.val : edge2.val);
                 }
             }
         }

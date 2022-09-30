@@ -1,16 +1,17 @@
 package org.firstinspires.ftc.forteaching.TechnoBot;
 
-import com.acmerobotics.dashboard.config.Config;
-import com.technototes.library.logger.Loggable;
-import com.technototes.library.logger.Log;
-import com.technototes.library.util.Color;
-
-import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.MotorAsServoSubsystem;
-import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.MovementTestingSubsystem;
 import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.ClawSubsystem;
 import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.LiftSubsystem;
+import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.MotorAsServoSubsystem;
+import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.MovementTestingSubsystem;
 import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.TankDriveSubsystem;
 import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.VisionSubsystem;
+
+import com.acmerobotics.dashboard.config.Config;
+
+import com.technototes.library.logger.Log;
+import com.technototes.library.logger.Loggable;
+import com.technototes.library.util.Color;
 
 // This is the "robot" class, which is for containing all the subsystems of the bot
 public class TheBot implements Loggable {
@@ -31,6 +32,7 @@ public class TheBot implements Loggable {
     // public SensingSubsystem sensing;
     public ClawSubsystem clawSubsystem;
     public LiftSubsystem liftSubsystem;
+
     @Log(name = "Vision", entryColor = Color.PINK)
     public VisionSubsystem visionSystem;
 

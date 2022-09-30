@@ -1,15 +1,14 @@
 package org.firstinspires.ftc.sixteen750;
 
-import com.acmerobotics.dashboard.config.Config;
+import static org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.sensor.IMU;
-
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-
-import static org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
 
 public class Hardware {
     @Config

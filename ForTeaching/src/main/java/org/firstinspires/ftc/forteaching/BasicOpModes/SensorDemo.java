@@ -1,14 +1,14 @@
 package org.firstinspires.ftc.forteaching.BasicOpModes;
 
-import com.qualcomm.robotcore.eventloop.opmode.*;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.TouchSensor;
-
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.forteaching.SensorCode;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+import com.qualcomm.robotcore.eventloop.opmode.*;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 @Disabled
 @TeleOp(name = "SensorDemo", group = "demo")
@@ -27,9 +27,13 @@ public class SensorDemo extends OpMode {
         sensorCode = new SensorCode(motorL, motorR, distanceSensor, touchSensor, colorSensor);
     }
 
-    enum State {started, foundColor, isClose, isFinished}
+    enum State {
+        started,
+        foundColor,
+        isClose,
+        isFinished
+    };
 
-    ;
     State state;
 
     @Override
@@ -41,7 +45,6 @@ public class SensorDemo extends OpMode {
     @Override
     public void loop() {
         switch (state) {
-
             case started:
                 if (colorSensor.blue() > 67) {
                     sensorCode.rotateRight(2, 1);
@@ -59,11 +62,6 @@ public class SensorDemo extends OpMode {
                     sensorCode.stop();
                     state = State.isFinished;
                 }
-
-
         }
-
     }
-
-
 }

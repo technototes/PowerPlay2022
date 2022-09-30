@@ -2,7 +2,6 @@ package org.firstinspires.ftc.forteaching;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class SwerveController {
     // At 4.8v, no load 60 degrees takes super-speed servos .055 seconds to move
@@ -60,7 +59,8 @@ public class SwerveController {
     }
     // The angles for this function are a scale from -1 to +1 meaning -180 degrees to +180 degrees
     // But since we can only move 180 degrees, we may have to invert the wheel motor...
-    private void setControlRelative(double flp, double fla, double frp, double fra, double rlp, double rla, double rrp, double rra) {
+    private void setControlRelative(
+            double flp, double fla, double frp, double fra, double rlp, double rla, double rrp, double rra) {
         // See if *any* of the servos require 'flipping'
         boolean ffl = (needFlip(fla) != flFlip);
         boolean ffr = (needFlip(fra) != frFlip);
@@ -95,7 +95,8 @@ public class SwerveController {
         mrr.setPower(rrFlip ? -rrp : rrp);
     }
 
-    public SwerveController(DcMotorEx flm, DcMotorEx frm, DcMotorEx rlm, DcMotorEx rrm, Servo fls, Servo frs, Servo rls, Servo rrs) {
+    public SwerveController(
+            DcMotorEx flm, DcMotorEx frm, DcMotorEx rlm, DcMotorEx rrm, Servo fls, Servo frs, Servo rls, Servo rrs) {
         mfl = flm;
         mfr = frm;
         mrl = rlm;
@@ -118,7 +119,8 @@ public class SwerveController {
         rrFlip = false;
     }
 
-    public void setControlRadians(double flp, double fla, double frp, double fra, double rlp, double rla, double rrp, double rra) {
+    public void setControlRadians(
+            double flp, double fla, double frp, double fra, double rlp, double rla, double rrp, double rra) {
         fra = inRange(-Math.PI, Math.PI, fra) * INV_PI;
         fla = inRange(-Math.PI, Math.PI, fla) * INV_PI;
         rra = inRange(-Math.PI, Math.PI, rra) * INV_PI;
@@ -126,7 +128,8 @@ public class SwerveController {
         setControlRelative(flp, fla, frp, fra, rlp, rla, rrp, rra);
     }
 
-    public void setControlDegrees(double flp, double fla, double frp, double fra, double rlp, double rla, double rrp, double rra) {
+    public void setControlDegrees(
+            double flp, double fla, double frp, double fra, double rlp, double rla, double rrp, double rra) {
         fra = inRange(-180, 180, fra) * INV_180;
         fla = inRange(-180, 180, fla) * INV_180;
         rra = inRange(-180, 180, rra) * INV_180;

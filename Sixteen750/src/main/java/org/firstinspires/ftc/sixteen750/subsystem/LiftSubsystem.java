@@ -2,10 +2,10 @@ package org.firstinspires.ftc.sixteen750.subsystem;
 
 import androidx.core.math.MathUtils;
 
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.technototes.library.hardware.motor.EncodedMotor;
-import com.technototes.library.subsystem.Subsystem;
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+
+import com.technototes.library.subsystem.Subsystem;
 
 @Config
 public class LiftSubsystem implements Subsystem {
@@ -31,7 +31,7 @@ public class LiftSubsystem implements Subsystem {
     }
 
     private void powerMotorForError(double error) {
-        //If we're error distance away from position,
+        // If we're error distance away from position,
         // set motor power to something that can reach position
         double power = error / MAX_DISTANCE_FOR_FULLPOWER;
         power = MathUtils.clamp(power, -1, 1);
@@ -59,7 +59,6 @@ public class LiftSubsystem implements Subsystem {
         }
         double error = position - MEDIUM_JUNCTION;
         powerMotorForError(error);
-
     }
 
     public void lowPole() {
