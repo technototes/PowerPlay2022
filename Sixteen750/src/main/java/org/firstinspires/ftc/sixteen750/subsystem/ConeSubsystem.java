@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.sixteen750.subsystem;
 
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+
 import com.technototes.library.subsystem.Subsystem;
 
 public class ConeSubsystem implements Subsystem {
@@ -8,12 +9,10 @@ public class ConeSubsystem implements Subsystem {
     private LiftSubsystem lift;
     private DistanceSensor distanceSensor;
 
-
     public ConeSubsystem(ClawSubsystem c, LiftSubsystem l, DistanceSensor d) {
         claw = c;
         lift = l;
         distanceSensor = d;
-
     }
 
     public void readyIntake() {
@@ -31,7 +30,6 @@ public class ConeSubsystem implements Subsystem {
         claw.release();
         lift.highPole();
     }
-
 
     public void scoreMediumJuction() {
         lift.midPole();

@@ -1,12 +1,10 @@
 package org.firstinspires.ftc.forteaching.TechnoBot.Commands;
 
+import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.MotorAsServoSubsystem;
 
 import com.technototes.library.command.Command;
 
-import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.MotorAsServoSubsystem;
-
 public class TestEncodedMotorCommand implements Command {
-
 
     MotorAsServoSubsystem motorAsServo;
     Operations which;

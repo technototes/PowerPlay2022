@@ -1,14 +1,14 @@
 package org.firstinspires.ftc.forteaching.TechnoBot.Commands;
 
-import com.technototes.library.command.Command;
-import com.technototes.library.control.CommandAxis;
-import com.technototes.library.control.CommandButton;
+import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
 
 import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.TankDriveSubsystem;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
+import com.technototes.library.command.Command;
+import com.technototes.library.control.CommandAxis;
+import com.technototes.library.control.CommandButton;
 
 public class TankDriveCommand implements Command {
     TankDriveSubsystem subsys;

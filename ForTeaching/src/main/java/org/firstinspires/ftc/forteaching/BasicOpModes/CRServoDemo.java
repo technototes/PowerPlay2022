@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.forteaching.BasicOpModes;
 
+import org.firstinspires.ftc.forteaching.CRServoCode;
+
 import com.qualcomm.robotcore.eventloop.opmode.*;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Gamepad;
-
-import org.firstinspires.ftc.forteaching.CRServoCode;
 
 @Disabled
 @TeleOp(name = "CRServoDemo", group = "Demo")
@@ -18,7 +18,7 @@ public class CRServoDemo extends OpMode {
         // Called when INIT button being pressed
         this.servo = hardwareMap.get(CRServo.class, "gobilda_cr"); // need to match in the Robot Configuration
         this.servoCode = new CRServoCode(this.servo);
-        this.gamepad = gamepad1;  // it's something built-in in the OpMode class
+        this.gamepad = gamepad1; // it's something built-in in the OpMode class
     }
 
     @Override

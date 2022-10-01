@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
 
+import org.openftc.easyopencv.OpenCvCameraRotation;
+
 import com.acmerobotics.dashboard.config.Config;
+
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.vision.hardware.Webcam;
-
-import org.opencv.core.Mat;
-import org.openftc.easyopencv.OpenCvCameraRotation;
 
 public class VisionSubsystem implements Subsystem, Loggable {
     @Config
@@ -28,9 +28,7 @@ public class VisionSubsystem implements Subsystem, Loggable {
 
     public void startStreaming() {
         camera.startStreaming(
-                VisionSubsystemConstants.WIDTH,
-                VisionSubsystemConstants.HEIGHT,
-                VisionSubsystemConstants.ROTATION);
+                VisionSubsystemConstants.WIDTH, VisionSubsystemConstants.HEIGHT, VisionSubsystemConstants.ROTATION);
     }
 
     public void startVisionPipeline() {
@@ -44,5 +42,4 @@ public class VisionSubsystem implements Subsystem, Loggable {
             /* Do we need to do anything to stop the vision pipeline? */
         });
     }
-
 }

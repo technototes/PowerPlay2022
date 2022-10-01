@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+
+import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
-import com.technototes.library.hardware.servo.Servo;
-
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Config
 public class ClawSubsystem implements Subsystem, Loggable {
@@ -19,28 +20,32 @@ public class ClawSubsystem implements Subsystem, Loggable {
     private Servo flipperServo;
     private DistanceSensor sensor;
 
-    public ClawSubsystem(Servo claw, Servo flipper, DistanceSensor s){
+    public ClawSubsystem(Servo claw, Servo flipper, DistanceSensor s) {
         clawServo = claw;
-        //flipperServo = flipper;
+        // flipperServo = flipper;
         sensor = s;
-
     }
-    public void open(){
+
+    public void open() {
         clawServo.setPosition(OPEN_SERVO_POSITION);
     }
-    public void close(){
+
+    public void close() {
         clawServo.setPosition(CLOSE_SERVO_POSITION);
     }
-    public void carry(){
+
+    public void carry() {
         close();
-        //flipperServo.setPosition(CARRY_SERVO_POSITION);
+        // flipperServo.setPosition(CARRY_SERVO_POSITION);
     }
-    public void release(){
-        //flipperServo.setPosition(RELEASE_SERVO_POSITION);
+
+    public void release() {
+        // flipperServo.setPosition(RELEASE_SERVO_POSITION);
         open();
     }
+
     public boolean isConeClose() {
-        if(sensor.getDistance(DistanceUnit.CM) <= 4.0) {
+        if (sensor.getDistance(DistanceUnit.CM) <= 4.0) {
             return true;
         }
         return false;

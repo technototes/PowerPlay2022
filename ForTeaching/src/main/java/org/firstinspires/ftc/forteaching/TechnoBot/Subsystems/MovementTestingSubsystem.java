@@ -3,6 +3,7 @@ package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.Range;
+
 import com.technototes.library.hardware.motor.Motor;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.logger.Log;
@@ -38,16 +39,12 @@ public class MovementTestingSubsystem implements Subsystem, Loggable {
 
     public void increaseServoMotor() {
         setServo(Range.clip(
-                servo.getPosition() + TestingValues.SERVO_DELTA,
-                TestingValues.SERVO_LOW,
-                TestingValues.SERVO_HIGH));
+                servo.getPosition() + TestingValues.SERVO_DELTA, TestingValues.SERVO_LOW, TestingValues.SERVO_HIGH));
     }
 
     public void decreaseServoMotor() {
         setServo(Range.clip(
-                servo.getPosition() - TestingValues.SERVO_DELTA,
-                TestingValues.SERVO_LOW,
-                TestingValues.SERVO_HIGH));
+                servo.getPosition() - TestingValues.SERVO_DELTA, TestingValues.SERVO_LOW, TestingValues.SERVO_HIGH));
     }
 
     public void neutralServoMotor() {
@@ -80,6 +77,7 @@ public class MovementTestingSubsystem implements Subsystem, Loggable {
 
     @Log.Number(name = "Servo")
     public volatile double curServo = 0.0;
+
     @Log.Number(name = "Motor")
     public volatile double curMotor = 0.0;
 }

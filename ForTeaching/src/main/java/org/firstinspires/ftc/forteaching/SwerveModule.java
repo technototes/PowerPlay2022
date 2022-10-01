@@ -46,10 +46,7 @@ public class SwerveModule {
         boolean early = (totalTime.milliseconds() < 100);
         double de_dt = early ? 0 : ((err - lastErr) / timeDelta); // derivative
         double e_t = early ? 0 : (lastInt + err * timeDelta); // integral
-        double value = servoPid.p * err
-                + servoPid.i * e_t
-                + servoPid.d * de_dt
-                + servoPid.f * Math.signum(err);
+        double value = servoPid.p * err + servoPid.i * e_t + servoPid.d * de_dt + servoPid.f * Math.signum(err);
         err = lastErr;
         lastInt = e_t;
         return Math.max(-1.0, Math.min(1.0, value));

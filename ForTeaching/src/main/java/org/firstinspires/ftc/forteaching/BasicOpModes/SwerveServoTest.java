@@ -2,14 +2,14 @@ package org.firstinspires.ftc.forteaching.BasicOpModes;
 
 import android.util.Log;
 
+import java.util.List;
+
+import org.firstinspires.ftc.forteaching.SwerveModule;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.forteaching.SwerveModule;
-
-import java.util.List;
 
 /*
 Motors: GoBilda 5202/3/4:
@@ -74,11 +74,16 @@ public class SwerveServoTest extends LinearOpMode {
                 leftRear.setRotatePower(curPower);
                 rightFront.setRotatePower(curPower);
                 rightRear.setRotatePower(curPower);
-                String data = String.format("LF: %f(%f) RF: %f(%f) LR: %f(%f) RR: %f(%f)",
-                        leftFront.getAngle(), curPower,
-                        rightFront.getAngle(), curPower,
-                        leftRear.getAngle(), curPower,
-                        rightRear.getAngle(), curPower);
+                String data = String.format(
+                        "LF: %f(%f) RF: %f(%f) LR: %f(%f) RR: %f(%f)",
+                        leftFront.getAngle(),
+                        curPower,
+                        rightFront.getAngle(),
+                        curPower,
+                        leftRear.getAngle(),
+                        curPower,
+                        rightRear.getAngle(),
+                        curPower);
                 telemetry.addLine(data);
                 Log.d("info", data);
                 telemetry.addData("Loop", et.toString());
@@ -89,8 +94,7 @@ public class SwerveServoTest extends LinearOpMode {
             if (Math.abs(curPower) > .4) {
                 dir = -dir;
             }
-            while (et.milliseconds() < 40) {
-            }
+            while (et.milliseconds() < 40) {}
             et.reset();
         }
     }
@@ -104,5 +108,4 @@ public class SwerveServoTest extends LinearOpMode {
         }
         return val;
     }
-
 }

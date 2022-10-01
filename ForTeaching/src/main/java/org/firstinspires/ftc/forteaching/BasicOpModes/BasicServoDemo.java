@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.forteaching.BasicOpModes;
 
+import org.firstinspires.ftc.forteaching.BasicServoCode;
+
 import com.qualcomm.robotcore.eventloop.opmode.*;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.forteaching.BasicServoCode;
 
 @Disabled
 @TeleOp(name = "BasicServoDemo", group = "Demo")
@@ -18,7 +18,7 @@ public class BasicServoDemo extends OpMode {
         // Called when INIT button being pressed
         this.servo = hardwareMap.get(Servo.class, "gobilda"); // need to match in the Robot Configuration
         this.servoCode = new BasicServoCode(this.servo);
-        this.gamepad = gamepad1;  // it's something built-in in the OpMode class
+        this.gamepad = gamepad1; // it's something built-in in the OpMode class
     }
 
     @Override
