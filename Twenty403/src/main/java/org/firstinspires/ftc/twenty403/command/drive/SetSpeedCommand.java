@@ -1,14 +1,16 @@
 package org.firstinspires.ftc.twenty403.command.drive;
 
-import com.technototes.library.command.Command;
-
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
+
+import com.technototes.library.command.Command;
 
 public class SetSpeedCommand implements Command {
     public DrivebaseSubsystem subsystem;
-    public SetSpeedCommand(DrivebaseSubsystem s){
+
+    public SetSpeedCommand(DrivebaseSubsystem s) {
         subsystem = s;
     }
+
     @Override
     public void execute() {
         subsystem.speed = 0.5;
