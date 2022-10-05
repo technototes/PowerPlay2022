@@ -14,7 +14,7 @@ import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 public class BlueHomeConeStackCommand extends SequentialCommandGroup {
     public BlueHomeConeStackCommand(MecanumDrivebaseSubsystem drive, ClawSubsystem claw, LiftSubsystem lift, ConeSubsystem cone){
         super(new TrajectorySequenceCommand(drive, RobotConstant.HIGH_JUNCTION_HOME).alongWith(new ConeReadyToScoreCommand(cone),
-                new ClawOpenCommand(claw), new BlueHomeAutoConeStack(), new BlueHomeAutoConeStack(), new BlueHomeAutoConeStack(),new BlueHomeAutoConeStack()));
+                new ClawOpenCommand(claw), new BlueHomeAutoConeStack(drive, claw, lift, cone), new BlueHomeAutoConeStack(drive, claw, lift, cone), new BlueHomeAutoConeStack(drive, claw, lift, cone),new BlueHomeAutoConeStack(drive, claw, lift, cone)));
 
     }
 }
