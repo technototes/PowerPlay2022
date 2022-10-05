@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.sixteen750.command.cone;
 
-import com.technototes.library.command.Command;
-
 import org.firstinspires.ftc.sixteen750.subsystem.ConeSubsystem;
+
+import com.technototes.library.command.Command;
 
 public class ConeReadyToScoreHigh implements Command {
     private ConeSubsystem subsystem;

@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.forteaching.BasicOpModes;
 
+import org.firstinspires.ftc.forteaching.TankDriveDemo;
+
 import com.qualcomm.robotcore.eventloop.opmode.*;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-
-import org.firstinspires.ftc.forteaching.TankDriveDemo;
 
 @Disabled
 @TeleOp(name = "TankCubed", group = "demo")
@@ -40,7 +40,5 @@ public class StickCubedTank extends OpMode {
     }
 
     @Override
-    public void start() {
-
-    }
+    public void start() {}
 }

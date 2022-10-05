@@ -1,18 +1,20 @@
 package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
 
+import org.openftc.easyopencv.OpenCvCameraRotation;
+
 import com.acmerobotics.dashboard.config.Config;
+
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.vision.hardware.Webcam;
 
-import org.opencv.core.Mat;
-import org.openftc.easyopencv.OpenCvCameraRotation;
-
 public class VisionSubsystem implements Subsystem, Loggable {
     @Config
     public static class VisionSubsystemConstants {
-        public static int WIDTH = 320;
-        public static int HEIGHT = 240;
+        // This is a super-low res image. I don't think we need higher resolution...
+        public static int WIDTH = 160;
+        public static int HEIGHT = 120;
+        // Change this if the camera is oriented differently
         public static OpenCvCameraRotation ROTATION = OpenCvCameraRotation.UPRIGHT;
     }
 
@@ -26,9 +28,7 @@ public class VisionSubsystem implements Subsystem, Loggable {
 
     public void startStreaming() {
         camera.startStreaming(
-                VisionSubsystemConstants.WIDTH,
-                VisionSubsystemConstants.HEIGHT,
-                VisionSubsystemConstants.ROTATION);
+                VisionSubsystemConstants.WIDTH, VisionSubsystemConstants.HEIGHT, VisionSubsystemConstants.ROTATION);
     }
 
     public void startVisionPipeline() {
@@ -42,5 +42,4 @@ public class VisionSubsystem implements Subsystem, Loggable {
             /* Do we need to do anything to stop the vision pipeline? */
         });
     }
-
 }

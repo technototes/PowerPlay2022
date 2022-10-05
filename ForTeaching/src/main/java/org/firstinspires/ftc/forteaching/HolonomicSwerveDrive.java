@@ -16,7 +16,8 @@ public class HolonomicSwerveDrive {
     // R = sqrt(L*L+W*W);
     private static double R_INV = 1.0 / Math.sqrt(L * L + W * W);
 
-    public HolonomicSwerveDrive(DcMotorEx flm, DcMotorEx frm, DcMotorEx rlm, DcMotorEx rrm, Servo fls, Servo frs, Servo rls, Servo rrs) {
+    public HolonomicSwerveDrive(
+            DcMotorEx flm, DcMotorEx frm, DcMotorEx rlm, DcMotorEx rrm, Servo fls, Servo frs, Servo rls, Servo rrs) {
         ctrl = new SwerveController(flm, frm, rlm, rrm, fls, frs, rls, rrs);
     }
 
@@ -43,8 +44,7 @@ public class HolonomicSwerveDrive {
         double arl = Math.atan2(A, D);
         double srr = Math.sqrt(A * A + C * C);
         double arr = Math.atan2(A, C);
-        double max = Math.max(Math.max(Math.abs(sfr), Math.abs(sfl)),
-                Math.max(Math.abs(srr), Math.abs(srl)));
+        double max = Math.max(Math.max(Math.abs(sfr), Math.abs(sfl)), Math.max(Math.abs(srr), Math.abs(srl)));
         if (max > 1) {
             sfr /= max;
             sfl /= max;
