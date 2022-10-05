@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
+import java.util.function.Supplier;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -7,16 +9,18 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.sensor.IMU;
+
+import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.path.subsystem.MecanumConstants;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
-import java.util.function.Supplier;
 
 public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Supplier<Pose2d>, Loggable {
 
     @Config
-    public abstract static class DrivebaseConstant implements MecanumConstants {
+    public static class DriveConstants implements MecanumConstants {
+
         @TicksPerRev
         public static final double TICKS_PER_REV = 28;
 
@@ -66,28 +70,62 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
 
         @VXWeight
         public static double VX_WEIGHT = 1;
+
         @VYWeight
         public static double VY_WEIGHT = 1;
+
         @OmegaWeight
         public static double OMEGA_WEIGHT = 1;
 
         @PoseLimit
         public static int POSE_HISTORY_LIMIT = 100;
+
+        @Override
+        public Class getConstant() {
+            return DriveConstants.class;
+        }
     }
+
+    private static final boolean ENABLE_POSE_DIAGNOSTICS = true;
+
+    @Log(name = "Pose2d: ")
+    public String poseDisplay = ENABLE_POSE_DIAGNOSTICS ? "" : null;
+
+    //    @Log.Number (name = "FL")
+    public EncodedMotor<DcMotorEx> fl2;
+    //    @Log.Number (name = "FR")
+    public EncodedMotor<DcMotorEx> fr2;
+    //    @Log.Number (name = "RL")
+    public EncodedMotor<DcMotorEx> rl2;
+    //    @Log.Number (name = "RR")
+    public EncodedMotor<DcMotorEx> rr2;
 
     public DrivebaseSubsystem(
             EncodedMotor<DcMotorEx> fl,
             EncodedMotor<DcMotorEx> fr,
             EncodedMotor<DcMotorEx> rl,
             EncodedMotor<DcMotorEx> rr,
-            IMU i,
-            MecanumConstants c
-    ) {
-        super(fl, fr, rl, rr, i, c);
+            IMU i) {
+        super(fl, fr, rl, rr, i, new DriveConstants());
+        fl2 = fl;
+        fr2 = fr;
+        rl2 = rl;
+        rr2 = rr;
     }
 
     @Override
     public Pose2d get() {
         return getPoseEstimate();
+    }
+
+    @Override
+    public void periodic() {
+        if (ENABLE_POSE_DIAGNOSTICS) {
+            updatePoseEstimate();
+            Pose2d pose = getPoseEstimate();
+            Pose2d poseVelocity = getPoseVelocity();
+            poseDisplay = pose.toString() + " : " + (poseVelocity != null ? poseVelocity.toString() : "<null>");
+            System.out.println("Pose: " + poseDisplay);
+        }
     }
 }

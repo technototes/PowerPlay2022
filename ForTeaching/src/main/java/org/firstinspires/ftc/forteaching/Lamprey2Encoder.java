@@ -1,14 +1,11 @@
 package org.firstinspires.ftc.forteaching;
 
 import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.qualcomm.robotcore.hardware.AnalogInputController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.configuration.annotations.AnalogSensorType;
-import com.qualcomm.robotcore.hardware.configuration.annotations.DeviceProperties;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 // Started out as an actual device, but that was problematic for robot configuration :(
-public class Lamprey2Encoder /*extends AnalogInput */{
+public class Lamprey2Encoder /*extends AnalogInput */ {
     private AnalogInput lamprey;
     /* Stuff for the encoder: I should encapsulate this stuff */
     private ElapsedTime lastRead;
@@ -19,6 +16,7 @@ public class Lamprey2Encoder /*extends AnalogInput */{
     private static final double msRange = 50.0;
     // This was from my observations:
     private static final double maxVolts = 2.321;
+
     private boolean isBadRead(double angle) {
         // TODO: Make this check to see if the value is physically possible based on time
         // First: Are we in the 'bad range' where smoothing might screw things up?

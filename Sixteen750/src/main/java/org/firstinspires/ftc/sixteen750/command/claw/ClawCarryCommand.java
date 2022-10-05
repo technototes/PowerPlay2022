@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.sixteen750.command.claw;
 
-import com.technototes.library.command.Command;
-
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
+
+import com.technototes.library.command.Command;
 
 public class ClawCarryCommand implements Command {
     private ClawSubsystem subsystem;
@@ -12,11 +12,8 @@ public class ClawCarryCommand implements Command {
         addRequirements(s);
     }
 
-
     @Override
     public void execute() {
         subsystem.carry();
     }
 }
-
-

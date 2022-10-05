@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.forteaching.BasicOpModes;
 
+import org.firstinspires.ftc.forteaching.TankDriveDemo;
+
 import com.qualcomm.robotcore.eventloop.opmode.*;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-
-import org.firstinspires.ftc.forteaching.TankDriveDemo;
 
 @Disabled
 @TeleOp(name = "StickTankDriveForVideo", group = "demo")
@@ -38,7 +38,5 @@ public class StickTankDriveForVideo extends OpMode {
     }
 
     @Override
-    public void start() {
-
-    }
+    public void start() {}
 }
