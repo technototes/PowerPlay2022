@@ -12,8 +12,8 @@ import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.ConeSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 
-public class ScoreFromStackRedHome extends SequentialCommandGroup {
-    public ScoreFromStackRedHome(MecanumDrivebaseSubsystem drive, ConeSubsystem cone, LiftSubsystem lift, ClawSubsystem claw) {
+public class ScoreFromStackRedAway extends SequentialCommandGroup {
+    public ScoreFromStackRedAway(MecanumDrivebaseSubsystem drive, ConeSubsystem cone, LiftSubsystem lift, ClawSubsystem claw) {
         super(
                 new TrajectorySequence(drive, CONESTACK_HOME).alongwith(new ConeReadyToIntakeCommand(cone)),
                 new ClawCloseCommand(claw),

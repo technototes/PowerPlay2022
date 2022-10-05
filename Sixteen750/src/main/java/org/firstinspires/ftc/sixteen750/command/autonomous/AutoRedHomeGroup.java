@@ -8,20 +8,17 @@ import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.ConeSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 
-public class AutoRedHomeGroup {
-    public AutoRedHomeGroup extends
-
-    SequentialCommandGroup {
-        public
-        AutoRedHomeGroup(MecanumDrive drive, ClawSubsystem claw, ConeSubsystem cone, LiftSubsystem lift)
-        {
-            super(
-                    new TrajectorySequence(drive, HIGHJUNCTION).alongwith(cone.readyToScoreCommand),
-                    new ClawOpenCommand(claw),
-                    new TrajectorySequence(drive, CONESTACK),
-                    new TrajectorySequence(drive, HIGHJUNCTION),
-                    new TrajectorySequence(PARK),
-                    )
-        }
+public class AutoRedHomeGroup extends SequentialCommandGroup {
+    public AutoRedHomeGroup(MecanumDrive drive, ClawSubsystem claw, ConeSubsystem cone, LiftSubsystem lift) {
+        super(
+                new TrajectorySequence(drive, HIGHJUNCTION_HOME).alongwith(cone.readyToScoreHigh),
+                new ClawOpenCommand(claw),
+                new ScoreFromStackRedHome(drive, cone, lift, claw),
+                new ScoreFromStackRedHome(drive, cone, lift, claw),
+                new ScoreFromStackRedHome(drive, cone, lift, claw),
+                new ScoreFromStackRedHome(drive, cone, lift, claw),
+                new TrajectorySequence(PARK_HOME)
+        );
     }
+}
 }
