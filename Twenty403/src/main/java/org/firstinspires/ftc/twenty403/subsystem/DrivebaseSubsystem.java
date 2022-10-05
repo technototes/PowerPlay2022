@@ -15,11 +15,10 @@ import com.technototes.library.logger.Loggable;
 import com.technototes.path.subsystem.MecanumConstants;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
-@SuppressWarnings("unused")
 public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Supplier<Pose2d>, Loggable {
 
     @Config
-    public abstract static class DriveConstants implements MecanumConstants {
+    public static class DriveConstants implements MecanumConstants {
 
         @TicksPerRev
         public static final double TICKS_PER_REV = 28;
@@ -34,6 +33,7 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
         public static PIDFCoefficients MOTOR_VELO_PID =
                 new PIDFCoefficients(20, 0, 3, MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
 
+        // TODO: change these when got the actual robot
         @WheelRadius
         public static double WHEEL_RADIUS = 1.88976; // in
 
@@ -87,6 +87,11 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
 
         @PoseLimit
         public static int POSE_HISTORY_LIMIT = 100;
+
+        @Override
+        public Class getConstant() {
+            return DriveConstants.class;
+        }
     }
 
     private static final boolean ENABLE_POSE_DIAGNOSTICS = true;
@@ -109,7 +114,7 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
             EncodedMotor<DcMotorEx> rl,
             EncodedMotor<DcMotorEx> rr,
             IMU i) {
-        super(fl, fr, rl, rr, i, () -> DriveConstants.class);
+        super(fl, fr, rl, rr, i, new DriveConstants());
         fl2 = fl;
         fr2 = fr;
         rl2 = rl;
