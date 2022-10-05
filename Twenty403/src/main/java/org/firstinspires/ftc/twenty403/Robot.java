@@ -4,11 +4,17 @@ import com.acmerobotics.dashboard.config.Config;
 
 import com.technototes.library.logger.Loggable;
 
+import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
+
 public class Robot implements Loggable {
     @Config
     public static class RobotConstant {
         public static boolean DRIVE_CONNECTED = false;
     }
+    public DrivebaseSubsystem drivebaseSubsystem;
 
-    public Robot(Hardware hardware) {}
+    public Robot(Hardware hardware) {
+        if (RobotConstant.DRIVE_CONNECTED) drivebaseSubsystem = new DrivebaseSubsystem(hardware.flDriveMotor, hardware.frDriveMotor, hardware.rlDriveMotor, hardware.rrDriveMotor, hardware.imu);
+    }
+
 }
