@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.forteaching.BasicOpModes;
 
+import org.firstinspires.ftc.forteaching.SimpleSwerveDrive;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.*;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.forteaching.SimpleSwerveDrive;
 
 @Disabled
 @TeleOp(name = "Simple Swerve", group = "demo")

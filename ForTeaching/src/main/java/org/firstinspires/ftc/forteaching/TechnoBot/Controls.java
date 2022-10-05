@@ -1,22 +1,21 @@
 package org.firstinspires.ftc.forteaching.TechnoBot;
 
-import com.technototes.library.command.CommandScheduler;
-import com.technototes.library.command.ParallelCommandGroup;
-import com.technototes.library.command.SequentialCommandGroup;
-import com.technototes.library.control.CommandAxis;
-import com.technototes.library.control.CommandButton;
-import com.technototes.library.control.CommandGamepad;
-import com.technototes.library.util.Alliance;
-
-import org.firstinspires.ftc.forteaching.TechnoBot.Commands.Operations;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.CloseClawCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.LiftDownCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.LiftUpCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.OpenClawCommand;
+import org.firstinspires.ftc.forteaching.TechnoBot.Commands.Operations;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.TankDriveCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.TestEncodedMotorCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.TestMotorCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.TestServoCommand;
+
+import com.technototes.library.command.CommandScheduler;
+import com.technototes.library.command.ParallelCommandGroup;
+import com.technototes.library.control.CommandAxis;
+import com.technototes.library.control.CommandButton;
+import com.technototes.library.control.CommandGamepad;
+import com.technototes.library.util.Alliance;
 
 public class Controls {
     public Alliance alliance;
@@ -98,8 +97,9 @@ public class Controls {
 
     // Joysticks require a "scheduleJoystick" thing, so the commands are invoked all the time
     private void bindDrivebaseControls() {
-        CommandScheduler.getInstance().scheduleJoystick(
-                new TankDriveCommand(robot.tankDriveBase, leftTankStick, rightTankStick, snapToAngle));
+        CommandScheduler.getInstance()
+                .scheduleJoystick(
+                        new TankDriveCommand(robot.tankDriveBase, leftTankStick, rightTankStick, snapToAngle));
     }
 
     // Silly helpers to make the code more succinct below
@@ -130,13 +130,8 @@ public class Controls {
         // time as the other commands) but if you want "do A, then do B, then do C" you should
         // use a sequential command group
         stop.whenPressed(new ParallelCommandGroup(
-                MakeEncCommand(Operations.Stop),
-                MakeMotorCommand(Operations.Stop),
-                MakeServoCommand(Operations.Stop)));
+                MakeEncCommand(Operations.Stop), MakeMotorCommand(Operations.Stop), MakeServoCommand(Operations.Stop)));
         halt.whenPressed(new ParallelCommandGroup(
-                MakeMotorCommand(Operations.Halt),
-                MakeEncCommand(Operations.Halt),
-                MakeServoCommand(Operations.Halt)));
-
+                MakeMotorCommand(Operations.Halt), MakeEncCommand(Operations.Halt), MakeServoCommand(Operations.Halt)));
     }
 }

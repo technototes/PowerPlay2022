@@ -14,6 +14,10 @@ buildscript {
     }
 }
 
+plugins {
+    id "com.diffplug.spotless" version "6.11.0"
+}
+
 // This is now required because aapt2 has to be downloaded from the
 // google() repository beginning with version 3.2 of the Android Gradle Plugin
 allprojects {
@@ -25,8 +29,16 @@ allprojects {
 
 repositories {
     mavenCentral()
+    // For Vuforia only, not really necessary: commented out to stop the warning from gradle
+    // flatDir { dirs rootProject.file('libs') }
+}
 
-    flatDir {
-        dirs '../libs'
+spotless {
+    java {
+        target('Twenty403/**/*.java', 'Sixteen750/**/*.java', 'ForTeaching/**/*.java')
+        removeUnusedImports()
+        palantirJavaFormat("2.27.0")
+        importOrder('android', 'java', 'org.firstinspires', 'org', 'com', 'com.technototes')
+        formatAnnotations()
     }
 }
