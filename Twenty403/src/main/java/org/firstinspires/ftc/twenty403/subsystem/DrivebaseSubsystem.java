@@ -7,14 +7,13 @@ import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.sensor.IMU;
-
 import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.path.subsystem.MecanumConstants;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
-
 
 public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Supplier<Pose2d>, Loggable {
 
@@ -31,37 +30,46 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
         public static final boolean RUN_USING_ENCODER = true;
 
         @MotorVeloPID
-        public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(20, 0, 3,
-                MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
+        public static PIDFCoefficients MOTOR_VELO_PID =
+                new PIDFCoefficients(20, 0, 3, MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
 
-        //TODO: change these when got the actual robot
+        // TODO: change these when got the actual robot
         @WheelRadius
         public static double WHEEL_RADIUS = 1.88976; // in
+
         @GearRatio
         public static double GEAR_RATIO = 1 / 19.2; // output (wheel) speed / input (motor) speed
+
         @TrackWidth
         public static double TRACK_WIDTH = 10; // in
+
         @WheelBase
         public static double WHEEL_BASE = 8.5; // in
 
         @KV
         public static double kV = 1.0 / MecanumConstants.rpmToVelocity(MAX_RPM, WHEEL_RADIUS, GEAR_RATIO);
+
         @KA
         public static double kA = 0;
+
         @KStatic
         public static double kStatic = 0;
 
         @MaxVelo
         public static double MAX_VEL = 60;
+
         @MaxAccel
         public static double MAX_ACCEL = 35;
+
         @MaxAngleVelo
         public static double MAX_ANG_VEL = Math.toRadians(180);
+
         @MaxAngleAccel
         public static double MAX_ANG_ACCEL = Math.toRadians(90);
 
         @TransPID
         public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(8, 0, 0);
+
         @HeadPID
         public static PIDCoefficients HEADING_PID = new PIDCoefficients(8, 0, 0);
 
