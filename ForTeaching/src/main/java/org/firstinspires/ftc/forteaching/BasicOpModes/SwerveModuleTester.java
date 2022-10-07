@@ -3,14 +3,14 @@ package org.firstinspires.ftc.forteaching.BasicOpModes;
 import android.util.Log;
 import android.util.Pair;
 
+import java.util.List;
+
+import org.firstinspires.ftc.forteaching.SwerveModule;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.forteaching.SwerveModule;
-
-import java.util.List;
 
 /*
 Motors: GoBilda 5202/3/4:
@@ -87,7 +87,6 @@ public class SwerveModuleTester extends LinearOpMode {
         }
         return val;
     }
-
 
     public void moduleTestOpMode() throws InterruptedException {
         hwinit();
@@ -253,16 +252,11 @@ public class SwerveModuleTester extends LinearOpMode {
                     state = 0;
                 }
             }
-            telemetry.addData("State", "%s (%1.0f° swing: use bumpers)",
-                    state == 0 ? "Setting" : "Trying", delta);
-            telemetry.addData((which == 0 && state == 0) ? "[>P<]" : "<[P]>",
-                    "%1.1e", SwerveModule.servoPid.p);
-            telemetry.addData((which == 1 && state == 0) ? "[>I<]" : "<[I]>",
-                    "%1.1e", SwerveModule.servoPid.i);
-            telemetry.addData((which == 2 && state == 0) ? "[>D<]" : "<[D]>",
-                    "%1.1e", SwerveModule.servoPid.d);
-            telemetry.addData((which == 3 && state == 0) ? "[>F<]" : "<[F]>",
-                    "%1.1e", SwerveModule.servoPid.f);
+            telemetry.addData("State", "%s (%1.0f° swing: use bumpers)", state == 0 ? "Setting" : "Trying", delta);
+            telemetry.addData((which == 0 && state == 0) ? "[>P<]" : "<[P]>", "%1.1e", SwerveModule.servoPid.p);
+            telemetry.addData((which == 1 && state == 0) ? "[>I<]" : "<[I]>", "%1.1e", SwerveModule.servoPid.i);
+            telemetry.addData((which == 2 && state == 0) ? "[>D<]" : "<[D]>", "%1.1e", SwerveModule.servoPid.d);
+            telemetry.addData((which == 3 && state == 0) ? "[>F<]" : "<[F]>", "%1.1e", SwerveModule.servoPid.f);
             telemetry.addLine(String.format("Bump: %1.4e, Cur: %1.4e", bumpValue, curValue));
             telemetry.addLine();
             // Help text:
@@ -272,13 +266,13 @@ public class SwerveModuleTester extends LinearOpMode {
             telemetry.addLine(state == 0 ? "" : "Pres any △□◯╳ to stop");
             if (state == 1) {
                 double curAngle = testMod.getAngle();
-                telemetry.addData("Angles",
-                        "%3.1f->%3.1f (%3.1f)", curAngle, targetAngle, error);
+                telemetry.addData("Angles", "%3.1f->%3.1f (%3.1f)", curAngle, targetAngle, error);
                 telemetry.addData("Power", value);
-                Log.d("PIDF",
-                        String.format("%f\tTarget\t%3.1f\tCurrent\t%3.1f\tError\t%3.1f\tPower\t%1.8f",
-                                et.milliseconds(), targetAngle, curAngle,
-                                error, value));
+                Log.d(
+                        "PIDF",
+                        String.format(
+                                "%f\tTarget\t%3.1f\tCurrent\t%3.1f\tError\t%3.1f\tPower\t%1.8f",
+                                et.milliseconds(), targetAngle, curAngle, error, value));
             }
             telemetry.update();
         }
