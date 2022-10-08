@@ -32,7 +32,7 @@ public class Controls {
         CommandScheduler.getInstance()
                 .scheduleJoystick(new DriveCommand(
                         robot.drivebaseSubsystem, driveLeftStick, driveRightStick, driveStraightenButton));
-        resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
-        snailSpeedButton.whilePressedOnce(new SetSpeedCommand(robot.drivebaseSubsystem));
+//        resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
+//        snailSpeedButton.whilePressedOnce(new SetSpeedCommand(robot.drivebaseSubsystem));
     }
 }
