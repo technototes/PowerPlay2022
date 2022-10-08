@@ -25,6 +25,12 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
+import org.firstinspires.ftc.sixteen750.util.SwerveModule;
+import org.firstinspires.ftc.sixteen750.util.LynxModuleUtil;
+import org.firstinspires.ftc.sixteen750.util.TrajectorySequence;
+import org.firstinspires.ftc.sixteen750.util.TrajectorySequenceBuilder;
+import org.firstinspires.ftc.sixteen750.util.TrajectorySequenceRunner;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
