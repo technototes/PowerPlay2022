@@ -13,10 +13,13 @@ import com.technototes.path.command.TrajectorySequenceCommand;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
 public class BlueAwayAutoConeStack extends SequentialCommandGroup {
-    public BlueAwayAutoConeStack(MecanumDrivebaseSubsystem drive, ClawSubsystem claw, LiftSubsystem lift, ConeSubsystem cone) {
-        super (new TrajectorySequenceCommand(drive,Robot.Trajectories.BLUE_AWAY_STACK).alongWith(new ConeReadyToIntakeCommand(cone)),
-                new TrajectorySequenceCommand(drive, Robot.Trajectories.BLUE_HIGH_JUNCTION_AWAY).alongWith(new ConeReadyToScoreCommand(cone)),
-                new ClawOpenCommand(claw) );
+    public BlueAwayAutoConeStack(
+            MecanumDrivebaseSubsystem drive, ClawSubsystem claw, LiftSubsystem lift, ConeSubsystem cone) {
+        super(
+                new TrajectorySequenceCommand(drive, Robot.Trajectories.BLUE_AWAY_STACK)
+                        .alongWith(new ConeReadyToIntakeCommand(cone)),
+                new TrajectorySequenceCommand(drive, Robot.Trajectories.BLUE_HIGH_JUNCTION_AWAY)
+                        .alongWith(new ConeReadyToScoreCommand(cone)),
+                new ClawOpenCommand(claw));
     }
-
 }

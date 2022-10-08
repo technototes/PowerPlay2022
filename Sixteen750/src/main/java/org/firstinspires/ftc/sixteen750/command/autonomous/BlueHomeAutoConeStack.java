@@ -1,10 +1,6 @@
 package org.firstinspires.ftc.sixteen750.command.autonomous;
 
 import org.firstinspires.ftc.sixteen750.Robot;
-import com.technototes.library.command.SequentialCommandGroup;
-import com.technototes.path.command.TrajectorySequenceCommand;
-import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
-
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.cone.ConeReadyToIntakeCommand;
 import org.firstinspires.ftc.sixteen750.command.cone.ConeReadyToScoreCommand;
@@ -15,7 +11,6 @@ import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.path.command.TrajectorySequenceCommand;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
-import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 
 public class BlueHomeAutoConeStack extends SequentialCommandGroup {
     public BlueHomeAutoConeStack(

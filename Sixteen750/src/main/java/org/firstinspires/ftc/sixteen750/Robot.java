@@ -18,10 +18,9 @@ public class Robot implements Loggable {
         public static TrajectorySequence BLUE_HOME_STACK = new TrajectorySequence(new ArrayList<>());
         public static TrajectorySequence BLUE_HIGH_JUNCTION_HOME = new TrajectorySequence(new ArrayList<>());
         public static TrajectorySequence BLUE_HIGH_JUNCTION_AWAY = new TrajectorySequence(new ArrayList<>());
-        public static TrajectorySequence BLUE_PARK_LOCATION_HOME  = new TrajectorySequence(new ArrayList<>());
+        public static TrajectorySequence BLUE_PARK_LOCATION_HOME = new TrajectorySequence(new ArrayList<>());
         public static TrajectorySequence BLUE_PARK_LOCATION_AWAY = new TrajectorySequence(new ArrayList<>());
         public static TrajectorySequence BLUE_HIGH_JUNCTION_CENTER = new TrajectorySequence(new ArrayList<>());
-        
     }
 
     public Robot(Hardware hardware) {}
