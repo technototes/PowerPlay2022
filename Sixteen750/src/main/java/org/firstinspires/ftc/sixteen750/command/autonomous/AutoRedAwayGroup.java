@@ -14,14 +14,13 @@ import com.technototes.path.command.TrajectorySequenceCommand;
 public class AutoRedAwayGroup extends SequentialCommandGroup {
     public AutoRedAwayGroup(DrivebaseSubsystem drive, ClawSubsystem claw, ConeSubsystem cone, LiftSubsystem lift) {
         super(
-                new TrajectorySequenceCommand(drive, Robot.Trajectories.HIGH_JUNCTION_AWAY)
+                new TrajectorySequenceCommand(drive, Robot.Trajectories.RED_HIGH_JUNCTION_AWAY)
                         .alongwith(new ConeReadyToScoreHigh(cone)),
                 new ClawOpenCommand(claw),
                 new ScoreFromStackRedAway(drive, cone, lift, claw),
                 new ScoreFromStackRedAway(drive, cone, lift, claw),
                 new ScoreFromStackRedAway(drive, cone, lift, claw),
                 new ScoreFromStackRedAway(drive, cone, lift, claw),
-                new TrajectorySequenceCommand(drive, Robot.Trajectories.PARK_AWAY)
-        );
+                new TrajectorySequenceCommand(drive, Robot.Trajectories.RED_PARK_LOCATION_AWAY));
     }
 }
