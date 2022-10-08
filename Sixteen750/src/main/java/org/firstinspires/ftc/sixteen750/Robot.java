@@ -21,8 +21,6 @@ public class Robot implements Loggable {
         public static TrajectorySequence PARK_AWAY = new TrajectorySequence(new ArrayList<>());
         public static TrajectorySequence PARK_HOME = new TrajectorySequence(new ArrayList<>());
         public static TrajectorySequence CONESTACK_HOME = new TrajectorySequence(new ArrayList<>());
-
-
     }
 
     public Robot(Hardware hardware) {
