@@ -13,13 +13,13 @@ import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.subsystem.drivebase.DrivebaseSubsystem;
 import com.technototes.path.command.TrajectorySequenceCommand;
 
-public class ScoreFromStackRedAway extends SequentialCommandGroup {
-    public ScoreFromStackRedAway(DrivebaseSubsystem drive, ConeSubsystem cone, LiftSubsystem lift, ClawSubsystem claw) {
+public class AutoRedAwayConeStackCommand extends SequentialCommandGroup {
+    public AutoRedAwayConeStackCommand(DrivebaseSubsystem drive, ConeSubsystem cone, LiftSubsystem lift, ClawSubsystem claw) {
         super(
-                new TrajectorySequenceCommand(drive, Robot.Trajectories.CONESTACK_HOME)
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.AWAY_STACK)
                         .alongwith(new ConeReadyToIntakeCommand(cone)),
                 new ClawCloseCommand(claw),
-                new TrajectorySequenceCommand(drive, Robot.Trajectories.HIGH_JUNCTION_HOME)
+                new TrajectorySequenceCommand(drive, Robot.Trajectories.RED_HIGH_JUNCTION_AWAY)
                         .alongwith(new ConeReadyToScoreHigh(cone)),
                 new ClawOpenCommand(claw));
     }

@@ -13,8 +13,8 @@ import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.subsystem.drivebase.DrivebaseSubsystem;
 import com.technototes.path.command.TrajectorySequenceCommand;
 
-public class ScoreFromStackRedHome extends SequentialCommandGroup {
-    public ScoreFromStackRedHome(DrivebaseSubsystem drive, ConeSubsystem cone, LiftSubsystem lift, ClawSubsystem claw) {
+public class AutoRedHomeConeStackCommand extends SequentialCommandGroup {
+    public AutoRedHomeConeStackCommand(DrivebaseSubsystem drive, ConeSubsystem cone, LiftSubsystem lift, ClawSubsystem claw) {
         super(
                 new TrajectorySequenceCommand(drive, Robot.Trajectories.CONESTACK_HOME)
                         .alongwith(new ConeReadyToIntakeCommand(cone)),
