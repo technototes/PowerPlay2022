@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.sixteen750.util;
+package org.firstinspires.ftc.sixteen750.swerve_util;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
@@ -16,6 +16,8 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem.DriveConstant;
 
 @Config
 public class SwerveModule {
@@ -91,14 +93,14 @@ public class SwerveModule {
     }
 
     public double getWheelPosition() {
-        return DriveConstants.encoderTicksToInches(motor.getCurrentPosition());
+        return DriveConstant.encoderTicksToInches(motor.getCurrentPosition());
     }
     public int flipModifier(){
         return MOTOR_FLIPPING && wheelFlipped ? 1 : -1;
     }
 
     public double getWheelVelocity() {
-        return DriveConstants.encoderTicksToInches(motor.getVelocity());
+        return DriveConstant.encoderTicksToInches(motor.getVelocity());
     }
 
     public void setMode(DcMotor.RunMode runMode) {
