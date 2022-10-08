@@ -68,10 +68,10 @@ public class SwerveModule {
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    public SwerveModule(HardwareMap hardwareMap, String motorName, String servoName, String encoderName) {
-        this(hardwareMap.get(DcMotorEx.class, motorName),
-                hardwareMap.get(CRServo.class, servoName),
-                new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, encoderName)));
+    public SwerveModule(HardwareMap hardwareMap, String mName, String sName, String eName) {
+        this(hardwareMap.get(DcMotorEx.class, mName),
+                hardwareMap.get(CRServo.class, sName),
+                new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, eName)));
     }
 
 
