@@ -18,7 +18,7 @@ public class BlueHomeAutoConeStack extends SequentialCommandGroup {
         super(
                 new TrajectorySequenceCommand(drive, Robot.Trajectories.BLUE_HOME_STACK)
                         .alongWith(new ConeReadyToIntakeCommand(cone)),
-                new TrajectorySequenceCommand(drive, Robot.Trajectories.HIGH_JUNCTION_HOME)
+                new TrajectorySequenceCommand(drive, Robot.Trajectories.BLUE_HIGH_JUNCTION_HOME)
                         .alongWith(new ConeReadyToScoreCommand(cone)),
                 new ClawOpenCommand(claw));
     }
