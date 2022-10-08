@@ -15,7 +15,7 @@ public class Hardware {
     public static class HardwareConstant {
         public static String FL_MOTOR = "motorFL";
         public static String FR_MOTOR = "motorFR";
-        public static String RL_MOTOR = "motorRL";  // bad
+        public static String RL_MOTOR = "motorRL"; // bad
         public static String RR_MOTOR = "motorRR";
         public static String IMU = "imu";
     }
