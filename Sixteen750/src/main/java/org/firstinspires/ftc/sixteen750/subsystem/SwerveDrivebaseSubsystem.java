@@ -26,6 +26,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
+import org.firstinspires.ftc.sixteen750.util.BetterSwerveLocalizer;
 import org.firstinspires.ftc.sixteen750.util.SwerveModule;
 import org.firstinspires.ftc.sixteen750.util.LynxModuleUtil;
 import org.firstinspires.ftc.sixteen750.util.TrajectorySequence;
@@ -142,7 +143,7 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
     }
 
     public SwerveDrivebaseSubsystem(HardwareMap hardwareMap) {
-        super(DriveConstant.kV, DriveConstant.kA, DriveConstantkStatic, DriveConstant.TRACK_WIDTH);
+        super(DriveConstant.kV, DriveConstant.kA, DriveConstant.kStatic, DriveConstant.TRACK_WIDTH);
 
         velocityConstraint = getVelocityConstraint(DriveConstant.MAX_VEL, DriveConstant.MAX_ANG_VEL, DriveConstant.TRACK_WIDTH);
         accelConstraint = getAccelerationConstraint(DriveConstant.MAX_ACCEL);
@@ -219,8 +220,6 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
         PhotonCore.enable();
         PhotonCore.CONTROL_HUB.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
         PhotonCore.experimental.setMaximumParallelCommands(MAX_PARALLEL_COMMANDS);
-
-
     }
 
     public void startIMUThread(LinearOpMode opMode) {
