@@ -19,7 +19,7 @@ public class AutoConstantBlue {
     public static Pose2d AWAY_START = new Pose2d(-36, -66, toRadians(90));
     public static Pose2d AWAY_JUNCTION = new Pose2d(-28, -4, toRadians(180));
     public static Pose2d AWAY_STACK = new Pose2d(-62, -12, toRadians(180));
-    public static Pose2d AWAY_PARK_LEFT = new Pose2d((-60, -36, toRadians(0));
+    public static Pose2d AWAY_PARK_LEFT = new Pose2d(-60, -36, toRadians(0));
     public static Pose2d AWAY_PARK_MIDDLE = new Pose2d(-36, -36, toRadians(-90));
     public static Pose2d AWAY_PARK_RIGHT = new Pose2d(-12, -36, toRadians(-90));
 
