@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.sixteen750.command.autonomous;
 
-import org.firstinspires.ftc.sixteen750.Robot;
+import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.cone.ConeReadyToIntakeCommand;
-import org.firstinspires.ftc.sixteen750.command.cone.ConeReadyToScoreCommand;
+import org.firstinspires.ftc.sixteen750.command.cone.ConeReadyToScoreHigh;
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.ConeSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
@@ -12,14 +12,15 @@ import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.path.command.TrajectorySequenceCommand;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
-public class BlueAwayAutoConeStack extends SequentialCommandGroup {
-    public BlueAwayAutoConeStack(
-            MecanumDrivebaseSubsystem drive, ClawSubsystem claw, LiftSubsystem lift, ConeSubsystem cone) {
+public class AutoRedAwayConeStackCommand extends SequentialCommandGroup {
+    public AutoRedAwayConeStackCommand(
+            MecanumDrivebaseSubsystem drive, ConeSubsystem cone, LiftSubsystem lift, ClawSubsystem claw) {
         super(
-                new TrajectorySequenceCommand(drive, Robot.Trajectories.BLUE_AWAY_STACK)
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.SIXOCLOCK_JUNCTION_TO_STACK)
                         .alongWith(new ConeReadyToIntakeCommand(cone)),
-                new TrajectorySequenceCommand(drive, Robot.Trajectories.BLUE_HIGH_JUNCTION_AWAY)
-                        .alongWith(new ConeReadyToScoreCommand(cone)),
+                new ClawCloseCommand(claw),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.STACK_TO_SIXOCLOCK_JUNCTION)
+                        .alongWith(new ConeReadyToScoreHigh(cone)),
                 new ClawOpenCommand(claw));
     }
 }
