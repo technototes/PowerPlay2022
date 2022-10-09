@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.subsystem.Subsystem;
-
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class ClawSubsystem implements Subsystem {
     public static double OPEN_SERVO_POSITION = .8;

@@ -33,8 +33,7 @@ public class Robot implements Loggable {
                     hardware.imu);
         }
         if (RobotConstant.CONE_CONNECTED) {
-            coneSubsystem = new ConeSubsystem();
+            // coneSubsystem = new ConeSubsystem(clawSubsystem, liftSubsystem, distance);
         }
-
     }
 }

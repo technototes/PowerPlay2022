@@ -8,6 +8,14 @@ public class ConeSubsystem implements Subsystem {
     private LiftSubsystem lift;
     private DistanceSensor distanceSensor;
 
+    /*
+    Note from Kevin:
+        Due to the way the command scheduler works, we probably don't want a
+        'composite' subsystem, but instead just need to make what this is doing as
+        'compound' commands. The command scheduler wants to make sure there are no
+        subsystem requirement conflicts, and this composite subsystem hides those
+        conflicts
+     */
     public ConeSubsystem(ClawSubsystem c, LiftSubsystem l, DistanceSensor d) {
         claw = c;
         lift = l;

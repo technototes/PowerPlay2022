@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.twenty403.command.compound;
 
-import com.technototes.library.command.Command;
-
 import org.firstinspires.ftc.twenty403.subsystem.ConeSubsystem;
+
+import com.technototes.library.command.Command;
 
 public class ConeReadyToIntakeCommand implements Command {
     private ConeSubsystem subsystem;

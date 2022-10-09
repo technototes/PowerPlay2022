@@ -1,25 +1,28 @@
 package org.firstinspires.ftc.twenty403.command.autonomous;
 
-import com.technototes.library.command.SequentialCommandGroup;
-import com.technototes.library.subsystem.drivebase.DrivebaseSubsystem;
-import com.technototes.path.command.TrajectorySequenceCommand;
-
+import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.twenty403.command.compound.ConeReadyScoreHigh;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.ConeSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 
+import com.technototes.library.command.SequentialCommandGroup;
+import com.technototes.path.command.TrajectorySequenceCommand;
+import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
+
 public class AutoRedAwayGroup extends SequentialCommandGroup {
-    public AutoRedAwayGroup(DrivebaseSubsystem drive, ClawSubsystem claw, ConeSubsystem cone, LiftSubsystem lift) {
+    public AutoRedAwayGroup(
+            MecanumDrivebaseSubsystem drive, ClawSubsystem claw, ConeSubsystem cone, LiftSubsystem lift) {
         super(
-                new TrajectorySequenceCommand(drive, Robot.Trajectories.RED_HIGH_JUNCTION_AWAY)
-                        .alongwith(new ConeReadyScoreHigh(cone)),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.START_TO_THREEOCLOCK_JUNCTION)
+                        .alongWith(new ConeReadyScoreHigh(cone)),
                 new ClawOpenCommand(claw),
                 new AutoRedAwayConeStackCommand(drive, cone, lift, claw),
                 new AutoRedAwayConeStackCommand(drive, cone, lift, claw),
                 new AutoRedAwayConeStackCommand(drive, cone, lift, claw),
                 new AutoRedAwayConeStackCommand(drive, cone, lift, claw),
-                new TrajectorySequenceCommand(drive, Robot.Trajectories.RED_PARK_LOCATION_AWAY));
+                // TODO: This should call the vision choice command to decide where to park
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.THREEOCLOCK_JUNCTION_LEFT));
     }
 }
