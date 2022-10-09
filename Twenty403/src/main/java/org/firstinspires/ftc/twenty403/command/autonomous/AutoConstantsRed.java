@@ -2,11 +2,12 @@ package org.firstinspires.ftc.twenty403.command.autonomous;
 
 import static java.lang.Math.toRadians;
 
+import java.util.function.Function;
+
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+
 import com.technototes.path.trajectorysequence.TrajectorySequence;
 import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
-
-import java.util.function.Function;
 
 public class AutoConstantsRed {
     // "Home" locations: (The side with the Red terminal)
@@ -29,9 +30,9 @@ public class AutoConstantsRed {
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
                 START_TO_NINEOCLOCK_JUNCTION =
-                b -> b.apply(START)
-                        .splineTo(NINEOCLOCK_JUNCTION.vec(), NINEOCLOCK_JUNCTION.getHeading())
-                        .build(),
+                        b -> b.apply(START)
+                                .splineTo(NINEOCLOCK_JUNCTION.vec(), NINEOCLOCK_JUNCTION.getHeading())
+                                .build(),
                 START_TO_SIXOCLOCK_JUNCTION =
                         b -> b.apply(START)
                                 .splineTo(NINEOCLOCK_JUNCTION.vec(), SIXOCLOCK_JUNCTION.getHeading())
@@ -76,7 +77,6 @@ public class AutoConstantsRed {
                         b -> b.apply(SIXOCLOCK_JUNCTION)
                                 .splineTo(RIGHT.vec(), RIGHT.getHeading())
                                 .build();
-
     }
 
     // Away locations:
@@ -95,9 +95,9 @@ public class AutoConstantsRed {
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
                 START_TO_THREEOCLOCK_JUNCTION =
-                b -> b.apply(START)
-                        .splineTo(THREEOCLOCK_JUNCTION.vec(), THREEOCLOCK_JUNCTION.getHeading())
-                        .build(),
+                        b -> b.apply(START)
+                                .splineTo(THREEOCLOCK_JUNCTION.vec(), THREEOCLOCK_JUNCTION.getHeading())
+                                .build(),
                 START_TO_SIXOCLOCK_JUNCTION =
                         b -> b.apply(START)
                                 .splineTo(SIXOCLOCK_JUNCTION.vec(), SIXOCLOCK_JUNCTION.getHeading())

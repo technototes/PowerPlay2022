@@ -13,6 +13,8 @@ public class Robot implements Loggable {
         public static boolean DRIVE_CONNECTED = false;
     }
 
+    // TODO: Move this stuff into the AutoConstantsBlue file
+    // and structure it the same as the AutoConstantsRed file
     public static class Trajectories {
         public static TrajectorySequence BLUE_AWAY_STACK = new TrajectorySequence(new ArrayList<>());
         public static TrajectorySequence BLUE_HOME_STACK = new TrajectorySequence(new ArrayList<>());

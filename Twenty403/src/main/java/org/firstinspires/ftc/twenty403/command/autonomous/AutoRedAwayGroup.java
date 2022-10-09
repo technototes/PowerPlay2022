@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.twenty403.command.autonomous;
 
-import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.twenty403.command.compound.ConeReadyScoreHigh;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;

@@ -2,8 +2,8 @@ package org.firstinspires.ftc.twenty403.command.autonomous;
 
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
-import org.firstinspires.ftc.twenty403.command.compound.ConeReadyToIntakeCommand;
 import org.firstinspires.ftc.twenty403.command.compound.ConeReadyScoreHigh;
+import org.firstinspires.ftc.twenty403.command.compound.ConeReadyToIntakeCommand;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.ConeSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
