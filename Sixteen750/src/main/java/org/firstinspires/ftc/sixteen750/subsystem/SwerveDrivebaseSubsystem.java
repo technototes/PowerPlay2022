@@ -25,6 +25,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
+import com.outoftheboxrobotics.photoncore.PhotonCore;
 
 import org.firstinspires.ftc.sixteen750.swerve_util.BetterSwerveLocalizer;
 import org.firstinspires.ftc.sixteen750.swerve_util.SwerveModule;
