@@ -143,7 +143,15 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
         }
     }
 
-    public SwerveDrivebaseSubsystem(HardwareMap hardwareMap) {
+    public SwerveDrivebaseSubsystem(
+            HardwareMap hardwareMap,
+            BNO055IMU imu,
+            SwerveModule leftFrontSwerveModule,
+            SwerveModule leftRearSwerveModule,
+            SwerveModule rightFrontSwerveModule,
+            SwerveModule rightRearSwerveModule
+    ) {
+        // The HardwareMap still needed but now can have arbitrary naming to these hardware devices
         super(DriveConstant.kV, DriveConstant.kA, DriveConstant.kStatic, DriveConstant.TRACK_WIDTH);
 
         velocityConstraint = getVelocityConstraint(DriveConstant.MAX_VEL, DriveConstant.MAX_ANG_VEL, DriveConstant.TRACK_WIDTH);
@@ -152,20 +160,20 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
                 new Pose2d(0.5, 0.5, Math.toRadians(5)), 0);
 
-        LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
+        LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap); // The reason why HardwareMap is passed in
 
         batteryVoltageSensor = hardwareMap.voltageSensor.iterator().next();
 
 
         // TODO: adjust the names of the following hardware devices to match your configuration
         synchronized (IMULock) {
-            imu = hardwareMap.get(BNO055IMU.class, "imu");
+            this.imu = imu;
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
             parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
-            imu.initialize(parameters);
+            this.imu.initialize(parameters);
         }
-        // TODO: If the hub containing the IMU you are using is mounted so that the "REV" logo does
-        // not face up, remap the IMU axes so that the z-axis points upward (normal to the floor.)
+
+        // TODO: If the hub containing the IMU you are using is mounted so that the "REV" logo does not face up, remap the IMU axes so that the z-axis points upward (normal to the floor.)
         //
         //             | +Z axis
         //             |
@@ -187,10 +195,14 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
         // BNO055IMUUtil.remapZAxis(imu, AxisDirection.NEG_Y);
 
 
-        leftFrontModule = new SwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder");
-        leftRearModule = new SwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder");
-        rightRearModule = new SwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder");
-        rightFrontModule = new SwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder");
+//      leftFrontModule = new SwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder");
+//      leftRearModule = new SwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder");
+//      rightRearModule = new SwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder");
+//      rightFrontModule = new SwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder");
+        this.leftFrontModule = leftFrontSwerveModule;
+        this.leftRearModule = leftRearSwerveModule;
+        this.rightRearModule = rightRearSwerveModule;
+        this.rightFrontModule = rightFrontSwerveModule;
 
         modules = Arrays.asList(leftFrontModule, leftRearModule, rightRearModule, rightFrontModule);
 
@@ -221,6 +233,18 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
         PhotonCore.enable();
         PhotonCore.CONTROL_HUB.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
         PhotonCore.experimental.setMaximumParallelCommands(MAX_PARALLEL_COMMANDS);
+    }
+
+    public SwerveDrivebaseSubsystem(HardwareMap hardwareMap){
+        // For to be compatible with the old code
+        this(
+                hardwareMap,
+                hardwareMap.get(BNO055IMU.class, "imu"),
+                new SwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder"),
+                new SwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder"),
+                new SwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder"),
+                new SwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder")
+        );
     }
 
     public void startIMUThread(LinearOpMode opMode) {
@@ -304,21 +328,18 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
     public void updateModules(){
         for (SwerveModule m : modules) m.update();
         PhotonCore.CONTROL_HUB.clearBulkCache();
-
-
     }
+
     public void update() {
         updateModules();
         updatePoseEstimate();
         DriveSignal signal = trajectorySequenceRunner.update(getPoseEstimate(), getPoseVelocity());
         if (signal != null) setDriveSignal(signal);
-
     }
 
     public void waitForIdle() {
         while (!Thread.currentThread().isInterrupted() && isBusy())
             update();
-
     }
 
     public boolean isBusy() {
@@ -331,7 +352,6 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
 
     public void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior zeroPowerBehavior) {
         for (SwerveModule m : modules) m.setZeroPowerBehavior(zeroPowerBehavior);
-
     }
 
     public void setPIDFCoefficients(DcMotor.RunMode runMode, PIDFCoefficients coefficients) {
@@ -399,7 +419,6 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
         //
         // See https://github.com/FIRST-Tech-Challenge/FtcRobotController/issues/251 for details.
         return imuAngleVelocity;
-
     }
 
     public static TrajectoryVelocityConstraint getVelocityConstraint(double maxVel, double maxAngularVel, double trackWidth) {
@@ -436,6 +455,5 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
         leftRearModule.setServoPower(v1);
         rightRearModule.setServoPower(v2);
         rightFrontModule.setServoPower(v3);
-
     }
 }
