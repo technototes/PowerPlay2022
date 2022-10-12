@@ -9,7 +9,7 @@ import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
 public class AutoBlueHomeConeStackCommand extends SequentialCommandGroup {
-    public AutoBlueHomeConeStackCommand(MecanumDrivebaseSubsystem drive, ClawSubsystem claw, LiftSubsystem lift) {
+    public AutoBlueHomeConeStackCommand(MecanumDrivebaseSubsystem drive, LiftSubsystem lift, ClawSubsystem claw) {
         super(
                 /*new TrajectorySequenceCommand(drive, Robot.Trajectories.BLUE_HOME_STACK)
                 .alongWith(new ConeReadyToIntakeCommand(cone)),*/

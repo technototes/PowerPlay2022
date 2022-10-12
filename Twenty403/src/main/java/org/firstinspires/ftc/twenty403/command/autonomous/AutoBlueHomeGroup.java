@@ -8,15 +8,15 @@ import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
 public class AutoBlueHomeGroup extends SequentialCommandGroup {
-    public AutoBlueHomeGroup(MecanumDrivebaseSubsystem drive, ClawSubsystem claw, LiftSubsystem lift) {
+    public AutoBlueHomeGroup(MecanumDrivebaseSubsystem drive, LiftSubsystem lift, ClawSubsystem claw) {
         super(
                 /*new TrajectorySequenceCommand(drive, Robot.Trajectories.BLUE_HIGH_JUNCTION_HOME)
                 .alongWith(new ConeReadyToScoreCommand(cone)),*/
                 new ClawOpenCommand(claw),
-                new AutoBlueHomeConeStackCommand(drive, claw, lift),
-                new AutoBlueHomeConeStackCommand(drive, claw, lift),
-                new AutoBlueHomeConeStackCommand(drive, claw, lift),
-                new AutoBlueHomeConeStackCommand(drive, claw, lift)
+                new AutoBlueHomeConeStackCommand(drive, lift, claw),
+                new AutoBlueHomeConeStackCommand(drive, lift, claw),
+                new AutoBlueHomeConeStackCommand(drive, lift, claw),
+                new AutoBlueHomeConeStackCommand(drive, lift, claw)
                 /*new TrajectorySequenceCommand(
                         drive,
                         Robot.Trajectories.BLUE_PARK_LOCATION_HOME)/*
