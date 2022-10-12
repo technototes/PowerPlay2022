@@ -17,10 +17,10 @@ public class AutoRedHomeConeStackCommand extends SequentialCommandGroup {
             MecanumDrivebaseSubsystem drive, ConeSubsystem cone, LiftSubsystem lift, ClawSubsystem claw) {
         super(
                 new TrajectorySequenceCommand(drive, AutoConstantsRed.Home.S_JUNCTION_TO_STACK)
-                        .alongWith(new ConeReadyToIntakeCommand(claw, lift)),
+                        .alongWith(new ConeReadyToIntakeCommand(lift, claw)),
                 new ClawCloseCommand(claw),
                 new TrajectorySequenceCommand(drive, AutoConstantsRed.Home.STACK_TO_S_JUNCTION)
-                        .alongWith(new ConeReadyScoreHigh(claw, lift)),
+                        .alongWith(new ConeReadyScoreHigh(lift, claw)),
                 new ClawOpenCommand(claw));
     }
 }

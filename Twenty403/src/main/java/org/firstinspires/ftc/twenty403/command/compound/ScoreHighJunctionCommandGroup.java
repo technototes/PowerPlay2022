@@ -15,6 +15,6 @@ public class ScoreHighJunctionCommandGroup extends SequentialCommandGroup {
                 new LiftHighJunctionCommand(lift),
                 new ClawReleaseCommand(claw),
                 new ClawOpenCommand(claw),
-                new ConeReadyToIntakeCommand(claw, lift));
+                new ConeReadyToIntakeCommand(lift, claw));
     }
 }

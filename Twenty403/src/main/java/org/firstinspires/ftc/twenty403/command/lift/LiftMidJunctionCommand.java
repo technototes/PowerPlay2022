@@ -5,14 +5,14 @@ import com.technototes.library.command.Command;
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 
 public class LiftMidJunctionCommand implements Command {
-    private LiftSubsystem name;
+    private LiftSubsystem liftSubsystem;
 
-    public LiftMidJunctionCommand(LiftSubsystem subsystem) {
-        name = subsystem;
+    public LiftMidJunctionCommand(LiftSubsystem ls) {
+        liftSubsystem = ls;
     }
 
     @Override
     public void execute() {
-        name.midPole();
+        liftSubsystem.midPole();
     }
 }
