@@ -3,7 +3,6 @@ package org.firstinspires.ftc.twenty403.command.autonomous;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.twenty403.command.compound.ConeReadyScoreHigh;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
-import org.firstinspires.ftc.twenty403.subsystem.ConeSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 
 import com.technototes.library.command.SequentialCommandGroup;
@@ -11,8 +10,7 @@ import com.technototes.path.command.TrajectorySequenceCommand;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
 public class AutoRedAwayGroup extends SequentialCommandGroup {
-    public AutoRedAwayGroup(
-            MecanumDrivebaseSubsystem drive, ClawSubsystem claw, LiftSubsystem lift) {
+    public AutoRedAwayGroup(MecanumDrivebaseSubsystem drive, ClawSubsystem claw, LiftSubsystem lift) {
         super(
                 new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.START_TO_E_JUNCTION)
                         .alongWith(new ConeReadyScoreHigh(lift, claw)),

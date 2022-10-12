@@ -38,21 +38,13 @@ public class AutoConstantsRed {
                                 .splineTo(W_JUNCTION.vec(), S_JUNCTION.getHeading())
                                 .build(),
                 W_JUNCTION_TO_STACK =
-                        b -> b.apply(W_JUNCTION)
-                                .lineToLinearHeading(STACK)
-                                .build(),
+                        b -> b.apply(W_JUNCTION).lineToLinearHeading(STACK).build(),
                 S_JUNCTION_TO_STACK =
-                        b -> b.apply(S_JUNCTION)
-                                .lineToLinearHeading(STACK)
-                                .build(),
+                        b -> b.apply(S_JUNCTION).lineToLinearHeading(STACK).build(),
                 STACK_TO_W_JUNCTION =
-                        b -> b.apply(STACK)
-                                .lineToLinearHeading(W_JUNCTION)
-                                .build(),
+                        b -> b.apply(STACK).lineToLinearHeading(W_JUNCTION).build(),
                 STACK_TO_S_JUNCTION =
-                        b -> b.apply(STACK)
-                                .lineToLinearHeading(S_JUNCTION)
-                                .build(),
+                        b -> b.apply(STACK).lineToLinearHeading(S_JUNCTION).build(),
                 W_JUNCTION_TO_LEFT =
                         b -> b.apply(W_JUNCTION)
                                 .splineTo(LEFT.vec(), LEFT.getHeading())
@@ -95,9 +87,13 @@ public class AutoConstantsRed {
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
                 START_TO_E_JUNCTION =
-                        b -> b.apply(START).splineTo(E_JUNCTION.vec(), E_JUNCTION.getHeading()).build(),
+                        b -> b.apply(START)
+                                .splineTo(E_JUNCTION.vec(), E_JUNCTION.getHeading())
+                                .build(),
                 START_TO_S_JUNCTION =
-                        b -> b.apply(START).splineTo(S_JUNCTION.vec(), S_JUNCTION.getHeading()).build(),
+                        b -> b.apply(START)
+                                .splineTo(S_JUNCTION.vec(), S_JUNCTION.getHeading())
+                                .build(),
                 E_JUNCTION_TO_STACK =
                         b -> b.apply(E_JUNCTION).lineToLinearHeading(STACK).build(),
                 S_JUNCTION_TO_STACK =
@@ -107,7 +103,9 @@ public class AutoConstantsRed {
                 STACK_TO_S_JUNCTION =
                         b -> b.apply(STACK).lineToLinearHeading(S_JUNCTION).build(),
                 E_JUNCTION_TO_LEFT =
-                        b -> b.apply(E_JUNCTION).splineTo(LEFT.vec(), LEFT.getHeading()).build(),
+                        b -> b.apply(E_JUNCTION)
+                                .splineTo(LEFT.vec(), LEFT.getHeading())
+                                .build(),
                 S_JUNCTION_TO_LEFT =
                         b -> b.apply(S_JUNCTION).lineToLinearHeading(LEFT).build();
     }
