@@ -2,11 +2,12 @@ package org.firstinspires.ftc.twenty403.command.autonomous;
 
 import static java.lang.Math.toRadians;
 
+import java.util.function.Function;
+
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+
 import com.technototes.path.trajectorysequence.TrajectorySequence;
 import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
-
-import java.util.function.Function;
 
 public class AutoConstantsBlue {
     public static class Home {
@@ -18,8 +19,7 @@ public class AutoConstantsBlue {
         public static Pose2d PARK_RIGHT = new Pose2d(60, -36, toRadians(180));
 
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
-            START_TO_JUNCTION =
-                b -> b.apply(START).build();
+                START_TO_JUNCTION = b -> b.apply(START).build();
     }
 
     public static class Away {

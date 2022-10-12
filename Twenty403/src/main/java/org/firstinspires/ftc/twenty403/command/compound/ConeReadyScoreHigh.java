@@ -9,9 +9,6 @@ import com.technototes.library.command.ParallelCommandGroup;
 
 public class ConeReadyScoreHigh extends ParallelCommandGroup {
     public ConeReadyScoreHigh(LiftSubsystem liftSubsystem, ClawSubsystem clawSubsystem) {
-        super(
-                new ClawOpenCommand(clawSubsystem),
-                new LiftHighJunctionCommand(liftSubsystem)
-        );
+        super(new ClawOpenCommand(clawSubsystem), new LiftHighJunctionCommand(liftSubsystem));
     }
 }
