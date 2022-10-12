@@ -10,15 +10,15 @@ import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
 public class AutoBlueAwayGroup extends SequentialCommandGroup {
     public AutoBlueAwayGroup(
-            MecanumDrivebaseSubsystem drive, ClawSubsystem claw, LiftSubsystem lift, ConeSubsystem cone) {
+            MecanumDrivebaseSubsystem drive, ClawSubsystem claw, LiftSubsystem lift) {
         super(
                 /*new TrajectorySequenceCommand(drive, Robot.Trajectories.BLUE_HIGH_JUNCTION_AWAY)
                 .alongWith(new ConeReadyToScoreCommand(cone)),*/
                 new ClawOpenCommand(claw),
-                new AutoBlueAwayConeStackCommand(drive, claw, lift, cone),
-                new AutoBlueAwayConeStackCommand(drive, claw, lift, cone),
-                new AutoBlueAwayConeStackCommand(drive, claw, lift, cone),
-                new AutoBlueAwayConeStackCommand(drive, claw, lift, cone)
+                new AutoBlueAwayConeStackCommand(drive, claw, lift),
+                new AutoBlueAwayConeStackCommand(drive, claw, lift),
+                new AutoBlueAwayConeStackCommand(drive, claw, lift),
+                new AutoBlueAwayConeStackCommand(drive, claw, lift)
                 /*new TrajectorySequenceCommand(
                 drive,
                 Robot.Trajectories.BLUE_PARK_LOCATION_AWAY) */
