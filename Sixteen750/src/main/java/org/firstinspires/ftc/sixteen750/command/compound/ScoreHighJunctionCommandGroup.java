@@ -4,7 +4,6 @@ import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawReleaseCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftHighJunctionCommand;
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
-import org.firstinspires.ftc.sixteen750.subsystem.ConeSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 
 import com.technototes.library.command.SequentialCommandGroup;
