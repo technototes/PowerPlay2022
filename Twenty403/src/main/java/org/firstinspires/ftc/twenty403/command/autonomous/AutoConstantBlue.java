@@ -19,7 +19,7 @@ public class AutoConstantBlue {
 
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
             START_TO_JUNCTION =
-                b -> b.apply(START)
+                b -> b.apply(START).build();
     }
 
     public static class Away {
