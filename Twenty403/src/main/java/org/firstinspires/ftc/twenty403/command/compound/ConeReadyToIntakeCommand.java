@@ -9,7 +9,7 @@ import com.technototes.library.command.ParallelCommandGroup;
 
 public class ConeReadyToIntakeCommand extends ParallelCommandGroup {
 
-    public ConeReadyToIntakeCommand(ClawSubsystem clawSubsystem, LiftSubsystem liftSubsystem) {
+    public ConeReadyToIntakeCommand(LiftSubsystem liftSubsystem, ClawSubsystem clawSubsystem) {
         super(
                 new ClawOpenCommand(clawSubsystem),
                 new LiftHighJunctionCommand(liftSubsystem)

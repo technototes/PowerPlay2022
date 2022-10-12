@@ -8,7 +8,7 @@ import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 import com.technototes.library.command.ParallelCommandGroup;
 
 public class ConeReadyScoreHigh extends ParallelCommandGroup {
-    public ConeReadyScoreHigh(ClawSubsystem clawSubsystem, LiftSubsystem liftSubsystem) {
+    public ConeReadyScoreHigh(LiftSubsystem liftSubsystem, ClawSubsystem clawSubsystem) {
         super(
                 new ClawOpenCommand(clawSubsystem),
                 new LiftHighJunctionCommand(liftSubsystem)

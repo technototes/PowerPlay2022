@@ -17,7 +17,7 @@ public class AutoRedAwayConeStackCommand extends SequentialCommandGroup {
             MecanumDrivebaseSubsystem drive, ConeSubsystem cone, LiftSubsystem lift, ClawSubsystem claw) {
         super(
                 new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.E_JUNCTION_TO_STACK)
-                        .alongWith(new ConeReadyToIntakeCommand(claw, lift)),
+                        .alongWith(new ConeReadyToIntakeCommand(lift, claw)),
                 new ClawCloseCommand(claw),
                 new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.STACK_TO_E_JUNCTION)
                         .alongWith(new ConeReadyToScoreCommand(lift, claw)),

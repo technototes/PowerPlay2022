@@ -5,14 +5,14 @@ import com.technototes.library.command.Command;
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 
 public class LiftCarryCommand implements Command {
-    private LiftSubsystem subsystem;
+    private LiftSubsystem liftSubsystem;
 
-    public LiftCarryCommand(LiftSubsystem subsystem) {
-        this.subsystem = subsystem;
+    public LiftCarryCommand(LiftSubsystem ls) {
+        liftSubsystem = ls;
     }
 
     @Override
     public void execute() {
-        subsystem.carry();
+        liftSubsystem.carry();
     }
 }
