@@ -109,6 +109,6 @@ public class AutoConstantsRed {
                 E_JUNCTION_TO_LEFT =
                         b -> b.apply(E_JUNCTION).splineTo(LEFT.vec(), LEFT.getHeading()).build(),
                 S_JUNCTION_TO_LEFT =
-                        b -> b.apply(S_JUNCTION).lineToLinearHeading(LEFT).build(),
+                        b -> b.apply(S_JUNCTION).lineToLinearHeading(LEFT).build();
     }
 }
