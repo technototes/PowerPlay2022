@@ -14,7 +14,7 @@ public class AutoRedAwayGroup extends SequentialCommandGroup {
     public AutoRedAwayGroup(
             MecanumDrivebaseSubsystem drive, ClawSubsystem claw, ConeSubsystem cone, LiftSubsystem lift) {
         super(
-                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.START_TO_THREEOCLOCK_JUNCTION)
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.START_TO_E_JUNCTION)
                         .alongWith(new ConeReadyScoreHigh(cone)),
                 new ClawOpenCommand(claw),
                 new AutoRedAwayConeStackCommand(drive, cone, lift, claw),
@@ -22,6 +22,6 @@ public class AutoRedAwayGroup extends SequentialCommandGroup {
                 new AutoRedAwayConeStackCommand(drive, cone, lift, claw),
                 new AutoRedAwayConeStackCommand(drive, cone, lift, claw),
                 // TODO: This should call the vision choice command to decide where to park
-                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.THREEOCLOCK_JUNCTION_LEFT));
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.E_JUNCTION_LEFT));
     }
 }

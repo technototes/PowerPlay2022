@@ -3,6 +3,10 @@ package org.firstinspires.ftc.twenty403.command.autonomous;
 import static java.lang.Math.toRadians;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.technototes.path.trajectorysequence.TrajectorySequence;
+import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
+
+import java.util.function.Function;
 
 public class AutoConstantBlue {
     public static class Home {
@@ -12,6 +16,10 @@ public class AutoConstantBlue {
         public static Pose2d PARK_LEFT = new Pose2d(12, -36, toRadians(-90));
         public static Pose2d PARK_MIDDLE = new Pose2d(36, -36, toRadians(-90));
         public static Pose2d PARK_RIGHT = new Pose2d(60, -36, toRadians(180));
+
+        public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
+            START_TO_JUNCTION =
+                b -> b.apply(START)
     }
 
     public static class Away {
