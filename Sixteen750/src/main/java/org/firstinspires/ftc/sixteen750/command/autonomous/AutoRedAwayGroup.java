@@ -4,7 +4,6 @@ import org.firstinspires.ftc.sixteen750.Robot;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.compound.ConeReadyToScoreHigh;
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
-import org.firstinspires.ftc.sixteen750.subsystem.ConeSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 
 import com.technototes.library.command.SequentialCommandGroup;
@@ -12,8 +11,7 @@ import com.technototes.path.command.TrajectorySequenceCommand;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
 public class AutoRedAwayGroup extends SequentialCommandGroup {
-    public AutoRedAwayGroup(
-            MecanumDrivebaseSubsystem drive, LiftSubsystem lift, ClawSubsystem claw) {
+    public AutoRedAwayGroup(MecanumDrivebaseSubsystem drive, LiftSubsystem lift, ClawSubsystem claw) {
         super(
                 new TrajectorySequenceCommand(drive, Robot.Trajectories.RED_HIGH_JUNCTION_AWAY)
                         .alongWith(new ConeReadyToScoreHigh(lift, claw)),
