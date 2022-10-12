@@ -19,62 +19,54 @@ public class AutoConstantsRed {
         public static Pose2d RIGHT = new Pose2d(12, 36, toRadians(90));
         // These have "home/away" modifiers, because we want to stay on "our side" during auto
         // 12 O'Clock is on the Blue side: Probably stay away
-        public static Pose2d TWELVEOCLOCK_JUNCTION = new Pose2d(18, -3, toRadians(-135));
+        public static Pose2d N_JUNCTION = new Pose2d(18, -3, toRadians(-135));
         // 3 O'Clock is on the Away side, so only use if we know our alliance partner won't be
         // in the way
-        public static Pose2d THREEOCLOCK_JUNCTION = new Pose2d(-28, 4, toRadians(-45));
-        public static Pose2d SIXOCLOCK_JUNCTION = new Pose2d(-10, 30, toRadians(-135));
-        public static Pose2d NINEOCLOCK_JUNCTION = new Pose2d(28, 4, toRadians(-135));
+        public static Pose2d E_JUNCTION = new Pose2d(-28, 4, toRadians(-45));
+        public static Pose2d S_JUNCTION = new Pose2d(-10, 30, toRadians(-135));
+        public static Pose2d W_JUNCTION = new Pose2d(28, 4, toRadians(-135));
 
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
-                START_TO_NINEOCLOCK_JUNCTION =
+                START_TO_W_JUNCTION =
                         b -> b.apply(START)
-                                .splineTo(NINEOCLOCK_JUNCTION.vec(), NINEOCLOCK_JUNCTION.getHeading())
+                                .splineTo(W_JUNCTION.vec(), W_JUNCTION.getHeading())
                                 .build(),
-                START_TO_SIXOCLOCK_JUNCTION =
+                START_TO_S_JUNCTION =
                         b -> b.apply(START)
-                                .splineTo(NINEOCLOCK_JUNCTION.vec(), SIXOCLOCK_JUNCTION.getHeading())
+                                .splineTo(W_JUNCTION.vec(), S_JUNCTION.getHeading())
                                 .build(),
-                NINEOCLOCK_JUNCTION_TO_STACK =
-                        b -> b.apply(NINEOCLOCK_JUNCTION)
-                                .lineToLinearHeading(STACK)
-                                .build(),
-                SIXOCLOCK_JUNCTION_TO_STACK =
-                        b -> b.apply(SIXOCLOCK_JUNCTION)
-                                .lineToLinearHeading(STACK)
-                                .build(),
-                STACK_TO_NINEOCLOCK_JUNCTION =
-                        b -> b.apply(STACK)
-                                .lineToLinearHeading(NINEOCLOCK_JUNCTION)
-                                .build(),
-                STACK_TO_SIXOCLOCK_JUNCTION =
-                        b -> b.apply(STACK)
-                                .lineToLinearHeading(SIXOCLOCK_JUNCTION)
-                                .build(),
-                NINEOCLOCK_JUNCTION_TO_LEFT =
-                        b -> b.apply(NINEOCLOCK_JUNCTION)
+                W_JUNCTION_TO_STACK =
+                        b -> b.apply(W_JUNCTION).lineToLinearHeading(STACK).build(),
+                S_JUNCTION_TO_STACK =
+                        b -> b.apply(S_JUNCTION).lineToLinearHeading(STACK).build(),
+                STACK_TO_W_JUNCTION =
+                        b -> b.apply(STACK).lineToLinearHeading(W_JUNCTION).build(),
+                STACK_TO_S_JUNCTION =
+                        b -> b.apply(STACK).lineToLinearHeading(S_JUNCTION).build(),
+                W_JUNCTION_TO_LEFT =
+                        b -> b.apply(W_JUNCTION)
                                 .splineTo(LEFT.vec(), LEFT.getHeading())
                                 .build(),
-                NINEOCLOCK_JUNCTION_TO_MIDDLE =
-                        b -> b.apply(NINEOCLOCK_JUNCTION)
+                W_JUNCTION_TO_MIDDLE =
+                        b -> b.apply(W_JUNCTION)
                                 .splineTo(MIDDLE.vec(), MIDDLE.getHeading())
                                 .build(),
-                NINEOCLOCK_JUNCTION_TO_RIGHT =
-                        b -> b.apply(NINEOCLOCK_JUNCTION)
+                W_JUNCTION_TO_RIGHT =
+                        b -> b.apply(W_JUNCTION)
                                 .splineTo(RIGHT.vec(), RIGHT.getHeading())
                                 .build(),
-                SIXOCLOCK_JUNCTION_TO_LEFT =
-                        b -> b.apply(SIXOCLOCK_JUNCTION)
+                S_JUNCTION_TO_LEFT =
+                        b -> b.apply(S_JUNCTION)
                                 .splineTo(LEFT.vec(), LEFT.getHeading())
                                 .build(),
-                SIXOCLOCK_JUNCTION_TO_MIDDLE =
-                        b -> b.apply(SIXOCLOCK_JUNCTION)
+                S_JUNCTION_TO_MIDDLE =
+                        b -> b.apply(S_JUNCTION)
                                 .splineTo(MIDDLE.vec(), MIDDLE.getHeading())
                                 .build(),
                 SIXCLOCK_JUNCTION_TO_RIGHT =
-                        b -> b.apply(SIXOCLOCK_JUNCTION)
+                        b -> b.apply(S_JUNCTION)
                                 .splineTo(RIGHT.vec(), RIGHT.getHeading())
                                 .build();
     }
@@ -87,40 +79,34 @@ public class AutoConstantsRed {
         public static Pose2d MIDDLE = new Pose2d(-36, 36, toRadians(90));
         public static Pose2d RIGHT = new Pose2d(-60, 36, toRadians(0));
         // These have "home/away" modifiers, because we want to stay on "our side" during auto
-        public static Pose2d TWELVEOCLOCK_JUNCTION = new Pose2d(18, -3, toRadians(-135));
-        public static Pose2d THREEOCLOCK_JUNCTION = new Pose2d(-28, 4, toRadians(-45));
-        public static Pose2d SIXOCLOCK_JUNCTION = new Pose2d(-10, 30, toRadians(-135));
-        public static Pose2d NINEOCLOCK_JUNCTION = new Pose2d(28, 4, toRadians(-135));
+        public static Pose2d N_JUNCTION = new Pose2d(18, -3, toRadians(-135));
+        public static Pose2d E_JUNCTION = new Pose2d(-28, 4, toRadians(-45));
+        public static Pose2d S_JUNCTION = new Pose2d(-10, 30, toRadians(-135));
+        public static Pose2d W_JUNCTION = new Pose2d(28, 4, toRadians(-135));
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
-                START_TO_THREEOCLOCK_JUNCTION =
+                START_TO_E_JUNCTION =
                         b -> b.apply(START)
-                                .splineTo(THREEOCLOCK_JUNCTION.vec(), THREEOCLOCK_JUNCTION.getHeading())
+                                .splineTo(E_JUNCTION.vec(), E_JUNCTION.getHeading())
                                 .build(),
-                START_TO_SIXOCLOCK_JUNCTION =
+                START_TO_S_JUNCTION =
                         b -> b.apply(START)
-                                .splineTo(SIXOCLOCK_JUNCTION.vec(), SIXOCLOCK_JUNCTION.getHeading())
+                                .splineTo(S_JUNCTION.vec(), S_JUNCTION.getHeading())
                                 .build(),
-                THREEOCLOCK_JUNCTION_TO_STACK =
-                        b -> b.apply(THREEOCLOCK_JUNCTION)
-                                .lineToLinearHeading(STACK)
-                                .build(),
-                SIXOCLOCK_JUNCTION_TO_STACK =
-                        b -> b.apply(SIXOCLOCK_JUNCTION)
-                                .lineToLinearHeading(STACK)
-                                .build(),
-                STACK_TO_THREEOCLOCK_JUNCTION =
-                        b -> b.apply(STACK)
-                                .lineToLinearHeading(THREEOCLOCK_JUNCTION)
-                                .build(),
-                STACK_TO_SIXOCLOCK_JUNCTION =
-                        b -> b.apply(STACK)
-                                .lineToLinearHeading(SIXOCLOCK_JUNCTION)
-                                .build(),
-                THREEOCLOCK_JUNCTION_LEFT =
-                        b -> b.apply(THREEOCLOCK_JUNCTION)
+                E_JUNCTION_TO_STACK =
+                        b -> b.apply(E_JUNCTION).lineToLinearHeading(STACK).build(),
+                S_JUNCTION_TO_STACK =
+                        b -> b.apply(S_JUNCTION).lineToLinearHeading(STACK).build(),
+                STACK_TO_E_JUNCTION =
+                        b -> b.apply(STACK).lineToLinearHeading(E_JUNCTION).build(),
+                STACK_TO_S_JUNCTION =
+                        b -> b.apply(STACK).lineToLinearHeading(S_JUNCTION).build(),
+                E_JUNCTION_TO_LEFT =
+                        b -> b.apply(E_JUNCTION)
                                 .splineTo(LEFT.vec(), LEFT.getHeading())
-                                .build();
+                                .build(),
+                S_JUNCTION_TO_LEFT =
+                        b -> b.apply(S_JUNCTION).lineToLinearHeading(LEFT).build();
     }
 }
