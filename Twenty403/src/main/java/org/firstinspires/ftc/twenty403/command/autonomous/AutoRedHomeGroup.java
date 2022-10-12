@@ -12,15 +12,15 @@ import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
 public class AutoRedHomeGroup extends SequentialCommandGroup {
     public AutoRedHomeGroup(
-            MecanumDrivebaseSubsystem drive, ClawSubsystem claw, ConeSubsystem cone, LiftSubsystem lift) {
+            MecanumDrivebaseSubsystem drive, ClawSubsystem claw, LiftSubsystem lift) {
         super(
                 new TrajectorySequenceCommand(drive, AutoConstantsRed.Home.START_TO_S_JUNCTION)
                         .alongWith(new ConeReadyScoreHigh(lift, claw)),
                 new ClawOpenCommand(claw),
-                new AutoRedHomeConeStackCommand(drive, cone, lift, claw),
-                new AutoRedHomeConeStackCommand(drive, cone, lift, claw),
-                new AutoRedHomeConeStackCommand(drive, cone, lift, claw),
-                new AutoRedHomeConeStackCommand(drive, cone, lift, claw),
+                new AutoRedHomeConeStackCommand(drive, lift, claw),
+                new AutoRedHomeConeStackCommand(drive, lift, claw),
+                new AutoRedHomeConeStackCommand(drive, lift, claw),
+                new AutoRedHomeConeStackCommand(drive, lift, claw),
                 // TODO: This should be our "use vision to decide where to park" command
                 new TrajectorySequenceCommand(drive, AutoConstantsRed.Home.S_JUNCTION_TO_RIGHT));
     }

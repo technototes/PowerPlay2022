@@ -14,7 +14,7 @@ import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
 public class AutoRedAwayConeStackCommand extends SequentialCommandGroup {
     public AutoRedAwayConeStackCommand(
-            MecanumDrivebaseSubsystem drive, ConeSubsystem cone, LiftSubsystem lift, ClawSubsystem claw) {
+            MecanumDrivebaseSubsystem drive, LiftSubsystem lift, ClawSubsystem claw) {
         super(
                 new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.E_JUNCTION_TO_STACK)
                         .alongWith(new ConeReadyToIntakeCommand(lift, claw)),

@@ -8,7 +8,7 @@ import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
 
 import java.util.function.Function;
 
-public class AutoConstantBlue {
+public class AutoConstantsBlue {
     public static class Home {
         public static Pose2d START = new Pose2d(36, -66, toRadians(-90));
         public static Pose2d JUNCTION = new Pose2d(28, -4, toRadians(135));

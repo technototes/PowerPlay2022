@@ -11,7 +11,7 @@ import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
 public class AutoBlueHomeConeStackCommand extends SequentialCommandGroup {
     public AutoBlueHomeConeStackCommand(
-            MecanumDrivebaseSubsystem drive, ClawSubsystem claw, LiftSubsystem lift, ConeSubsystem cone) {
+            MecanumDrivebaseSubsystem drive, ClawSubsystem claw, LiftSubsystem lift) {
         super(
                 /*new TrajectorySequenceCommand(drive, Robot.Trajectories.BLUE_HOME_STACK)
                 .alongWith(new ConeReadyToIntakeCommand(cone)),*/
