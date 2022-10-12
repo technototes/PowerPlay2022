@@ -1,18 +1,18 @@
 package org.firstinspires.ftc.twenty403.command.compound;
 
-import org.firstinspires.ftc.twenty403.subsystem.ConeSubsystem;
+import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
+import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
+import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
+import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 
-import com.technototes.library.command.Command;
+import com.technototes.library.command.ParallelCommandGroup;
 
-public class ConeReadyToIntakeCommand implements Command {
-    private ConeSubsystem subsystem;
+public class ConeReadyToIntakeCommand extends ParallelCommandGroup {
 
-    public ConeReadyToIntakeCommand(ConeSubsystem s) {
-        subsystem = s;
-    }
-
-    @Override
-    public void execute() {
-        subsystem.readyIntake();
+    public ConeReadyToIntakeCommand(ClawSubsystem clawSubsystem, LiftSubsystem liftSubsystem) {
+        super(
+                new ClawOpenCommand(clawSubsystem),
+                new LiftHighJunctionCommand(liftSubsystem)
+        );
     }
 }
