@@ -10,7 +10,7 @@ import com.technototes.path.command.TrajectorySequenceCommand;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
 public class AutoRedAwayGroup extends SequentialCommandGroup {
-    public AutoRedAwayGroup(MecanumDrivebaseSubsystem drive, ClawSubsystem claw, LiftSubsystem lift) {
+    public AutoRedAwayGroup(MecanumDrivebaseSubsystem drive,LiftSubsystem lift, ClawSubsystem claw) {
         super(
                 new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.START_TO_E_JUNCTION)
                         .alongWith(new ConeReadyScoreHigh(lift, claw)),
