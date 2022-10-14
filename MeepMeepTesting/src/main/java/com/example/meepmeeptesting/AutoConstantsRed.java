@@ -20,9 +20,9 @@ import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationCon
 public class AutoConstantsRed {
     // "Home" locations: (The side with the Red terminal)
     public static class Home {
-        public static Pose2d START = new Pose2d(36, -66, toRadians(-90));
+        public static Pose2d START = new Pose2d(36, -66, toRadians(90));
         public static Pose2d STACK = new Pose2d(61, -12, toRadians(0));
-        public static Pose2d BETWEEN_TO_STACK = new Pose2d(27, -12, toRadians(20));
+        public static Pose2d BETWEEN_TO_STACK = new Pose2d(27, -12, toRadians(50));
         public static Pose2d BETWEEN_TO_JUNCTION = new Pose2d(56, -12, toRadians(189));
         public static Pose2d LEFT = new Pose2d(60, 36, toRadians(180));
         public static Pose2d MIDDLE = new Pose2d(36, 36, toRadians(90));
@@ -53,8 +53,8 @@ public class AutoConstantsRed {
         public static Supplier<Trajectory>
                 START_TO_W_JUNCTION =
                 () -> function.apply(START)
-                            .splineTo(W_JUNCTION.vec(), W_JUNCTION.getHeading())
-                            .build(),
+                        .splineTo(W_JUNCTION.vec(), W_JUNCTION.getHeading())
+                        .build(),
                 START_TO_S_JUNCTION =
                         () -> function.apply(START)
                                 .splineTo(S_JUNCTION.vec(), S_JUNCTION.getHeading())
@@ -68,10 +68,10 @@ public class AutoConstantsRed {
                                 .splineTo(STACK.vec(), STACK.getHeading())
                                 .build(),
 
-                S_JUNCTION_TO_STACK =
-                        () -> function.apply(S_JUNCTION)
-                                .lineToLinearHeading(STACK)
-                                .build(),
+        S_JUNCTION_TO_STACK =
+                () -> function.apply(S_JUNCTION)
+                        .lineToLinearHeading(STACK)
+                        .build(),
                 STACK_TO_BETWEEN_TO_JUNCTION =
                         () -> function.apply(STACK)
                                 .lineToLinearHeading(BETWEEN_TO_JUNCTION)
