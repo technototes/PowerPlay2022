@@ -73,7 +73,7 @@ public class AutoConstantsRed {
                         b -> b.apply(S_JUNCTION)
                                 .splineTo(MIDDLE.vec(), MIDDLE.getHeading())
                                 .build(),
-                SIXCLOCK_JUNCTION_TO_RIGHT =
+                S_JUNCTION_TO_RIGHT =
                         b -> b.apply(S_JUNCTION)
                                 .splineTo(RIGHT.vec(), RIGHT.getHeading())
                                 .build();
