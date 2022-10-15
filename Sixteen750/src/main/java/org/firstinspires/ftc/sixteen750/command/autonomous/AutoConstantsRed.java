@@ -9,6 +9,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.technototes.path.trajectorysequence.TrajectorySequence;
 import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
 
+
 public class AutoConstantsRed {
     // "Home" locations: (The side with the Red terminal)
     public static class Home {
@@ -30,9 +31,9 @@ public class AutoConstantsRed {
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
                 START_TO_NINEOCLOCK_JUNCTION =
-                        b -> b.apply(START)
-                                .splineTo(NINEOCLOCK_JUNCTION.vec(), NINEOCLOCK_JUNCTION.getHeading())
-                                .build(),
+                b -> b.apply(START)
+                        .splineTo(NINEOCLOCK_JUNCTION.vec(), NINEOCLOCK_JUNCTION.getHeading())
+                        .build(),
                 START_TO_SIXOCLOCK_JUNCTION =
                         b -> b.apply(START)
                                 .splineTo(NINEOCLOCK_JUNCTION.vec(), SIXOCLOCK_JUNCTION.getHeading())
@@ -95,9 +96,9 @@ public class AutoConstantsRed {
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
                 START_TO_THREEOCLOCK_JUNCTION =
-                        b -> b.apply(START)
-                                .splineTo(THREEOCLOCK_JUNCTION.vec(), THREEOCLOCK_JUNCTION.getHeading())
-                                .build(),
+                b -> b.apply(START)
+                        .splineTo(THREEOCLOCK_JUNCTION.vec(), THREEOCLOCK_JUNCTION.getHeading())
+                        .build(),
                 START_TO_SIXOCLOCK_JUNCTION =
                         b -> b.apply(START)
                                 .splineTo(SIXOCLOCK_JUNCTION.vec(), SIXOCLOCK_JUNCTION.getHeading())

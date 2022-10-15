@@ -17,13 +17,11 @@ import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationConstraint;
 
 
-public class AutoConstantsRed {
+public class AutoConstantsBlue {
     // "Home" locations: (The side with the Red terminal)
-    public static class Home {
-        public static Pose2d START = new Pose2d(36, -66, toRadians(90));
-        public static Pose2d STACK = new Pose2d(61, -12, toRadians(0));
-        public static Pose2d BETWEEN_TO_STACK = new Pose2d(27, -12, toRadians(50));
-        public static Pose2d BETWEEN_TO_JUNCTION = new Pose2d(56, -12, toRadians(189));
+    public static class Away {
+        public static Pose2d START = new Pose2d(36, 66, toRadians(-90));
+        public static Pose2d STACK = new Pose2d(58, 13, toRadians(0));
         public static Pose2d LEFT = new Pose2d(60, 36, toRadians(180));
         public static Pose2d MIDDLE = new Pose2d(36, 36, toRadians(90));
         public static Pose2d RIGHT = new Pose2d(12, 36, toRadians(90));
@@ -34,7 +32,11 @@ public class AutoConstantsRed {
         // in the way
         public static Pose2d E_JUNCTION = new Pose2d(-28, 4, toRadians(-45));
         public static Pose2d S_JUNCTION = new Pose2d(-10, 30, toRadians(-135));
-        public static Pose2d W_JUNCTION = new Pose2d(25, -3, toRadians(140));
+        public static Pose2d W_JUNCTION = new Pose2d(30, 7, toRadians(-135));
+
+
+        public static Pose2d BETWEEN_TO_STACK = new Pose2d(27, 13, toRadians(0));
+        public static Pose2d BETWEEN_TO_JUNCTION = new Pose2d(56, 12, toRadians(170));
 
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
@@ -115,7 +117,7 @@ public class AutoConstantsRed {
     }
 
     // Away locations:
-    public static class Away {
+    public static class Home {
         public static Pose2d START = new Pose2d(-36, 66, toRadians(-90));
         public static Pose2d STACK = new Pose2d(-62, 12, toRadians(180));
         public static Pose2d LEFT = new Pose2d(-12, 36, toRadians(90));
