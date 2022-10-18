@@ -23,7 +23,7 @@ public class AutoConstantsRed {
         // 3 O'Clock is on the Away side, so only use if we know our alliance partner won't be
         // in the way
         public static Pose2d W_JUNCTION = new Pose2d(-28, 4, toRadians(-45)); //Switched W and E because MeepMeep has the field flipped (or we did haha)
-        public static Pose2d N_JUNCTION = new Pose2d(-4,-28, toRadians(45));
+        public static Pose2d S_JUNCTION = new Pose2d(-4,-28, toRadians(45));  // Do you mean: N_JUNCTION
         public static Pose2d E_JUNCTION = new Pose2d(28, 4, toRadians(-135));
 
         // These are 'trajectory pieces' which should be named like this:
@@ -73,7 +73,7 @@ public class AutoConstantsRed {
                         b -> b.apply(N_JUNCTION)
                                 .splineTo(MIDDLE.vec(), MIDDLE.getHeading())
                                 .build(),
-                SIXCLOCK_JUNCTION_TO_RIGHT =
+                S_JUNCTION_TO_RIGHT =
                         b -> b.apply(N_JUNCTION)
                                 .splineTo(RIGHT.vec(), RIGHT.getHeading())
                                 .build();

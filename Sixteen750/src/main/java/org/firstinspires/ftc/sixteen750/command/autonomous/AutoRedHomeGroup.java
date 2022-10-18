@@ -20,6 +20,6 @@ public class AutoRedHomeGroup extends SequentialCommandGroup {
                 new AutoRedHomeConeStackCommand(drive, lift, claw),
                 new AutoRedHomeConeStackCommand(drive, lift, claw),
                 // TODO: This should be our "use vision to decide where to park" command
-                new TrajectorySequenceCommand(drive, AutoConstantsRed.Home.SIXCLOCK_JUNCTION_TO_RIGHT));
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Home.S_JUNCTION_TO_RIGHT));
     }
 }
