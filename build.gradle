@@ -35,7 +35,11 @@ repositories {
 
 spotless {
     java {
-        target('Twenty403/**/*.java', 'Sixteen750/**/*.java', 'ForTeaching/**/*.java')
+        // target('Twenty403/**/*.java', 'Sixteen750/**/*.java', 'ForTeaching/**/*.java')
+        target project.fileTree(project.rootDir) {
+            include 'Twenty403/**/*.java', 'Sixteen750/**/*.java', 'ForTeaching/**/*.java'
+            exclude '**/generated/**', '**/AutoConstantBlue.java', '**/AutoConstantsBlue.java', '**/AutoConstantsRed.java'
+        }
         removeUnusedImports()
         palantirJavaFormat("2.27.0")
         importOrder('android', 'java', 'org.firstinspires', 'org', 'com', 'com.technototes')
