@@ -22,10 +22,10 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
 
         @TicksPerRev
         public static final double TICKS_PER_REV = 28;
-
+        //TICKS_PER_REV is the number of "ticks" the motors' encoders will count per revolution.
         @MaxRPM
         public static final double MAX_RPM = 6000;
-
+        //MaxRPM is the maximum RPM that the motor can reach at the recommended voltage (12v).
         @UseDriveEncoder
         public static final boolean RUN_USING_ENCODER = true;
 
