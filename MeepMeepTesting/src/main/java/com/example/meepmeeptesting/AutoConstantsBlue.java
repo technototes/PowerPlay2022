@@ -21,8 +21,8 @@ public class AutoConstantsBlue {
     // "Home" locations: (The side with the Red terminal)
     public static class Away {
         public static Pose2d START = new Pose2d(36, 66, toRadians(-90));
-        public static Pose2d STACK = new Pose2d(58, 13, toRadians(0));
-        public static Pose2d LEFT = new Pose2d(60, 36, toRadians(180));
+        public static Pose2d STACK = new Pose2d(59, 12, toRadians(0));
+        public static Pose2d LEFT = new Pose2d(60, 36, toRadians(150));
         public static Pose2d MIDDLE = new Pose2d(36, 36, toRadians(90));
         public static Pose2d RIGHT = new Pose2d(12, 36, toRadians(90));
         // These have "home/away" modifiers, because we want to stay on "our side" during auto
@@ -32,18 +32,18 @@ public class AutoConstantsBlue {
         // in the way
         public static Pose2d E_JUNCTION = new Pose2d(-28, 4, toRadians(-45));
         public static Pose2d S_JUNCTION = new Pose2d(-10, 30, toRadians(-135));
-        public static Pose2d W_JUNCTION = new Pose2d(30, 7, toRadians(-135));
+        public static Pose2d W_JUNCTION = new Pose2d(27, 8, toRadians(-115));
 
 
-        public static Pose2d BETWEEN_TO_STACK = new Pose2d(27, 13, toRadians(0));
-        public static Pose2d BETWEEN_TO_JUNCTION = new Pose2d(56, 12, toRadians(170));
+        public static Pose2d BETWEEN_TO_STACK = new Pose2d(34, 15, toRadians(0));
+        public static Pose2d BETWEEN_TO_JUNCTION = new Pose2d(37, 12, toRadians(180));
 
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
-        public static double MAX_VEL = 50;
-        public static double MAX_ACCEL = 40;
-        public static double MAX_ANG_VEL = Math.toRadians(180);
-        public static double MAX_ANG_ACCEL = Math.toRadians(120);
+        public static double MAX_VEL = 80;
+        public static double MAX_ACCEL = 70;
+        public static double MAX_ANG_VEL = Math.toRadians(200);
+        public static double MAX_ANG_ACCEL = Math.toRadians(200);
         public static double TRACK_WIDTH = 9.5;
 
         public static MinVelocityConstraint MIN_VEL = new MinVelocityConstraint(Arrays.asList(
@@ -90,9 +90,10 @@ public class AutoConstantsBlue {
                         () -> function.apply(STACK)
                                 .lineToLinearHeading(S_JUNCTION)
                                 .build(),
-                W_JUNCTION_TO_LEFT =
-                        () -> function.apply(W_JUNCTION)
-                                .splineTo(LEFT.vec(), LEFT.getHeading())
+                STACK_TO_LEFT =
+                        () -> function.apply(STACK)
+                                //.splineTo(LEFT.vec(), LEFT.getHeading())
+                                .lineToLinearHeading(LEFT)
                                 .build(),
                 W_JUNCTION_TO_MIDDLE =
                         () -> function.apply(W_JUNCTION)

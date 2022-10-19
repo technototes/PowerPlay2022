@@ -11,6 +11,7 @@ public class MeepMeepTesting {
         MeepMeep meepMeep = new MeepMeep(750);
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
+                .setDimensions(14,14)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 9.5)
                 .followTrajectorySequence(drive ->
@@ -36,17 +37,9 @@ public class MeepMeepTesting {
                                 .addTrajectory(AutoConstantsBlue.Away.BETWEEN_T0_STACK_TO_STACK.get())
                                 .addTrajectory(AutoConstantsBlue.Away.STACK_TO_BETWEEN_TO_JUNCTION.get())
                                 .addTrajectory(AutoConstantsBlue.Away.BETWEEN_TO_JUNCTION_TO_JUNCTION.get())
-                                .addTrajectory(AutoConstantsBlue.Away.W_JUNCTION_TO_LEFT.get())
-                                .addTrajectory(AutoConstantRed.Away.START_TO_W_JUNCTION.get())
-                                .addTrajectory(AutoConstantRed.Away.W_JUNCTION_TO_STACK.get())
-                                .addTrajectory(AutoConstantRed.Away.STACK_TO_W_JUNCTION.get())
-                                .addTrajectory(AutoConstantRed.Away.W_JUNCTION_TO_STACK.get())
-                                .addTrajectory(AutoConstantRed.Away.STACK_TO_W_JUNCTION.get())
-                                .addTrajectory(AutoConstantRed.Away.W_JUNCTION_TO_STACK.get())
-                                .addTrajectory(AutoConstantRed.Away.STACK_TO_W_JUNCTION.get())
-                                .addTrajectory(AutoConstantRed.Away.W_JUNCTION_TO_STACK.get())
-                                .addTrajectory(AutoConstantRed.Away.STACK_TO_W_JUNCTION.get())
-                                .addTrajectory(AutoConstantRed.Away.W_JUNCTION_TO_PARK_LEFT.get())
+                                .addTrajectory(AutoConstantsBlue.Away.W_JUNCTION_TO_BETWEEN_TO_STACK.get())
+                                .addTrajectory(AutoConstantsBlue.Away.BETWEEN_T0_STACK_TO_STACK.get())
+                                .addTrajectory(AutoConstantsBlue.Away.STACK_TO_LEFT.get())
                                 .build()
                 );
 
