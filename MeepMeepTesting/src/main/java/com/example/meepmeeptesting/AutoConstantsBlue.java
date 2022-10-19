@@ -119,13 +119,14 @@ public class AutoConstantsBlue {
     // Away locations:
     public static class Home {
         public static Pose2d START = new Pose2d(-36, 66, toRadians(-90));
-        public static Pose2d STACK = new Pose2d(-62, 12, toRadians(180));
+        public static Pose2d STACK = new Pose2d(-60, 12, toRadians(180));
+        public static Pose2d BETWEEN = new Pose2d(-36, 20, toRadians(180));
         public static Pose2d LEFT = new Pose2d(-12, 36, toRadians(90));
         public static Pose2d MIDDLE = new Pose2d(-36, 36, toRadians(90));
         public static Pose2d RIGHT = new Pose2d(-60, 36, toRadians(0));
         // These have "home/away" modifiers, because we want to stay on "our side" during auto
         public static Pose2d N_JUNCTION = new Pose2d(18, -3, toRadians(-135));
-        public static Pose2d E_JUNCTION = new Pose2d(-28, 4, toRadians(-45));
+        public static Pose2d E_JUNCTION = new Pose2d(-30, 6, toRadians(-45));
         public static Pose2d S_JUNCTION = new Pose2d(-10, 30, toRadians(-135));
         public static Pose2d W_JUNCTION = new Pose2d(28, 4, toRadians(-135));
         // These are 'trajectory pieces' which should be named like this:
@@ -154,6 +155,22 @@ public class AutoConstantsBlue {
                 E_JUNCTION_TO_STACK =
                         () -> function.apply(E_JUNCTION)
                                 .lineToLinearHeading(STACK)
+                                .build(),
+                E_JUNCTION_TO_BETWEEN =
+                        () -> function.apply(E_JUNCTION)
+                                .lineToLinearHeading(BETWEEN)
+                                .build(),
+                BETWEEN_TO_STACK =
+                        () -> function.apply(BETWEEN)
+                                .lineToLinearHeading(STACK)
+                                .build(),
+                STACK_TO_BETWEEN =
+                        () -> function.apply(STACK)
+                                .lineToLinearHeading(BETWEEN)
+                                .build(),
+                BETWEEN_TO_E_JUNCTION =
+                        () -> function.apply(BETWEEN)
+                                .lineToLinearHeading(E_JUNCTION)
                                 .build(),
                 S_JUNCTION_TO_STACK =
                         () -> function.apply(S_JUNCTION)
