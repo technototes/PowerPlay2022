@@ -2,10 +2,18 @@ package org.firstinspires.ftc.twenty403.command.autonomous;
 
 import static java.lang.Math.toRadians;
 
+import java.util.Arrays;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
+import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.MecanumVelocityConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationConstraint;
 import com.technototes.path.trajectorysequence.TrajectorySequence;
 import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
 
@@ -28,45 +36,57 @@ public class AutoConstantsRed {
 
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
-        public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
+        public static double MAX_VEL = 50;
+        public static double MAX_ACCEL = 40;
+        public static double MAX_ANG_VEL = Math.toRadians(180);
+        public static double MAX_ANG_ACCEL = Math.toRadians(120);
+        public static double TRACK_WIDTH = 9.5;
+
+        public static MinVelocityConstraint MIN_VEL = new MinVelocityConstraint(Arrays.asList(
+                new AngularVelocityConstraint(MAX_ANG_VEL),
+                new MecanumVelocityConstraint(MAX_VEL, TRACK_WIDTH)
+        ));
+        public static ProfileAccelerationConstraint PROF_ACCEL = new ProfileAccelerationConstraint(MAX_ACCEL);
+        public static Function<Pose2d, TrajectoryBuilder> function = pose -> new TrajectoryBuilder(pose, MIN_VEL, PROF_ACCEL);
+        public static Supplier<Trajectory>
                 START_TO_W_JUNCTION =
-                b -> b.apply(START)
+                () -> function.apply(START)
                         .splineTo(W_JUNCTION.vec(), W_JUNCTION.getHeading())
                         .build(),
                 START_TO_S_JUNCTION =
-                        b -> b.apply(START)
+                        () -> function.apply(START)
                                 .splineTo(S_JUNCTION.vec(), S_JUNCTION.getHeading())
                                 .build(),
                 W_JUNCTION_TO_STACK =
-                        b -> b.apply(W_JUNCTION).lineToLinearHeading(STACK).build(),
+                        () -> function.apply(W_JUNCTION).lineToLinearHeading(STACK).build(),
                 S_JUNCTION_TO_STACK =
-                        b -> b.apply(S_JUNCTION).lineToLinearHeading(STACK).build(),
+                        () -> function.apply(S_JUNCTION).lineToLinearHeading(STACK).build(),
                 STACK_TO_W_JUNCTION =
-                        b -> b.apply(STACK).lineToLinearHeading(W_JUNCTION).build(),
+                        () -> function.apply(STACK).lineToLinearHeading(W_JUNCTION).build(),
                 STACK_TO_S_JUNCTION =
-                        b -> b.apply(STACK).lineToLinearHeading(S_JUNCTION).build(),
+                        () -> function.apply(STACK).lineToLinearHeading(S_JUNCTION).build(),
                 W_JUNCTION_TO_LEFT =
-                        b -> b.apply(W_JUNCTION)
+                        () -> function.apply(W_JUNCTION)
                                 .splineTo(LEFT.vec(), LEFT.getHeading())
                                 .build(),
                 W_JUNCTION_TO_MIDDLE =
-                        b -> b.apply(W_JUNCTION)
+                        () -> function.apply(W_JUNCTION)
                                 .splineTo(MIDDLE.vec(), MIDDLE.getHeading())
                                 .build(),
                 W_JUNCTION_TO_RIGHT =
-                        b -> b.apply(W_JUNCTION)
+                        () -> function.apply(W_JUNCTION)
                                 .splineTo(RIGHT.vec(), RIGHT.getHeading())
                                 .build(),
                 S_JUNCTION_TO_LEFT =
-                        b -> b.apply(S_JUNCTION)
+                        () -> function.apply(S_JUNCTION)
                                 .splineTo(LEFT.vec(), LEFT.getHeading())
                                 .build(),
                 S_JUNCTION_TO_MIDDLE =
-                        b -> b.apply(S_JUNCTION)
+                        () -> function.apply(S_JUNCTION)
                                 .splineTo(MIDDLE.vec(), MIDDLE.getHeading())
                                 .build(),
                 S_JUNCTION_TO_RIGHT =
-                        b -> b.apply(S_JUNCTION)
+                        () -> function.apply(S_JUNCTION)
                                 .splineTo(RIGHT.vec(), RIGHT.getHeading())
                                 .build();
     }
@@ -85,25 +105,37 @@ public class AutoConstantsRed {
         public static Pose2d W_JUNCTION = new Pose2d(28, 4, toRadians(-135));
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
-        public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
+        public static double MAX_VEL = 50;
+        public static double MAX_ACCEL = 40;
+        public static double MAX_ANG_VEL = Math.toRadians(180);
+        public static double MAX_ANG_ACCEL = Math.toRadians(120);
+        public static double TRACK_WIDTH = 9.5;
+
+        public static MinVelocityConstraint MIN_VEL = new MinVelocityConstraint(Arrays.asList(
+                new AngularVelocityConstraint(MAX_ANG_VEL),
+                new MecanumVelocityConstraint(MAX_VEL, TRACK_WIDTH)
+        ));
+        public static ProfileAccelerationConstraint PROF_ACCEL = new ProfileAccelerationConstraint(MAX_ACCEL);
+        public static Function<Pose2d, TrajectoryBuilder> function = pose -> new TrajectoryBuilder(pose, MIN_VEL, PROF_ACCEL);
+        public static Supplier<Trajectory>
                 START_TO_E_JUNCTION =
-                b -> b.apply(START)
+                () -> function.apply(START)
                         .splineTo(E_JUNCTION.vec(), E_JUNCTION.getHeading())
                         .build(),
                 START_TO_S_JUNCTION =
-                        b -> b.apply(START)
+                        () -> function.apply(START)
                                 .splineTo(S_JUNCTION.vec(), S_JUNCTION.getHeading())
                                 .build(),
                 E_JUNCTION_TO_STACK =
-                        b -> b.apply(E_JUNCTION).lineToLinearHeading(STACK).build(),
+                        () -> function.apply(E_JUNCTION).lineToLinearHeading(STACK).build(),
                 S_JUNCTION_TO_STACK =
-                        b -> b.apply(S_JUNCTION).lineToLinearHeading(STACK).build(),
+                        () -> function.apply(S_JUNCTION).lineToLinearHeading(STACK).build(),
                 STACK_TO_E_JUNCTION =
-                        b -> b.apply(STACK).lineToLinearHeading(E_JUNCTION).build(),
+                        () -> function.apply(STACK).lineToLinearHeading(E_JUNCTION).build(),
                 STACK_TO_S_JUNCTION =
-                        b -> b.apply(STACK).lineToLinearHeading(S_JUNCTION).build(),
+                        () -> function.apply(STACK).lineToLinearHeading(S_JUNCTION).build(),
                 E_JUNCTION_LEFT =
-                        b -> b.apply(E_JUNCTION)
+                        () -> function.apply(E_JUNCTION)
                                 .splineTo(LEFT.vec(), LEFT.getHeading())
                                 .build();
     }
