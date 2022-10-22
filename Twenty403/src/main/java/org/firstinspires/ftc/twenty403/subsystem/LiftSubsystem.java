@@ -49,7 +49,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
     }
 
-    private void setPosition(double lpos,double rpos) {
+    private void setPosition(double lpos, double rpos) {
         leftPidController.setTargetPosition(Range.clip(lpos, MIN_HEIGHT, MAX_HEIGHT));
         rightPidController.setTargetPosition(Range.clip(rpos, MIN_HEIGHT, MAX_HEIGHT));
     }
@@ -97,17 +97,18 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         setLiftPosition(leftPidController.getTargetPosition(), rightPidController.getTargetPosition());
     }
 
-//    public double delta() {
-//        return leftPidController.getTargetPosition() - leftMotor.getDevice().getCurrentPosition();
-//        return rightPidController.getTargetPosition() - rightMotor.getDevice().getCurrentPosition();
-//    }
+    //    public double delta() {
+    //        return leftPidController.getTargetPosition() - leftMotor.getDevice().getCurrentPosition();
+    //        return rightPidController.getTargetPosition() - rightMotor.getDevice().getCurrentPosition();
+    //    }
 
-//    public boolean isAtTarget() {
-//        return Math.abs(delta()) < DEAD_ZONE;
-//    }
+    //    public boolean isAtTarget() {
+    //        return Math.abs(delta()) < DEAD_ZONE;
+    //    }
 
     @Log(name = "lEncMotor Pos (Actual)")
     public volatile String lpAndActual = "(unknown)";
+
     @Log(name = "rEncMotor Pos (Actual)")
     public volatile String rpAndActual = "(unknown)";
 
@@ -115,20 +116,20 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public Double get() {
         // Not sure about this one
         return leftPidController.getTargetPosition();
-//        return rightPidController.getTargetPosition();
+        //        return rightPidController.getTargetPosition();
     }
 
-//    private boolean closeEnough(double currentPostion, double targetPostion) {
-//        double error = currentPostion - targetPostion;
-//        if (error <= DEAD_ZONE && error >= -DEAD_ZONE) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
+    //    private boolean closeEnough(double currentPostion, double targetPostion) {
+    //        double error = currentPostion - targetPostion;
+    //        if (error <= DEAD_ZONE && error >= -DEAD_ZONE) {
+    //            return true;
+    //        } else {
+    //            return false;
+    //        }
+    //    }
 
     public void highPole() {
-       setLiftPosition(LHIGH_JUNCTION, RHIGH_JUNCTION);
+        setLiftPosition(LHIGH_JUNCTION, RHIGH_JUNCTION);
     }
 
     public void midPole() {
@@ -138,6 +139,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public void lowPole() {
         setLiftPosition(LLOW_JUNCTION, RLOW_JUNCTION);
     }
+
     public void groundJunction() {
         setLiftPosition(LGROUND_JUNCTION, RGROUND_JUNCTION);
     }
@@ -151,6 +153,6 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public void moveDown() {
         // maybe getCurrentPosition instead of getTargetPosition
         double position = leftPidController.getTargetPosition();
-        setLiftPosition(position - LMOVE, position -RMOVE);
+        setLiftPosition(position - LMOVE, position - RMOVE);
     }
 }

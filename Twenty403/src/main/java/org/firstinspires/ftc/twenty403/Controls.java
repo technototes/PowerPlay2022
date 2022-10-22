@@ -39,6 +39,5 @@ public class Controls {
 
     public void bindPathTestingButton() {
         pathTestingButton.whenPressed(new AutoBluePathingTest(robot.drivebaseSubsystem));
-
     }
 }
