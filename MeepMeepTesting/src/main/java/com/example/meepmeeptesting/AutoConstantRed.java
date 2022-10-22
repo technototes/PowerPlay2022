@@ -136,16 +136,12 @@ public class AutoConstantRed {
                                 .build(),
                 SIXOCLOCK_JUNCTION_TO_PARK_MIDDLE =
                         () -> function.apply(E_JUNCTION)
-                                .lineToLinearHeading(PARK_MIDDLE).
-                                build();
-        E_JUNCTION_TO_BETWEEN =
-                ()->function.apply(E_JUNCTION)
-                .
-
-        lineToLinearHeading(E_JUNCTION)
-        .
-
-        build();
+                                .lineToLinearHeading(PARK_MIDDLE)
+                                .build(),
+                E_JUNCTION_TO_BETWEEN =
+                        () -> function.apply(E_JUNCTION)
+                                .lineToLinearHeading(E_JUNCTION)
+                                .build();
 
     }
 
