@@ -22,6 +22,6 @@ public class AutoRedAwayGroup extends SequentialCommandGroup {
                 // ,
                 // TODO: This should call the vision choice command to decide where to park
                 // new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.E_JUNCTION_LEFT)
-        );
+                );
     }
 }
