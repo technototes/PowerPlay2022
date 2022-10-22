@@ -18,7 +18,26 @@ public class MeepMeepTesting {
                         drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
                                 .addTrajectory(AutoConstantsBlue.Home.START_TO_E_JUNCTION.get())
                                 .addTrajectory(AutoConstantsBlue.Home.E_JUNCTION_TO_BETWEEN.get())
-                                .addTrajectory(AutoConstantsBlue.Home.)
+                                .addTrajectory(AutoConstantsBlue.Home.BETWEEN_TO_STACK.get())
+                                .addTrajectory(AutoConstantsBlue.Home.STACK_TO_BETWEEN.get())
+                                .addTrajectory(AutoConstantsBlue.Home.BETWEEN_TO_E_JUNCTION.get())
+                                .addTrajectory(AutoConstantsBlue.Home.E_JUNCTION_TO_BETWEEN.get())
+                                .addTrajectory(AutoConstantsBlue.Home.BETWEEN_TO_STACK.get())
+                                .addTrajectory(AutoConstantsBlue.Home.STACK_TO_BETWEEN.get())
+                                .addTrajectory(AutoConstantsBlue.Home.BETWEEN_TO_E_JUNCTION.get())
+                                .addTrajectory(AutoConstantsBlue.Home.E_JUNCTION_TO_BETWEEN.get())
+                                .addTrajectory(AutoConstantsBlue.Home.BETWEEN_TO_STACK.get())
+                                .addTrajectory(AutoConstantsBlue.Home.STACK_TO_BETWEEN.get())
+                                .addTrajectory(AutoConstantsBlue.Home.BETWEEN_TO_E_JUNCTION.get())
+                                .addTrajectory(AutoConstantsBlue.Home.E_JUNCTION_TO_BETWEEN.get())
+                                .addTrajectory(AutoConstantsBlue.Home.BETWEEN_TO_STACK.get())
+                                .addTrajectory(AutoConstantsBlue.Home.STACK_TO_BETWEEN.get())
+                                .addTrajectory(AutoConstantsBlue.Home.BETWEEN_TO_E_JUNCTION.get())
+                                .addTrajectory(AutoConstantsBlue.Home.E_JUNCTION_TO_BETWEEN_2.get())
+                                .addTrajectory(AutoConstantsBlue.Home.BETWEEN_2_TO_BETWEEN_3.get())
+                                .addTrajectory(AutoConstantsBlue.Home.BETWEEN_3_TO_LEFT.get())
+
+
 
 
 
