@@ -31,7 +31,7 @@ public class ConeSubsystem implements Subsystem {
         lift.highPole();
     }
 
-    public void scoreMediumJuction() {
+    public void scoreMediumJunction() {
         lift.midPole();
         claw.release();
         claw.open();

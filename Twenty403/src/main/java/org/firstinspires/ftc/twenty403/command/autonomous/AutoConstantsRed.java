@@ -73,7 +73,7 @@ public class AutoConstantsRed {
                         b -> b.apply(S_JUNCTION)
                                 .splineTo(MIDDLE.vec(), MIDDLE.getHeading())
                                 .build(),
-                SIXCLOCK_JUNCTION_TO_RIGHT =
+                S_JUNCTION_TO_RIGHT =
                         b -> b.apply(S_JUNCTION)
                                 .splineTo(RIGHT.vec(), RIGHT.getHeading())
                                 .build();
@@ -103,21 +103,13 @@ public class AutoConstantsRed {
                                 .splineTo(S_JUNCTION.vec(), S_JUNCTION.getHeading())
                                 .build(),
                 E_JUNCTION_TO_STACK =
-                        b -> b.apply(E_JUNCTION)
-                                .lineToLinearHeading(STACK)
-                                .build(),
+                        b -> b.apply(E_JUNCTION).lineToLinearHeading(STACK).build(),
                 S_JUNCTION_TO_STACK =
-                        b -> b.apply(S_JUNCTION)
-                                .lineToLinearHeading(STACK)
-                                .build(),
+                        b -> b.apply(S_JUNCTION).lineToLinearHeading(STACK).build(),
                 STACK_TO_E_JUNCTION =
-                        b -> b.apply(STACK)
-                                .lineToLinearHeading(E_JUNCTION)
-                                .build(),
+                        b -> b.apply(STACK).lineToLinearHeading(E_JUNCTION).build(),
                 STACK_TO_S_JUNCTION =
-                        b -> b.apply(STACK)
-                                .lineToLinearHeading(S_JUNCTION)
-                                .build(),
+                        b -> b.apply(STACK).lineToLinearHeading(S_JUNCTION).build(),
                 E_JUNCTION_LEFT =
                         b -> b.apply(E_JUNCTION)
                                 .splineTo(LEFT.vec(), LEFT.getHeading())
