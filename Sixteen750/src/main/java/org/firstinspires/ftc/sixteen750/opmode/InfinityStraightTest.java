@@ -13,7 +13,7 @@ import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequence;
 @Config
 @Autonomous(group = "drive")
 public class InfinityStraightTest extends LinearOpMode {
-    public static double DISTANCE = 30; // in
+    public static double DISTANCE = 50; // in
     int loopCount = 0;
 
     @Override
@@ -28,6 +28,7 @@ public class InfinityStraightTest extends LinearOpMode {
                 .build();
 
         waitForStart();
+        drive.enableDebugTelemetry(telemetry, true);
         drive.startIMUThread(this);
         if (isStopRequested()) return;
 

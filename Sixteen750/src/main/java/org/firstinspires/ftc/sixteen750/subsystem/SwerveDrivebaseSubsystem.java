@@ -80,6 +80,7 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
     public double leftFrontModuleCurrentOrientation, rightFrontModuleCurrentOrientation, leftRearModuleCurrentOrientation, rightRearModuleCurrentOrientation = 0;
     private boolean debugTelemetryEnabled = false;
     private Telemetry telemetry;
+    private boolean telemetryCallUpdate = false;
 
     /*
      * Constants shared between multiple drive types.
@@ -488,9 +489,10 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
         rightFrontModule.setServoPower(v3);
     }
 
-    public void enableDebugTelemetry(Telemetry telemetry){
+    public void enableDebugTelemetry(Telemetry telemetry, boolean callUpdate){
         this.telemetry = telemetry;
         this.debugTelemetryEnabled = true;
+        this.telemetryCallUpdate = callUpdate;
     }
 
     public void debugTelemetry(Telemetry telemetry){
@@ -503,6 +505,9 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
             telemetry.addData("RightFrontCurrentOrientation", this.rightFrontModuleCurrentOrientation);
             telemetry.addData("RightRearTargetOrientation", this.rightRearModuleTargetOrientation);
             telemetry.addData("RightRearCurrentOrientation", this.rightRearModuleCurrentOrientation);
+            if (this.telemetryCallUpdate){
+                telemetry.update();
+            }
         }
     }
 }
