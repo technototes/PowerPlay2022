@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class AutoConstantRed {
+public class AutoConstantsRed {
     public static class Away {
         public static Pose2d START = new Pose2d(36, -66, toRadians(90));
         public static Pose2d STACK = new Pose2d(60, -12, toRadians(0));
@@ -78,7 +78,7 @@ public class AutoConstantRed {
         public static Pose2d PARK_RIGHT = new Pose2d(-12, -36, toRadians(-90));
         public static Pose2d E_JUNCTION = new Pose2d(-28, -4, toRadians(13));
         public static Pose2d S_JUNCTION = new Pose2d(-4, -28, toRadians(45));
-        public static Pose2d E_JUNCTION_STACK_BETWEEN = new Pose2d(-45, -12, toRadians(0));
+        public static Pose2d BETWEEN = new Pose2d(-45, -12, toRadians(0));
 
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
@@ -97,50 +97,50 @@ public class AutoConstantRed {
         public static Supplier<Trajectory>
 
 
-                START_TO_NINEOCLOCK_JUNCTION =
+                START_TO_W_JUNCTION =
                 () -> function.apply(START)
                         .splineTo(E_JUNCTION.vec(), E_JUNCTION.getHeading())
                         .build(),
-        //START_TO_SIXOCLOCK_JUNCTION=
+        //START_TO_S_JUNCTION=
         //   () -> function.apply(START).lineToLinearHeading().build()
-        NINEOCLOCK_TO_STACK =
+        W_TO_STACK =
                 () -> function.apply(E_JUNCTION)
                         .lineToLinearHeading(STACK)
 //                            .splineTo(E_JUNCTION.vec(), E_JUNCTION.getHeading()
                         .build(),
-                STACK_TO_NINEOCLOCK_JUNCTION =
+                STACK_TO_W_JUNCTION =
                         () -> function.apply(STACK)
                                 .lineToLinearHeading(E_JUNCTION)
                                 .build(),
-        //STACK_TO_SIXOCLOCK_JUNCTION=
+        //STACK_TO_S_JUNCTION=
         //() -> function.apply(STACK).lineToLinearHeading().build(),
-        NINEOCLOCK_JUNCTION_TO_PARK_LEFT =
+        W_JUNCTION_TO_PARK_LEFT =
                 () -> function.apply(E_JUNCTION)
                         .lineToLinearHeading(PARK_LEFT)
                         .build(),
-                NINEOCLOCK_JUNCTION_TO_PARK_RIGHT =
+                W_JUNCTION_TO_PARK_RIGHT =
                         () -> function.apply(E_JUNCTION)
                                 .lineToLinearHeading(PARK_RIGHT)
                                 .build(),
-                NINEOCLOCK_JUNCTION_TO_PARK_MIDDLE =
+                W_JUNCTION_TO_PARK_MIDDLE =
                         () -> function.apply(E_JUNCTION)
                                 .lineToLinearHeading(PARK_MIDDLE)
                                 .build(),
-                SIXOCLOCK_JUNCTION_TO_PARK_LEFT =
+                S_JUNCTION_TO_PARK_LEFT =
                         () -> function.apply(E_JUNCTION)
                                 .lineToLinearHeading(PARK_LEFT)
                                 .build(),
-                SIXOCLOCK_JUNCTION_TO_PARK_RIGHT =
+                S_JUNCTION_TO_PARK_RIGHT =
                         () -> function.apply(E_JUNCTION)
                                 .lineToLinearHeading(PARK_RIGHT)
                                 .build(),
-                SIXOCLOCK_JUNCTION_TO_PARK_MIDDLE =
+                S_JUNCTION_TO_PARK_MIDDLE =
                         () -> function.apply(E_JUNCTION)
                                 .lineToLinearHeading(PARK_MIDDLE)
                                 .build(),
                 E_JUNCTION_TO_BETWEEN =
                         () -> function.apply(E_JUNCTION)
-                                .lineToLinearHeading(E_JUNCTION)
+                                .lineToLinearHeading(BETWEEN)
                                 .build();
 
     }
