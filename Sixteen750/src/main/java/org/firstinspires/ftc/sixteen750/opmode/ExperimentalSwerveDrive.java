@@ -41,7 +41,7 @@ public class ExperimentalSwerveDrive extends CommandOpMode {
     @Override
     public void uponStart() {
         /// Right after waitForStart()
-        drive.enableDebugTelemetry(telemetry, false);
+        drive.enableDiagnoseTelemetry(telemetry, false);
         drive.startIMUThread(this);
         t = new ElapsedTime();
     }

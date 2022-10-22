@@ -38,6 +38,8 @@ import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequenceRunner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.function.Function;
 
 public class SwerveDrivebaseSubsystem extends SwerveDrive {
     public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(4, 0, 0);
@@ -81,6 +83,7 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
     private boolean debugTelemetryEnabled = false;
     private Telemetry telemetry;
     private boolean telemetryCallUpdate = false;
+    public Function<SwerveDrivebaseSubsystem, Integer> updateCallback = null;
 
     /*
      * Constants shared between multiple drive types.
@@ -355,7 +358,10 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
         DriveSignal signal = trajectorySequenceRunner.update(getPoseEstimate(), getPoseVelocity());
         if (signal != null) setDriveSignal(signal);
         if (debugTelemetryEnabled){
-            debugTelemetry(this.telemetry);
+            modulesOrientationTelemetry(this.telemetry, this.telemetryCallUpdate);
+        }
+        if (this.updateCallback != null){
+            this.updateCallback.apply(this);
         }
     }
 
@@ -489,13 +495,13 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
         rightFrontModule.setServoPower(v3);
     }
 
-    public void enableDebugTelemetry(Telemetry telemetry, boolean callUpdate){
+    public void enableDiagnoseTelemetry(Telemetry telemetry, boolean callUpdate){
         this.telemetry = telemetry;
         this.debugTelemetryEnabled = true;
         this.telemetryCallUpdate = callUpdate;
     }
 
-    public void debugTelemetry(Telemetry telemetry){
+    public void modulesOrientationTelemetry(Telemetry telemetry, boolean callUpdate){
         if (telemetry != null){
             telemetry.addData("LeftFrontTargetOrientation", this.leftFrontModuleTargetOrientation);
             telemetry.addData("LeftFrontCurrentOrientation", this.leftFrontModuleCurrentOrientation);
@@ -505,7 +511,7 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
             telemetry.addData("RightFrontCurrentOrientation", this.rightFrontModuleCurrentOrientation);
             telemetry.addData("RightRearTargetOrientation", this.rightRearModuleTargetOrientation);
             telemetry.addData("RightRearCurrentOrientation", this.rightRearModuleCurrentOrientation);
-            if (this.telemetryCallUpdate){
+            if (callUpdate){
                 telemetry.update();
             }
         }

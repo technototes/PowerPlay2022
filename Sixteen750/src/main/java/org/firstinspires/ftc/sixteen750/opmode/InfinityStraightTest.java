@@ -7,14 +7,33 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem;
 import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequence;
 
 @Config
 @Autonomous(group = "drive")
 public class InfinityStraightTest extends LinearOpMode {
-    public static double DISTANCE = 50; // in
+    public static double DISTANCE = 100; // in
     int loopCount = 0;
+
+    public Integer updateCallback(SwerveDrivebaseSubsystem drive, Telemetry telemetry){
+        Pose2d poseEstimate = drive.getPoseEstimate();
+        telemetry.addData("X", poseEstimate.getX());
+        telemetry.addData("Y", poseEstimate.getY());
+        telemetry.addData("Heading", poseEstimate.getHeading());
+        telemetry.addData("Loop", loopCount);
+        telemetry.addData("LeftFrontTargetOrientation", drive.leftFrontModuleTargetOrientation);
+        telemetry.addData("LeftFrontCurrentOrientation", drive.leftFrontModuleCurrentOrientation);
+        telemetry.addData("LeftRearTargetOrientation", drive.leftRearModuleTargetOrientation);
+        telemetry.addData("LeftRearCurrentOrientation", drive.leftRearModuleCurrentOrientation);
+        telemetry.addData("RightFrontTargetOrientation", drive.rightFrontModuleTargetOrientation);
+        telemetry.addData("RightFrontCurrentOrientation", drive.rightFrontModuleCurrentOrientation);
+        telemetry.addData("RightRearTargetOrientation", drive.rightRearModuleTargetOrientation);
+        telemetry.addData("RightRearCurrentOrientation", drive.rightRearModuleCurrentOrientation);
+        telemetry.update();
+        return 0;
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -27,20 +46,16 @@ public class InfinityStraightTest extends LinearOpMode {
                 .back(DISTANCE)
                 .build();
 
+        drive.updateCallback = d -> updateCallback(d, telemetry);
+
         waitForStart();
-        drive.enableDebugTelemetry(telemetry, true);
+
+        drive.enableDiagnoseTelemetry(telemetry, false);
         drive.startIMUThread(this);
         if (isStopRequested()) return;
 
         while (!isStopRequested() && opModeIsActive()) {
             drive.followTrajectorySequence(trajectory);
-
-            Pose2d poseEstimate = drive.getPoseEstimate();
-            telemetry.addData("finalX", poseEstimate.getX());
-            telemetry.addData("finalY", poseEstimate.getY());
-            telemetry.addData("finalHeading", poseEstimate.getHeading());
-            telemetry.addData("Loop", loopCount);
-            telemetry.update();
             loopCount++;
         }
     }
