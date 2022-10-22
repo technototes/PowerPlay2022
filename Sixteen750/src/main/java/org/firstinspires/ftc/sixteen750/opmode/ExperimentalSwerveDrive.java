@@ -9,18 +9,15 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.technototes.library.structure.CommandOpMode;
 
-import org.firstinspires.ftc.sixteen750.Controls;
-import org.firstinspires.ftc.sixteen750.Hardware;
-import org.firstinspires.ftc.sixteen750.Robot;
 import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem;
 
 @SuppressWarnings("unused")
 @TeleOp(group = "ExperimentalSwerveDrive")
 public class ExperimentalSwerveDrive extends CommandOpMode {
     /// Standard Code
-    public Robot robot;
-    public Controls controls;
-    public Hardware hardware;
+//    public Robot robot;
+//    public Controls controls;
+//    public Hardware hardware;
 
     /// Before waitForStart()
     SwerveDrivebaseSubsystem drive;
@@ -30,9 +27,9 @@ public class ExperimentalSwerveDrive extends CommandOpMode {
     @Override
     public void uponInit() {
         /// Standard Code
-        hardware = new Hardware();
-        robot = new Robot(hardware);
-        controls = new Controls(robot);
+//        hardware = new Hardware();
+//        robot = new Robot(hardware);
+//        controls = new Controls(robot);
 
         /// Before waitForStart()
         drive = new SwerveDrivebaseSubsystem(hardwareMap);
@@ -73,14 +70,22 @@ public class ExperimentalSwerveDrive extends CommandOpMode {
 
         telemetry.addData("x", poseEstimate.getX());
         telemetry.addData("y", poseEstimate.getY());
-        telemetry.addData("heading", poseEstimate.getHeading());
-        telemetry.addData("current", drive.rightFrontModule.getModuleRotation());
-        telemetry.addData("target", drive.rightFrontModule.getTargetRotation());
-        telemetry.addData("imuuuu", drive.getRawExternalHeading());
+//        telemetry.addData("heading", poseEstimate.getHeading());
+//        telemetry.addData("current", drive.rightFrontModule.getModuleRotation());
+//        telemetry.addData("target", drive.rightFrontModule.getTargetRotation());
+//        telemetry.addData("imuuuu", drive.getRawExternalHeading());
     //  TelemetryPacket packet = new TelemetryPacket();
     //  Canvas fieldOverlay = packet.fieldOverlay();
     //  DashboardUtil.drawRobot(fieldOverlay, poseEstimate);
     //  FtcDashboard.getInstance().sendTelemetryPacket(packet);
+        telemetry.addData("LeftFrontTargetOrientation", drive.leftFrontModuleTargetOrientation);
+        telemetry.addData("LeftFrontCurrentOrientation", drive.leftFrontModuleCurrentOrientation);
+        telemetry.addData("LeftRearTargetOrientation", drive.leftRearModuleTargetOrientation);
+        telemetry.addData("LeftRearCurrentOrientation", drive.leftRearModuleCurrentOrientation);
+        telemetry.addData("RightFrontTargetOrientation", drive.rightFrontModuleTargetOrientation);
+        telemetry.addData("RightFrontCurrentOrientation", drive.rightFrontModuleCurrentOrientation);
+        telemetry.addData("RightRearTargetOrientation", drive.rightRearModuleTargetOrientation);
+        telemetry.addData("RightRearCurrentOrientation", drive.rightRearModuleCurrentOrientation);
         telemetry.update();
     }
 }

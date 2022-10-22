@@ -74,6 +74,10 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
     @GuardedBy("IMULock")
     private BNO055IMU imu;
 
+    // Extra logging
+    public double leftFrontModuleTargetOrientation, rightFrontModuleTargetOrientation, leftRearModuleTargetOrientation, rightRearModuleTargetOrientation = 0;
+    public double leftFrontModuleCurrentOrientation, rightFrontModuleCurrentOrientation, leftRearModuleCurrentOrientation, rightRearModuleCurrentOrientation = 0;
+
     /*
      * Constants shared between multiple drive types.
      *
@@ -454,11 +458,21 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
 
 
     @Override
-    public void setModuleOrientations(double v, double v1, double v2, double v3) {
-        leftFrontModule.setTargetRotation(v);
+    public void setModuleOrientations(double v0, double v1, double v2, double v3) {
+        leftFrontModule.setTargetRotation(v0);
         leftRearModule.setTargetRotation(v1);
         rightRearModule.setTargetRotation(v2);
         rightFrontModule.setTargetRotation(v3);
+
+        leftFrontModuleTargetOrientation = leftFrontModule.getTargetRotation();
+        leftRearModuleTargetOrientation = leftRearModule.getTargetRotation();
+        rightRearModuleTargetOrientation = rightRearModule.getTargetRotation();
+        rightFrontModuleTargetOrientation = rightFrontModule.getTargetRotation();
+
+        leftFrontModuleCurrentOrientation = leftFrontModule.getModuleRotation();
+        leftRearModuleCurrentOrientation = leftRearModule.getModuleRotation();
+        rightRearModuleCurrentOrientation = rightRearModule.getModuleRotation();
+        rightFrontModuleCurrentOrientation = rightFrontModule.getModuleRotation();
     }
 
     public void setModuleVelocities(double v, double v1, double v2, double v3) {
