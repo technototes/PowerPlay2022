@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.twenty403;
 
 import org.firstinspires.ftc.twenty403.Robot.RobotConstant;
+import org.firstinspires.ftc.twenty403.command.autonomous.AutoBluePathingTest;
 import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
 
 import com.technototes.library.command.CommandScheduler;
@@ -13,6 +14,7 @@ public class Controls {
     public CommandGamepad gamepad;
     public Stick driveLeftStick, driveRightStick;
     public CommandButton resetGyroButton, driveStraightenButton, snailSpeedButton;
+    public CommandButton pathTestingButton;
 
     public Controls(CommandGamepad g, Robot r) {
         this.robot = r;
@@ -21,6 +23,7 @@ public class Controls {
         driveLeftStick = gamepad.leftStick;
         driveRightStick = gamepad.rightStick;
         driveStraightenButton = gamepad.square;
+        pathTestingButton = gamepad.cross;
         if (RobotConstant.DRIVE_CONNECTED) {
             bindDriveControls();
         }
@@ -32,5 +35,10 @@ public class Controls {
                         robot.drivebaseSubsystem, driveLeftStick, driveRightStick, driveStraightenButton));
         //        resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
         //        snailSpeedButton.whilePressedOnce(new SetSpeedCommand(robot.drivebaseSubsystem));
+    }
+
+    public void bindPathTestingButton() {
+        pathTestingButton.whenPressed(new AutoBluePathingTest(robot.drivebaseSubsystem));
+
     }
 }
