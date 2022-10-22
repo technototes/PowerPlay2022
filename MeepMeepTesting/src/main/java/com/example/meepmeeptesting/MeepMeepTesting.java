@@ -38,6 +38,16 @@ public class MeepMeepTesting {
                                 .addTrajectory(AutoConstantsBlue.Away.STACK_TO_BETWEEN_TO_JUNCTION.get())
                                 .addTrajectory(AutoConstantsBlue.Away.BETWEEN_TO_JUNCTION_TO_JUNCTION.get())
                                 .addTrajectory(AutoConstantsBlue.Away.W_JUNCTION_TO_LEFT.get())
+                                .addTrajectory(AutoConstantRed.Away.START_TO_W_JUNCTION.get())
+                                .addTrajectory(AutoConstantRed.Away.W_JUNCTION_TO_STACK.get())
+                                .addTrajectory(AutoConstantRed.Away.STACK_TO_W_JUNCTION.get())
+                                .addTrajectory(AutoConstantRed.Away.W_JUNCTION_TO_STACK.get())
+                                .addTrajectory(AutoConstantRed.Away.STACK_TO_W_JUNCTION.get())
+                                .addTrajectory(AutoConstantRed.Away.W_JUNCTION_TO_STACK.get())
+                                .addTrajectory(AutoConstantRed.Away.STACK_TO_W_JUNCTION.get())
+                                .addTrajectory(AutoConstantRed.Away.W_JUNCTION_TO_STACK.get())
+                                .addTrajectory(AutoConstantRed.Away.STACK_TO_W_JUNCTION.get())
+                                .addTrajectory(AutoConstantRed.Away.W_JUNCTION_TO_PARK_LEFT.get())
                                 .build()
                 );
 
