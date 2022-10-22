@@ -27,6 +27,7 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.outoftheboxrobotics.photoncore.PhotonCore;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.sixteen750.swerve_util.BetterSwerveLocalizer;
 import org.firstinspires.ftc.sixteen750.swerve_util.SwerveModule;
 import org.firstinspires.ftc.sixteen750.swerve_util.LynxModuleUtil;
@@ -77,6 +78,8 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
     // Extra logging
     public double leftFrontModuleTargetOrientation, rightFrontModuleTargetOrientation, leftRearModuleTargetOrientation, rightRearModuleTargetOrientation = 0;
     public double leftFrontModuleCurrentOrientation, rightFrontModuleCurrentOrientation, leftRearModuleCurrentOrientation, rightRearModuleCurrentOrientation = 0;
+    private boolean debugTelemetryEnabled = false;
+    private Telemetry telemetry;
 
     /*
      * Constants shared between multiple drive types.
@@ -350,6 +353,9 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
         updatePoseEstimate();
         DriveSignal signal = trajectorySequenceRunner.update(getPoseEstimate(), getPoseVelocity());
         if (signal != null) setDriveSignal(signal);
+        if (debugTelemetryEnabled){
+            debugTelemetry(this.telemetry);
+        }
     }
 
     public void waitForIdle() {
@@ -480,5 +486,23 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
         leftRearModule.setServoPower(v1);
         rightRearModule.setServoPower(v2);
         rightFrontModule.setServoPower(v3);
+    }
+
+    public void enableDebugTelemetry(Telemetry telemetry){
+        this.telemetry = telemetry;
+        this.debugTelemetryEnabled = true;
+    }
+
+    public void debugTelemetry(Telemetry telemetry){
+        if (telemetry != null){
+            telemetry.addData("LeftFrontTargetOrientation", this.leftFrontModuleTargetOrientation);
+            telemetry.addData("LeftFrontCurrentOrientation", this.leftFrontModuleCurrentOrientation);
+            telemetry.addData("LeftRearTargetOrientation", this.leftRearModuleTargetOrientation);
+            telemetry.addData("LeftRearCurrentOrientation", this.leftRearModuleCurrentOrientation);
+            telemetry.addData("RightFrontTargetOrientation", this.rightFrontModuleTargetOrientation);
+            telemetry.addData("RightFrontCurrentOrientation", this.rightFrontModuleCurrentOrientation);
+            telemetry.addData("RightRearTargetOrientation", this.rightRearModuleTargetOrientation);
+            telemetry.addData("RightRearCurrentOrientation", this.rightRearModuleCurrentOrientation);
+        }
     }
 }

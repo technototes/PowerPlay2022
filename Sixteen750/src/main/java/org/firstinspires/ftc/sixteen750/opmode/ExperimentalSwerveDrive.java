@@ -41,6 +41,7 @@ public class ExperimentalSwerveDrive extends CommandOpMode {
     @Override
     public void uponStart() {
         /// Right after waitForStart()
+        drive.enableDebugTelemetry(telemetry);
         drive.startIMUThread(this);
         t = new ElapsedTime();
     }
@@ -78,14 +79,8 @@ public class ExperimentalSwerveDrive extends CommandOpMode {
     //  Canvas fieldOverlay = packet.fieldOverlay();
     //  DashboardUtil.drawRobot(fieldOverlay, poseEstimate);
     //  FtcDashboard.getInstance().sendTelemetryPacket(packet);
-        telemetry.addData("LeftFrontTargetOrientation", drive.leftFrontModuleTargetOrientation);
-        telemetry.addData("LeftFrontCurrentOrientation", drive.leftFrontModuleCurrentOrientation);
-        telemetry.addData("LeftRearTargetOrientation", drive.leftRearModuleTargetOrientation);
-        telemetry.addData("LeftRearCurrentOrientation", drive.leftRearModuleCurrentOrientation);
-        telemetry.addData("RightFrontTargetOrientation", drive.rightFrontModuleTargetOrientation);
-        telemetry.addData("RightFrontCurrentOrientation", drive.rightFrontModuleCurrentOrientation);
-        telemetry.addData("RightRearTargetOrientation", drive.rightRearModuleTargetOrientation);
-        telemetry.addData("RightRearCurrentOrientation", drive.rightRearModuleCurrentOrientation);
+        telemetry.addData("LeftStick-X", gamepad1.left_stick_x);
+        telemetry.addData("LeftStick-Y", gamepad1.left_stick_y);
         telemetry.update();
     }
 }
