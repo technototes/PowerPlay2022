@@ -9,6 +9,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.technototes.path.trajectorysequence.TrajectorySequence;
 import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
 
+
 public class AutoConstantsRed {
     // "Home" locations: (The side with the Red terminal)
     public static class Home {
