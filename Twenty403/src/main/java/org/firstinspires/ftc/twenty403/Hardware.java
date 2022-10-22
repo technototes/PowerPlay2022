@@ -13,10 +13,10 @@ import com.technototes.library.hardware.sensor.IMU;
 public class Hardware {
     @Config
     public static class HardwareConstant {
-        public static String FL_MOTOR = "motorFL";
-        public static String FR_MOTOR = "motorFR";
-        public static String RL_MOTOR = "motorRL"; // bad
-        public static String RR_MOTOR = "motorRR";
+        public static String FL_MOTOR = "FLMOTOR";
+        public static String FR_MOTOR = "FRMOTOR";
+        public static String RL_MOTOR = "RLMOTOR"; // bad
+        public static String RR_MOTOR = "RRMOTOR";
         public static String IMU = "imu";
     }
 

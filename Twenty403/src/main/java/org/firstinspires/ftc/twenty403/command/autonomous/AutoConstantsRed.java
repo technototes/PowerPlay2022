@@ -38,21 +38,13 @@ public class AutoConstantsRed {
                                 .splineTo(S_JUNCTION.vec(), S_JUNCTION.getHeading())
                                 .build(),
                 W_JUNCTION_TO_STACK =
-                        b -> b.apply(W_JUNCTION)
-                                .lineToLinearHeading(STACK)
-                                .build(),
+                        b -> b.apply(W_JUNCTION).lineToLinearHeading(STACK).build(),
                 S_JUNCTION_TO_STACK =
-                        b -> b.apply(S_JUNCTION)
-                                .lineToLinearHeading(STACK)
-                                .build(),
+                        b -> b.apply(S_JUNCTION).lineToLinearHeading(STACK).build(),
                 STACK_TO_W_JUNCTION =
-                        b -> b.apply(STACK)
-                                .lineToLinearHeading(W_JUNCTION)
-                                .build(),
+                        b -> b.apply(STACK).lineToLinearHeading(W_JUNCTION).build(),
                 STACK_TO_S_JUNCTION =
-                        b -> b.apply(STACK)
-                                .lineToLinearHeading(S_JUNCTION)
-                                .build(),
+                        b -> b.apply(STACK).lineToLinearHeading(S_JUNCTION).build(),
                 W_JUNCTION_TO_LEFT =
                         b -> b.apply(W_JUNCTION)
                                 .splineTo(LEFT.vec(), LEFT.getHeading())
