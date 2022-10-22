@@ -111,7 +111,8 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
                 new PIDFCoefficients(20, 0, 3, MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
 
         @WheelBase
-        public static double WHEEL_BASE = 9.5; // in
+        public static double WHEEL_BASE = 8.5; // in
+
         /*
                 @KV
                 public static double kV = 1.0 / MecanumConstants.rpmToVelocity(MAX_RPM, WHEEL_RADIUS, GEAR_RATIO);
