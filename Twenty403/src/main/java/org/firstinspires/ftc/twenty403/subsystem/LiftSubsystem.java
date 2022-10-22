@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
-import androidx.core.math.MathUtils;
-
 import java.util.function.Supplier;
 
 import com.acmerobotics.dashboard.config.Config;
@@ -19,15 +17,17 @@ import com.technototes.library.subsystem.Subsystem;
 public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     // TODO: THESE VALUES ARE ALL WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
     public static double TICKS_INCH = 750;
-    public static double LOW_JUNCTION = .5 * TICKS_INCH;
-    public static double MEDIUM_JUNCTION = 12 * TICKS_INCH;
-    public static double HIGH_JUNCTION = 24 * TICKS_INCH;
-    public static double MAX_HEIGHT = 27 * TICKS_INCH;
+    public static double GROUND_JUNCTION = 0.5 * TICKS_INCH;
+    public static double LOW_JUNCTION = 12 * TICKS_INCH;
+    public static double MEDIUM_JUNCTION = 24 * TICKS_INCH;
+    public static double HIGH_JUNCTION = 36 * TICKS_INCH;
+    public static double MAX_HEIGHT = 38 * TICKS_INCH;
     public static double MIN_HEIGHT = 0;
     public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH;
     public static double DEAD_ZONE = .25 * TICKS_INCH;
     public static double MAX_MOTOR_SPEED = 0.8;
     public static double MIN_MOTOR_SPEED = -0.4; // Gravity
+    public static double MOVE = 2.25 * TICKS_INCH;
     public static PIDCoefficients PID = new PIDCoefficients(0.008, 0, 0.0005);
 
     private DcMotorEx liftMotor;
@@ -40,7 +40,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         pidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
     }
 
-    public void setPosition(double pos) {
+    private void setPosition(double pos) {
         pidController.setTargetPosition(Range.clip(pos, MIN_HEIGHT, MAX_HEIGHT));
     }
 
@@ -62,14 +62,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         pidController.setTargetPosition(motor.get());
     }
 
-    private void setEncMotor(double val) {
+    private void setLiftPosition(double val) {
         setPosition(val);
         pAndActual = String.format("%d (%d)", (int) val, motor.get().intValue());
     }
 
-    public void stopEncMotor() {
-        setEncMotor(0);
-    }
     // This is run for every loop (Feature of the TechnoLib Subsystem!)
     // So you can just call "setTop" in a command and it will get there "as soon as it can"
     @Override
@@ -78,7 +75,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         double clippedSpeed = Range.clip(targetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
         motor.setSpeed(clippedSpeed);
         // For logging purposes, I'm also doing this, to ensure that both values are updated
-        setEncMotor(get());
+        setLiftPosition(get());
     }
 
     public double delta() {
@@ -106,58 +103,30 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
     }
 
-    private void powerMotorForError(double error) {
-        // If we're error distance away from position,
-        // set motor power to something that can reach position
-        double power = error / MAX_DISTANCE_FOR_FULLPOWER;
-        power = MathUtils.clamp(power, -1, 1);
-        power = Math.cbrt(power);
-        liftMotor.setPower(power);
-    }
-
     public void highPole() {
-        double position = liftMotor.getCurrentPosition();
-        if (closeEnough(position, HIGH_JUNCTION)) {
-            return;
-        }
-        double error = position - HIGH_JUNCTION;
-        powerMotorForError(error);
+       setLiftPosition(HIGH_JUNCTION);
     }
 
     public void midPole() {
-        double position = liftMotor.getCurrentPosition();
-        if (closeEnough(position, MEDIUM_JUNCTION)) {
-            return;
-        }
-        double error = position - MEDIUM_JUNCTION;
-        powerMotorForError(error);
+        setLiftPosition(MEDIUM_JUNCTION);
     }
 
     public void lowPole() {
-        double position = liftMotor.getCurrentPosition();
-        if (closeEnough(position, LOW_JUNCTION)) {
-            return;
-        }
-        double error = position - LOW_JUNCTION;
-        powerMotorForError(error);
+        setLiftPosition(LOW_JUNCTION);
+    }
+    public void groundJunction() {
+        setLiftPosition(GROUND_JUNCTION);
     }
 
     public void moveUp() {
-        double position = liftMotor.getCurrentPosition();
-        if (position >= MAX_HEIGHT) {
-            return;
-        }
-        double error = position - MAX_HEIGHT;
-        powerMotorForError(error);
+        // maybe getCurrentPosition instead of getTargetPosition
+        double position = pidController.getTargetPosition();
+        setLiftPosition(position + MOVE);
     }
 
     public void moveDown() {
-
-        double position = liftMotor.getCurrentPosition();
-        if (position <= MIN_HEIGHT) {
-            return;
-        }
-        double error = position - MIN_HEIGHT;
-        powerMotorForError(error);
+        // maybe getCurrentPosition instead of getTargetPosition
+        double position = pidController.getTargetPosition();
+        setLiftPosition(position - MOVE);
     }
 }
