@@ -21,7 +21,5 @@ jobs:
         java-version: 11
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Assemble Twenty403 with Gradle
-      run: ./gradlew :Twenty403:assembleDebug
-    - name: Assemble Sixteen750 with Gradle
-      run: ./gradlew :Sixteen750:assembleDebug
+    - name: Assemble Twenty403 and Sixteen750 with Gradle
+      run: ./gradlew justAssembleDebug --no-daemon
