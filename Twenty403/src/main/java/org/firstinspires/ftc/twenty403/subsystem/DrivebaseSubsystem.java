@@ -143,19 +143,29 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
 
         @LateralMult
         public static double LATERAL_MULTIPLIER = 1.14; // Lateral position is off by 14%
+        /*
+        1. Run the strafe opmode via the driver hub
+        2. This opmode will strafe right at the specified distance. You are free to change the code to strafe left.
+        3. The distance traveled should be 8- inches by default. However, it may undershoot. If so, measure the distance traveled.
+        4. Take your target distance, and divide it by the actual distance traveled (to find a lateral multiplier value).
+        5. Run it again.
 
+
+
+         */
         @VXWeight
         public static double VX_WEIGHT = 1;
-
+        // If you increase these values, you will lower the speed
         @VYWeight
         public static double VY_WEIGHT = 1;
-
+        // If you increase these values, you will lower the speed
         @OmegaWeight
         public static double OMEGA_WEIGHT = 1;
-
+        // If you increase these values, you will lower the speed
         @PoseLimit
         public static int POSE_HISTORY_LIMIT = 100;
 
+        // If you increase these values, you will lower the speed
         @Override
         public Class getConstant() {
             return DriveConstants.class;
