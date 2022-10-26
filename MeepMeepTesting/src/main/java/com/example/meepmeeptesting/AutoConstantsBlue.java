@@ -200,10 +200,10 @@ public class AutoConstantsBlue {
                                 .lineToLinearHeading(E_JUNCTION)
                                 .build(),
 
-                S_JUNCTION_TO_STACK =
-                        () -> function.apply(S_JUNCTION)
-                                .lineToLinearHeading(STACK)
-                                .build(),
+        S_JUNCTION_TO_STACK =
+                () -> function.apply(S_JUNCTION)
+                        .lineToLinearHeading(STACK)
+                        .build(),
                 STACK_TO_E_JUNCTION =
                         () -> function.apply(STACK)
                                 .lineToLinearHeading(E_JUNCTION)
