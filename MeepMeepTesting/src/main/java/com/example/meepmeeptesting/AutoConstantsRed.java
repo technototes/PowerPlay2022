@@ -23,10 +23,14 @@ public class AutoConstantsRed {
         public static Pose2d PARK_MIDDLE = new Pose2d(36, -36, toRadians(-90));
         public static Pose2d PARK_RIGHT = new Pose2d(60, -36, toRadians(180));
 
-        public static Pose2d E_JUNCTION = new Pose2d(27, -5, toRadians(120));
+        public static Pose2d W_JUNCTION = new Pose2d(27, -5, toRadians(120));
         public static Pose2d S_JUNCTION = new Pose2d(4, -28, toRadians(135));
 
-        public static Pose2d BETWEEN = new Pose2d(33, -10, toRadians(10));
+        //right facing between
+        public static Pose2d W_JUNCTION_TO_BETWEEN = new Pose2d(34, -15, toRadians(0));
+        //left facing between
+        public static Pose2d STACK_TO_BETWEEN = new Pose2d(37, -12, toRadians(180));
+
 
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
@@ -45,22 +49,34 @@ public class AutoConstantsRed {
         public static Supplier<Trajectory>
 
                 START_TO_W_JUNCTION =
-                () -> function.apply(START).splineTo(E_JUNCTION.vec(), E_JUNCTION.getHeading()).build(),
+                () -> function.apply(START).splineTo(W_JUNCTION.vec(), W_JUNCTION.getHeading()).build(),
         //START_TO_SOUTH_JUNCTION =
         // ()-> function.apply(START).lineToLinearHeading(SOUTH_JUNCTION).build(),
         W_JUNCTION_TO_STACK =
-                () -> function.apply(E_JUNCTION).lineToLinearHeading(STACK).build(),
+                () -> function.apply(W_JUNCTION).lineToLinearHeading(STACK).build(),
         //SOUTH_JUNCTION_TO_STACK = b->b.apply(JUNCTION).lineToLinearHeading(STACK).build(),
         STACK_TO_W_JUNCTION =
-                () -> function.apply(STACK).lineToLinearHeading(E_JUNCTION).build(),
+                () -> function.apply(STACK).lineToLinearHeading(W_JUNCTION).build(),
         //STACK_TO_SOUTH_JUNCTION =
         // ()->function.apply(STACK).lineToLinearHeading(JUNCTION).build(),
+        W_JUNCTION_TO_JUNCTION_TO_BETWEEN =
+                () -> function.apply(W_JUNCTION).lineToLinearHeading(W_JUNCTION_TO_BETWEEN).build(),
+
+        STACK_TO_STACK_TO_BETWEEN =
+                () -> function.apply(STACK).lineToLinearHeading(STACK_TO_BETWEEN).build(),
+                BETWEEN_TO_STACK =
+                        () -> function.apply(W_JUNCTION_TO_BETWEEN).lineToLinearHeading(STACK).build(),
+                BETWEEN_TO_W_JUNCTION =
+                        () -> function.apply(STACK_TO_BETWEEN).lineToLinearHeading(W_JUNCTION).build(),
+
         W_JUNCTION_TO_PARK_LEFT =
-                () -> function.apply(E_JUNCTION).lineToLinearHeading(PARK_LEFT).build(),
+                () -> function.apply(W_JUNCTION).lineToLinearHeading(PARK_LEFT).build(),
                 W_JUNCTION_TO_PARK_MIDDLE =
-                        () -> function.apply(E_JUNCTION).lineToLinearHeading(PARK_MIDDLE).build(),
+                        () -> function.apply(W_JUNCTION).lineToLinearHeading(PARK_MIDDLE).build(),
                 W_JUNCTION_TO_PARK_RIGHT =
-                        () -> function.apply(E_JUNCTION).lineToLinearHeading(PARK_RIGHT).build();
+                        () -> function.apply(W_JUNCTION).lineToLinearHeading(PARK_RIGHT).build();
+
+
         //SOUTH_JUNCTION_TO_PARK_LEFT =
         // ()->function.apply(JUNCTION).lineToLinearHeading(PARK_LEFT).build()
         //SOUTH_JUNCTION_TO_PARK_MIDDLE =
