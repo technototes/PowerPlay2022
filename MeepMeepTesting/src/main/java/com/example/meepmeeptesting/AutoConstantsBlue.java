@@ -40,8 +40,8 @@ public class AutoConstantsBlue {
 
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
-        public static double MAX_VEL = 80;
-        public static double MAX_ACCEL = 70;
+        public static double MAX_VEL = 50;
+        public static double MAX_ACCEL = 40;
         public static double MAX_ANG_VEL = Math.toRadians(200);
         public static double MAX_ANG_ACCEL = Math.toRadians(200);
         public static double TRACK_WIDTH = 9.5;
@@ -180,10 +180,10 @@ public class AutoConstantsBlue {
                                 .lineToLinearHeading(E_JUNCTION)
                                 .build(),
 
-                S_JUNCTION_TO_STACK =
-                        () -> function.apply(S_JUNCTION)
-                                .lineToLinearHeading(STACK)
-                                .build(),
+        S_JUNCTION_TO_STACK =
+                () -> function.apply(S_JUNCTION)
+                        .lineToLinearHeading(STACK)
+                        .build(),
                 STACK_TO_E_JUNCTION =
                         () -> function.apply(STACK)
                                 .lineToLinearHeading(E_JUNCTION)
