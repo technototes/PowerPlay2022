@@ -32,7 +32,6 @@ public class ClawSubsystem implements Subsystem {
         flipperServo = null;
         sensor = null;
         isHardware = false;
-
     }
 
     private static void log(String s) {

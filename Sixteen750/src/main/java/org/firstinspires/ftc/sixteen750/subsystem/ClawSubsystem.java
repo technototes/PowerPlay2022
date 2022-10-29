@@ -26,7 +26,7 @@ public class ClawSubsystem implements Subsystem {
         isHardware = true;
     }
 
-    //Non-functional subsystem constructor
+    // Non-functional subsystem constructor
     public ClawSubsystem() {
         clawServo = null;
         flipperServo = null;
