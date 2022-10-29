@@ -237,3 +237,4 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         setLiftPosition(position - LMOVE, position - RMOVE);
     }
 }
+

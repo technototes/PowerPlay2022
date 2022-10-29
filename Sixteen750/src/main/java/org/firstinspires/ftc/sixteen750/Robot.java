@@ -8,7 +8,6 @@ import com.technototes.library.logger.Loggable;
 import com.technototes.path.trajectorysequence.TrajectorySequence;
 
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
-import org.firstinspires.ftc.sixteen750.subsystem.ConeSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 
 public class Robot implements Loggable {
@@ -52,7 +51,7 @@ public class Robot implements Loggable {
         }
 
         if (RobotConstant.LIFT_CONNECTED) {
-            liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor, hardware.LiftRightMotor);
+            liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor/*, hardware.LiftRightMotor*/);
         }
     }
 }
