@@ -73,17 +73,18 @@ public class AutoConstantsRed {
     }
 
     public static class Home {
-        public static Pose2d START = new Pose2d(-36, -66, toRadians(90));
-        public static Pose2d STACK = new Pose2d(-62, -12, toRadians(180));
+        public static Pose2d START = new Pose2d(-36, 66, toRadians(-90));
+        public static Pose2d STACK = new Pose2d(-62, 12, toRadians(180));
         public static Pose2d PARK_LEFT = new Pose2d(-60, -36, toRadians(0));
-        public static Pose2d PARK_MIDDLE = new Pose2d(-36, -36, toRadians(-90));
+        public static Pose2d PARK_MIDDLE = new Pose2d(-36, 36, toRadians(-90));
         public static Pose2d PARK_RIGHT = new Pose2d(-12, -36, toRadians(-90));
         public static Pose2d E_JUNCTION = new Pose2d(-28, -4, toRadians(13));
         public static Pose2d S_JUNCTION = new Pose2d(-4, -28, toRadians(45));
-        public static Pose2d BETWEEN = new Pose2d(-45, -12, toRadians(180));
-        public static Pose2d BETWEEN2 = new Pose2d(-45, -12, toRadians(-180));
+        // between goes backward while rotating
+        public static Pose2d BETWEEN = new Pose2d(-47, 12, toRadians(180));
+        public static Pose2d BETWEEN2 = new Pose2d(-34, 12, toRadians(-30));
         public static Pose2d BETWEEN3 = new Pose2d(-44, -27, toRadians(30));
-        public static Pose2d W_JUNCTION = new Pose2d(-30, -2, toRadians(10));
+        public static Pose2d W_JUNCTION = new Pose2d(-30, 4, toRadians(-30));
 
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
@@ -128,7 +129,7 @@ public class AutoConstantsRed {
                                 .lineToLinearHeading(PARK_RIGHT)
                                 .build(),
                 W_JUNCTION_TO_PARK_MIDDLE =
-                        () -> function.apply(E_JUNCTION)
+                        () -> function.apply(W_JUNCTION)
                                 .lineToLinearHeading(PARK_MIDDLE)
                                 .build(),
                 S_JUNCTION_TO_PARK_LEFT =
