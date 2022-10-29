@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import com.technototes.library.subsystem.Subsystem;
 
+@Deprecated
 public class ConeSubsystem implements Subsystem {
     private ClawSubsystem claw;
     private LiftSubsystem lift;

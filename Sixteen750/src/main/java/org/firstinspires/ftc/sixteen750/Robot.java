@@ -7,11 +7,21 @@ import com.acmerobotics.dashboard.config.Config;
 import com.technototes.library.logger.Loggable;
 import com.technototes.path.trajectorysequence.TrajectorySequence;
 
+import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.ConeSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
+
 public class Robot implements Loggable {
     @Config
     public static class RobotConstant {
-        public static boolean DRIVE_CONNECTED = false;
+        public static boolean DRIVE_CONNECTED = true;
+        public static boolean CLAW_CONNECTED = true;
+        public static boolean LIFT_CONNECTED = true;
     }
+
+    //public DriveBaseSubsystem driveBaseSubsystem;
+    public ClawSubsystem clawSubsystem;
+    public LiftSubsystem liftSubsystem;
 
     // TODO: Move this stuff into the AutoConstantsBlue file
     // and structure it the same as the AutoConstantsRed file
@@ -27,7 +37,24 @@ public class Robot implements Loggable {
         public static TrajectorySequence RED_PARK_LOCATION_AWAY = new TrajectorySequence(new ArrayList<>());
     }
 
-    public Robot(Hardware hardware) {}
+    public Robot(Hardware hardware) {
+        if (RobotConstant.DRIVE_CONNECTED) {
+//            driveBaseSubsystem(
+//                    hardware.flDriveMotor,
+//                    hardware.frDriveMotor,
+//                    hardware.rlDriveMotor,
+//                    hardware.rrDriveMotor,
+//                    hardware.imu)
+//            )
+        }
+        if (RobotConstant.CLAW_CONNECTED) {
+            clawSubsystem = new ClawSubsystem(hardware.claw, hardware.flipper, hardware. clawDistance);
+        }
+
+        if (RobotConstant.LIFT_CONNECTED) {
+            liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor, hardware.LiftRightMotor);
+        }
+    }
 }
 /*
 Robot is 12 inches
