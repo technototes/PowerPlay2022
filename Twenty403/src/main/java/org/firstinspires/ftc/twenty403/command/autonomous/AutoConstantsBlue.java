@@ -123,5 +123,45 @@ public class AutoConstantsBlue {
         public static Pose2d PARK_LEFT = new Pose2d(-60, -36, toRadians(0));
         public static Pose2d PARK_MIDDLE = new Pose2d(-36, -36, toRadians(-90));
         public static Pose2d PARK_RIGHT = new Pose2d(-12, -36, toRadians(-90));
+
+public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
+                START_TO_JUNCTION =
+                b -> b.apply(START)
+                        .splineTo(JUNCTION.vec(), JUNCTION.getHeading())
+                        .build(),
+                JUNCTION_TO_STACK =
+                        b -> b.apply(JUNCTION)
+                                .lineToLinearHeading(STACK)
+                                .build(),
+                JUNCTION_TO_PARK_LEFT =
+                        b -> b.apply(JUNCTION)
+                                .lineToLinearHeading(PARK_LEFT)
+                                .build(),
+                JUNCTION_TO_PARK_MIDDLE =
+                        b -> b.apply(JUNCTION)
+                                .lineToLinearHeading(PARK_MIDDLE)
+                                .build(),
+                JUNCTION_TO_PARK_RIGHT =
+                        b -> b.apply(JUNCTION)
+                                .lineToLinearHeading(PARK_RIGHT)
+                                .build(),
+                STACK_TO_JUNCTION =
+                        b -> b.apply(STACK)
+                                .lineToLinearHeading(JUNCTION)
+                                .build(),
+                START_TO_LEFT_PARK =
+                        b -> b.apply(START)
+                                .lineToLinearHeading(PARK_LEFT)
+                                .build(),
+                START_TO_MIDDLE_PARK =
+                        b -> b.apply(START)
+                                .lineToLinearHeading(PARK_MIDDLE)
+                                .build(),
+                START_TO_RIGHT_PARK =
+                        b -> b.apply(START)
+                                .lineToLinearHeading(PARK_RIGHT)
+                                .build();
+
+
     }
 }

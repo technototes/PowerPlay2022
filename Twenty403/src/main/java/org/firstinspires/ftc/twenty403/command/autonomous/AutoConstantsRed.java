@@ -76,6 +76,18 @@ public class AutoConstantsRed {
                 S_JUNCTION_TO_RIGHT =
                         b -> b.apply(S_JUNCTION)
                                 .splineTo(RIGHT.vec(), RIGHT.getHeading())
+                                .build(),
+                START_TO_LEFT_PARK =
+                        b -> b.apply(START)
+                                .lineToLinearHeading(LEFT)
+                                .build(),
+                START_TO_MIDDLE_PARK =
+                        b -> b.apply(START)
+                                .lineToLinearHeading(MIDDLE)
+                                .build(),
+                START_TO_RIGHT_PARK =
+                        b -> b.apply(START)
+                                .lineToLinearHeading(RIGHT)
                                 .build();
     }
 
@@ -112,13 +124,19 @@ public class AutoConstantsRed {
                 E_JUNCTION_TO_PARK_MIDDLE =
                         b -> b.apply(E_JUNCTION).lineToLinearHeading(PARK_MIDDLE).build(),
                 E_JUNCTION_TO_PARK_RIGHT =
-                        b -> b.apply(E_JUNCTION).lineToLinearHeading(PARK_RIGHT).build();
+                        b -> b.apply(E_JUNCTION).lineToLinearHeading(PARK_RIGHT).build(),
         //SOUTH_JUNCTION_TO_PARK_LEFT =
         // ()->function.apply(JUNCTION).lineToLinearHeading(PARK_LEFT).build()
         //SOUTH_JUNCTION_TO_PARK_MIDDLE =
         // ()->function.apply(JUNCTION).lineToLinearHeading(PARK_MIDDLE).build()
         //SOUTH_JUNCTION_TO_PARK_RIGHT =
         // ()->function.apply(JUNCTION).lineToLinearHeading(PARK_RIGHT).build()
+        START_TO_LEFT_PARK =
+                b -> b.apply(START).lineToLinearHeading(PARK_LEFT).build(),
+                START_TO_MIDDLE_PARK =
+                        b -> b.apply(START).lineToLinearHeading(PARK_MIDDLE).build(),
+                START_TO_RIGHT_PARK =
+                        b -> b.apply(START).lineToLinearHeading(PARK_RIGHT).build();
 
     }
 }
