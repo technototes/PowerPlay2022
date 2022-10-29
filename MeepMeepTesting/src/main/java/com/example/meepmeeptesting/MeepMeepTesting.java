@@ -9,7 +9,6 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 public class MeepMeepTesting {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(750);
-
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 .setDimensions(14, 14)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
@@ -23,6 +22,7 @@ public class MeepMeepTesting {
                                 .build()
 
                 );
+
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_POWERPLAY_OFFICIAL)
                 .setDarkMode(true)

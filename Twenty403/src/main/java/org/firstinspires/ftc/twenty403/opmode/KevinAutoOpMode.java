@@ -19,7 +19,7 @@ public class KevinAutoOpMode extends CommandOpMode {
 
     @Override
     public void uponInit() {
-        hardware = new Hardware();
+        hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware);
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Home.START);
 
