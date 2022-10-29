@@ -38,6 +38,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     private EncodedMotor<DcMotorEx> leftMotor;
     private PIDFController leftPidController;
 
+    private boolean singleMotor;
     private EncodedMotor<DcMotorEx> rightMotor;
     private PIDFController rightPidController;
 
@@ -47,39 +48,60 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
         rightMotor = rm;
         rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
+        singleMotor = false;
+    }
+
+    public LiftSubsystem(EncodedMotor<DcMotorEx> oneMotor) {
+        leftMotor = oneMotor;
+        leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
+        singleMotor = false;
+        rightMotor = null;
+        rightPidController = null;
     }
 
     private void setPosition(double lpos, double rpos) {
         leftPidController.setTargetPosition(Range.clip(lpos, MIN_HEIGHT, MAX_HEIGHT));
-        rightPidController.setTargetPosition(Range.clip(rpos, MIN_HEIGHT, MAX_HEIGHT));
+        if (singleMotor == false) {
+            rightPidController.setTargetPosition(Range.clip(rpos, MIN_HEIGHT, MAX_HEIGHT));
+        }
     }
 
     public void setTop() {
         leftPidController.setTargetPosition(MAX_HEIGHT);
-        rightPidController.setTargetPosition(MAX_HEIGHT);
+        if (singleMotor == false) {
+            rightPidController.setTargetPosition(MAX_HEIGHT);
+        }
     }
 
     public void setBottom() {
         leftPidController.setTargetPosition(MIN_HEIGHT);
-        rightPidController.setTargetPosition(MIN_HEIGHT);
+        if (singleMotor == false) {
+            rightPidController.setTargetPosition(MIN_HEIGHT);
+        }
     }
 
     public void stop() {
         // By resetting the pidController, it stops the periodic function from making changes
         leftPidController.reset();
-        rightPidController.reset();
+        if (singleMotor == false) {
+            rightPidController.reset();
+        }
     }
 
     public void halt() {
         // Just set the target position to the current position to get the motor to stop, yes?
         leftPidController.setTargetPosition(leftMotor.get());
-        rightPidController.setTargetPosition(rightMotor.get());
+        if (!singleMotor) {
+            rightPidController.setTargetPosition(rightMotor.get());
+        }
     }
 
     private void setLiftPosition(double lval, double rval) {
         setPosition(lval, rval);
         lpAndActual = String.format("%d (%d)", (int) lval, leftMotor.get().intValue());
-        rpAndActual = String.format("%d (%d)", (int) rval, rightMotor.get().intValue());
+        if (singleMotor == false) {
+            rpAndActual = String.format("%d (%d)", (int) rval, rightMotor.get().intValue());
+        }
     }
 
     // This is run for every loop (Feature of the TechnoLib Subsystem!)
@@ -89,12 +111,17 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         double ltargetSpeed = leftPidController.update(leftMotor.get());
         double lclippedSpeed = Range.clip(ltargetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
         leftMotor.setSpeed(lclippedSpeed);
-
-        double rtargetSpeed = rightPidController.update(rightMotor.get());
-        double rclippedSpeed = Range.clip(rtargetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
-        rightMotor.setSpeed(rclippedSpeed);
-        // For logging purposes, I'm also doing this, to ensure that both values are updated
-        setLiftPosition(leftPidController.getTargetPosition(), rightPidController.getTargetPosition());
+        if (!singleMotor) {
+            double rtargetSpeed = rightPidController.update(rightMotor.get());
+            double rclippedSpeed = Range.clip(rtargetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
+            rightMotor.setSpeed(rclippedSpeed);
+            // For logging purposes, I'm also doing this, to ensure that both values are updated
+        }
+        double rightTarget = 0;
+        if (!singleMotor) {
+            rightTarget = rightPidController.getTargetPosition();
+        }
+        setLiftPosition(leftPidController.getTargetPosition(), rightTarget);
     }
 
     //    public double delta() {
