@@ -13,6 +13,6 @@ public class LiftCarryCommand implements Command {
 
     @Override
     public void execute() {
-        liftSubsystem.carry();
+        liftSubsystem.groundJunction();
     }
 }
