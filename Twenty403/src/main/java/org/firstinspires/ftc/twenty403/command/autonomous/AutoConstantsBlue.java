@@ -63,6 +63,18 @@ public class AutoConstantsBlue {
                         b -> b.apply(BETWEEN)
                                 .lineToLinearHeading(E_JUNCTION)
                                 .build(),
+                START_TO_LEFT_PARK =
+                        b -> b.apply(START)
+                                .lineToLinearHeading(LEFT)
+                                .build(),
+                START_TO_MIDDLE_PARK =
+                        b -> b.apply(START)
+                                .lineToLinearHeading(MIDDLE)
+                                .build(),
+                START_TO_RIGHT_PARK =
+                        b -> b.apply(START)
+                                .lineToLinearHeading(RIGHT)
+                                .build(),
 
         S_JUNCTION_TO_STACK =
                 b -> b.apply(S_JUNCTION)
