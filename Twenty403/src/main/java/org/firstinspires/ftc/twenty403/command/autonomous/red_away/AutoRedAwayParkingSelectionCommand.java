@@ -1,0 +1,18 @@
+package org.firstinspires.ftc.twenty403.command.autonomous.red_away;
+
+import android.util.Pair;
+
+import com.technototes.library.command.ChoiceCommand;
+
+import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
+import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
+
+public class AutoRedAwayParkingSelectionCommand extends ChoiceCommand {
+    public AutoRedAwayParkingSelectionCommand(DrivebaseSubsystem drivebaseSubsystem, VisionSubsystem visionSubsystem) {
+        super(
+                new Pair<>(visionSubsystem.visionPipeline::left, new AutoRedAwayLeft(drivebaseSubsystem)),
+                new Pair<>(visionSubsystem.visionPipeline::middle, new AutoRedAwayRight(drivebaseSubsystem)),
+                new Pair<>(visionSubsystem.visionPipeline::right, new AutoRedAwayRight(drivebaseSubsystem))
+        );
+    }
+}
