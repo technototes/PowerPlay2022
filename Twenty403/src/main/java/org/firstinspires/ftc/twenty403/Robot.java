@@ -12,9 +12,9 @@ public class Robot implements Loggable {
     @Config
     public static class RobotConstant {
         public static boolean DRIVE_CONNECTED = true;
-        public static boolean CONE_CONNECTED = true;
         public static boolean CLAW_CONNECTED = true;
         public static boolean LIFT_CONNECTED = true;
+        public static boolean DUAL_LIFT_SETUP = false;
     }
 
     public DrivebaseSubsystem drivebaseSubsystem;
@@ -32,9 +32,15 @@ public class Robot implements Loggable {
         }
         if (RobotConstant.CLAW_CONNECTED) {
             clawSubsystem = new ClawSubsystem(hardware.claw, hardware.flipper, hardware.clawDistance);
+        } else {
+            clawSubsystem = new ClawSubsystem();
         }
         if (RobotConstant.LIFT_CONNECTED) {
-            liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor, hardware.LiftRightMotor);
+            if (RobotConstant.DUAL_LIFT_SETUP) {
+                liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor, hardware.LiftRightMotor);
+            } else {
+                liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor);
+            }
         }
     }
 }
