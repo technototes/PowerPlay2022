@@ -21,7 +21,7 @@ public class KevinAutoOpMode extends CommandOpMode {
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware);
-        robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Home.START);
+        robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Home.START.toPose());
 
         CommandScheduler.getInstance()
                 .scheduleForState(new AutoBlueHomeGroup(robot.drivebaseSubsystem /*,
