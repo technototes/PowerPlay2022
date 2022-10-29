@@ -41,6 +41,8 @@ public class Robot implements Loggable {
             } else {
                 liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor);
             }
+        } else {
+            liftSubsystem = new LiftSubsystem();
         }
     }
 }
