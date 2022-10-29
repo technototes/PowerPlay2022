@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.twenty403;
 
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
-import org.firstinspires.ftc.twenty403.subsystem.ConeSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 
@@ -21,7 +20,6 @@ public class Robot implements Loggable {
     public DrivebaseSubsystem drivebaseSubsystem;
     public ClawSubsystem clawSubsystem;
     public LiftSubsystem liftSubsystem;
-    public ConeSubsystem coneSubsystem;
 
     public Robot(Hardware hardware) {
         if (RobotConstant.DRIVE_CONNECTED) {
@@ -32,8 +30,11 @@ public class Robot implements Loggable {
                     hardware.rrDriveMotor,
                     hardware.imu);
         }
-        if (RobotConstant.CONE_CONNECTED) {
-            // coneSubsystem = new ConeSubsystem(clawSubsystem, liftSubsystem, distance);
+        if (RobotConstant.CLAW_CONNECTED) {
+            clawSubsystem = new ClawSubsystem(hardware.claw, hardware.flipper, hardware.clawDistance);
+        }
+        if (RobotConstant.LIFT_CONNECTED) {
+            liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor, hardware.LiftRightMotor);
         }
     }
 }
