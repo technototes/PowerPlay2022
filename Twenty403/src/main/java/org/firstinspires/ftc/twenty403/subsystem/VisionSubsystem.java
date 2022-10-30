@@ -1,13 +1,15 @@
-package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
+package org.firstinspires.ftc.twenty403.subsystem;
 
 import org.openftc.easyopencv.OpenCvCameraRotation;
+
+import com.acmerobotics.dashboard.config.Config;
 
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.vision.hardware.Webcam;
 
 public class VisionSubsystem implements Subsystem, Loggable {
-    // @Config Disable the dashboard
+    @Config
     public static class VisionSubsystemConstants {
         // This is a super-low res image. I don't think we need higher resolution...
         public static int WIDTH = 160;

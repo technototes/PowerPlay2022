@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.Range;
 
@@ -11,7 +10,7 @@ import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 
 public class MovementTestingSubsystem implements Subsystem, Loggable {
-    @Config
+    // @Config - Don't want this on the dashboard
     public static class TestingValues {
         public static double SERVO_DELTA = 0.09;
         public static double SERVO_HIGH = 0.72;

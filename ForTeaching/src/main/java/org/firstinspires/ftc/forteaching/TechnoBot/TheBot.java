@@ -7,8 +7,6 @@ import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.MovementTestingSub
 import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.TankDriveSubsystem;
 import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.VisionSubsystem;
 
-import com.acmerobotics.dashboard.config.Config;
-
 import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.util.Color;
@@ -17,7 +15,7 @@ import com.technototes.library.util.Color;
 public class TheBot implements Loggable {
 
     // This can be convenient when working with partially completed, or mid-reconfigured robots:
-    @Config
+    // @Config Disable for the dashboard
     public static class Connected {
         public static boolean DriveTrain = false;
         public static boolean Sensors = false;

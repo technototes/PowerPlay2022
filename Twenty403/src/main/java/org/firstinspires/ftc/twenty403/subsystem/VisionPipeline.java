@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
+package org.firstinspires.ftc.twenty403.subsystem;
 
 import java.util.function.Supplier;
 
@@ -9,6 +9,7 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.util.Range;
 
 import com.technototes.library.logger.Log;
@@ -17,7 +18,7 @@ import com.technototes.library.logger.Loggable;
 
 public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>, Loggable {
 
-    // @Config Disable the dashboard
+    @Config
     public static class VisionConstants {
         public enum ParkingPosition {
             LEFT,

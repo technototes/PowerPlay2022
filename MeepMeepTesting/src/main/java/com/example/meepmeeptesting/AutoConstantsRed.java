@@ -14,6 +14,8 @@ import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import javax.naming.ldap.StartTlsRequest;
+
 public class AutoConstantsRed {
     public static class Away {
         public static Pose2d START = new Pose2d(36, -66, toRadians(90));
@@ -23,10 +25,14 @@ public class AutoConstantsRed {
         public static Pose2d PARK_MIDDLE = new Pose2d(36, -36, toRadians(-90));
         public static Pose2d PARK_RIGHT = new Pose2d(60, -36, toRadians(180));
 
-        public static Pose2d E_JUNCTION = new Pose2d(27, -5, toRadians(120));
+        public static Pose2d W_JUNCTION = new Pose2d(27, -5, toRadians(120));
         public static Pose2d S_JUNCTION = new Pose2d(4, -28, toRadians(135));
 
-        public static Pose2d BETWEEN = new Pose2d(33, -10, toRadians(10));
+        //right facing between
+        public static Pose2d W_JUNCTION_TO_BETWEEN = new Pose2d(34, -15, toRadians(0));
+        //left facing between
+        public static Pose2d STACK_TO_BETWEEN = new Pose2d(37, -12, toRadians(180));
+
 
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
@@ -45,22 +51,34 @@ public class AutoConstantsRed {
         public static Supplier<Trajectory>
 
                 START_TO_W_JUNCTION =
-                () -> function.apply(START).splineTo(E_JUNCTION.vec(), E_JUNCTION.getHeading()).build(),
+                () -> function.apply(START).splineTo(W_JUNCTION.vec(), W_JUNCTION.getHeading()).build(),
         //START_TO_SOUTH_JUNCTION =
         // ()-> function.apply(START).lineToLinearHeading(SOUTH_JUNCTION).build(),
         W_JUNCTION_TO_STACK =
-                () -> function.apply(E_JUNCTION).lineToLinearHeading(STACK).build(),
+                () -> function.apply(W_JUNCTION).lineToLinearHeading(STACK).build(),
         //SOUTH_JUNCTION_TO_STACK = b->b.apply(JUNCTION).lineToLinearHeading(STACK).build(),
         STACK_TO_W_JUNCTION =
-                () -> function.apply(STACK).lineToLinearHeading(E_JUNCTION).build(),
+                () -> function.apply(STACK).lineToLinearHeading(W_JUNCTION).build(),
         //STACK_TO_SOUTH_JUNCTION =
         // ()->function.apply(STACK).lineToLinearHeading(JUNCTION).build(),
+        W_JUNCTION_TO_JUNCTION_TO_BETWEEN =
+                () -> function.apply(W_JUNCTION).lineToLinearHeading(W_JUNCTION_TO_BETWEEN).build(),
+
+        STACK_TO_STACK_TO_BETWEEN =
+                () -> function.apply(STACK).lineToLinearHeading(STACK_TO_BETWEEN).build(),
+                BETWEEN_TO_STACK =
+                        () -> function.apply(W_JUNCTION_TO_BETWEEN).lineToLinearHeading(STACK).build(),
+                BETWEEN_TO_W_JUNCTION =
+                        () -> function.apply(STACK_TO_BETWEEN).lineToLinearHeading(W_JUNCTION).build(),
+
         W_JUNCTION_TO_PARK_LEFT =
-                () -> function.apply(E_JUNCTION).lineToLinearHeading(PARK_LEFT).build(),
+                () -> function.apply(W_JUNCTION).lineToLinearHeading(PARK_LEFT).build(),
                 W_JUNCTION_TO_PARK_MIDDLE =
-                        () -> function.apply(E_JUNCTION).lineToLinearHeading(PARK_MIDDLE).build(),
+                        () -> function.apply(W_JUNCTION).lineToLinearHeading(PARK_MIDDLE).build(),
                 W_JUNCTION_TO_PARK_RIGHT =
-                        () -> function.apply(E_JUNCTION).lineToLinearHeading(PARK_RIGHT).build();
+                        () -> function.apply(W_JUNCTION).lineToLinearHeading(PARK_RIGHT).build();
+
+
         //SOUTH_JUNCTION_TO_PARK_LEFT =
         // ()->function.apply(JUNCTION).lineToLinearHeading(PARK_LEFT).build()
         //SOUTH_JUNCTION_TO_PARK_MIDDLE =
@@ -71,14 +89,18 @@ public class AutoConstantsRed {
     }
 
     public static class Home {
-        public static Pose2d START = new Pose2d(-36, -66, toRadians(90));
-        public static Pose2d STACK = new Pose2d(-62, -12, toRadians(180));
+        public static Pose2d START = new Pose2d(-36, 66, toRadians(-90));
+        public static Pose2d STACK = new Pose2d(-62, 12, toRadians(180));
         public static Pose2d PARK_LEFT = new Pose2d(-60, -36, toRadians(0));
-        public static Pose2d PARK_MIDDLE = new Pose2d(-36, -36, toRadians(-90));
+        public static Pose2d PARK_MIDDLE = new Pose2d(-36, 36, toRadians(-90));
         public static Pose2d PARK_RIGHT = new Pose2d(-12, -36, toRadians(-90));
         public static Pose2d E_JUNCTION = new Pose2d(-28, -4, toRadians(13));
         public static Pose2d S_JUNCTION = new Pose2d(-4, -28, toRadians(45));
-        public static Pose2d BETWEEN = new Pose2d(-45, -12, toRadians(0));
+        // between goes backward while rotating
+        public static Pose2d BETWEEN = new Pose2d(-47, 12, toRadians(180));
+        public static Pose2d BETWEEN2 = new Pose2d(-34, 12, toRadians(-30));
+        public static Pose2d BETWEEN3 = new Pose2d(-44, -27, toRadians(30));
+        public static Pose2d W_JUNCTION = new Pose2d(-30, 4, toRadians(-30));
 
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
@@ -99,7 +121,7 @@ public class AutoConstantsRed {
 
                 START_TO_W_JUNCTION =
                 () -> function.apply(START)
-                        .splineTo(E_JUNCTION.vec(), E_JUNCTION.getHeading())
+                        .splineTo(W_JUNCTION.vec(), W_JUNCTION.getHeading())
                         .build(),
         //START_TO_S_JUNCTION=
         //   () -> function.apply(START).lineToLinearHeading().build()
@@ -110,7 +132,7 @@ public class AutoConstantsRed {
                         .build(),
                 STACK_TO_W_JUNCTION =
                         () -> function.apply(STACK)
-                                .lineToLinearHeading(E_JUNCTION)
+                                .lineToLinearHeading(W_JUNCTION)
                                 .build(),
         //STACK_TO_S_JUNCTION=
         //() -> function.apply(STACK).lineToLinearHeading().build(),
@@ -123,7 +145,7 @@ public class AutoConstantsRed {
                                 .lineToLinearHeading(PARK_RIGHT)
                                 .build(),
                 W_JUNCTION_TO_PARK_MIDDLE =
-                        () -> function.apply(E_JUNCTION)
+                        () -> function.apply(W_JUNCTION)
                                 .lineToLinearHeading(PARK_MIDDLE)
                                 .build(),
                 S_JUNCTION_TO_PARK_LEFT =
@@ -141,8 +163,31 @@ public class AutoConstantsRed {
                 E_JUNCTION_TO_BETWEEN =
                         () -> function.apply(E_JUNCTION)
                                 .lineToLinearHeading(BETWEEN)
+                                .build(),
+                W_JUNCTION_TO_BETWEEN =
+                        () -> function.apply(W_JUNCTION)
+                                .lineToLinearHeading(BETWEEN)
+                                .build(),
+                BETWEEN_TO_STACK =
+                        () -> function.apply(BETWEEN)
+                                .lineToLinearHeading(STACK)
+                                .build(),
+                STACK_TO_BETWEEN =
+                        () -> function.apply(STACK)
+                                .lineToLinearHeading(BETWEEN2)
+                                .build(),
+                BETWEEN_TO_W_JUNCTION =
+                        () -> function.apply(BETWEEN2)
+                                .lineToLinearHeading(W_JUNCTION)
+                                .build(),
+                START_TO_BETWEEN3 =
+                        () -> function.apply(START)
+                                .lineToLinearHeading(BETWEEN3)
+                                .build(),
+                BETWEEN3_TO_W_JUNCTION =
+                        () -> function.apply(BETWEEN3)
+                                .lineToLinearHeading(W_JUNCTION)
                                 .build();
-
     }
 
 }
