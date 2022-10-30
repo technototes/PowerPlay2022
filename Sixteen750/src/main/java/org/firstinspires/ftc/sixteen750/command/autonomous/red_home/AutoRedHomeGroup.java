@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.sixteen750.command.autonomous;
+package org.firstinspires.ftc.sixteen750.command.autonomous.red_home;
 
+import org.firstinspires.ftc.sixteen750.command.autonomous.AutoConstantsRed;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.compound.ConeReadyToScoreHigh;
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
