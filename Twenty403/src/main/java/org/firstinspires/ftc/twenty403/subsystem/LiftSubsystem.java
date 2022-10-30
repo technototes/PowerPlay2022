@@ -37,11 +37,13 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     private EncodedMotor<DcMotorEx> leftMotor;
     private PIDFController leftPidController;
-
-    private boolean singleMotor;
-    private boolean isHardware;
     private EncodedMotor<DcMotorEx> rightMotor;
     private PIDFController rightPidController;
+
+    // True if we only have *one* motor connected
+    private boolean singleMotor;
+    // True if we actually have hardware attached
+    private boolean isHardware;
 
     public LiftSubsystem(EncodedMotor<DcMotorEx> lm, EncodedMotor<DcMotorEx> rm) {
         leftMotor = lm;

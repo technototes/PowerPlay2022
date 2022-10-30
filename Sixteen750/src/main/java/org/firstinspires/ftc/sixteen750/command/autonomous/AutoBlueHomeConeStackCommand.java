@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.sixteen750.command.autonomous;
 
-import org.firstinspires.ftc.sixteen750.Robot;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.compound.ConeReadyToIntakeCommand;
@@ -15,10 +14,10 @@ import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 public class AutoBlueHomeConeStackCommand extends SequentialCommandGroup {
     public AutoBlueHomeConeStackCommand(MecanumDrivebaseSubsystem drive, LiftSubsystem lift, ClawSubsystem claw) {
         super(
-                new TrajectorySequenceCommand(drive, Robot.Trajectories.BLUE_HOME_STACK)
+                new TrajectorySequenceCommand(drive, AutoConstantBlue.Home.E_JUNCTION_TO_STACK)
                         .alongWith(new ConeReadyToIntakeCommand(lift, claw)),
                 new ClawCloseCommand(claw),
-                new TrajectorySequenceCommand(drive, Robot.Trajectories.BLUE_HIGH_JUNCTION_HOME)
+                new TrajectorySequenceCommand(drive, AutoConstantBlue.Home.STACK_TO_E_JUNCTION)
                         .alongWith(new ConeReadyToScoreCommand(lift, claw)),
                 new ClawOpenCommand(claw));
     }
