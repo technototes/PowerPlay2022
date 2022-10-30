@@ -43,7 +43,6 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     private EncodedMotor<DcMotorEx> rightMotor;
     private PIDFController rightPidController;
 
-
     public LiftSubsystem(EncodedMotor<DcMotorEx> lm, EncodedMotor<DcMotorEx> rm) {
         leftMotor = lm;
         leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);

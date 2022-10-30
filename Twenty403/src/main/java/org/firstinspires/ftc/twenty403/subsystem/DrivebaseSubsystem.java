@@ -17,6 +17,10 @@ import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
 public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Supplier<Pose2d>, Loggable {
 
+    // Notes from Kevin:
+    // The 5203 motors when direct driven
+    // move about 63 inches forward and is measured as roughly 3000 ticks on the encoders
+
     @Config
     public abstract static class DriveConstants implements MecanumConstants {
 
@@ -54,17 +58,21 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
         @KStatic
         public static double kStatic = 0;
 
+        // This was 60, which was too fast. Things slid around a lot.
         @MaxVelo
-        public static double MAX_VEL = 60;
+        public static double MAX_VEL = 30;
 
+        // This was 35, which also felt a bit too fast. The bot controls more smoothly now
         @MaxAccel
-        public static double MAX_ACCEL = 35;
+        public static double MAX_ACCEL = 30;
 
+        // This was 180 degrees
         @MaxAngleVelo
-        public static double MAX_ANG_VEL = Math.toRadians(180);
+        public static double MAX_ANG_VEL = Math.toRadians(135);
 
+        // This was 90 degrees
         @MaxAngleAccel
-        public static double MAX_ANG_ACCEL = Math.toRadians(90);
+        public static double MAX_ANG_ACCEL = Math.toRadians(45);
 
         @TransPID
         public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(8, 0, 0);
@@ -93,13 +101,13 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
     @Log(name = "Pose2d: ")
     public String poseDisplay = ENABLE_POSE_DIAGNOSTICS ? "" : null;
 
-    //    @Log.Number (name = "FL")
+    // @Log.Number(name = "FL")
     public EncodedMotor<DcMotorEx> fl2;
-    //    @Log.Number (name = "FR")
+    // @Log.Number(name = "FR")
     public EncodedMotor<DcMotorEx> fr2;
-    //    @Log.Number (name = "RL")
+    // @Log.Number(name = "RL")
     public EncodedMotor<DcMotorEx> rl2;
-    //    @Log.Number (name = "RR")
+    // @Log.Number(name = "RR")
     public EncodedMotor<DcMotorEx> rr2;
 
     public DrivebaseSubsystem(

@@ -2,7 +2,6 @@ package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
 
 import java.util.function.Supplier;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -14,7 +13,7 @@ import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 
 public class MotorAsServoSubsystem implements Subsystem, Supplier<Double>, Loggable {
-    @Config
+    // @Config - Removed so it doesn't show up on the dashboard
     public static class MotorAsServoConstants {
         public static double LOWER_LIMIT = 0.0;
         public static double UPPER_LIMIT = 2250.0;
