@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
+import org.openftc.easyopencv.OpenCvCameraRotation;
+
 import com.acmerobotics.dashboard.config.Config;
+
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.vision.hardware.Webcam;
-
-import org.openftc.easyopencv.OpenCvCameraRotation;
 
 public class VisionSubsystem implements Subsystem, Loggable {
     @Config

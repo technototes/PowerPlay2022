@@ -3,7 +3,6 @@ package org.firstinspires.ftc.forteaching.TechnoBot;
 // This is a sample hardware class that keeps a reference to all the
 // pieces of hardware on the robot
 
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -18,7 +17,7 @@ import com.technototes.vision.hardware.Webcam;
 
 public class Hardware {
     // Put all the names of the devices in here:
-    @Config
+    // @Config Disable for the dashboard
     public static class DeviceNames {
         public static String LEFT_MOTOR = "motorL";
         public static String RIGHT_MOTOR = "motorR";

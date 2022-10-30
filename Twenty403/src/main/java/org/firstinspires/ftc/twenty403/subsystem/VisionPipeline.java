@@ -1,10 +1,6 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
-import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.util.Range;
-import com.technototes.library.logger.Log;
-import com.technototes.library.logger.LogConfig;
-import com.technototes.library.logger.Loggable;
+import java.util.function.Supplier;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -13,7 +9,12 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-import java.util.function.Supplier;
+import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.util.Range;
+
+import com.technototes.library.logger.Log;
+import com.technototes.library.logger.LogConfig;
+import com.technototes.library.logger.Loggable;
 
 public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>, Loggable {
 

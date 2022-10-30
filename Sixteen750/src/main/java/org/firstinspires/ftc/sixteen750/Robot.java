@@ -2,13 +2,13 @@ package org.firstinspires.ftc.sixteen750;
 
 import java.util.ArrayList;
 
+import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
+
 import com.acmerobotics.dashboard.config.Config;
 
 import com.technototes.library.logger.Loggable;
 import com.technototes.path.trajectorysequence.TrajectorySequence;
-
-import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
-import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 
 public class Robot implements Loggable {
     @Config
@@ -18,7 +18,7 @@ public class Robot implements Loggable {
         public static boolean LIFT_CONNECTED = true;
     }
 
-    //public DriveBaseSubsystem driveBaseSubsystem;
+    // public DriveBaseSubsystem driveBaseSubsystem;
     public ClawSubsystem clawSubsystem;
     public LiftSubsystem liftSubsystem;
 
@@ -38,20 +38,20 @@ public class Robot implements Loggable {
 
     public Robot(Hardware hardware) {
         if (RobotConstant.DRIVE_CONNECTED) {
-//            driveBaseSubsystem(
-//                    hardware.flDriveMotor,
-//                    hardware.frDriveMotor,
-//                    hardware.rlDriveMotor,
-//                    hardware.rrDriveMotor,
-//                    hardware.imu)
-//            )
+            //            driveBaseSubsystem(
+            //                    hardware.flDriveMotor,
+            //                    hardware.frDriveMotor,
+            //                    hardware.rlDriveMotor,
+            //                    hardware.rrDriveMotor,
+            //                    hardware.imu)
+            //            )
         }
         if (RobotConstant.CLAW_CONNECTED) {
-            clawSubsystem = new ClawSubsystem(hardware.claw, hardware.flipper, hardware. clawDistance);
+            clawSubsystem = new ClawSubsystem(hardware.claw, hardware.flipper, hardware.clawDistance);
         }
 
         if (RobotConstant.LIFT_CONNECTED) {
-            liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor/*, hardware.LiftRightMotor*/);
+            liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor /*, hardware.LiftRightMotor*/);
         }
     }
 }

@@ -1,17 +1,17 @@
 package org.firstinspires.ftc.sixteen750.subsystem;
 
+import java.util.function.Supplier;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-
 import com.qualcomm.robotcore.util.Range;
+
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
-
-import java.util.function.Supplier;
 
 @Config
 public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
@@ -42,7 +42,6 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     private boolean isHardware;
     private EncodedMotor<DcMotorEx> rightMotor;
     private PIDFController rightPidController;
-
 
     public LiftSubsystem(EncodedMotor<DcMotorEx> lm, EncodedMotor<DcMotorEx> rm) {
         leftMotor = lm;
@@ -237,4 +236,3 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         setLiftPosition(position - LMOVE, position - RMOVE);
     }
 }
-
