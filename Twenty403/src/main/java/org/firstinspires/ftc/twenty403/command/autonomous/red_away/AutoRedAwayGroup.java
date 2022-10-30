@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.twenty403.command.autonomous;
+package org.firstinspires.ftc.twenty403.command.autonomous.red_away;
 
+import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsRed;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.twenty403.command.compound.ConeReadyScoreHigh;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;

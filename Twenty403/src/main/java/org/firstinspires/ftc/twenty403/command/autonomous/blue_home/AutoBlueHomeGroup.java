@@ -1,9 +1,11 @@
-package org.firstinspires.ftc.twenty403.command.autonomous;
+package org.firstinspires.ftc.twenty403.command.autonomous.blue_home;
 
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.path.command.TrajectorySequenceCommand;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
+
+import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsBlue;
 
 public class AutoBlueHomeGroup extends SequentialCommandGroup {
     public AutoBlueHomeGroup(MecanumDrivebaseSubsystem drive /*, LiftSubsystem lift, ClawSubsystem claw*/) {
