@@ -1,14 +1,11 @@
 package org.firstinspires.ftc.sixteen750;
 
-import java.util.ArrayList;
-
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 
 import com.acmerobotics.dashboard.config.Config;
 
 import com.technototes.library.logger.Loggable;
-import com.technototes.path.trajectorysequence.TrajectorySequence;
 
 public class Robot implements Loggable {
     @Config
@@ -22,20 +19,6 @@ public class Robot implements Loggable {
     public ClawSubsystem clawSubsystem;
     public LiftSubsystem liftSubsystem;
 
-    // TODO: Move this stuff into the AutoConstantsBlue file
-    // and structure it the same as the AutoConstantsRed file
-    public static class Trajectories {
-        public static TrajectorySequence BLUE_AWAY_STACK = new TrajectorySequence(new ArrayList<>());
-        public static TrajectorySequence BLUE_HOME_STACK = new TrajectorySequence(new ArrayList<>());
-        public static TrajectorySequence BLUE_HIGH_JUNCTION_HOME = new TrajectorySequence(new ArrayList<>());
-        public static TrajectorySequence BLUE_HIGH_JUNCTION_AWAY = new TrajectorySequence(new ArrayList<>());
-        public static TrajectorySequence BLUE_PARK_LOCATION_HOME = new TrajectorySequence(new ArrayList<>());
-        public static TrajectorySequence BLUE_PARK_LOCATION_AWAY = new TrajectorySequence(new ArrayList<>());
-        public static TrajectorySequence BLUE_HIGH_JUNCTION_CENTER = new TrajectorySequence(new ArrayList<>());
-        public static TrajectorySequence RED_HIGH_JUNCTION_AWAY = new TrajectorySequence(new ArrayList<>());
-        public static TrajectorySequence RED_PARK_LOCATION_AWAY = new TrajectorySequence(new ArrayList<>());
-    }
-
     public Robot(Hardware hardware) {
         if (RobotConstant.DRIVE_CONNECTED) {
             //            driveBaseSubsystem(
@@ -48,10 +31,14 @@ public class Robot implements Loggable {
         }
         if (RobotConstant.CLAW_CONNECTED) {
             clawSubsystem = new ClawSubsystem(hardware.claw, hardware.flipper, hardware.clawDistance);
+        } else {
+            clawSubsystem = new ClawSubsystem();
         }
 
         if (RobotConstant.LIFT_CONNECTED) {
             liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor /*, hardware.LiftRightMotor*/);
+        } else {
+            liftSubsystem = new LiftSubsystem();
         }
     }
 }
