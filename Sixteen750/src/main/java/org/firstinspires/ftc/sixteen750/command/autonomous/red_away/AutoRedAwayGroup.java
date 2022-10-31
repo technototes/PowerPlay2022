@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.sixteen750.command.autonomous;
+package org.firstinspires.ftc.sixteen750.command.autonomous.red_away;
 
-import org.firstinspires.ftc.sixteen750.Robot;
+import org.firstinspires.ftc.sixteen750.command.autonomous.AutoConstantsRed;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.compound.ConeReadyToScoreHigh;
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
@@ -13,7 +13,7 @@ import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 public class AutoRedAwayGroup extends SequentialCommandGroup {
     public AutoRedAwayGroup(MecanumDrivebaseSubsystem drive, LiftSubsystem lift, ClawSubsystem claw) {
         super(
-                new TrajectorySequenceCommand(drive, Robot.Trajectories.RED_HIGH_JUNCTION_AWAY)
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.START_TO_S_JUNCTION)
                         .alongWith(new ConeReadyToScoreHigh(lift, claw)),
                 new ClawOpenCommand(claw),
                 new AutoRedAwayConeStackCommand(drive, lift, claw),
@@ -21,6 +21,6 @@ public class AutoRedAwayGroup extends SequentialCommandGroup {
                 new AutoRedAwayConeStackCommand(drive, lift, claw),
                 new AutoRedAwayConeStackCommand(drive, lift, claw),
                 // TODO: This should call the vision choice command to decide where to park
-                new TrajectorySequenceCommand(drive, Robot.Trajectories.RED_PARK_LOCATION_AWAY));
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.S_JUNCTION_TO_LEFT));
     }
 }

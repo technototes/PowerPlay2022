@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.sixteen750.command.autonomous;
+package org.firstinspires.ftc.sixteen750.command.autonomous.blue_away;
 
-import org.firstinspires.ftc.sixteen750.Robot;
+import org.firstinspires.ftc.sixteen750.command.autonomous.AutoConstantBlue;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.compound.ConeReadyToScoreCommand;
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
@@ -13,7 +13,7 @@ import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 public class AutoBlueAwayGroup extends SequentialCommandGroup {
     public AutoBlueAwayGroup(MecanumDrivebaseSubsystem drive, LiftSubsystem lift, ClawSubsystem claw) {
         super(
-                new TrajectorySequenceCommand(drive, Robot.Trajectories.BLUE_HIGH_JUNCTION_AWAY)
+                new TrajectorySequenceCommand(drive, AutoConstantBlue.Away.START_TO_NINEOCLOCK_JUNCTION)
                         .alongWith(new ConeReadyToScoreCommand(lift, claw)),
                 new ClawOpenCommand(claw),
                 new AutoBlueAwayConeStackCommand(drive, lift, claw),
@@ -22,6 +22,7 @@ public class AutoBlueAwayGroup extends SequentialCommandGroup {
                 new AutoBlueAwayConeStackCommand(drive, lift, claw),
                 new TrajectorySequenceCommand(
                         drive,
-                        Robot.Trajectories.BLUE_PARK_LOCATION_AWAY) /*Placeholder for what we're doing for parking*/);
+                        AutoConstantBlue.Away
+                                .SIXOCLOCK_JUNCTION_TO_PARK_RIGHT) /*Placeholder for what we're doing for parking*/);
     }
 }
