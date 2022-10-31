@@ -1,0 +1,11 @@
+#!/bin/sh
+echo "Put every branch that you want to pull forward in the \"branches.txt\" file"
+read
+for i in $(cat branches.txt) ; do 
+  git checkout $i
+  git pull
+  git merge main
+  echo Ctrl-C now if you don\'t want to push this to github
+  read
+#  git push
+done
