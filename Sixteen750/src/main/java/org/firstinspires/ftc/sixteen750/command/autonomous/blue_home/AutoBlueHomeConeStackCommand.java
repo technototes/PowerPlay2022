@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.sixteen750.command.autonomous;
+package org.firstinspires.ftc.sixteen750.command.autonomous.blue_home;
 
+import org.firstinspires.ftc.sixteen750.command.autonomous.AutoConstantBlue;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.compound.ConeReadyToIntakeCommand;

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.twenty403.command.autonomous;
+package org.firstinspires.ftc.twenty403.command.autonomous.blue_away;
 
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;

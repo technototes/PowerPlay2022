@@ -40,7 +40,7 @@ public class Hardware {
     public Servo flipper;
     public DistanceSensor clawDistance;
 
-    public Hardware(HardwareMap hwmap) {
+    public Hardware(HardwareMap hwMap) {
         if (RobotConstant.DRIVE_CONNECTED) {
             flDriveMotor = new EncodedMotor<>(HardwareConstant.FL_MOTOR);
             frDriveMotor = new EncodedMotor<>(HardwareConstant.FR_MOTOR);
@@ -51,7 +51,7 @@ public class Hardware {
         if (RobotConstant.CLAW_CONNECTED) {
             claw = new Servo(HardwareConstant.CLAW_SERVO);
             flipper = new Servo(HardwareConstant.FLIPPER_SERVO);
-            clawDistance = hwmap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR);
+            clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR);
         }
         if (RobotConstant.LIFT_CONNECTED) {
             LiftLeftMotor = new EncodedMotor<>(HardwareConstant.LIFT_LEFT_MOTOR);
