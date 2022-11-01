@@ -43,9 +43,16 @@ public class DebugEncoder extends CommandOpMode {
         //  DashboardUtil.drawRobot(fieldOverlay, poseEstimate);
         //  FtcDashboard.getInstance().sendTelemetryPacket(packet);
         telemetry.addData("LeftFront-AbsoluteEncoder", drive.leftFrontModule.getModuleRotation());
+        telemetry.addData("LeftFront-MotorEncoder", drive.leftFrontModule.getWheelPosition());
+
         telemetry.addData("LeftRear-AbsoluteEncoder", drive.leftRearModule.getModuleRotation());
+        telemetry.addData("LeftRear-MotorEncoder", drive.leftRearModule.getWheelPosition());
+
         telemetry.addData("RightFront-AbsoluteEncoder", drive.rightFrontModule.getModuleRotation());
+        telemetry.addData("RightFront-MotorEncoder", drive.rightFrontModule.getWheelPosition());
+
         telemetry.addData("RightRear-AbsoluteEncoder", drive.rightRearModule.getModuleRotation());
+        telemetry.addData("RightRear-MotorEncoder", drive.rightRearModule.getWheelPosition());
         telemetry.update();
     }
 }
