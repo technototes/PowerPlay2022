@@ -9,7 +9,6 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.util.Range;
 
 import com.technototes.library.logger.Log;
@@ -18,7 +17,7 @@ import com.technototes.library.logger.Loggable;
 
 public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>, Loggable {
 
-    @Config
+    // @Config Disable the dashboard
     public static class VisionConstants {
         public enum ParkingPosition {
             LEFT,
@@ -45,10 +44,10 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         public static double highV = 255;
 
         // In the 160x120 bitmap, where are we looking?
-        public static int X = 10;
-        public static int Y = 10;
-        public static int WIDTH = 140;
-        public static int HEIGHT = 100;
+        public static int X = 45;
+        public static int Y = 60;
+        public static int WIDTH = 60;
+        public static int HEIGHT = 60;
 
         // What color should we draw the outlining rectangle?
         public static Scalar HIGHLIGHT = new Scalar(255, 0, 255);

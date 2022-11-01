@@ -9,6 +9,7 @@ public class LiftMidJunctionCommand implements Command {
 
     public LiftMidJunctionCommand(LiftSubsystem ls) {
         liftSubsystem = ls;
+        addRequirements(ls);
     }
 
     @Override

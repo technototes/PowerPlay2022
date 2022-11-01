@@ -2,12 +2,11 @@ package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
 
 import androidx.core.math.MathUtils;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import com.technototes.library.subsystem.Subsystem;
 
-@Config
+// @Config - Don't want this on the dashboard
 public class LiftSubsystem implements Subsystem {
     // TODO: THESE VALUES ARE ALL WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
     public static double TICKS_INCH = 750;

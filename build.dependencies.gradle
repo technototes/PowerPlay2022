@@ -46,6 +46,6 @@ dependencies {
     // EasyOpenCv:
     implementation 'org.openftc:easyopencv:1.5.2'
     // FTC Dashboard:
-    implementation 'com.acmerobotics.dashboard:dashboard:0.4.5'
+    implementation 'com.acmerobotics.dashboard:dashboard:0.4.6'
 }
 

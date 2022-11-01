@@ -20,30 +20,42 @@ import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationCon
 public class AutoConstantsBlue {
     // "Home" locations: (The side with the Red terminal)
     public static class Away {
+//        public static Pose2d START = new Pose2d(36, 66, toRadians(-90));
+//        public static Pose2d STACK = new Pose2d(60, 12, toRadians(0));
+//        public static Pose2d LEFT = new Pose2d(60, 36, toRadians(150));
+//        public static Pose2d MIDDLE = new Pose2d(36, 36, toRadians(90));
+//        public static Pose2d RIGHT = new Pose2d(12, 36, toRadians(90));
+//        // These have "home/away" modifiers, because we want to stay on "our side" during auto
+//        // 12 O'Clock is on the Blue side: Probably stay away
+//        public static Pose2d N_JUNCTION = new Pose2d(18, -3, toRadians(-135));
+//        // 3 O'Clock is on the Away side, so only use if we know our alliance partner won't be
+//        // in the way
+//        public static Pose2d E_JUNCTION = new Pose2d(-28, 4, toRadians(-45));
+//        public static Pose2d S_JUNCTION = new Pose2d(-10, 30, toRadians(-135));
+//        public static Pose2d W_JUNCTION = new Pose2d(27, 8, toRadians(-115));
         public static Pose2d START = new Pose2d(36, 66, toRadians(-90));
-        public static Pose2d STACK = new Pose2d(58, 13, toRadians(0));
-        public static Pose2d LEFT = new Pose2d(60, 36, toRadians(180));
-        public static Pose2d MIDDLE = new Pose2d(36, 36, toRadians(90));
-        public static Pose2d RIGHT = new Pose2d(12, 36, toRadians(90));
+        public static Pose2d STACK = new Pose2d(60, 12, toRadians(0));
+        public static Pose2d BETWEEN = new Pose2d(-40, 12, toRadians(180));
+        public static Pose2d BETWEEN_2 = new Pose2d(-36, 6, toRadians(90));
+        public static Pose2d BETWEEN_3 = new Pose2d(-36, 36, toRadians(90));
+        public static Pose2d LEFT = new Pose2d(12, 36, toRadians(-90));
+        public static Pose2d MIDDLE = new Pose2d(36, 36, toRadians(-90));
+        public static Pose2d RIGHT = new Pose2d(60, 36, toRadians(-90));
         // These have "home/away" modifiers, because we want to stay on "our side" during auto
-        // 12 O'Clock is on the Blue side: Probably stay away
         public static Pose2d N_JUNCTION = new Pose2d(18, -3, toRadians(-135));
-        // 3 O'Clock is on the Away side, so only use if we know our alliance partner won't be
-        // in the way
-        public static Pose2d E_JUNCTION = new Pose2d(-28, 4, toRadians(-45));
+        public static Pose2d E_JUNCTION = new Pose2d(-30, 6, toRadians(-45));
         public static Pose2d S_JUNCTION = new Pose2d(-10, 30, toRadians(-135));
-        public static Pose2d W_JUNCTION = new Pose2d(30, 7, toRadians(-135));
+        public static Pose2d W_JUNCTION = new Pose2d(28, 4, toRadians(-135));
 
-
-        public static Pose2d BETWEEN_TO_STACK = new Pose2d(27, 13, toRadians(0));
-        public static Pose2d BETWEEN_TO_JUNCTION = new Pose2d(56, 12, toRadians(170));
+        public static Pose2d BETWEEN_TO_STACK = new Pose2d(37, 12, toRadians(0));
+        public static Pose2d BETWEEN_TO_JUNCTION = new Pose2d(37, 12, toRadians(180));
 
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
         public static double MAX_VEL = 50;
         public static double MAX_ACCEL = 40;
-        public static double MAX_ANG_VEL = Math.toRadians(180);
-        public static double MAX_ANG_ACCEL = Math.toRadians(120);
+        public static double MAX_ANG_VEL = Math.toRadians(200);
+        public static double MAX_ANG_ACCEL = Math.toRadians(200);
         public static double TRACK_WIDTH = 9.5;
 
         public static MinVelocityConstraint MIN_VEL = new MinVelocityConstraint(Arrays.asList(
@@ -67,7 +79,7 @@ public class AutoConstantsBlue {
                                 .build(),
                 BETWEEN_T0_STACK_TO_STACK =
                         () -> function.apply(BETWEEN_TO_STACK)
-                                .splineTo(STACK.vec(), STACK.getHeading())
+                                .lineToLinearHeading(STACK)
                                 .build(),
 
         S_JUNCTION_TO_STACK =
@@ -90,17 +102,26 @@ public class AutoConstantsBlue {
                         () -> function.apply(STACK)
                                 .lineToLinearHeading(S_JUNCTION)
                                 .build(),
-                W_JUNCTION_TO_LEFT =
-                        () -> function.apply(W_JUNCTION)
-                                .splineTo(LEFT.vec(), LEFT.getHeading())
+                STACK_TO_LEFT =
+                        () -> function.apply(STACK)
+                                //.splineTo(LEFT.vec(), LEFT.getHeading())
+                                .lineToLinearHeading(LEFT)
                                 .build(),
                 W_JUNCTION_TO_MIDDLE =
                         () -> function.apply(W_JUNCTION)
-                                .splineTo(MIDDLE.vec(), MIDDLE.getHeading())
+                                .lineToLinearHeading(MIDDLE)
                                 .build(),
                 W_JUNCTION_TO_RIGHT =
                         () -> function.apply(W_JUNCTION)
                                 .splineTo(RIGHT.vec(), RIGHT.getHeading())
+                                .build(),
+                MIDDLE_TO_RIGHT =
+                        () -> function.apply(MIDDLE)
+                                .lineToLinearHeading(RIGHT)
+                                .build(),
+                MIDDLE_TO_LEFT =
+                        () -> function.apply(MIDDLE)
+                                .lineToLinearHeading(LEFT)
                                 .build(),
                 S_JUNCTION_TO_LEFT =
                         () -> function.apply(S_JUNCTION)
@@ -108,7 +129,7 @@ public class AutoConstantsBlue {
                                 .build(),
                 S_JUNCTION_TO_MIDDLE =
                         () -> function.apply(S_JUNCTION)
-                                .splineTo(MIDDLE.vec(), MIDDLE.getHeading())
+                                .lineToLinearHeading(MIDDLE)
                                 .build(),
                 SIXCLOCK_JUNCTION_TO_RIGHT =
                         () -> function.apply(S_JUNCTION)
@@ -118,16 +139,19 @@ public class AutoConstantsBlue {
 
     // Away locations:
     public static class Home {
-        public static Pose2d START = new Pose2d(-36, 66, toRadians(-90));
-        public static Pose2d STACK = new Pose2d(-62, 12, toRadians(180));
-        public static Pose2d LEFT = new Pose2d(-12, 36, toRadians(90));
-        public static Pose2d MIDDLE = new Pose2d(-36, 36, toRadians(90));
-        public static Pose2d RIGHT = new Pose2d(-60, 36, toRadians(0));
+        public static Pose2d START = new Pose2d(36, 66, toRadians(-90));
+        public static Pose2d STACK = new Pose2d(60, 12, toRadians(180));
+        public static Pose2d BETWEEN = new Pose2d(40, 12, toRadians(180));
+        public static Pose2d BETWEEN_2 = new Pose2d(36, 6, toRadians(90));
+        public static Pose2d BETWEEN_3 = new Pose2d(36, 36, toRadians(90));
+        public static Pose2d LEFT = new Pose2d(12, 36, toRadians(-90));
+        public static Pose2d MIDDLE = new Pose2d(36, 36, toRadians(90));
+        public static Pose2d RIGHT = new Pose2d(60, 36, toRadians(-90));
         // These have "home/away" modifiers, because we want to stay on "our side" during auto
-        public static Pose2d N_JUNCTION = new Pose2d(18, -3, toRadians(-135));
-        public static Pose2d E_JUNCTION = new Pose2d(-28, 4, toRadians(-45));
-        public static Pose2d S_JUNCTION = new Pose2d(-10, 30, toRadians(-135));
-        public static Pose2d W_JUNCTION = new Pose2d(28, 4, toRadians(-135));
+        public static Pose2d N_JUNCTION = new Pose2d(-18, -3, toRadians(-135));
+        public static Pose2d E_JUNCTION = new Pose2d(30, 6, toRadians(-45));
+        public static Pose2d S_JUNCTION = new Pose2d(10, 30, toRadians(-135));
+        public static Pose2d W_JUNCTION = new Pose2d(-28, 4, toRadians(-135));
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
         public static double MAX_VEL = 50;
@@ -155,10 +179,31 @@ public class AutoConstantsBlue {
                         () -> function.apply(E_JUNCTION)
                                 .lineToLinearHeading(STACK)
                                 .build(),
-                S_JUNCTION_TO_STACK =
-                        () -> function.apply(S_JUNCTION)
+                E_JUNCTION_TO_BETWEEN =
+                        () -> function.apply(E_JUNCTION)
+                                .lineToLinearHeading(BETWEEN)
+                                .build(),
+                E_JUNCTION_TO_BETWEEN_2 =
+                        () -> function.apply(E_JUNCTION)
+                                .lineToLinearHeading(BETWEEN_2)
+                                .build(),
+                BETWEEN_TO_STACK =
+                        () -> function.apply(BETWEEN)
                                 .lineToLinearHeading(STACK)
                                 .build(),
+                STACK_TO_BETWEEN =
+                        () -> function.apply(STACK)
+                                .lineToLinearHeading(BETWEEN)
+                                .build(),
+                BETWEEN_TO_E_JUNCTION =
+                        () -> function.apply(BETWEEN)
+                                .lineToLinearHeading(E_JUNCTION)
+                                .build(),
+
+        S_JUNCTION_TO_STACK =
+                () -> function.apply(S_JUNCTION)
+                        .lineToLinearHeading(STACK)
+                        .build(),
                 STACK_TO_E_JUNCTION =
                         () -> function.apply(STACK)
                                 .lineToLinearHeading(E_JUNCTION)
@@ -167,9 +212,31 @@ public class AutoConstantsBlue {
                         () -> function.apply(STACK)
                                 .lineToLinearHeading(S_JUNCTION)
                                 .build(),
-                E_JUNCTION_LEFT =
+                BETWEEN_TO_MIDDLE =
+                        () -> function.apply(BETWEEN_2)
+                                .splineTo(MIDDLE.vec(), MIDDLE.getHeading())
+                                .build(),
+                BETWEEN_2_TO_BETWEEN_3 =
+                        () -> function.apply(BETWEEN_2)
+                                .splineTo(BETWEEN_3.vec(), BETWEEN_3.getHeading())
+                                .build(),
+                BETWEEN_3_TO_LEFT =
+                        () -> function.apply(BETWEEN_3)
+                                .lineToLinearHeading(LEFT)
+                                .build(),
+                BETWEEN_3_TO_RIGHT =
+                        () -> function.apply(BETWEEN_3)
+                                .lineToLinearHeading(RIGHT)
+                                .build(),
+                E_JUNCTION_TO_MIDDLE =
                         () -> function.apply(E_JUNCTION)
-                                .splineTo(LEFT.vec(), LEFT.getHeading())
+                                .splineTo(MIDDLE.vec(), LEFT.getHeading())
+                                .build(),
+                E_JUNCTION_TO_RIGHT =
+                        () -> function.apply(E_JUNCTION)
+                                .splineTo(RIGHT.vec(), LEFT.getHeading())
                                 .build();
+
+
     }
 }
