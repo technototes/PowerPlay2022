@@ -3,14 +3,14 @@ package org.firstinspires.ftc.twenty403.command;
 import com.technototes.library.command.Command;
 import com.technototes.library.util.Alliance;
 
+import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
 
 public class VisionCommand implements Command {
     public VisionSubsystem subsystem;
 
-    public VisionCommand(VisionSubsystem s, Alliance alliance) {
+    public VisionCommand(VisionSubsystem s) {
         subsystem = s;
-        // subsystem.setStartingPosition(alliance, side);
         addRequirements(subsystem);
     }
 

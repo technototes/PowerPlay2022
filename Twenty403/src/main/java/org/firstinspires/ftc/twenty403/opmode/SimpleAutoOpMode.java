@@ -3,6 +3,7 @@ package org.firstinspires.ftc.twenty403.opmode;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
+import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -22,7 +23,7 @@ public class SimpleAutoOpMode extends LinearOpMode {
         HardwareBuilder.initMap(hardwareMap);
 
         hardware = new Hardware(hardwareMap);
-        robot = new Robot(hardware);
+        robot = new Robot(hardware, Alliance.NONE, StartingPosition.NEUTRAL);
 
         waitForStart();
 
