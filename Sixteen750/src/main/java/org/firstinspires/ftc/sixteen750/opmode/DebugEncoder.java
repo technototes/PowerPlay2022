@@ -53,6 +53,14 @@ public class DebugEncoder extends CommandOpMode {
 
         telemetry.addData("RightRear-AbsoluteEncoder", drive.rightRearModule.getModuleRotation());
         telemetry.addData("RightRear-MotorEncoder", drive.rightRearModule.getWheelPosition());
+
+        telemetry.addData("IMU-AngularOrientation-FirstAngle", drive.imuAngularOrientation.firstAngle);
+        telemetry.addData("IMU-AngularOrientation-SecondAngle", drive.imuAngularOrientation.secondAngle);
+        telemetry.addData("IMU-AngularOrientation-ThirdAngle", drive.imuAngularOrientation.thirdAngle);
+        telemetry.addData("IMU-AngularVelocity-X", drive.imuAngularVelocity.xRotationRate);
+        telemetry.addData("IMU-AngularVelocity-Y", drive.imuAngularVelocity.yRotationRate);
+        telemetry.addData("IMU-AngularVelocity-Z", drive.imuAngularVelocity.zRotationRate);
+
         telemetry.update();
     }
 }

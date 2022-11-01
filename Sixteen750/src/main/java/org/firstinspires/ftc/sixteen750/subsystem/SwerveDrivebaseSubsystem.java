@@ -28,6 +28,8 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.outoftheboxrobotics.photoncore.PhotonCore;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.sixteen750.swerve_util.BetterSwerveLocalizer;
 import org.firstinspires.ftc.sixteen750.swerve_util.SwerveModule;
 import org.firstinspires.ftc.sixteen750.swerve_util.LynxModuleUtil;
@@ -76,6 +78,10 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
     private double imuAngleVelocity = 0;
     @GuardedBy("IMULock")
     private BNO055IMU imu;
+
+    // For debugging
+    public Orientation imuAngularOrientation;
+    public AngularVelocity imuAngularVelocity;
 
     // Extra logging
     public double leftFrontModuleTargetOrientation, rightFrontModuleTargetOrientation, leftRearModuleTargetOrientation, rightRearModuleTargetOrientation = 0;
@@ -273,8 +279,10 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
         imuThread = new Thread(() -> {
             while (!opMode.isStopRequested() && opMode.opModeIsActive()) {
                 synchronized (IMULock) {
-                    imuAngle = imu.getAngularOrientation().firstAngle;
-                    imuAngleVelocity = -imu.getAngularVelocity().xRotationRate;
+                    imuAngularOrientation = imu.getAngularOrientation();
+                    imuAngularVelocity = imu.getAngularVelocity();
+                    imuAngle = imuAngularOrientation.firstAngle;
+                    imuAngleVelocity = -imuAngularVelocity.xRotationRate;
                 }
             }
         });
