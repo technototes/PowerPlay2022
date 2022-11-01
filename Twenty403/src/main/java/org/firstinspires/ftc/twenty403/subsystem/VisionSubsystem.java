@@ -2,6 +2,7 @@ package org.firstinspires.ftc.twenty403.subsystem;
 
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 
 import com.technototes.library.logger.Loggable;

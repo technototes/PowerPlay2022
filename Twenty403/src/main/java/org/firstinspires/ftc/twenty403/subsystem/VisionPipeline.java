@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
+import android.graphics.Bitmap;
+
 import java.util.function.Supplier;
 
+import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
@@ -9,7 +12,9 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import com.technototes.library.logger.Log;
@@ -66,6 +71,12 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
     @Log.Boolean(name = "right")
     public volatile boolean rightDetected = false;
 
+    @LogConfig.Run(duringRun = false, duringInit = true)
+    @Log.Number(name="FPS")
+    public volatile double fps = 0.0;
+
+    private ElapsedTime time = new ElapsedTime();
+
     public Mat customColorSpace = new Mat();
     public Mat Cr = new Mat();
     public Mat img = null;
@@ -118,7 +129,15 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
 
     @Override
     public Mat processFrame(Mat input) {
+        if (fps != 0.0) {
+            fps = 1000 / time.milliseconds();
+        } else {
+            fps = 1.0;
+        }
+        time.reset();
+
         inputToCr(input);
+        // sendBitmap();
         return input;
     }
 
@@ -137,5 +156,12 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
 
     public boolean right() {
         return rightDetected;
+    }
+
+    // Send the bitmap to the FTC Dashboard
+    private void sendBitmap() {
+        Bitmap bitmap = Bitmap.createBitmap(img.cols(), img.rows(), Bitmap.Config.RGB_565);
+        Utils.matToBitmap(img, bitmap);
+        FtcDashboard.getInstance().sendImage(bitmap);
     }
 }

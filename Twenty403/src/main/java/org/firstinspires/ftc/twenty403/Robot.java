@@ -3,6 +3,7 @@ package org.firstinspires.ftc.twenty403;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
+import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
 
 import com.acmerobotics.dashboard.config.Config;
 
@@ -14,12 +15,15 @@ public class Robot implements Loggable {
         public static boolean DRIVE_CONNECTED = true;
         public static boolean CLAW_CONNECTED = false;
         public static boolean LIFT_CONNECTED = false;
+        public static boolean CAMERA_CONNECTED = true;
+
         public static boolean DUAL_LIFT_SETUP = false;
     }
 
     public DrivebaseSubsystem drivebaseSubsystem;
     public ClawSubsystem clawSubsystem;
     public LiftSubsystem liftSubsystem;
+    public VisionSubsystem visionSystem;
 
     public Robot(Hardware hardware) {
         if (RobotConstant.DRIVE_CONNECTED) {
@@ -43,6 +47,9 @@ public class Robot implements Loggable {
             }
         } else {
             liftSubsystem = new LiftSubsystem();
+        }
+        if (RobotConstant.CAMERA_CONNECTED) {
+            visionSystem = new VisionSubsystem(hardware.camera);
         }
     }
 }
