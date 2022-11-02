@@ -13,10 +13,12 @@ import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 
+import org.firstinspires.ftc.twenty403.Robot;
+
 @Config
 public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double TICKS_INCH = 265;
-    // TODO: THESE VALUES ARE ALL WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
+    // TODO: THESE VALUES ARE PROBABLY WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
     public static double LGROUND_JUNCTION = 0.5 * TICKS_INCH;
     public static double RGROUND_JUNCTION = 0.5 * TICKS_INCH;
     public static double LLOW_JUNCTION = 12 * TICKS_INCH;
@@ -29,15 +31,21 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double MIN_HEIGHT = 0;
     public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH;
     public static double DEAD_ZONE = .25 * TICKS_INCH;
+
+    // We can probably bump these up higher, but not until things are generally working
     public static double MAX_MOTOR_SPEED = 0.3;
     public static double MIN_MOTOR_SPEED = -0.1; // Gravity
+
     public static double LMOVE = 1.00 * TICKS_INCH;
     public static double RMOVE = 1.00 * TICKS_INCH;
+
+    // We may need to adjust this. Make *very* small changes!
     public static PIDCoefficients PID = new PIDCoefficients(0.008, 0, 0.0005);
 
-    private EncodedMotor<DcMotorEx> leftMotor;
+    private EncodedMotor<DcMotorEx> _leftMotor;
+    private EncodedMotor<DcMotorEx> _rightMotor;
+
     private PIDFController leftPidController;
-    private EncodedMotor<DcMotorEx> rightMotor;
     private PIDFController rightPidController;
 
     // True if we only have *one* motor connected
@@ -48,15 +56,14 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     // For the left side, positive is *down*
     // For the right side, positive is *up*
     public LiftSubsystem(EncodedMotor<DcMotorEx> lm, EncodedMotor<DcMotorEx> rm) {
-        leftMotor = lm;
-        leftMotor.setInverted(false);
-        leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
-
-        rightMotor = rm;
-        rightMotor.setInverted(true);
-        rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
-        singleMotor = false;
         isHardware = true;
+        singleMotor = false;
+
+        _leftMotor = lm;
+        _rightMotor = rm;
+
+        rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
+        leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
     }
 
     // Before:
@@ -65,30 +72,25 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     // 2875, -2923
     // 262, 269
     public LiftSubsystem(EncodedMotor<DcMotorEx> oneMotor) {
-        leftMotor = oneMotor;
-        leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
-        singleMotor = false;
-        rightMotor = null;
-        rightPidController = null;
         isHardware = true;
+        singleMotor = false;
+
+        _leftMotor = oneMotor;
+        _rightMotor = null;
+
+        leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
+        rightPidController = null;
     }
 
     public LiftSubsystem() {
         isHardware = false;
-        leftMotor = null;
-        rightMotor = null;
+        singleMotor = false;
+
+        _leftMotor = null;
+        _rightMotor = null;
+
         leftPidController = null;
         rightPidController = null;
-    }
-
-    private void setPosition(double lpos, double rpos) {
-        if (!isHardware) {
-            return;
-        }
-        leftPidController.setTargetPosition(Range.clip(lpos, MIN_HEIGHT, MAX_HEIGHT));
-        if (singleMotor == false) {
-            rightPidController.setTargetPosition(Range.clip(rpos, MIN_HEIGHT, MAX_HEIGHT));
-        }
     }
 
     //    public double delta() {
@@ -100,81 +102,33 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     //        return Math.abs(delta()) < DEAD_ZONE;
     //    }
 
-    public void stop() {
-        if (!isHardware) {
-            return;
-        }
-        // By resetting the pidController, it stops the periodic function from making changes
-        leftPidController.reset();
-        if (singleMotor == false) {
-            rightPidController.reset();
-        }
-    }
-
-    public void halt() {
-        if (!isHardware) {
-            return;
-        }
-        // Just set the target position to the current position to get the motor to stop, yes?
-        leftPidController.setTargetPosition(leftMotor.get());
-        if (!singleMotor) {
-            rightPidController.setTargetPosition(rightMotor.get());
-        }
-    }
-
     private void setLiftPosition(double lval, double rval) {
-        if (!isHardware) {
-            return;
-        }
-        setPosition(lval, rval);
-        lpAndActual = String.format("%d (%d)", (int) lval, leftMotor.get().intValue());
-        if (singleMotor == false) {
-            rpAndActual = String.format("%d (%d)", (int) rval, rightMotor.get().intValue());
-        }
+        double lpos = Range.clip(lval, MIN_HEIGHT, MAX_HEIGHT);
+        double rpos = Range.clip(rval, MIN_HEIGHT, MAX_HEIGHT);
+        leftPidController.setTargetPosition(lpos);
+        rightPidController.setTargetPosition(rpos);
+        lpAndActual = String.format("%d (%d)", (int) lpos, (int) getLeftPos());
+        rpAndActual = String.format("%d (%d)", (int) rpos, (int) getRightPos());
     }
 
     // This is run for every loop (Feature of the TechnoLib Subsystem!)
     // So you can just call "setTop" in a command and it will get there "as soon as it can"
     @Override
     public void periodic() {
-        if (!isHardware) {
-            return;
-        }
-        // Negate leftMoter.get() so that the motor moves in the proper direction
-        double ltargetSpeed = leftPidController.update(-leftMotor.get());
+        double ltargetSpeed = leftPidController.update(getLeftPos());
         double lclippedSpeed = Range.clip(ltargetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
-        setLeftPower(lclippedSpeed);
-        if (!singleMotor) {
-            double rtargetSpeed = rightPidController.update(rightMotor.get());
-            double rclippedSpeed = Range.clip(rtargetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
-            setRighttPower(rclippedSpeed);
-            // For logging purposes, I'm also doing this, to ensure that both values are updated
-        }
-        double rightTarget = 0;
-        if (!singleMotor) {
-            rightTarget = rightPidController.getTargetPosition();
-        }
-        setLiftPosition(leftPidController.getTargetPosition(), rightTarget);
-    }
+        double rtargetSpeed = rightPidController.update(getRightPos());
+        double rclippedSpeed = Range.clip(rtargetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
 
-    private void setLeftPower(double p) {
-        // leftMotor.setSpeed(p);
-        lMotorPower = String.format("Power assigned: %f", p);
+        setMotorPower(lclippedSpeed, rclippedSpeed);
+        setLiftPosition(leftPidController.getTargetPosition(), rightPidController.getTargetPosition());
     }
-
-    private void setRighttPower(double p) {
-        // leftMotor.setSpeed(p);
-        rMotorPower = String.format("Power assigned: %f", p);
-    }
-
-    //    public double delta() {
-    //        return leftPidController.getTargetPosition() - leftMotor.getDevice().getCurrentPosition();
-    //        return rightPidController.getTargetPosition() - rightMotor.getDevice().getCurrentPosition();
-    //    }
 
     //    public boolean isAtTarget() {
     //        return Math.abs(delta()) < DEAD_ZONE;
     //    }
+
+    /* Stuff for Logging */
 
     @Log(name = "lEncMotor Pos (Actual)")
     public volatile String lpAndActual = "(unknown)";
@@ -190,66 +144,86 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     @Override
     public Double get() {
-        if (!isHardware) {
-            return 0.0;
-        }
-        // Not sure about this one
+        // Not sure about this one: it's just for displaying things, so this is probably fine:
         return leftPidController.getTargetPosition();
-        //        return rightPidController.getTargetPosition();
+        // return rightPidController.getTargetPosition();
     }
 
-    //    private boolean closeEnough(double currentPostion, double targetPostion) {
-    //        double error = currentPostion - targetPostion;
-    //        if (error <= DEAD_ZONE && error >= -DEAD_ZONE) {
-    //            return true;
-    //        } else {
-    //            return false;
-    //        }
-    //    }
+    /* Subsystem command functions */
+
+    public void stop() {
+        // By resetting the pidController, it stops the periodic function from making changes
+        leftPidController.reset();
+        rightPidController.reset();
+    }
+
+    public void halt() {
+        // Just set the target position to the current position to get the motor to stop, yes?
+        leftPidController.setTargetPosition(getLeftPos());
+        rightPidController.setTargetPosition(getRightPos());
+    }
 
     public void highPole() {
-        if (!isHardware) {
-            return;
-        }
         setLiftPosition(LHIGH_JUNCTION, RHIGH_JUNCTION);
     }
 
     public void midPole() {
-        if (!isHardware) {
-            return;
-        }
         setLiftPosition(LMEDIUM_JUNCTION, RMEDIUM_JUNCTION);
     }
 
     public void lowPole() {
-        if (!isHardware) {
-            return;
-        }
         setLiftPosition(LLOW_JUNCTION, RLOW_JUNCTION);
     }
 
     public void groundJunction() {
-        if (!isHardware) {
-            return;
-        }
         setLiftPosition(LGROUND_JUNCTION, RGROUND_JUNCTION);
     }
 
     public void moveUp() {
-        if (!isHardware) {
-            return;
-        }
         // maybe getCurrentPosition instead of getTargetPosition
-        double position = leftPidController.getTargetPosition();
-        setLiftPosition(position + LMOVE, position + RMOVE);
+        double lposition = leftPidController.getTargetPosition();
+        double rposition = rightPidController.getTargetPosition();
+        setLiftPosition(lposition + LMOVE, rposition + RMOVE);
     }
 
     public void moveDown() {
-        if (!isHardware) {
-            return;
-        }
         // maybe getCurrentPosition instead of getTargetPosition
-        double position = leftPidController.getTargetPosition();
-        setLiftPosition(position - LMOVE, position - RMOVE);
+        double lposition = leftPidController.getTargetPosition();
+        double rposition = rightPidController.getTargetPosition();
+        setLiftPosition(lposition - LMOVE, rposition - RMOVE);
+    }
+
+    /*
+     * The following functions are the only ones that actually touch hardware.
+     * Since the motors rotate opposite directions, we can deal with that in these
+     * functions, and not have to worry about any other problems.
+     * (See the motor power negating in setMotorPower and the encoder negating in getLeftPos)
+     */
+
+    private void setMotorPower(double lp, double rp) {
+        if (isHardware && Robot.RobotConstant.LIFT_MOVE_MOTORS) {
+            // Invert the speed here
+            _leftMotor.setSpeed(-lp);
+            if (!singleMotor) {
+                _rightMotor.setSpeed(rp);
+            }
+        }
+        lMotorPower = String.format("Power assigned: %f", lp);
+        rMotorPower = String.format("Power assigned: %f", rp);
+    }
+
+    private double getLeftPos() {
+        if (!isHardware) {
+            return 0;
+        }
+        // Invert the sign on this one to make it look like it's rotating the same way...
+        return -_leftMotor.get();
+    }
+
+    private double getRightPos() {
+        if (!isHardware || singleMotor) {
+            return 0;
+        }
+        return _rightMotor.get();
     }
 }
