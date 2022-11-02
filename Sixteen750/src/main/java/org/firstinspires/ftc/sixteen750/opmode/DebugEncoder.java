@@ -61,6 +61,9 @@ public class DebugEncoder extends CommandOpMode {
         telemetry.addData("IMU-AngularVelocity-Y", drive.imuAngularVelocity.yRotationRate);
         telemetry.addData("IMU-AngularVelocity-Z", drive.imuAngularVelocity.zRotationRate);
 
+        telemetry.addData("imuAngle", drive.imuAngle);
+        telemetry.addData("imuAngleVelocity", drive.imuAngleVelocity);
+
         telemetry.update();
     }
 }

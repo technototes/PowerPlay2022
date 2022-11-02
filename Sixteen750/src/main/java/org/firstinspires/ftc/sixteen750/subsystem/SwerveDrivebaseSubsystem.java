@@ -74,8 +74,9 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
     public Thread imuThread;
 
     private final Object IMULock = new Object();
-    private double imuAngle = 0;
-    private double imuAngleVelocity = 0;
+    // TODO: change them to private
+    public double imuAngle = 0;
+    public double imuAngleVelocity = 0;
     @GuardedBy("IMULock")
     private BNO055IMU imu;
 
