@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.sixteen750.subsystem;
 
-import android.util.Log;
-
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -10,66 +8,92 @@ import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.subsystem.Subsystem;
 
 public class ClawSubsystem implements Subsystem {
-    public static double OPEN_SERVO_POSITION = .8;
-    public static double CLOSE_SERVO_POSITION = .5;
-    public static double CARRY_SERVO_POSITION = .4;
-    public static double RELEASE_SERVO_POSITION = .0;
+    public static double OPEN_CLAW_SERVO_POS = .8;
+    public static double CLOSE_CLAW_SERVO_POS = .5;
+    public static double ELBOW_CARRY_SERVO_POS = .4;
+    public static double ELBOW_RELEASE_SERVO_POS = .0;
+    public static double GROUND_JUNCTION = 2;
+    public static double GROUND_ELBOW = 1;
+    public static double LOW_JUNCTION = 10;
+    public static double LOW_ELBOW = 2;
+    public static double MID_JUNCTION = 25;
+    public static double MID_ELBOW = 3;
+    public static double HIGH_JUNCTION = 35;
+    public static double HIGH_ELBOW = 4;
     private Servo clawServo;
     private Servo flipperServo;
-    private DistanceSensor sensor;
-    private Boolean isHardware;
+    private Servo elbowServo;
+    private DistanceSensor sensor; // not on the bot currently
 
-    public ClawSubsystem(Servo claw, Servo flipper, DistanceSensor s) {
+    public ClawSubsystem(Servo claw, Servo flipper, Servo elbow, DistanceSensor s) {
         clawServo = claw;
         flipperServo = flipper;
+        elbowServo = elbow;
         sensor = s;
-        isHardware = true;
     }
 
-    // Non-functional subsystem constructor
+    public ClawSubsystem(Servo claw, Servo flipper, Servo elbow) {
+        clawServo = claw;
+        flipperServo = flipper;
+        elbowServo = elbow;
+    }
+
     public ClawSubsystem() {
         clawServo = null;
         flipperServo = null;
+        elbowServo = null;
         sensor = null;
-        isHardware = false;
-    }
-
-    public static void log(String s) {
-        Log.d("Claw", s);
     }
 
     public void open() {
-        log("Open");
-        if (isHardware) {
-            clawServo.setPosition(OPEN_SERVO_POSITION);
-        }
+        clawServo.setPosition(OPEN_CLAW_SERVO_POS);
     }
 
     public void close() {
-        log("Close");
-        if (isHardware) {
-            clawServo.setPosition(CLOSE_SERVO_POSITION);
-        }
+        clawServo.setPosition(CLOSE_CLAW_SERVO_POS);
     }
 
     public void carry() {
-        log("Carry");
         close();
-        if (isHardware) {
-            flipperServo.setPosition(CARRY_SERVO_POSITION);
-        }
+        elbowServo.setPosition(ELBOW_CARRY_SERVO_POS);
     }
 
     public void release() {
-        if (isHardware) {
-            flipperServo.setPosition(RELEASE_SERVO_POSITION);
-        }
+        elbowServo.setPosition(ELBOW_RELEASE_SERVO_POS);
         open();
     }
 
+    public void scoreGroundJunction() {
+        flipperServo.setPosition(GROUND_JUNCTION);
+        elbowServo.setPosition(GROUND_ELBOW);
+    }
+
+    public void flipperLowJunction() {
+        flipperServo.setPosition(LOW_JUNCTION);
+    }
+
+    public void elbowLowJunction() {
+        elbowServo.setPosition(LOW_ELBOW);
+    }
+
+    public void flipperMediumJunction() {
+        flipperServo.setPosition(MID_JUNCTION);
+    }
+
+    public void elbowMidiumJunction() {
+        elbowServo.setPosition(MID_ELBOW);
+    }
+
+    public void flipperHighJunction() {
+        flipperServo.setPosition(HIGH_JUNCTION);
+    }
+
+    public void elbowHighJunction() {
+        elbowServo.setPosition(HIGH_ELBOW);
+    }
+
     public boolean isConeClose() {
-        log("isConeClose");
-        if (isHardware && sensor.getDistance(DistanceUnit.CM) <= 4.0) {
+        if (sensor.getDistance(DistanceUnit.CM) <= 4.0) {
             return true;
         }
         return false;

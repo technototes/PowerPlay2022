@@ -5,19 +5,17 @@ import com.acmerobotics.dashboard.config.Config;
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.path.command.TrajectorySequenceCommand;
-import com.technototes.path.geometry.ConfigurablePose;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
 @Config
 public class AutoTestDrivebaseCommand extends SequentialCommandGroup {
-    public static ConfigurablePose TEST_START = new ConfigurablePose(0, 0, 0);
-    public static ConfigurablePose TEST_END = new ConfigurablePose(0, 10, 0);
+    // public static ConfigurablePose TEST_START = new ConfigurablePose(0, 0, 0);
+    // public static ConfigurablePose TEST_END = new ConfigurablePose(0, 10, 0);
 
     public AutoTestDrivebaseCommand(MecanumDrivebaseSubsystem drive) {
         super(
-                new TrajectorySequenceCommand(drive, b -> b.apply(TEST_START.toPose())
-                        .lineToLinearHeading(TEST_END.toPose())
-                        .build()),
+                new TrajectorySequenceCommand(drive, AutoConstantsBlue.Home.START_TO_W_JUNCTION),
+                new TrajectorySequenceCommand(drive, AutoConstantsBlue.Home.W_JUNCTION_TO_STACK),
                 CommandScheduler.getInstance()::terminateOpMode
                 //                .alongWith(new ConeReadyToScoreCommand(cone)),
                 // new ClawOpenCommand(claw),
