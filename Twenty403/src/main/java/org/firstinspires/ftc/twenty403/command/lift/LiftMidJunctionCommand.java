@@ -2,18 +2,8 @@ package org.firstinspires.ftc.twenty403.command.lift;
 
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 
-import com.technototes.library.command.Command;
-
-public class LiftMidJunctionCommand implements Command {
-    private LiftSubsystem liftSubsystem;
-
+public class LiftMidJunctionCommand extends LiftHeightCommand {
     public LiftMidJunctionCommand(LiftSubsystem ls) {
-        liftSubsystem = ls;
-        addRequirements(ls);
-    }
-
-    @Override
-    public void execute() {
-        liftSubsystem.midPole();
+        super(ls, JunctionHeight.Medium);
     }
 }
