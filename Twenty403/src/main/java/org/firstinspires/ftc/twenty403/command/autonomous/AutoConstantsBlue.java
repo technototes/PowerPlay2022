@@ -1,17 +1,20 @@
 package org.firstinspires.ftc.twenty403.command.autonomous;
 
 import static java.lang.Math.toRadians;
+
 import java.util.function.Function;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.technototes.path.geometry.ConfigurablePose;
 import com.technototes.path.trajectorysequence.TrajectorySequence;
 import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
 
 public class AutoConstantsBlue {
+    @Config
     public static class Home {
-        public static ConfigurablePose START = new ConfigurablePose(-36, 66, toRadians(-90));
-        public static ConfigurablePose STACK = new ConfigurablePose(-60, 12, toRadians(180));
+        public static ConfigurablePose START = new ConfigurablePose(36, -66, toRadians(90));
+        public static ConfigurablePose STACK = new ConfigurablePose(60, -12, toRadians(180));
         public static ConfigurablePose BETWEEN = new ConfigurablePose(-40, 12, toRadians(180));
         public static ConfigurablePose BETWEEN_2 = new ConfigurablePose(-36, 6, toRadians(90));
         public static ConfigurablePose BETWEEN_3 = new ConfigurablePose(-36, 36, toRadians(90));
@@ -22,14 +25,30 @@ public class AutoConstantsBlue {
         public static ConfigurablePose N_JUNCTION = new ConfigurablePose(18, -3, toRadians(-135));
         public static ConfigurablePose E_JUNCTION = new ConfigurablePose(-30, 6, toRadians(-45));
         public static ConfigurablePose S_JUNCTION = new ConfigurablePose(-10, 30, toRadians(-135));
-        public static ConfigurablePose W_JUNCTION = new ConfigurablePose(28, 4, toRadians(-135));
+        public static ConfigurablePose W_JUNCTION = new ConfigurablePose(26, -9, 2.2);
+        public static ConfigurablePose TEST_A = new ConfigurablePose(36, -66, toRadians(90));
+        public static ConfigurablePose TEST_B = new ConfigurablePose(28, -4, toRadians(-135));
+        public static ConfigurablePose BETWEEN_START_W_JUNCTION = new ConfigurablePose(36, -21, 2);
+        public static ConfigurablePose BETWEEN_W_JUNCTION_STACK = new ConfigurablePose(36, -14, .4);
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
+                TEST_PATH = b -> b.apply(TEST_A.toPose())
+                .lineToLinearHeading(TEST_B.toPose()).build(),
                 START_TO_E_JUNCTION =
-                b -> b.apply(START.toPose())
-                        .splineTo(E_JUNCTION.toVec(), E_JUNCTION.getHeading())
-                        .build(),
+                        b -> b.apply(START.toPose())
+                                .splineTo(E_JUNCTION.toVec(), E_JUNCTION.getHeading())
+                                .build(),
+                START_TO_W_JUNCTION =
+                        b -> b.apply(START.toPose())
+                                .lineToLinearHeading(BETWEEN_START_W_JUNCTION.toPose())
+                                .lineToLinearHeading(W_JUNCTION.toPose())
+                                .build(),
+                W_JUNCTION_TO_STACK =
+                        b -> b.apply(W_JUNCTION.toPose())
+                                .lineToLinearHeading(BETWEEN_W_JUNCTION_STACK.toPose())
+                                .lineToLinearHeading(STACK.toPose())
+                                .build(),
                 START_TO_S_JUNCTION =
                         b -> b.apply(START.toPose())
                                 .splineTo(S_JUNCTION.toVec(), S_JUNCTION.getHeading())
@@ -119,7 +138,7 @@ public class AutoConstantsBlue {
         public static ConfigurablePose PARK_MIDDLE = new ConfigurablePose(-36, -36, toRadians(-90));
         public static ConfigurablePose PARK_RIGHT = new ConfigurablePose(-12, -36, toRadians(-90));
 
-public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
+        public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
                 START_TO_JUNCTION =
                 b -> b.apply(START.toPose())
                         .splineTo(JUNCTION.toVec(), JUNCTION.getHeading())

@@ -104,8 +104,10 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                     count++;
                     // Draw a dot on the image at this point - input was put into img
                     // The color choice makes things stripey, which makes it easier to identify
-                    double[] colorToDraw = ((j + i) & 3) != 0 ? edge1.val : edge2.val;
-                    img.put(j + VisionConstants.Y, i + VisionConstants.X, colorToDraw);
+                    if (VisionSubsystem.VisionSubsystemConstants.DEBUG_VIEW) {
+                        double[] colorToDraw = ((j + i) & 3) != 0 ? edge1.val : edge2.val;
+                        img.put(j + VisionConstants.Y, i + VisionConstants.X, colorToDraw);
+                    }
                 }
             }
         }
@@ -158,8 +160,9 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
 
         inputToCr(input);
 
-        // Uncomment if you want to see the image on FTC Dashboard
-        // sendBitmap();
+        if (VisionSubsystem.VisionSubsystemConstants.DEBUG_VIEW) {
+            sendBitmap();
+        }
         return input;
     }
 
@@ -182,8 +185,11 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
 
     // Helper to send the bitmap to the FTC Dashboard
     private void sendBitmap() {
-        Bitmap bitmap = Bitmap.createBitmap(img.cols(), img.rows(), Bitmap.Config.RGB_565);
-        Utils.matToBitmap(img, bitmap);
-        FtcDashboard.getInstance().sendImage(bitmap);
+        FtcDashboard db = FtcDashboard.getInstance();
+        if (db != null) {
+            Bitmap bitmap = Bitmap.createBitmap(img.cols(), img.rows(), Bitmap.Config.RGB_565);
+            Utils.matToBitmap(img, bitmap);
+            db.sendImage(bitmap);
+        }
     }
 }
