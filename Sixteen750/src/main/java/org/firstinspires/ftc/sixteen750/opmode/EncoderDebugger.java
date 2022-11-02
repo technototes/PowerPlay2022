@@ -12,7 +12,7 @@ import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem;
 
 @Config
 @TeleOp(group = "drive")
-public class DebugEncoder extends CommandOpMode {
+public class EncoderDebugger extends CommandOpMode {
     SwerveDrivebaseSubsystem drive;
 
     ElapsedTime t;
@@ -63,6 +63,9 @@ public class DebugEncoder extends CommandOpMode {
 
         telemetry.addData("imuAngle", drive.imuAngle);
         telemetry.addData("imuAngleVelocity", drive.imuAngleVelocity);
+
+        telemetry.addData("ExternalHeading", drive.getExternalHeading());
+        telemetry.addData("ExternalHeadingVelocity", drive.getExternalHeadingVelocity());
 
         telemetry.update();
     }
