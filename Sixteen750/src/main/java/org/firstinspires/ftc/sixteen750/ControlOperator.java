@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.sixteen750;
 
-public class Controls {
+public class ControlOperator {
     public Robot robot;
 
-    public Controls(Robot r) {
+    public ControlOperator(Robot r) {
         this.robot = r;
     }
 }

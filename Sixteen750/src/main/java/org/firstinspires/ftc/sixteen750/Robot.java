@@ -30,7 +30,7 @@ public class Robot implements Loggable {
             //            )
         }
         if (RobotConstant.CLAW_CONNECTED) {
-            clawSubsystem = new ClawSubsystem(hardware.claw, hardware.flipper, hardware.clawDistance);
+            clawSubsystem = new ClawSubsystem(hardware.claw, hardware.flipper, hardware.elbow);
         } else {
             clawSubsystem = new ClawSubsystem();
         }

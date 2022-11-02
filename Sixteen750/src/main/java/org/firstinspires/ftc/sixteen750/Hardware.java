@@ -24,6 +24,7 @@ public class Hardware {
 
         public static String CLAW_SERVO = "claw";
         public static String FLIPPER_SERVO = "flipper";
+        public static String ELBOW_SERVO = "elbow";
         public static String CLAW_SENSOR = "claw_sensor";
         public static String LIFT_LEFT_MOTOR = "lift_left_motor";
         public static String LIFT_RIGHT_MOTOR = "lift_right_motor";
@@ -38,6 +39,7 @@ public class Hardware {
     public IMU imu;
     public Servo claw;
     public Servo flipper;
+    public Servo elbow;
     public DistanceSensor clawDistance;
 
     public Hardware(HardwareMap hwMap) {
@@ -51,6 +53,7 @@ public class Hardware {
         if (RobotConstant.CLAW_CONNECTED) {
             claw = new Servo(HardwareConstant.CLAW_SERVO);
             flipper = new Servo(HardwareConstant.FLIPPER_SERVO);
+            elbow = new Servo(HardwareConstant.ELBOW_SERVO);
             clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR);
         }
         if (RobotConstant.LIFT_CONNECTED) {

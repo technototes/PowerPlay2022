@@ -1,26 +1,23 @@
-package org.firstinspires.ftc.twenty403;
-
-import org.firstinspires.ftc.twenty403.Robot.RobotConstant;
-import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
-import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
-import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftDownCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
+package org.firstinspires.ftc.sixteen750;
 
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.control.CommandAxis;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
+import com.technototes.path.command.MecanumDriveCommand;
+import org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
+import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
+import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 
-public class Controls {
+public class ControlDriver {
     public Robot robot;
     public CommandGamepad gamepad;
 
     public Stick driveLeftStick, driveRightStick;
     public CommandButton resetGyroButton, driveStraightenButton, snailSpeedButton, liftUpButton, clawOpenButton;
     public CommandAxis liftDownButton, clawCloseButton;
-    public Controls(CommandGamepad g, Robot r) {
+    public ControlDriver(CommandGamepad g, Robot r) {
         this.robot = r;
         gamepad = g;
 
@@ -70,3 +67,4 @@ public class Controls {
         liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
     }
 }
+
