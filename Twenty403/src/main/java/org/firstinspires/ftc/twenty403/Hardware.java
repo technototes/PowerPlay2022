@@ -18,6 +18,12 @@ public class Hardware {
         public static String RL_MOTOR = "motorRL"; // bad
         public static String RR_MOTOR = "motorRR";
         public static String IMU = "imu";
+
+        public static String CLAW_SERVO = "claw";
+        public static String FLIPPER_SERVO = "flipper";
+        public static String CLAW_SENSOR = "claw_sensor";
+        public static String LIFT_LEFT_MOTOR = "LLIFT";
+        public static String LIFT_RIGHT_MOTOR = "RLIFT";
     }
 
     public EncodedMotor<DcMotorEx> flDriveMotor;
