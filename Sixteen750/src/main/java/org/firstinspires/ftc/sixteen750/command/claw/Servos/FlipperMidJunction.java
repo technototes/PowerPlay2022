@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.sixteen750.command.claw.Servos;
 
-import com.technototes.library.command.Command;
-
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
+
+import com.technototes.library.command.Command;
 
 public class FlipperMidJunction implements Command {
     private ClawSubsystem subsystem;
@@ -13,5 +13,7 @@ public class FlipperMidJunction implements Command {
     }
 
     @Override
-    public void execute() {subsystem.flipperMediumJunction();}
+    public void execute() {
+        subsystem.flipperMediumJunction();
+    }
 }

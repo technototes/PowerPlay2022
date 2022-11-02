@@ -8,7 +8,6 @@ import org.firstinspires.ftc.twenty403.command.lift.LiftDownCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
 
 import com.technototes.library.command.CommandScheduler;
-import com.technototes.library.control.CommandAxis;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
@@ -19,7 +18,8 @@ public class Controls {
 
     public Stick driveLeftStick, driveRightStick;
     public CommandButton resetGyroButton, driveStraightenButton, snailSpeedButton, liftUpButton, clawOpenButton;
-    public CommandAxis liftDownButton, clawCloseButton;
+    public CommandButton liftDownButton, clawCloseButton;
+
     public Controls(CommandGamepad g, Robot r) {
         this.robot = r;
         gamepad = g;
@@ -42,10 +42,12 @@ public class Controls {
         driveLeftStick = gamepad.leftStick;
         driveRightStick = gamepad.rightStick;
         driveStraightenButton = gamepad.square;
-        liftDownButton = gamepad.rightTrigger;
+
         liftUpButton = gamepad.rightBumper;
-        clawCloseButton= gamepad.leftTrigger;
-        clawOpenButton=gamepad.leftBumper;
+        liftDownButton = gamepad.rightTrigger.getAsButton();
+        clawOpenButton = gamepad.leftBumper;
+        clawCloseButton = gamepad.leftTrigger.getAsButton();
+
         // TODO: Identify other controls for
     }
 

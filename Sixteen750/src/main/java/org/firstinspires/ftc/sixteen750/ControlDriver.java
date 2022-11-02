@@ -1,14 +1,13 @@
 package org.firstinspires.ftc.sixteen750;
 
-import com.technototes.library.command.CommandScheduler;
+import org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
+import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
+import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
+
 import com.technototes.library.control.CommandAxis;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
-import com.technototes.path.command.MecanumDriveCommand;
-import org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
-import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
-import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 
 public class ControlDriver {
     public Robot robot;
@@ -17,6 +16,7 @@ public class ControlDriver {
     public Stick driveLeftStick, driveRightStick;
     public CommandButton resetGyroButton, driveStraightenButton, snailSpeedButton, liftUpButton, clawOpenButton;
     public CommandAxis liftDownButton, clawCloseButton;
+
     public ControlDriver(CommandGamepad g, Robot r) {
         this.robot = r;
         gamepad = g;
@@ -41,15 +41,15 @@ public class ControlDriver {
         driveStraightenButton = gamepad.square;
         liftDownButton = gamepad.rightTrigger;
         liftUpButton = gamepad.rightBumper;
-        clawCloseButton= gamepad.leftTrigger;
-        clawOpenButton=gamepad.leftBumper;
+        clawCloseButton = gamepad.leftTrigger;
+        clawOpenButton = gamepad.leftBumper;
         // TODO: Identify other controls for
     }
 
     public void bindDriveControls() {
-        CommandScheduler.getInstance()
-                .scheduleJoystick(new DriveCommand(
-                        robot.drivebaseSubsystem, driveLeftStick, driveRightStick, driveStraightenButton));
+        // CommandScheduler.getInstance()
+        //  .scheduleJoystick(new DriveCommand(
+        //      robot.drivebaseSubsystem, driveLeftStick, driveRightStick, driveStraightenButton));
         // TODO: We probably want buttons to reset the Gyro...
         //   resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
         //   snailSpeedButton.whilePressedOnce(new SetSpeedCommand(robot.drivebaseSubsystem));
@@ -63,8 +63,7 @@ public class ControlDriver {
 
     public void bindLiftControls() {
         // TODO: Name & Bind lift controls
-        liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
-        liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
+        // liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
+        // liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
     }
 }
-

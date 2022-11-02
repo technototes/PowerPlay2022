@@ -8,7 +8,6 @@ import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsBlue;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoTestDrivebaseCommand;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import com.technototes.library.command.CommandScheduler;

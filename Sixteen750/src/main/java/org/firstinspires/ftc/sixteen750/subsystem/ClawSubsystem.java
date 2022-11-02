@@ -23,7 +23,7 @@ public class ClawSubsystem implements Subsystem {
     private Servo clawServo;
     private Servo flipperServo;
     private Servo elbowServo;
-    private DistanceSensor sensor; //not on the bot currently
+    private DistanceSensor sensor; // not on the bot currently
 
     public ClawSubsystem(Servo claw, Servo flipper, Servo elbow, DistanceSensor s) {
         clawServo = claw;
@@ -31,12 +31,14 @@ public class ClawSubsystem implements Subsystem {
         elbowServo = elbow;
         sensor = s;
     }
+
     public ClawSubsystem(Servo claw, Servo flipper, Servo elbow) {
         clawServo = claw;
         flipperServo = flipper;
         elbowServo = elbow;
     }
-    public ClawSubsystem(){
+
+    public ClawSubsystem() {
         clawServo = null;
         flipperServo = null;
         elbowServo = null;
@@ -55,37 +57,37 @@ public class ClawSubsystem implements Subsystem {
         close();
         elbowServo.setPosition(ELBOW_CARRY_SERVO_POS);
     }
+
     public void release() {
         elbowServo.setPosition(ELBOW_RELEASE_SERVO_POS);
         open();
     }
-
 
     public void scoreGroundJunction() {
         flipperServo.setPosition(GROUND_JUNCTION);
         elbowServo.setPosition(GROUND_ELBOW);
     }
 
-
     public void flipperLowJunction() {
         flipperServo.setPosition(LOW_JUNCTION);
     }
+
     public void elbowLowJunction() {
         elbowServo.setPosition(LOW_ELBOW);
     }
 
-
     public void flipperMediumJunction() {
         flipperServo.setPosition(MID_JUNCTION);
     }
+
     public void elbowMidiumJunction() {
         elbowServo.setPosition(MID_ELBOW);
     }
 
-
     public void flipperHighJunction() {
         flipperServo.setPosition(HIGH_JUNCTION);
     }
+
     public void elbowHighJunction() {
         elbowServo.setPosition(HIGH_ELBOW);
     }

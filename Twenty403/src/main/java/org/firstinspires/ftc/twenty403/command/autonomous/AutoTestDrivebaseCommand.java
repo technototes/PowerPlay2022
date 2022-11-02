@@ -5,7 +5,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.path.command.TrajectorySequenceCommand;
-import com.technototes.path.geometry.ConfigurablePose;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
 @Config
@@ -28,6 +27,6 @@ public class AutoTestDrivebaseCommand extends SequentialCommandGroup {
                         drive,
                         Robot.Trajectories.BLUE_PARK_LOCATION_HOME)/*
                 /*Placeholder for what we're doing for parking*/
-        );
+                );
     }
 }

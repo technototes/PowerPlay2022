@@ -1,18 +1,15 @@
 package org.firstinspires.ftc.sixteen750.command.drive;
 
-import com.acmerobotics.roadrunner.drive.DriveSignal;
-import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
+import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
+
 import com.technototes.library.command.Command;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.Stick;
 import com.technototes.library.subsystem.drivebase.DrivebaseSubsystem;
 import com.technototes.library.util.MathUtils;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
-
-public class DriveCommand implements Command{
+public class DriveCommand implements Command {
 
     static double STRAIGHTEN_DEAD_ZONE = 0.08;
     public DrivebaseSubsystem subsystem;
@@ -42,7 +39,7 @@ public class DriveCommand implements Command{
         if (straight == null || straight.getAsBoolean() == false) {
             // No straighten override: return the stick value
             // (with some adjustment...)
-            return -Math.pow(r.getAsDouble() * subsystem.speed, 3);
+            return 0; // TODO: -Math.pow(r.getAsDouble() * subsystem.speed, 3);
         } else {
             // headingInRads is [0-2pi]
             double heading = -Math.toDegrees(headingInRads);
@@ -64,11 +61,13 @@ public class DriveCommand implements Command{
 
     @Override
     public void execute() {
+        /*
         double curHeading = -subsystem.getExternalHeading();
         Vector2d input = new Vector2d(-y.getAsDouble() * subsystem.speed, -x.getAsDouble() * subsystem.speed)
                 .rotated(curHeading);
         subsystem.setWeightedDrivePower(new Pose2d(input.getX(), input.getY(), getRotation(curHeading)));
         subsystem.update();
+        */
     }
 
     @Override
@@ -78,6 +77,6 @@ public class DriveCommand implements Command{
 
     @Override
     public void end(boolean cancel) {
-        if (cancel) subsystem.setDriveSignal(new DriveSignal());
+        // TODO: if (cancel) subsystem.setDriveSignal(new DriveSignal());
     }
 }

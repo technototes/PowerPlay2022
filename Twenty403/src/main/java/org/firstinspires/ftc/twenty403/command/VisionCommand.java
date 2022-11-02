@@ -1,10 +1,8 @@
 package org.firstinspires.ftc.twenty403.command;
 
-import com.technototes.library.command.Command;
-import com.technototes.library.util.Alliance;
-
-import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
+
+import com.technototes.library.command.Command;
 
 public class VisionCommand implements Command {
     public VisionSubsystem subsystem;
@@ -32,4 +30,3 @@ public class VisionCommand implements Command {
         subsystem.stopVisionPipeline();
     }
 }
-

@@ -1,19 +1,20 @@
 package org.firstinspires.ftc.sixteen750.command.claw.Servos;
 
-import com.technototes.library.command.Command;
-
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 
-public class ElbowLowJunction implements Command{
+import com.technototes.library.command.Command;
 
-        private ClawSubsystem subsystem;
+public class ElbowLowJunction implements Command {
 
-        public ElbowLowJunction(ClawSubsystem s) {
-            subsystem = s;
-            addRequirements(s);
-        }
+    private ClawSubsystem subsystem;
 
-        @Override
-        public void execute() {subsystem.elbowLowJunction();}
+    public ElbowLowJunction(ClawSubsystem s) {
+        subsystem = s;
+        addRequirements(s);
+    }
 
+    @Override
+    public void execute() {
+        subsystem.elbowLowJunction();
+    }
 }
