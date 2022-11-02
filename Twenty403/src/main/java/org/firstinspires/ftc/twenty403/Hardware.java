@@ -2,6 +2,7 @@ package org.firstinspires.ftc.twenty403;
 
 import static org.firstinspires.ftc.twenty403.Robot.RobotConstant;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.Camera;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 
 import com.acmerobotics.dashboard.config.Config;
@@ -12,6 +13,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.sensor.IMU;
 import com.technototes.library.hardware.servo.Servo;
+import com.technototes.vision.hardware.Webcam;
 
 public class Hardware {
     @Config
@@ -27,18 +29,23 @@ public class Hardware {
         public static String CLAW_SENSOR = "claw_sensor";
         public static String LIFT_LEFT_MOTOR = "lift_left_motor";
         public static String LIFT_RIGHT_MOTOR = "lift_right_motor";
+
+        public static String CAMERA = "Webcam";
     }
 
     public EncodedMotor<DcMotorEx> flDriveMotor;
     public EncodedMotor<DcMotorEx> frDriveMotor;
     public EncodedMotor<DcMotorEx> rlDriveMotor;
     public EncodedMotor<DcMotorEx> rrDriveMotor;
+    public IMU imu;
+
     public EncodedMotor<DcMotorEx> LiftLeftMotor;
     public EncodedMotor<DcMotorEx> LiftRightMotor;
-    public IMU imu;
     public Servo claw;
     public Servo flipper;
     public DistanceSensor clawDistance;
+
+    public Webcam camera;
 
     public Hardware(HardwareMap hwmap) {
         if (RobotConstant.DRIVE_CONNECTED) {
@@ -56,6 +63,9 @@ public class Hardware {
         if (RobotConstant.LIFT_CONNECTED) {
             LiftLeftMotor = new EncodedMotor<>(HardwareConstant.LIFT_LEFT_MOTOR);
             LiftRightMotor = new EncodedMotor<>(HardwareConstant.LIFT_RIGHT_MOTOR);
+        }
+        if (RobotConstant.CAMERA_CONNECTED) {
+            camera = new Webcam(HardwareConstant.CAMERA);
         }
     }
 }

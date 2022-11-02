@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
+import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
+import com.technototes.library.util.Alliance;
 import com.technototes.vision.hardware.Webcam;
 
 public class VisionSubsystem implements Subsystem, Loggable {
@@ -16,14 +19,16 @@ public class VisionSubsystem implements Subsystem, Loggable {
         public static int HEIGHT = 120;
         // Change this if the camera is oriented differently
         public static OpenCvCameraRotation ROTATION = OpenCvCameraRotation.UPRIGHT;
+        // Turn this on if we want to see the debug image
+        public static boolean DEBUG_VIEW = true;
     }
 
     public Webcam camera;
     public VisionPipeline visionPipeline;
 
-    public VisionSubsystem(Webcam c) {
+    public VisionSubsystem(Webcam c, Alliance alliance, StartingPosition side) {
         camera = c;
-        visionPipeline = new VisionPipeline();
+        visionPipeline = new VisionPipeline(alliance, side);
     }
 
     public void startStreaming() {

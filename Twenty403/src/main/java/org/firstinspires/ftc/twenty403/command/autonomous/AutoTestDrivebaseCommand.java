@@ -10,14 +10,13 @@ import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
 @Config
 public class AutoTestDrivebaseCommand extends SequentialCommandGroup {
-    public static ConfigurablePose TEST_START = new ConfigurablePose(0, 0, 0);
-    public static ConfigurablePose TEST_END = new ConfigurablePose(0, 10, 0);
+    // public static ConfigurablePose TEST_START = new ConfigurablePose(0, 0, 0);
+    // public static ConfigurablePose TEST_END = new ConfigurablePose(0, 10, 0);
 
     public AutoTestDrivebaseCommand(MecanumDrivebaseSubsystem drive) {
         super(
-                new TrajectorySequenceCommand(drive, b -> b.apply(TEST_START.toPose())
-                        .lineToLinearHeading(TEST_END.toPose())
-                        .build()),
+                new TrajectorySequenceCommand(drive, AutoConstantsBlue.Home.START_TO_W_JUNCTION),
+                new TrajectorySequenceCommand(drive, AutoConstantsBlue.Home.W_JUNCTION_TO_STACK),
                 CommandScheduler.getInstance()::terminateOpMode
                 //                .alongWith(new ConeReadyToScoreCommand(cone)),
                 // new ClawOpenCommand(claw),
@@ -29,6 +28,6 @@ public class AutoTestDrivebaseCommand extends SequentialCommandGroup {
                         drive,
                         Robot.Trajectories.BLUE_PARK_LOCATION_HOME)/*
                 /*Placeholder for what we're doing for parking*/
-                );
+        );
     }
 }
