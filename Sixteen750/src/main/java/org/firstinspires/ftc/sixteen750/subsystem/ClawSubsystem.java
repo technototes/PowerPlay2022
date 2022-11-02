@@ -31,6 +31,17 @@ public class ClawSubsystem implements Subsystem {
         elbowServo = elbow;
         sensor = s;
     }
+    public ClawSubsystem(Servo claw, Servo flipper, Servo elbow) {
+        clawServo = claw;
+        flipperServo = flipper;
+        elbowServo = elbow;
+    }
+    public ClawSubsystem(){
+        clawServo = null;
+        flipperServo = null;
+        elbowServo = null;
+        sensor = null;
+    }
 
     public void open() {
         clawServo.setPosition(OPEN_CLAW_SERVO_POS);
