@@ -14,7 +14,7 @@ public class AutoConstantsBlue {
     @Config
     public static class Home {
         public static ConfigurablePose START = new ConfigurablePose(36, -66, toRadians(90));
-        public static ConfigurablePose STACK = new ConfigurablePose(60, -12, toRadians(180));
+        public static ConfigurablePose STACK = new ConfigurablePose(60, -12, toRadians(0));
         public static ConfigurablePose BETWEEN = new ConfigurablePose(-40, 12, toRadians(180));
         public static ConfigurablePose BETWEEN_2 = new ConfigurablePose(-36, 6, toRadians(90));
         public static ConfigurablePose BETWEEN_3 = new ConfigurablePose(-36, 36, toRadians(90));
