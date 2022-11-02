@@ -2,7 +2,6 @@ package org.firstinspires.ftc.twenty403;
 
 import static org.firstinspires.ftc.twenty403.Robot.RobotConstant;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.Camera;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 
 import com.acmerobotics.dashboard.config.Config;
@@ -24,13 +23,13 @@ public class Hardware {
         public static String RR_MOTOR = "RRMOTOR";
         public static String IMU = "imu";
 
+        public static String CAMERA = "Webcam";
+
         public static String CLAW_SERVO = "claw";
         public static String FLIPPER_SERVO = "flipper";
         public static String CLAW_SENSOR = "claw_sensor";
-        public static String LIFT_LEFT_MOTOR = "lift_left_motor";
-        public static String LIFT_RIGHT_MOTOR = "lift_right_motor";
-
-        public static String CAMERA = "Webcam";
+        public static String LIFT_LEFT_MOTOR = "LLIFT";
+        public static String LIFT_RIGHT_MOTOR = "RLIFT";
     }
 
     public EncodedMotor<DcMotorEx> flDriveMotor;
