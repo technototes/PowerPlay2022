@@ -2,7 +2,6 @@ package org.firstinspires.ftc.twenty403.command.autonomous.red_away;
 
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsRed;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
-import org.firstinspires.ftc.twenty403.command.compound.ConeReadyScoreHigh;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 
@@ -14,7 +13,7 @@ public class AutoRedAwayGroup extends SequentialCommandGroup {
     public AutoRedAwayGroup(MecanumDrivebaseSubsystem drive, LiftSubsystem lift, ClawSubsystem claw) {
         super(
                 new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.START_TO_E_JUNCTION)
-                        .alongWith(new ConeReadyScoreHigh(lift, claw)),
+                /*.alongWith(new ConeReadyScoreHigh(lift, claw))*/ ,
                 new ClawOpenCommand(claw),
                 new AutoRedAwayConeStackCommand(drive, lift, claw),
                 new AutoRedAwayConeStackCommand(drive, lift, claw),
