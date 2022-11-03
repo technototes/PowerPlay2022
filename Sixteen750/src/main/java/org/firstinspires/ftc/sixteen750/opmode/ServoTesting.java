@@ -3,16 +3,16 @@ package org.firstinspires.ftc.sixteen750.opmode;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.technototes.library.structure.CommandOpMode;
 
-import org.firstinspires.ftc.sixteen750.swerve_util.SwerveModule;
 
 @TeleOp(group = "drive")
 public class ServoTesting extends CommandOpMode {
     ElapsedTime t;
 
-    SwerveModule leftFrontModule, leftRearModule, rightRearModule, rightFrontModule;
+    CRServo leftFrontServo, leftRearServo, rightRearServo, rightFrontServo;
     boolean isLeftFrontPressed, isLeftRearPressed, isRightRearPressed, isRightFrontPressed = false;
 
     public static double servoPower = 0.1;
@@ -22,10 +22,10 @@ public class ServoTesting extends CommandOpMode {
     public void uponInit() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        leftFrontModule = new SwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder");
-        leftRearModule = new SwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder");
-        rightRearModule = new SwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder");
-        rightFrontModule = new SwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder");
+        leftFrontServo = hardwareMap.get(CRServo.class, "leftFrontServo");
+        leftRearServo = hardwareMap.get(CRServo.class, "leftRearServo");
+        rightRearServo = hardwareMap.get(CRServo.class, "rightRearServo");
+        rightFrontServo = hardwareMap.get(CRServo.class, "rightFrontServo");
     }
 
     @Override
@@ -38,35 +38,35 @@ public class ServoTesting extends CommandOpMode {
         double loopSeconds = t.seconds();
 
         if (this.gamepad1.dpad_left){
-            leftFrontModule.setServoPower(servoPower);
+            leftFrontServo.setPower(servoPower);
             isLeftFrontPressed = true;
         }
         else {
-            leftFrontModule.setServoPower(servoStopPower);
+            leftFrontServo.setPower(servoStopPower);
             isLeftFrontPressed = false;
         }
         if (this.gamepad1.dpad_down){
-            leftRearModule.setServoPower(servoPower);
+            leftRearServo.setPower(servoPower);
             isLeftRearPressed = true;
         }
         else {
-            leftRearModule.setServoPower(servoStopPower);
+            leftRearServo.setPower(servoStopPower);
             isLeftRearPressed = false;
         }
         if (this.gamepad1.dpad_up){
-            rightRearModule.setServoPower(servoPower);
+            rightRearServo.setPower(servoPower);
             isRightRearPressed = true;
         }
         else {
-            rightRearModule.setServoPower( servoStopPower);
+            rightRearServo.setPower(servoStopPower);
             isRightRearPressed = false;
         }
         if (this.gamepad1.dpad_right){
-            rightFrontModule.setServoPower(servoPower);
+            rightFrontServo.setPower(servoPower);
             isRightFrontPressed = true;
         }
         else {
-            rightFrontModule.setServoPower(servoStopPower);
+            rightFrontServo.setPower(servoStopPower);
             isRightFrontPressed = false;
         }
 
