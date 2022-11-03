@@ -40,7 +40,6 @@ import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequenceRunner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.function.Function;
 
 public class SwerveDrivebaseSubsystem extends SwerveDrive {
@@ -104,7 +103,7 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
      * and op modes themselves.
      */
     @Config
-    public static class DriveConstant {
+    public static class SwerveDriveConstant {
         /*
          * These are motor constants that should be listed online for your motors.
          */
@@ -181,10 +180,10 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
             SwerveModule rightRearSwerveModule
     ) {
         // The HardwareMap still needed but now can have arbitrary naming to these hardware devices
-        super(DriveConstant.kV, DriveConstant.kA, DriveConstant.kStatic, DriveConstant.TRACK_WIDTH);
+        super(SwerveDriveConstant.kV, SwerveDriveConstant.kA, SwerveDriveConstant.kStatic, SwerveDriveConstant.TRACK_WIDTH);
 
-        velocityConstraint = getVelocityConstraint(DriveConstant.MAX_VEL, DriveConstant.MAX_ANG_VEL, DriveConstant.TRACK_WIDTH);
-        accelConstraint = getAccelerationConstraint(DriveConstant.MAX_ACCEL);
+        velocityConstraint = getVelocityConstraint(SwerveDriveConstant.MAX_VEL, SwerveDriveConstant.MAX_ANG_VEL, SwerveDriveConstant.TRACK_WIDTH);
+        accelConstraint = getAccelerationConstraint(SwerveDriveConstant.MAX_ACCEL);
 
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
                 new Pose2d(0.5, 0.5, Math.toRadians(5)), 0);
@@ -236,7 +235,7 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
         modules = Arrays.asList(leftFrontModule, leftRearModule, rightRearModule, rightFrontModule);
 
 
-        if (DriveConstant.RUN_USING_ENCODER) {
+        if (SwerveDriveConstant.RUN_USING_ENCODER) {
             setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
@@ -246,8 +245,8 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
         //TODO instantiate hardware
 
 
-        if (DriveConstant.RUN_USING_ENCODER && DriveConstant.MOTOR_VELO_PID != null) {
-            setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, DriveConstant.MOTOR_VELO_PID);
+        if (SwerveDriveConstant.RUN_USING_ENCODER && SwerveDriveConstant.MOTOR_VELO_PID != null) {
+            setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, SwerveDriveConstant.MOTOR_VELO_PID);
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
@@ -305,16 +304,16 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
     public static TrajectorySequenceBuilder trajectorySequenceBuilder(Pose2d startPose) {
         return new TrajectorySequenceBuilder(
                 startPose,
-                getVelocityConstraint(DriveConstant.MAX_VEL, DriveConstant.MAX_ANG_VEL, DriveConstant.TRACK_WIDTH), getAccelerationConstraint(DriveConstant.MAX_ACCEL),
-                DriveConstant.MAX_ANG_VEL, DriveConstant.MAX_ANG_ACCEL
+                getVelocityConstraint(SwerveDriveConstant.MAX_VEL, SwerveDriveConstant.MAX_ANG_VEL, SwerveDriveConstant.TRACK_WIDTH), getAccelerationConstraint(SwerveDriveConstant.MAX_ACCEL),
+                SwerveDriveConstant.MAX_ANG_VEL, SwerveDriveConstant.MAX_ANG_ACCEL
         );
     }
     public static TrajectorySequenceBuilder trajectorySequenceBuilder(Pose2d startPose, double startHeading) {
         return new TrajectorySequenceBuilder(
                 startPose,
                 startHeading,
-                getVelocityConstraint(DriveConstant.MAX_VEL, DriveConstant.MAX_ANG_VEL, DriveConstant.TRACK_WIDTH), getAccelerationConstraint(DriveConstant.MAX_ACCEL),
-                DriveConstant.MAX_ANG_VEL, DriveConstant.MAX_ANG_ACCEL
+                getVelocityConstraint(SwerveDriveConstant.MAX_VEL, SwerveDriveConstant.MAX_ANG_VEL, SwerveDriveConstant.TRACK_WIDTH), getAccelerationConstraint(SwerveDriveConstant.MAX_ACCEL),
+                SwerveDriveConstant.MAX_ANG_VEL, SwerveDriveConstant.MAX_ANG_ACCEL
         );
     }
     public void turnAsync(double angle) {

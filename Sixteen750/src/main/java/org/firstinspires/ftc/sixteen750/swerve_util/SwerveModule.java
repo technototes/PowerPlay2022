@@ -17,7 +17,7 @@ import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem.DriveConstant;
+import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem.SwerveDriveConstant;
 
 @Config
 public class SwerveModule {
@@ -93,14 +93,14 @@ public class SwerveModule {
     }
 
     public double getWheelPosition() {
-        return DriveConstant.encoderTicksToInches(motor.getCurrentPosition());
+        return SwerveDriveConstant.encoderTicksToInches(motor.getCurrentPosition());
     }
     public int flipModifier(){
         return MOTOR_FLIPPING && wheelFlipped ? 1 : -1;
     }
 
     public double getWheelVelocity() {
-        return DriveConstant.encoderTicksToInches(motor.getVelocity());
+        return SwerveDriveConstant.encoderTicksToInches(motor.getVelocity());
     }
 
     public void setMode(DcMotor.RunMode runMode) {
