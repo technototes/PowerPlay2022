@@ -16,7 +16,8 @@ public class Robot implements Loggable {
     public static class RobotConstant {
         public static boolean DRIVE_CONNECTED = true;
         public static boolean CLAW_CONNECTED = false;
-        public static boolean LIFT_CONNECTED = false;
+        public static boolean LIFT_CONNECTED = true;
+        public static boolean LIFT_MOVE_MOTORS = true;
         public static boolean CAMERA_CONNECTED = true;
 
         // Are we using 1 or 2 motors?
