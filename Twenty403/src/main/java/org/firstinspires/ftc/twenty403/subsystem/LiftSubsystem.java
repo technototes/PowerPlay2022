@@ -2,6 +2,8 @@ package org.firstinspires.ftc.twenty403.subsystem;
 
 import java.util.function.Supplier;
 
+import org.firstinspires.ftc.twenty403.Robot;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
@@ -12,8 +14,6 @@ import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
-
-import org.firstinspires.ftc.twenty403.Robot;
 
 @Config
 public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
