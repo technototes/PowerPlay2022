@@ -33,8 +33,8 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double DEAD_ZONE = .25 * TICKS_INCH;
 
     // We can probably bump these up higher, but not until things are generally working
-    public static double MAX_MOTOR_SPEED = 0.3;
-    public static double MIN_MOTOR_SPEED = -0.1; // Gravity
+    public static double MAX_MOTOR_SPEED = 0.6;
+    public static double MIN_MOTOR_SPEED = -0.2; // Gravity
 
     public static double LMOVE = 1.00 * TICKS_INCH;
     public static double RMOVE = 1.00 * TICKS_INCH;
@@ -73,7 +73,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     // 262, 269
     public LiftSubsystem(EncodedMotor<DcMotorEx> oneMotor) {
         isHardware = true;
-        singleMotor = false;
+        singleMotor = true;
 
         _leftMotor = oneMotor;
         _rightMotor = null;
