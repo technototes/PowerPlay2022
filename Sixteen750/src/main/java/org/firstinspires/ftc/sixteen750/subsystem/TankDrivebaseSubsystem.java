@@ -128,7 +128,13 @@ public class TankDrivebaseSubsystem extends TankDrive {
         }
     }
 
-    public TankDrivebaseSubsystem(HardwareMap hardwareMap) {
+    public TankDrivebaseSubsystem(HardwareMap hardwareMap,
+                                  DcMotorEx leftFrontMotor,
+                                  DcMotorEx leftRearMotor,
+                                  DcMotorEx rightFrontMotor,
+                                  DcMotorEx rightRearMotor,
+                                  BNO055IMU imu
+    ) {
         super(TankDriveConstants.kV, TankDriveConstants.kA, TankDriveConstants.kStatic, TankDriveConstants.TRACK_WIDTH);
 
         follower = new TankPIDVAFollower(AXIAL_PID, CROSS_TRACK_PID,
@@ -142,11 +148,11 @@ public class TankDrivebaseSubsystem extends TankDrive {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
-        // TODO: adjust the names of the following hardware devices to match your configuration
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        // TODO: the imu should be initialized outside of the subsystem
+        this.imu = imu;
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
-        imu.initialize(parameters);
+        this.imu.initialize(parameters);
 
         // TODO: If the hub containing the IMU you are using is mounted so that the "REV" logo does
         // not face up, remap the IMU axes so that the z-axis points upward (normal to the floor.)
@@ -171,14 +177,14 @@ public class TankDrivebaseSubsystem extends TankDrive {
         // BNO055IMUUtil.remapZAxis(imu, AxisDirection.NEG_Y);
 
         // add/remove motors depending on your robot (e.g., 6WD)
-        DcMotorEx leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
-        DcMotorEx leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
-        DcMotorEx rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
-        DcMotorEx rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+        // DcMotorEx leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
+        // DcMotorEx leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
+        // DcMotorEx rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
+        // DcMotorEx rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
 
-        motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
-        leftMotors = Arrays.asList(leftFront, leftRear);
-        rightMotors = Arrays.asList(rightFront, rightRear);
+        motors = Arrays.asList(leftFrontMotor, leftRearMotor, rightRearMotor, rightFrontMotor);
+        leftMotors = Arrays.asList(leftFrontMotor, leftRearMotor);
+        rightMotors = Arrays.asList(rightFrontMotor, rightRearMotor);
 
         for (DcMotorEx motor : motors) {
             MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
@@ -202,6 +208,17 @@ public class TankDrivebaseSubsystem extends TankDrive {
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
 
         trajectorySequenceRunner = new TrajectorySequenceRunner(follower, HEADING_PID);
+    }
+
+    public TankDrivebaseSubsystem(HardwareMap hardwareMap) {
+        this(
+                hardwareMap,
+                hardwareMap.get(DcMotorEx.class, "leftFrontMotor"),
+                hardwareMap.get(DcMotorEx.class, "leftRearMotor"),
+                hardwareMap.get(DcMotorEx.class, "rightFrontMotor"),
+                hardwareMap.get(DcMotorEx.class, "rightRearMotor"),
+                hardwareMap.get(BNO055IMU.class, "imu")
+        );
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
@@ -355,7 +372,7 @@ public class TankDrivebaseSubsystem extends TankDrive {
 
     @Override
     public double getRawExternalHeading() {
-        return imu.getAngularOrientation().firstAngle;
+        return this.imu.getAngularOrientation().firstAngle;
     }
 
     @Override
