@@ -18,7 +18,7 @@ public class Controls {
 
     public Stick driveLeftStick, driveRightStick;
     public CommandButton resetGyroButton, driveStraightenButton, snailSpeedButton, liftUpButton, clawOpenButton;
-    public CommandButton liftDownButton, clawCloseButton;
+    public CommandButton liftDownButton, clawCloseButton, liftDownButtonBackup;
 
     public Controls(CommandGamepad g, Robot r) {
         this.robot = r;
@@ -44,7 +44,8 @@ public class Controls {
         driveStraightenButton = gamepad.square;
 
         liftUpButton = gamepad.rightBumper;
-        liftDownButton = gamepad.rightTrigger.getAsButton();
+        liftDownButton = gamepad.cross;
+        liftDownButtonBackup = gamepad.rightTrigger.getAsButton();
         clawOpenButton = gamepad.leftBumper;
         clawCloseButton = gamepad.leftTrigger.getAsButton();
 
@@ -70,5 +71,6 @@ public class Controls {
         // TODO: Name & Bind lift controls
         liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
         liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
+        liftDownButtonBackup.whenPressed(new LiftDownCommand(robot.liftSubsystem));
     }
 }
