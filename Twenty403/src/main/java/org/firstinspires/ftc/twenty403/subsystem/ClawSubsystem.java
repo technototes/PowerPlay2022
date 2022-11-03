@@ -15,13 +15,11 @@ public class ClawSubsystem implements Subsystem {
     public static double CARRY_SERVO_POSITION = .4;
     public static double RELEASE_SERVO_POSITION = .0;
     private Servo clawServo;
-    private Servo flipperServo;
     private DistanceSensor sensor;
     private Boolean isHardware;
 
-    public ClawSubsystem(Servo claw, Servo flipper, DistanceSensor s) {
+    public ClawSubsystem(Servo claw, DistanceSensor s) {
         clawServo = claw;
-        flipperServo = flipper;
         sensor = s;
         isHardware = true;
     }
@@ -29,7 +27,6 @@ public class ClawSubsystem implements Subsystem {
     // Non-functional subsystem constructor
     public ClawSubsystem() {
         clawServo = null;
-        flipperServo = null;
         sensor = null;
         isHardware = false;
     }
@@ -50,22 +47,6 @@ public class ClawSubsystem implements Subsystem {
         if (isHardware) {
             clawServo.setPosition(CLOSE_SERVO_POSITION);
         }
-    }
-
-    public void carry() {
-        log("Carry");
-        close();
-        if (isHardware) {
-            flipperServo.setPosition(CARRY_SERVO_POSITION);
-        }
-    }
-
-    public void release() {
-        log("Release");
-        if (isHardware) {
-            flipperServo.setPosition(RELEASE_SERVO_POSITION);
-        }
-        open();
     }
 
     public boolean isConeClose() {
