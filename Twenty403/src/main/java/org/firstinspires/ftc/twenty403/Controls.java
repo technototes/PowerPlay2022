@@ -41,9 +41,9 @@ public class Controls {
         resetGyroButton = gamepad.rightStickButton;
         driveLeftStick = gamepad.leftStick;
         driveRightStick = gamepad.rightStick;
-        driveStraightenButton = gamepad.square;
+        driveStraightenButton = gamepad.triangle;
 
-        liftUpButton = gamepad.rightBumper;
+        liftUpButton = gamepad.square;
         liftDownButton = gamepad.cross;
         liftDownButtonBackup = gamepad.rightTrigger.getAsButton();
         clawOpenButton = gamepad.leftBumper;
