@@ -17,29 +17,40 @@ import org.firstinspires.ftc.sixteen750.swerve_util.AbsoluteAnalogEncoder;
 public class ServoTest extends CommandOpMode {
     ElapsedTime t;
 
-    public static boolean alsoEncoder = true;
-
     CRServo leftFrontServo, leftRearServo, rightRearServo, rightFrontServo;
     AbsoluteAnalogEncoder leftFrontEncoder, leftRearEncoder, rightRearEncoder, rightFrontEncoder;
     boolean isLeftFrontPressed, isLeftRearPressed, isRightRearPressed, isRightFrontPressed = false;
 
     public static double servoPower = 0.3; // 0.1 is too little
     public static double servoStopPower = 0.0;
+    public static boolean alsoEncoder = true;
+
+    boolean isLeftSideConnected, isRightSideConnected = true;
 
     @Override
     public void uponInit() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        leftFrontServo = hardwareMap.get(CRServo.class, "leftFrontServo");
-        leftRearServo = hardwareMap.get(CRServo.class, "leftRearServo");
-        rightRearServo = hardwareMap.get(CRServo.class, "rightRearServo");
-        rightFrontServo = hardwareMap.get(CRServo.class, "rightFrontServo");
+        try {
+            leftFrontServo = hardwareMap.get(CRServo.class, "leftFrontServo");
+            leftRearServo = hardwareMap.get(CRServo.class, "leftRearServo");
+            if (alsoEncoder){
+                leftFrontEncoder = new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, "leftFrontEncoder"));
+                leftRearEncoder = new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, "leftRearEncoder"));
+            }
+        } catch (IllegalArgumentException e) {
+            isLeftSideConnected = false;
+        }
 
-        if (alsoEncoder){
-            leftFrontEncoder = new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, "leftFrontEncoder"));
-            leftRearEncoder = new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, "leftRearEncoder"));
-            rightRearEncoder = new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, "rightRearEncoder"));
-            rightFrontEncoder = new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, "rightFrontEncoder"));
+        try {
+            rightRearServo = hardwareMap.get(CRServo.class, "rightRearServo");
+            rightFrontServo = hardwareMap.get(CRServo.class, "rightFrontServo");
+            if (alsoEncoder){
+                rightRearEncoder = new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, "rightRearEncoder"));
+                rightFrontEncoder = new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, "rightFrontEncoder"));
+            }
+        } catch (IllegalArgumentException e) {
+            isRightSideConnected = false;
         }
     }
 
@@ -52,7 +63,7 @@ public class ServoTest extends CommandOpMode {
     public void runLoop(){
         double loopSeconds = t.seconds();
 
-        if (this.gamepad1.dpad_left){
+        if (this.gamepad1.dpad_left && isLeftSideConnected){
             leftFrontServo.setPower(servoPower);
             isLeftFrontPressed = true;
         }
@@ -60,7 +71,7 @@ public class ServoTest extends CommandOpMode {
             leftFrontServo.setPower(servoStopPower);
             isLeftFrontPressed = false;
         }
-        if (this.gamepad1.dpad_down){
+        if (this.gamepad1.dpad_down && isLeftSideConnected){
             leftRearServo.setPower(servoPower);
             isLeftRearPressed = true;
         }
@@ -68,7 +79,7 @@ public class ServoTest extends CommandOpMode {
             leftRearServo.setPower(servoStopPower);
             isLeftRearPressed = false;
         }
-        if (this.gamepad1.dpad_up){
+        if (this.gamepad1.dpad_up && isRightSideConnected){
             rightRearServo.setPower(servoPower);
             isRightRearPressed = true;
         }
@@ -76,7 +87,7 @@ public class ServoTest extends CommandOpMode {
             rightRearServo.setPower(servoStopPower);
             isRightRearPressed = false;
         }
-        if (this.gamepad1.dpad_right){
+        if (this.gamepad1.dpad_right && isRightSideConnected){
             rightFrontServo.setPower(servoPower);
             isRightFrontPressed = true;
         }
@@ -92,11 +103,17 @@ public class ServoTest extends CommandOpMode {
         telemetry.addData("RightRear - Servo - Pressed", isRightRearPressed);
         telemetry.addData("RightFront - Servo - Pressed", isRightFrontPressed);
 
-        if (alsoEncoder) {
-            telemetry.addData("LeftFront - Position", leftFrontEncoder.getCurrentPosition());
-            telemetry.addData("LeftRear - Position", leftRearEncoder.getCurrentPosition());
-            telemetry.addData("RightRear - Position", rightRearEncoder.getCurrentPosition());
-            telemetry.addData("RightFront - Position", rightFrontEncoder.getCurrentPosition());
+        if (isLeftSideConnected){
+            if (alsoEncoder) {
+                telemetry.addData("LeftFront - Position", leftFrontEncoder.getCurrentPosition());
+                telemetry.addData("LeftRear - Position", leftRearEncoder.getCurrentPosition());
+            }
+        }
+        if (isRightSideConnected){
+            if (alsoEncoder) {
+                telemetry.addData("RightRear - Position", rightRearEncoder.getCurrentPosition());
+                telemetry.addData("RightFront - Position", rightFrontEncoder.getCurrentPosition());
+            }
         }
 
         telemetry.update();
