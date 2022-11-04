@@ -33,6 +33,7 @@ public class AbsoluteAnalogEncoderDebug extends CommandOpMode {
 
     @Override
     public void runLoop() {
+        telemetry.addLine("Visit 192.168.43.1:8080/dash to see the FTC-Dashboard");
         if (isLeftSideConnected) {
             telemetry.addData("LeftFront - Position", leftFrontEncoder.getCurrentPosition());
             telemetry.addData("LeftFront - Voltage", leftFrontEncoder.getVoltage());

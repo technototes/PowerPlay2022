@@ -19,6 +19,7 @@ public class SwerveInfinityStraightTest extends LinearOpMode {
     int loopCount = 0;
 
     public Integer updateCallback(SwerveDrivebaseSubsystem drive, Telemetry telemetry){
+        telemetry.addLine("Visit 192.168.43.1:8080/dash to see the FTC-Dashboard");
         Pose2d poseEstimate = drive.getPoseEstimate();
         telemetry.addData("X", poseEstimate.getX());
         telemetry.addData("Y", poseEstimate.getY());

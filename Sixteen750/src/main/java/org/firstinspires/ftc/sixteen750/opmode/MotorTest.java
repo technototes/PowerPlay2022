@@ -89,6 +89,7 @@ public class MotorTest extends CommandOpMode {
             isRightFrontPressed = false;
         }
 
+        telemetry.addLine("Visit 192.168.43.1:8080/dash to see the FTC-Dashboard");
         telemetry.addData("Loop Seconds", loopSeconds);
 
         if (isLeftSideConnected) {

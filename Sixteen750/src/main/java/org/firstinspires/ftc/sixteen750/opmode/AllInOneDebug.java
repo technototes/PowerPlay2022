@@ -13,7 +13,7 @@ import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem;
 @Config
 @TeleOp(group = "Test-Hardware")
 @SuppressWarnings("unused")
-public class EncoderDebugger extends CommandOpMode {
+public class AllInOneDebug extends CommandOpMode {
     SwerveDrivebaseSubsystem drive;
 
     ElapsedTime t;
@@ -42,6 +42,7 @@ public class EncoderDebugger extends CommandOpMode {
         drive.update();
         double loopSeconds = t.seconds();
         t.reset();
+        telemetry.addLine("Visit 192.168.43.1:8080/dash to see the FTC-Dashboard");
         telemetry.addData("looptime",1/loopSeconds);
 
         //  TelemetryPacket packet = new TelemetryPacket();

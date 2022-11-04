@@ -60,7 +60,8 @@ public class ServoTest extends CommandOpMode {
     }
 
     @Override
-    public void runLoop(){
+    public void runLoop() {
+        telemetry.addLine("Visit 192.168.43.1:8080/dash to see the FTC-Dashboard");
         double loopSeconds = t.seconds();
 
         if (this.gamepad1.dpad_left && isLeftSideConnected){
