@@ -11,7 +11,7 @@ import com.technototes.library.structure.CommandOpMode;
 @Config
 @TeleOp(group = "Test-Hardware")
 @SuppressWarnings("unused")
-public class ServoTesting extends CommandOpMode {
+public class ServoTest extends CommandOpMode {
     ElapsedTime t;
 
     CRServo leftFrontServo, leftRearServo, rightRearServo, rightFrontServo;
