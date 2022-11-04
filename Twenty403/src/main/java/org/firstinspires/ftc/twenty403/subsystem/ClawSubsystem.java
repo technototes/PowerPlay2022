@@ -4,16 +4,17 @@ import android.util.Log;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.subsystem.Subsystem;
-
+@Config
 public class ClawSubsystem implements Subsystem {
-    public static double OPEN_SERVO_POSITION = .8;
-    public static double CLOSE_SERVO_POSITION = .5;
-    public static double CARRY_SERVO_POSITION = .4;
-    public static double RELEASE_SERVO_POSITION = .0;
+    //Correct numbers, tested
+    public static double OPEN_SERVO_POSITION = .6;
+    public static double CLOSE_SERVO_POSITION = .45;
+
     private Servo clawServo;
     private DistanceSensor sensor;
     private Boolean isHardware;
