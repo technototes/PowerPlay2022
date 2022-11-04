@@ -235,4 +235,19 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         double position = leftPidController.getTargetPosition();
         setLiftPosition(position - LMOVE, position - RMOVE);
     }
+
+    public double getLeftPos() {
+        if (!isHardware) {
+            return 0;
+        }
+        // Invert the sign on this one to make it look like it's rotating the same way...
+        return -leftMotor.get();
+    }
+
+    public double getRightPos() {
+        if (!isHardware || singleMotor) {
+            return 0;
+        }
+        return rightMotor.get();
+    }
 }
