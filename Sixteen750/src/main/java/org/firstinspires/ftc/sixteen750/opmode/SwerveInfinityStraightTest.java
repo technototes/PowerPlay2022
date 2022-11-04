@@ -14,7 +14,7 @@ import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequence;
 @Config
 @Autonomous(group = "Test-Path")
 @SuppressWarnings("unused")
-public class InfinityStraightTest extends LinearOpMode {
+public class SwerveInfinityStraightTest extends LinearOpMode {
     public static double DISTANCE = 100; // in
     int loopCount = 0;
 

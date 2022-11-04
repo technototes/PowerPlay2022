@@ -186,4 +186,8 @@ public class SwerveModule {
             return Vector2d.polar(wheelPos-oldWheel, podRot);
         }
     }
+
+    public double getEncoderVoltage() {
+        return encoder.getVoltage();
+    }
 }

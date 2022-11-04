@@ -14,23 +14,15 @@ import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem;
 @SuppressWarnings("unused")
 @TeleOp(name = "ExperimentalSwerveDrive", group = "Swerve")
 public class ExperimentalSwerveDrive extends CommandOpMode {
-//  Standard Code
-//  public Robot robot;
-//  public Controls controls;
-//  public Hardware hardware;
-
     /// Before waitForStart()
     SwerveDrivebaseSubsystem drive;
 
     ElapsedTime t;
 
+    public static boolean moreRawDataOnTelemetry = true;
+
     @Override
     public void uponInit() {
-        /// Standard Code
-//        hardware = new Hardware();
-//        robot = new Robot(hardware);
-//        controls = new Controls(robot);
-
         /// Before waitForStart()
         drive = new SwerveDrivebaseSubsystem(hardwareMap);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -43,6 +35,16 @@ public class ExperimentalSwerveDrive extends CommandOpMode {
         /// Right after waitForStart()
         drive.enableDiagnoseTelemetry(telemetry, false);
         drive.startIMUThread(this);
+        drive.updateCallback = (drive) -> {
+            drive.modulesOrientationTelemetry(telemetry, false);
+            if (moreRawDataOnTelemetry) {
+                telemetry.addData("LeftFront - AAE - Voltage", drive.leftFrontModule.getEncoderVoltage());
+                telemetry.addData("LeftRear - AAE - Voltage", drive.leftRearModule.getEncoderVoltage());
+                telemetry.addData("RightFront - AAE - Voltage", drive.rightFrontModule.getEncoderVoltage());
+                telemetry.addData("RightRear - AAE - Voltage", drive.rightRearModule.getEncoderVoltage());
+            }
+            return 0;
+        };
         t = new ElapsedTime();
     }
 
@@ -71,10 +73,10 @@ public class ExperimentalSwerveDrive extends CommandOpMode {
 
         telemetry.addData("x", poseEstimate.getX());
         telemetry.addData("y", poseEstimate.getY());
-//        telemetry.addData("heading", poseEstimate.getHeading());
-//        telemetry.addData("current", drive.rightFrontModule.getModuleRotation());
-//        telemetry.addData("target", drive.rightFrontModule.getTargetRotation());
-//        telemetry.addData("imuuuu", drive.getRawExternalHeading());
+//      telemetry.addData("heading", poseEstimate.getHeading());
+//      telemetry.addData("current", drive.rightFrontModule.getModuleRotation());
+//      telemetry.addData("target", drive.rightFrontModule.getTargetRotation());
+//      telemetry.addData("imuuuu", drive.getRawExternalHeading());
     //  TelemetryPacket packet = new TelemetryPacket();
     //  Canvas fieldOverlay = packet.fieldOverlay();
     //  DashboardUtil.drawRobot(fieldOverlay, poseEstimate);

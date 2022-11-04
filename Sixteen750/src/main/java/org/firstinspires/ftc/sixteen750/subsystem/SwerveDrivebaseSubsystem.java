@@ -509,7 +509,7 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
         this.telemetryCallUpdate = callUpdate;
     }
 
-    public void modulesOrientationTelemetry(Telemetry telemetry, boolean callUpdate){
+    public Integer modulesOrientationTelemetry(Telemetry telemetry, boolean callUpdate){
         if (telemetry != null){
             telemetry.addData("LeftFrontTargetOrientation", this.leftFrontModuleTargetOrientation);
             telemetry.addData("LeftFrontCurrentOrientation", this.leftFrontModuleCurrentOrientation);
@@ -523,5 +523,6 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
                 telemetry.update();
             }
         }
+        return 0;
     }
 }
