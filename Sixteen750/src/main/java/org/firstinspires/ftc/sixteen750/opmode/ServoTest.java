@@ -38,7 +38,7 @@ public class ServoTest extends CommandOpMode {
                 leftFrontEncoder = new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, "leftFrontEncoder"));
                 leftRearEncoder = new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, "leftRearEncoder"));
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             isLeftSideConnected = false;
         }
 
@@ -49,7 +49,7 @@ public class ServoTest extends CommandOpMode {
                 rightRearEncoder = new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, "rightRearEncoder"));
                 rightFrontEncoder = new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, "rightFrontEncoder"));
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             isRightSideConnected = false;
         }
     }

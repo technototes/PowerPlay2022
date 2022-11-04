@@ -25,15 +25,26 @@ public class MotorTest extends CommandOpMode {
     public static double motorSpeed = 0.3; // 0.1 is too little, the motor trying to move but not enough to move the robot; 0.2 is slightly better
     public static double motorStopSpeed = 0.0;
 
+    boolean isLeftSideConnected, isRightSideConnected = true;
+
     @Override
     public void uponInit() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         /// Note: here is using the hardware from TechnoLib
-        leftFrontMotor = new EncodedMotor<>(hardwareMap.get(DcMotorEx.class, "leftFrontMotor"));
-        leftRearMotor = new EncodedMotor<>(hardwareMap.get(DcMotorEx.class, "leftRearMotor"));
-        rightRearMotor = new EncodedMotor<>(hardwareMap.get(DcMotorEx.class, "rightRearMotor"));
-        rightFrontMotor = new EncodedMotor<>(hardwareMap.get(DcMotorEx.class, "rightFrontMotor"));
+        try {
+            leftFrontMotor = new EncodedMotor<>(hardwareMap.get(DcMotorEx.class, "leftFrontMotor"));
+            leftRearMotor = new EncodedMotor<>(hardwareMap.get(DcMotorEx.class, "leftRearMotor"));
+        } catch (Exception e) {
+            isLeftSideConnected = false;
+        }
+
+        try {
+            rightRearMotor = new EncodedMotor<>(hardwareMap.get(DcMotorEx.class, "rightRearMotor"));
+            rightFrontMotor = new EncodedMotor<>(hardwareMap.get(DcMotorEx.class, "rightFrontMotor"));
+        } catch (Exception e) {
+            isRightSideConnected = false;
+        }
     }
 
     @Override
@@ -45,7 +56,7 @@ public class MotorTest extends CommandOpMode {
     public void runLoop(){
         double loopSeconds = t.seconds();
 
-        if (this.gamepad1.dpad_left){
+        if (this.gamepad1.dpad_left && isLeftSideConnected){
             leftFrontMotor.setSpeed(motorSpeed);
             isLeftFrontPressed = true;
         }
@@ -53,7 +64,7 @@ public class MotorTest extends CommandOpMode {
             leftFrontMotor.setSpeed(motorStopSpeed);
             isLeftFrontPressed = false;
         }
-        if (this.gamepad1.dpad_down){
+        if (this.gamepad1.dpad_down && isLeftSideConnected){
             leftRearMotor.setSpeed(motorSpeed);
             isLeftRearPressed = true;
         }
@@ -61,7 +72,7 @@ public class MotorTest extends CommandOpMode {
             leftRearMotor.setSpeed(motorStopSpeed);
             isLeftRearPressed = false;
         }
-        if (this.gamepad1.dpad_up){
+        if (this.gamepad1.dpad_up && isRightSideConnected){
             rightRearMotor.setSpeed(motorSpeed);
             isRightRearPressed = true;
         }
@@ -69,7 +80,7 @@ public class MotorTest extends CommandOpMode {
             rightRearMotor.setSpeed(motorStopSpeed);
             isRightRearPressed = false;
         }
-        if (this.gamepad1.dpad_right){
+        if (this.gamepad1.dpad_right && isRightSideConnected){
             rightFrontMotor.setSpeed(motorSpeed);
             isRightFrontPressed = true;
         }
@@ -80,10 +91,14 @@ public class MotorTest extends CommandOpMode {
 
         telemetry.addData("Loop Seconds", loopSeconds);
 
-        telemetry.addData("LeftFront - Motor - Encoder", leftFrontMotor.getEncoder().getPosition());
-        telemetry.addData("LeftRear - Motor - Encoder", leftRearMotor.getEncoder().getPosition());
-        telemetry.addData("RightRear - Motor - Encoder", rightRearMotor.getEncoder().getPosition());
-        telemetry.addData("RightFront - Motor - Encoder", rightFrontMotor.getEncoder().getPosition());
+        if (isLeftSideConnected) {
+            telemetry.addData("LeftFront - Motor - Encoder", leftFrontMotor.getEncoder().getPosition());
+            telemetry.addData("LeftRear - Motor - Encoder", leftRearMotor.getEncoder().getPosition());
+        }
+        if (isRightSideConnected) {
+            telemetry.addData("RightRear - Motor - Encoder", rightRearMotor.getEncoder().getPosition());
+            telemetry.addData("RightFront - Motor - Encoder", rightFrontMotor.getEncoder().getPosition());
+        }
 
         telemetry.addData("LeftFront - Motor - Pressed", isLeftFrontPressed);
         telemetry.addData("LeftRear - Motor - Pressed", isLeftRearPressed);
