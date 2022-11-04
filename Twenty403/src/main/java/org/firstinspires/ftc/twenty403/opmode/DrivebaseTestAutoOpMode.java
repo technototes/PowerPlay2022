@@ -23,8 +23,8 @@ public class DrivebaseTestAutoOpMode extends CommandOpMode {
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
-        robot = new Robot(hardware, Alliance.BLUE, StartingPosition.HOME);
-        robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Home.START.toPose());
+        robot = new Robot(hardware, Alliance.BLUE, StartingPosition.AWAY);
+        robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Away.START.toPose());
         CommandScheduler.getInstance()
                 .scheduleForState(
                         new AutoTestDrivebaseCommand(robot.drivebaseSubsystem), CommandOpMode.OpModeState.RUN);
