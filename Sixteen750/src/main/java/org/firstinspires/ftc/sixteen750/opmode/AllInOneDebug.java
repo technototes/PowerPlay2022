@@ -51,16 +51,16 @@ public class AllInOneDebug extends CommandOpMode {
         //  FtcDashboard.getInstance().sendTelemetryPacket(packet);
 
         if (showEncoders) {
-            telemetry.addData("LeftFront-AbsoluteEncoder", drive.leftFrontModule.getModuleRotation());
+            telemetry.addData("LeftFront-AnalogEncoder", drive.leftFrontModule.getModuleRotation());
             telemetry.addData("LeftFront-MotorEncoder", drive.leftFrontModule.getWheelPosition());
 
-            telemetry.addData("LeftRear-AbsoluteEncoder", drive.leftRearModule.getModuleRotation());
+            telemetry.addData("LeftRear-AnalogEncoder", drive.leftRearModule.getModuleRotation());
             telemetry.addData("LeftRear-MotorEncoder", drive.leftRearModule.getWheelPosition());
 
-            telemetry.addData("RightFront-AbsoluteEncoder", drive.rightFrontModule.getModuleRotation());
+            telemetry.addData("RightFront-AnalogEncoder", drive.rightFrontModule.getModuleRotation());
             telemetry.addData("RightFront-MotorEncoder", drive.rightFrontModule.getWheelPosition());
 
-            telemetry.addData("RightRear-AbsoluteEncoder", drive.rightRearModule.getModuleRotation());
+            telemetry.addData("RightRear-AnalogEncoder", drive.rightRearModule.getModuleRotation());
             telemetry.addData("RightRear-MotorEncoder", drive.rightRearModule.getWheelPosition());
         }
 

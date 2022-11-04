@@ -107,13 +107,17 @@ public class ServoTest extends CommandOpMode {
         if (isLeftSideConnected){
             if (alsoEncoder) {
                 telemetry.addData("LeftFront - Position", leftFrontEncoder.getCurrentPosition());
+                telemetry.addData("LeftFront - Voltage", leftFrontEncoder.getVoltage());
                 telemetry.addData("LeftRear - Position", leftRearEncoder.getCurrentPosition());
+                telemetry.addData("LeftRear - Voltage", leftRearEncoder.getVoltage());
             }
         }
         if (isRightSideConnected){
             if (alsoEncoder) {
                 telemetry.addData("RightRear - Position", rightRearEncoder.getCurrentPosition());
+                telemetry.addData("RightRear - Voltage", rightRearEncoder.getVoltage());
                 telemetry.addData("RightFront - Position", rightFrontEncoder.getCurrentPosition());
+                telemetry.addData("RightFront - Voltage", rightFrontEncoder.getVoltage());
             }
         }
 
