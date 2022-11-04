@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.sixteen750.opmode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.technototes.library.structure.CommandOpMode;
 
-
+@Config
 @TeleOp(group = "Test-Hardware")
 @SuppressWarnings("unused")
 public class ServoTesting extends CommandOpMode {
@@ -73,10 +74,10 @@ public class ServoTesting extends CommandOpMode {
 
         t.reset();
         telemetry.addData("looptime",1/loopSeconds);
-        telemetry.addData("LeftFront - Servo", isLeftFrontPressed);
-        telemetry.addData("LeftRear - Servo", isLeftRearPressed);
-        telemetry.addData("RightRear - Servo", isRightRearPressed);
-        telemetry.addData("RightFront - Servo", isRightFrontPressed);
+        telemetry.addData("LeftFront - Servo - Pressed", isLeftFrontPressed);
+        telemetry.addData("LeftRear - Servo - Pressed", isLeftRearPressed);
+        telemetry.addData("RightRear - Servo - Pressed", isRightRearPressed);
+        telemetry.addData("RightFront - Servo - Pressed", isRightFrontPressed);
         telemetry.update();
     }
 }
