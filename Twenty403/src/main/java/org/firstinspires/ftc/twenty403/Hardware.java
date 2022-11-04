@@ -26,7 +26,7 @@ public class Hardware {
         public static String CAMERA = "Webcam";
 
         public static String CLAW_SERVO = "claw";
-        //public static String CLAW_SENSOR = "claw_sensor";
+        // public static String CLAW_SENSOR = "claw_sensor";
         public static String LIFT_LEFT_MOTOR = "LLIFT";
         public static String LIFT_RIGHT_MOTOR = "RLIFT";
     }
@@ -55,7 +55,7 @@ public class Hardware {
         }
         if (RobotConstant.CLAW_CONNECTED) {
             claw = new Servo(HardwareConstant.CLAW_SERVO);
-            //clawDistance = hwmap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR);
+            // clawDistance = hwmap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR);
         }
         if (RobotConstant.LIFT_CONNECTED) {
             LiftLeftMotor = new EncodedMotor<>(HardwareConstant.LIFT_LEFT_MOTOR);

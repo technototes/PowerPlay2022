@@ -1,12 +1,9 @@
 package org.firstinspires.ftc.twenty403.command.autonomous;
 
-import com.acmerobotics.dashboard.config.Config;
-
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.path.command.TrajectorySequenceCommand;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
-
 
 public class AutoTestDrivebaseCommand extends SequentialCommandGroup {
     // public static ConfigurablePose TEST_START = new ConfigurablePose(0, 0, 0);
@@ -37,6 +34,6 @@ public class AutoTestDrivebaseCommand extends SequentialCommandGroup {
                         drive,
                         Robot.Trajectories.BLUE_PARK_LOCATION_HOME)/*
                 /*Placeholder for what we're doing for parking*/
-        );
+                );
     }
 }

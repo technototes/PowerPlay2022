@@ -9,9 +9,10 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.subsystem.Subsystem;
+
 @Config
 public class ClawSubsystem implements Subsystem {
-    //Correct numbers, tested
+    // Correct numbers, tested
     public static double OPEN_SERVO_POSITION = .6;
     public static double CLOSE_SERVO_POSITION = .45;
 

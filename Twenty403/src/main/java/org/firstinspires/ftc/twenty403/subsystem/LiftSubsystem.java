@@ -121,10 +121,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         double rtargetSpeed = rightPidController.update(getRightPos());
         double rclippedSpeed = Range.clip(rtargetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
 
-//        double leftError = Math.abs(leftPidController.getTargetPosition() - getLeftPos());
-//        double rightError = Math.abs(rightPidController.getTargetPosition() - getRightPos());
-//        if (leftError > DEAD_ZONE || rightError > DEAD_ZONE) {
-//        }
+        //        double leftError = Math.abs(leftPidController.getTargetPosition() - getLeftPos());
+        //        double rightError = Math.abs(rightPidController.getTargetPosition() - getRightPos());
+        //        if (leftError > DEAD_ZONE || rightError > DEAD_ZONE) {
+        //        }
         setMotorPower(lclippedSpeed, rclippedSpeed);
         setLiftPosition(leftPidController.getTargetPosition(), rightPidController.getTargetPosition());
     }
