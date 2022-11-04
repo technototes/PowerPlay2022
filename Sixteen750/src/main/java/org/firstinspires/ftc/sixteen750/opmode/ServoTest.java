@@ -14,10 +14,14 @@ import com.technototes.library.structure.CommandOpMode;
 public class ServoTest extends CommandOpMode {
     ElapsedTime t;
 
+
+
+    public static boolean alsoEncoder = false;
+
     CRServo leftFrontServo, leftRearServo, rightRearServo, rightFrontServo;
     boolean isLeftFrontPressed, isLeftRearPressed, isRightRearPressed, isRightFrontPressed = false;
 
-    public static double servoPower = 0.1;
+    public static double servoPower = 0.3; // 0.1 is too little
     public static double servoStopPower = 0.0;
 
     @Override

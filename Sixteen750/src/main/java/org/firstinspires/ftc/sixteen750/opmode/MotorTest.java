@@ -22,7 +22,7 @@ public class MotorTest extends CommandOpMode {
 
     boolean isLeftFrontPressed, isLeftRearPressed, isRightRearPressed, isRightFrontPressed = false;
 
-    public static double motorSpeed = 0.1;
+    public static double motorSpeed = 0.3; // 0.1 is too little, the motor trying to move but not enough to move the robot; 0.2 is slightly better
     public static double motorStopSpeed = 0.0;
 
     @Override
