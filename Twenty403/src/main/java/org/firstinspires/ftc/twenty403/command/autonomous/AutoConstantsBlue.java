@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.twenty403.command.autonomous;
 
+import static java.lang.Math.E;
 import static java.lang.Math.toRadians;
 
 import java.util.function.Function;
@@ -20,8 +21,8 @@ public class AutoConstantsBlue {
         public static ConfigurablePose BETWEEN_2 = new ConfigurablePose(-36, 6, toRadians(90));
         public static ConfigurablePose BETWEEN_3 = new ConfigurablePose(-36, 36, toRadians(90));
         public static ConfigurablePose LEFT = new ConfigurablePose(12, -14, 4.71);
-        public static ConfigurablePose MIDDLE = new ConfigurablePose(36, -15, 4.71);
-        public static ConfigurablePose RIGHT = new ConfigurablePose(-60, 36, toRadians(-90));
+        public static ConfigurablePose MIDDLE = new ConfigurablePose(36, -14, 4.71);
+        public static ConfigurablePose RIGHT = new ConfigurablePose(60, -11, 3.93);
         // These have "home/away" modifiers, because we want to stay on "our side" during auto
         public static ConfigurablePose N_JUNCTION = new ConfigurablePose(18, -3, toRadians(-135));
         public static ConfigurablePose E_JUNCTION = new ConfigurablePose(-30, 6, toRadians(-45));
@@ -140,50 +141,48 @@ public class AutoConstantsBlue {
 
     }
 
+    @Config
     public static class Away {
         public static ConfigurablePose START = new ConfigurablePose(-36, -66, toRadians(90));
-        public static ConfigurablePose JUNCTION = new ConfigurablePose(-28, -4, toRadians(180));
-        public static ConfigurablePose STACK = new ConfigurablePose(-62, -12, toRadians(180));
-        public static ConfigurablePose PARK_LEFT = new ConfigurablePose(-60, -36, toRadians(0));
-        public static ConfigurablePose PARK_MIDDLE = new ConfigurablePose(-36, -36, toRadians(-90));
-        public static ConfigurablePose PARK_RIGHT = new ConfigurablePose(-12, -36, toRadians(-90));
+        public static ConfigurablePose E_JUNCTION = new ConfigurablePose(-30, -8, 0.63);
+        public static ConfigurablePose STACK = new ConfigurablePose(-60, -17, toRadians(180));
+        public static ConfigurablePose LEFT = new ConfigurablePose(-60, -14, 4.88);
+        public static ConfigurablePose MIDDLE = new ConfigurablePose(-37, -16, 5.41);
+        public static ConfigurablePose RIGHT = new ConfigurablePose(-12, -13, 5.41);
+        public static ConfigurablePose BETWEEN_START_E_JUNCTION = new ConfigurablePose(-36, -21, toRadians(75));
+        public static ConfigurablePose BETWEEN_E_JUNCTION_STACK = new ConfigurablePose(-36, -14, toRadians(180));
+        public static ConfigurablePose BETWEEN_STACK_E_JUNCTION = new ConfigurablePose(-36, -14, toRadians(75));
 
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
-                START_TO_JUNCTION =
+                START_TO_E_JUNCTION =
                 b -> b.apply(START.toPose())
-                        .splineTo(JUNCTION.toVec(), JUNCTION.getHeading())
+                        .lineToLinearHeading(BETWEEN_START_E_JUNCTION.toPose())
+                        .lineToLinearHeading(E_JUNCTION.toPose())
                         .build(),
-                JUNCTION_TO_STACK =
-                        b -> b.apply(JUNCTION.toPose())
+                E_JUNCTION_TO_STACK =
+                        b -> b.apply(E_JUNCTION.toPose())
+                                .lineToLinearHeading(BETWEEN_E_JUNCTION_STACK.toPose())
                                 .lineToLinearHeading(STACK.toPose())
                                 .build(),
-                JUNCTION_TO_PARK_LEFT =
-                        b -> b.apply(JUNCTION.toPose())
-                                .lineToLinearHeading(PARK_LEFT.toPose())
-                                .build(),
-                JUNCTION_TO_PARK_MIDDLE =
-                        b -> b.apply(JUNCTION.toPose())
-                                .lineToLinearHeading(PARK_MIDDLE.toPose())
-                                .build(),
-                JUNCTION_TO_PARK_RIGHT =
-                        b -> b.apply(JUNCTION.toPose())
-                                .lineToLinearHeading(PARK_RIGHT.toPose())
-                                .build(),
-                STACK_TO_JUNCTION =
+                STACK_TO_E_JUNCTION =
                         b -> b.apply(STACK.toPose())
-                                .lineToLinearHeading(JUNCTION.toPose())
+                                .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
+                                .lineToLinearHeading(E_JUNCTION.toPose())
                                 .build(),
-                START_TO_LEFT_PARK =
-                        b -> b.apply(START.toPose())
-                                .lineToLinearHeading(PARK_LEFT.toPose())
+                E_JUNCTION_TO_LEFT_PARK =
+                        b -> b.apply(E_JUNCTION.toPose())
+                                .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
+                                .lineToLinearHeading(LEFT.toPose())
                                 .build(),
-                START_TO_MIDDLE_PARK =
-                        b -> b.apply(START.toPose())
-                                .lineToLinearHeading(PARK_MIDDLE.toPose())
+                E_JUNCTION_TO_MIDDLE_PARK =
+                        b -> b.apply(E_JUNCTION.toPose())
+                                .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
+                                .lineToLinearHeading(MIDDLE.toPose())
                                 .build(),
-                START_TO_RIGHT_PARK =
-                        b -> b.apply(START.toPose())
-                                .lineToLinearHeading(PARK_RIGHT.toPose())
+                E_JUNCTION_TO_RIGHT_PARK =
+                        b -> b.apply(E_JUNCTION.toPose())
+                                .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
+                                .lineToLinearHeading(RIGHT.toPose())
                                 .build();
 
 
