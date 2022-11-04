@@ -11,7 +11,8 @@ import com.technototes.library.structure.CommandOpMode;
 import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem;
 
 @Config
-@TeleOp(group = "drive")
+@TeleOp(group = "Test-Hardware")
+@SuppressWarnings("unused")
 public class EncoderDebugger extends CommandOpMode {
     SwerveDrivebaseSubsystem drive;
 

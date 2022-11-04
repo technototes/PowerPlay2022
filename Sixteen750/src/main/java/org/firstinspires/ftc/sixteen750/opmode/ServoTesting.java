@@ -8,7 +8,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.technototes.library.structure.CommandOpMode;
 
 
-@TeleOp(group = "drive")
+@TeleOp(group = "Test-Hardware")
+@SuppressWarnings("unused")
 public class ServoTesting extends CommandOpMode {
     ElapsedTime t;
 

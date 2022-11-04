@@ -12,7 +12,7 @@ import com.technototes.library.structure.CommandOpMode;
 import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem;
 
 @SuppressWarnings("unused")
-@TeleOp(group = "ExperimentalSwerveDrive")
+@TeleOp(name = "ExperimentalSwerveDrive", group = "Swerve")
 public class ExperimentalSwerveDrive extends CommandOpMode {
 //  Standard Code
 //  public Robot robot;
