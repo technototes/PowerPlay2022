@@ -34,6 +34,9 @@ public class AutoConstantsRed {
         //left facing between
         public static Pose2d STACK_TO_BETWEEN = new Pose2d(37, -12, toRadians(180));
 
+        public static Pose2d LOW_JUNCTION_LEFT = new Pose2d(26,-52, toRadians(120));
+        public static Pose2d LOW_JUNCTION_RIGHT = new Pose2d(48,-24, toRadians(60));
+
 
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
@@ -77,7 +80,7 @@ public class AutoConstantsRed {
                 W_JUNCTION_TO_PARK_MIDDLE =
                         () -> function.apply(W_JUNCTION).lineToLinearHeading(PARK_MIDDLE).build(),
                 W_JUNCTION_TO_PARK_RIGHT =
-                        () -> function.apply(W_JUNCTION).lineToLinearHeading(PARK_RIGHT).build();
+                        () -> function.apply(W_JUNCTION).lineToLinearHeading(PARK_RIGHT).build(),
 
 
         //SOUTH_JUNCTION_TO_PARK_LEFT =
@@ -86,6 +89,11 @@ public class AutoConstantsRed {
         // ()->function.apply(JUNCTION).lineToLinearHeading(PARK_MIDDLE).build()
         //SOUTH_JUNCTION_TO_PARK_RIGHT =
         // ()->function.apply(JUNCTION).lineToLinearHeading(PARK_RIGHT).build()
+
+        START_TO_LEFT_LOW =
+                () -> function.apply(START).lineToLinearHeading(LOW_JUNCTION_LEFT).build(),
+        START_TO_RIGHT_LOW =
+                () -> function.apply(START).splineTo(LOW_JUNCTION_RIGHT.vec(), LOW_JUNCTION_RIGHT.getHeading() /*,Math.toRadians(60)*/).build();
 
     }
 
