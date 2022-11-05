@@ -19,6 +19,12 @@ public class ClawServoTest extends CommandOpMode {
     public ControlDriver controls;
     public Hardware hardware;
 
+    // clockwise is order
+    public static double upBtnServoPosition = 0.45;
+    public static double rightBtnServoPosition = 0.47;
+    public static double downBtnServoPosition = 0.5;
+    public static double leftBtnServoPosition = 0.6;
+
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
@@ -36,13 +42,13 @@ public class ClawServoTest extends CommandOpMode {
          * Open: 0.6
          * */
         if (gamepad1.dpad_up) {
-            hardware.claw.setPosition(0.45); // better not to go below this value
+            hardware.claw.setPosition(upBtnServoPosition); // better not to go below this value
         } else if (gamepad1.dpad_right) {
-            hardware.claw.setPosition(0.47);
+            hardware.claw.setPosition(rightBtnServoPosition);
         } else if (gamepad1.dpad_down) {
-            hardware.claw.setPosition(0.5);
+            hardware.claw.setPosition(downBtnServoPosition);
         } else if (gamepad1.dpad_left) {
-            hardware.claw.setPosition(0.6);
+            hardware.claw.setPosition(leftBtnServoPosition);
         } else if (gamepad1.square) {
             hardware.claw.setPosition(1);
         } else if (gamepad1.circle) {
