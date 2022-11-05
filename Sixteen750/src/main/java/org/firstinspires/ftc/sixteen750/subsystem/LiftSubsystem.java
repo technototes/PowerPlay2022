@@ -244,12 +244,15 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
         // Invert the sign on this one to make it look like it's rotating the same way...
         return -leftMotor.getEncoder().getPosition(); // .get() will cause NullPointerException
+//        return -leftMotor.get();
     }
 
     public double getRightPos() {
         if (!isHardware || singleMotor) {
             return 0;
         }
-        return rightMotor.getEncoder().getPosition(); // .get() will cause NullPointerException
+//        return rightMotor.getEncoder().getPosition(); // .get() will cause NullPointerException
+//        return rightMotor.get();
+        return 16750;
     }
 }
