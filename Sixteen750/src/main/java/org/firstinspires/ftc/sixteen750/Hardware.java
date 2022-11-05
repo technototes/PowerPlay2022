@@ -3,8 +3,11 @@ package org.firstinspires.ftc.sixteen750;
 import static org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.sixteen750.swerve_util.AbsoluteAnalogEncoder;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -16,10 +19,18 @@ import com.technototes.library.hardware.servo.Servo;
 public class Hardware {
     @Config
     public static class HardwareConstant {
-        public static String FL_MOTOR = "flmotor";
-        public static String FR_MOTOR = "frmotor";
-        public static String RL_MOTOR = "rlmotor";
-        public static String RR_MOTOR = "rrmotor";
+        public static String LF_MOTOR = "leftFrontMotor";
+        public static String LR_MOTOR = "leftRearMotor";
+        public static String RF_MOTOR = "rightFrontMotor";
+        public static String RR_MOTOR = "rightRearMotor";
+        public static String LF_SERVO = "leftFrontServo";
+        public static String LR_SERVO = "leftRearServo";
+        public static String RF_SERVO = "rightFrontServo";
+        public static String RR_SERVO = "rightRearServo";
+        public static String LF_ENCODER = "leftFrontEncoder";
+        public static String LR_ENCODER = "leftRearEncoder";
+        public static String RF_ENCODER = "rightFrontEncoder";
+        public static String RR_ENCODER = "rightRearEncoder";
         public static String IMU = "imu";
 
         public static String CLAW_SERVO = "clawServo";
@@ -30,32 +41,53 @@ public class Hardware {
         public static String LIFT_RIGHT_MOTOR = "rightLiftMotor";
     }
 
-    public EncodedMotor<DcMotorEx> flDriveMotor;
-    public EncodedMotor<DcMotorEx> frDriveMotor;
-    public EncodedMotor<DcMotorEx> rlDriveMotor;
-    public EncodedMotor<DcMotorEx> rrDriveMotor;
+    public EncodedMotor<DcMotorEx> leftFrontMotor;
+    public EncodedMotor<DcMotorEx> leftRearMotor;
+    public EncodedMotor<DcMotorEx> rightFrontMotor;
+    public EncodedMotor<DcMotorEx> rightRearMotor;
+    public CRServo leftFrontServo;
+    public CRServo leftRearServo;
+    public CRServo rightFrontServo;
+    public CRServo rightRearServo;
+    public AbsoluteAnalogEncoder leftFrontEncoder;
+    public AbsoluteAnalogEncoder leftRearEncoder;
+    public AbsoluteAnalogEncoder rightFrontEncoder;
+    public AbsoluteAnalogEncoder rightRearEncoder;
+    public IMU imu;
+
     public EncodedMotor<DcMotorEx> liftLeftMotor;
     public EncodedMotor<DcMotorEx> liftRightMotor;
-    public IMU imu;
-    public Servo claw;
-    public Servo flipper;
-    public Servo elbow;
+
+    public Servo clawServo;
+    public Servo flipperServo;
+    public Servo elbowServo;
     public DistanceSensor clawDistance;
 
     public Hardware(HardwareMap hwMap) {
         if (RobotConstant.DRIVE_CONNECTED) {
-            flDriveMotor = new EncodedMotor<>(HardwareConstant.FL_MOTOR);
-            frDriveMotor = new EncodedMotor<>(HardwareConstant.FR_MOTOR);
-            rlDriveMotor = new EncodedMotor<>(HardwareConstant.RL_MOTOR);
-            rrDriveMotor = new EncodedMotor<>(HardwareConstant.RR_MOTOR);
-            imu = new IMU(HardwareConstant.IMU).remapAxes(AxesOrder.YXZ, IMU.AxesSigns.NNN);
+            leftFrontMotor = new EncodedMotor<>(HardwareConstant.LF_MOTOR);
+            leftRearMotor = new EncodedMotor<>(HardwareConstant.LR_MOTOR);
+            rightFrontMotor = new EncodedMotor<>(HardwareConstant.RF_MOTOR);
+            rightRearMotor = new EncodedMotor<>(HardwareConstant.RR_MOTOR);
+
+            leftFrontServo = hwMap.crservo.get(HardwareConstant.LF_SERVO);
+            leftRearServo = hwMap.crservo.get(HardwareConstant.LR_SERVO);
+            rightFrontServo = hwMap.crservo.get(HardwareConstant.RF_SERVO);
+            rightRearServo = hwMap.crservo.get(HardwareConstant.RR_SERVO);
+
+            leftFrontEncoder = new AbsoluteAnalogEncoder(hwMap.get(AnalogInput.class, HardwareConstant.LF_ENCODER));
+            leftRearEncoder = new AbsoluteAnalogEncoder(hwMap.get(AnalogInput.class, HardwareConstant.LR_ENCODER));
+            rightFrontEncoder = new AbsoluteAnalogEncoder(hwMap.get(AnalogInput.class, HardwareConstant.RF_ENCODER));
+            rightRearEncoder = new AbsoluteAnalogEncoder(hwMap.get(AnalogInput.class, HardwareConstant.RR_ENCODER));
+
+//          imu = new IMU(HardwareConstant.IMU).remapAxes(AxesOrder.YXZ, IMU.AxesSigns.NNN); // TODO: figure the  axes order
+            imu = new IMU(HardwareConstant.IMU);
         }
         if (RobotConstant.CLAW_CONNECTED) {
-            claw = new Servo(HardwareConstant.CLAW_SERVO)
-                    .invert(); // no need to invert for gobilda super speed; might need to invert for the 25KG servo
-            flipper = new Servo(HardwareConstant.FLIPPER_SERVO);
-            elbow = new Servo(HardwareConstant.ELBOW_SERVO);
-            //          clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR); // not installed
+            clawServo = new Servo(HardwareConstant.CLAW_SERVO).invert(); // no need to invert for gobilda super speed; might need to invert for the 25KG servo
+            flipperServo = new Servo(HardwareConstant.FLIPPER_SERVO);
+            elbowServo = new Servo(HardwareConstant.ELBOW_SERVO);
+//          clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR); // not installed
         }
         if (RobotConstant.LIFT_CONNECTED) {
             liftLeftMotor = new EncodedMotor<>(HardwareConstant.LIFT_LEFT_MOTOR);

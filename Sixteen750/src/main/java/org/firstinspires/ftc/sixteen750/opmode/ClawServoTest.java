@@ -42,17 +42,17 @@ public class ClawServoTest extends CommandOpMode {
          * Open: 0.6
          * */
         if (gamepad1.dpad_up) {
-            hardware.claw.setPosition(upBtnServoPosition); // better not to go below this value
+            hardware.clawServo.setPosition(upBtnServoPosition); // better not to go below this value
         } else if (gamepad1.dpad_right) {
-            hardware.claw.setPosition(rightBtnServoPosition);
+            hardware.clawServo.setPosition(rightBtnServoPosition);
         } else if (gamepad1.dpad_down) {
-            hardware.claw.setPosition(downBtnServoPosition);
+            hardware.clawServo.setPosition(downBtnServoPosition);
         } else if (gamepad1.dpad_left) {
-            hardware.claw.setPosition(leftBtnServoPosition);
+            hardware.clawServo.setPosition(leftBtnServoPosition);
         } else if (gamepad1.square) {
-            hardware.claw.setPosition(1);
+            hardware.clawServo.setPosition(1);
         } else if (gamepad1.circle) {
-            hardware.claw.setPosition(0);
+            hardware.clawServo.setPosition(0);
         }
 
         telemetry.addData("Claw Servo Position", robot.clawSubsystem.getClawPosition());
