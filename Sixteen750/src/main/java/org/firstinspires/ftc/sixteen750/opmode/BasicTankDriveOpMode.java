@@ -48,6 +48,11 @@ public class BasicTankDriveOpMode extends CommandOpMode {
 
         telemetry.addData("Left Stick", leftStickValue);
         telemetry.addData("Right Stick", rightStickValue);
+
+        telemetry.addData("LeftFront Motor Power", drive.getLeftFrontMotorVelocity());
+        telemetry.addData("LeftRear Motor Power", drive.getLeftRearMotorVelocity());
+        telemetry.addData("RightFront Motor Power", drive.getRightFrontMotorVelocity());
+        telemetry.addData("RightRear Motor Power", drive.getRightRearMotorVelocity());
         telemetry.update();
     }
 }

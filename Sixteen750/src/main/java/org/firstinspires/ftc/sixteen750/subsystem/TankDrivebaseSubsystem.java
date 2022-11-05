@@ -391,4 +391,17 @@ public class TankDrivebaseSubsystem extends TankDrive {
     public static TrajectoryAccelerationConstraint getAccelerationConstraint(double maxAccel) {
         return new ProfileAccelerationConstraint(maxAccel);
     }
+
+    public double getLeftFrontMotorVelocity(){
+        return leftMotors.get(0).getVelocity();
+    }
+    public double getLeftRearMotorVelocity(){
+        return leftMotors.get(1).getVelocity();
+    }
+    public double getRightFrontMotorVelocity(){
+        return rightMotors.get(0).getVelocity();
+    }
+    public double getRightRearMotorVelocity(){
+        return rightMotors.get(1).getVelocity();
+    }
 }
