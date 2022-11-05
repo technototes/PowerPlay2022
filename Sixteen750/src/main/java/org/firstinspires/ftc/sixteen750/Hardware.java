@@ -26,8 +26,8 @@ public class Hardware {
         public static String FLIPPER_SERVO = "flipperServo";
         public static String ELBOW_SERVO = "elbowServo";
         public static String CLAW_SENSOR = "clawSensor";
-        public static String LIFT_LEFT_MOTOR = "liftLiftMotor";
-        public static String LIFT_RIGHT_MOTOR = "liftRightMotor";
+        public static String LIFT_LEFT_MOTOR = "leftLiftMotor";
+        public static String LIFT_RIGHT_MOTOR = "rightLiftMotor";
     }
 
     public EncodedMotor<DcMotorEx> flDriveMotor;
