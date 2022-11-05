@@ -5,6 +5,10 @@ import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftDownCommand;
+import org.firstinspires.ftc.twenty403.command.lift.LiftGroundJunctionCommand;
+import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
+import org.firstinspires.ftc.twenty403.command.lift.LiftLowJunctionCommand;
+import org.firstinspires.ftc.twenty403.command.lift.LiftMidJunctionCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
 
 import com.technototes.library.command.CommandScheduler;
@@ -19,6 +23,7 @@ public class Controls {
     public Stick driveLeftStick, driveRightStick;
     public CommandButton resetGyroButton, driveStraightenButton, snailSpeedButton, liftUpButton, clawOpenButton;
     public CommandButton liftDownButton, clawCloseButton, liftDownButtonBackup, clawCloseButtonBackup;
+    public CommandButton liftGround, liftLow, liftMedium, liftHigh;
 
     public Controls(CommandGamepad g, Robot r) {
         this.robot = r;
@@ -50,6 +55,11 @@ public class Controls {
         clawCloseButtonBackup = gamepad.circle;
         clawCloseButton = gamepad.leftTrigger.getAsButton();
 
+        liftGround = gamepad.dpadDown;
+        liftLow = gamepad.dpadLeft;
+        liftMedium = gamepad.dpadRight;
+        liftHigh = gamepad.dpadUp;
+
         // TODO: Identify other controls for
     }
 
@@ -74,5 +84,10 @@ public class Controls {
         liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
         liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
         liftDownButtonBackup.whenPressed(new LiftDownCommand(robot.liftSubsystem));
+        liftLow.whenPressed(new LiftLowJunctionCommand(robot.liftSubsystem));
+        liftGround.whenPressed(new LiftGroundJunctionCommand(robot.liftSubsystem));
+        liftMedium.whenPressed(new LiftMidJunctionCommand(robot.liftSubsystem));
+        liftHigh.whenPressed(new LiftHighJunctionCommand(robot.liftSubsystem));
+
     }
 }
