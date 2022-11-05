@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
-@TeleOp(name = "Simple Manual")
+@TeleOp(name = "BlackTeleOp")
 public class BlackTeleOpMode extends CommandOpMode {
     public Robot robot;
     public Controls controls;

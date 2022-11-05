@@ -11,28 +11,19 @@ public class AutoTestDrivebaseCommand extends SequentialCommandGroup {
 
     public AutoTestDrivebaseCommand(MecanumDrivebaseSubsystem drive) {
         super(
-                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.START_TO_W_JUNCTION),
-                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.W_JUNCTION_TO_STACK),
-                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.STACK_TO_W_JUNCTION),
-                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.W_JUNCTION_TO_STACK),
-                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.STACK_TO_W_JUNCTION),
-                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.W_JUNCTION_TO_STACK),
-                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.STACK_TO_W_JUNCTION),
-                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.W_JUNCTION_TO_STACK),
-                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.STACK_TO_W_JUNCTION),
-                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.W_JUNCTION_TO_STACK),
-                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.STACK_TO_W_JUNCTION),
-                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.W_JUNCTION_TO_LEFT_PARK),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Home.START_TO_E_JUNCTION),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Home.E_JUNCTION_TO_STACK),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Home.STACK_TO_E_JUNCTION),
                 CommandScheduler.getInstance()::terminateOpMode
                 //                .alongWith(new ConeReadyToScoreCommand(cone)),
                 // new ClawOpenCommand(claw),
-                //                new AutoBlueAwayConeStackCommand(drive, lift, claw),
-                //                new AutoBlueAwayConeStackCommand(drive, lift, claw),
-                //                new AutoBlueAwayConeStackCommand(drive, lift, claw),
-                //                new AutoBlueAwayConeStackCommand(drive, lift, claw)
+                //                new AutoBlueHomeConeStackCommand(drive, lift, claw),
+                //                new AutoBlueHomeConeStackCommand(drive, lift, claw),
+                //                new AutoBlueHomeConeStackCommand(drive, lift, claw),
+                //                new AutoBlueHomeConeStackCommand(drive, lift, claw)
                 /*new TrajectorySequenceCommand(
                         drive,
-                        Robot.Trajectories.BLUE_PARK_LOCATION_Away)/*
+                        Robot.Trajectories.BLUE_PARK_LOCATION_Home)/*
                 /*Placeholder for what we're doing for parking*/
                 );
     }

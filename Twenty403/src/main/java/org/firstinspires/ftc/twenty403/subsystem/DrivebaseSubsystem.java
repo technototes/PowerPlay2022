@@ -121,6 +121,15 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
         fr2 = fr;
         rl2 = rl;
         rr2 = rr;
+        speed = 0.3;
+    }
+
+    public void fast() {
+        speed = 1;
+    }
+
+    public void slow() {
+        speed = 0.3;
     }
 
     @Override
