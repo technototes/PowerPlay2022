@@ -21,11 +21,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     public static double LGROUND_JUNCTION = 265;
     public static double RGROUND_JUNCTION = 265;
-    public static double LLOW_JUNCTION = 2980; //2750 old value
+    public static double LLOW_JUNCTION = 2980; // 2750 old value
     public static double RLOW_JUNCTION = 2980;
-    public static double LMEDIUM_JUNCTION = 4770; //4670
+    public static double LMEDIUM_JUNCTION = 4770; // 4670
     public static double RMEDIUM_JUNCTION = 4770;
-    public static double LHIGH_JUNCTION = 6560; //6460
+    public static double LHIGH_JUNCTION = 6560; // 6460
     public static double RHIGH_JUNCTION = 6560;
     public static double MAX_HEIGHT = 6600;
     public static double MIN_HEIGHT = 0;

@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.sixteen750.command.lift;
 
-import com.technototes.library.command.Command;
-
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
+
+import com.technototes.library.command.Command;
 
 public class LiftMoveDownCommand implements Command {
     private LiftSubsystem liftSubsystem;
@@ -17,4 +17,3 @@ public class LiftMoveDownCommand implements Command {
         liftSubsystem.moveDown();
     }
 }
-

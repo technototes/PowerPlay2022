@@ -103,13 +103,15 @@ public class ClawSubsystem implements Subsystem {
         return clawServo;
     }
 
-    public double getClawPosition(){
+    public double getClawPosition() {
         return clawServo.getPosition();
     }
-    public double getFlipperPosition(){
+
+    public double getFlipperPosition() {
         return flipperServo.getPosition();
     }
-    public double getElbowPosition(){
+
+    public double getElbowPosition() {
         return elbowServo.getPosition();
     }
 }

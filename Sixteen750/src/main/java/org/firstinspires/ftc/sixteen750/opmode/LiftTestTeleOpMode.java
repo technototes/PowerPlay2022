@@ -1,14 +1,14 @@
 package org.firstinspires.ftc.sixteen750.opmode;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.technototes.library.structure.CommandOpMode;
-import com.technototes.library.util.Alliance;
-
 import org.firstinspires.ftc.sixteen750.ControlDriver;
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
+
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import com.technototes.library.structure.CommandOpMode;
 
 @TeleOp(name = "LiftTestTeleOp")
 public class LiftTestTeleOpMode extends CommandOpMode {

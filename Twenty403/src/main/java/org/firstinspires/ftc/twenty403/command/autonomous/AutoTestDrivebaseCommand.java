@@ -14,7 +14,6 @@ public class AutoTestDrivebaseCommand extends SequentialCommandGroup {
                 new TrajectorySequenceCommand(drive, AutoConstantsRed.Home.START_TO_E_JUNCTION),
                 new TrajectorySequenceCommand(drive, AutoConstantsRed.Home.E_JUNCTION_TO_STACK),
                 new TrajectorySequenceCommand(drive, AutoConstantsRed.Home.STACK_TO_E_JUNCTION),
-
                 CommandScheduler.getInstance()::terminateOpMode
                 //                .alongWith(new ConeReadyToScoreCommand(cone)),
                 // new ClawOpenCommand(claw),

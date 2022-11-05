@@ -93,6 +93,5 @@ public class Controls {
         liftGround.whenPressed(new LiftGroundJunctionCommand(robot.liftSubsystem));
         liftMedium.whenPressed(new LiftMidJunctionCommand(robot.liftSubsystem));
         liftHigh.whenPressed(new LiftHighJunctionCommand(robot.liftSubsystem));
-
     }
 }
