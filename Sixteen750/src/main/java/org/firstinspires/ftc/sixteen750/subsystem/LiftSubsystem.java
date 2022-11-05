@@ -25,11 +25,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double L_HIGH_JUNCTION = 36 * TICKS_INCH; // WRONG
     public static double R_HIGH_JUNCTION = 36 * TICKS_INCH; // WRONG
     public static double MAX_HEIGHT = 38 * TICKS_INCH; // WRONG
-    public static double LEFT_ABSOLUTE_MAX_HEIGHT = 544;
-    public static double RIGHT_ABSOLUTE_MAX_HEIGHT = 566;
+    public static double LEFT_ABSOLUTE_MAX_HEIGHT = 1651;
+    public static double RIGHT_ABSOLUTE_MAX_HEIGHT = 1651; // COPIED FROM LEFT
     public static double MIN_HEIGHT = 0;
-    public static double LEFT_ABSOLUTE_MIN_HEIGHT = 0;
-    public static double RIGHT_ABSOLUTE_MIN_HEIGHT = 0;
+    public static double LEFT_ABSOLUTE_MIN_HEIGHT = 15;
+    public static double RIGHT_ABSOLUTE_MIN_HEIGHT = 15; // COPIED FROM LEFT
     public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH; // WRONG
     public static double DEAD_ZONE = .25 * TICKS_INCH; // WRONG
     public static double MAX_MOTOR_SPEED = 0.8;
