@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.sixteen750.opmode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.technototes.library.structure.CommandOpMode;
@@ -17,6 +19,7 @@ public class AbsoluteAnalogEncoderDebug extends CommandOpMode {
 
     @Override
     public void uponInit() {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         /// According to the alternative constructor in SwerveModule
         try {
             leftFrontEncoder = new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, "leftFrontEncoder"));
@@ -34,7 +37,7 @@ public class AbsoluteAnalogEncoderDebug extends CommandOpMode {
 
     @Override
     public void runLoop() {
-//        telemetry.addLine("Visit 192.168.43.1:8080/dash to see the FTC-Dashboard");
+        telemetry.addLine("Visit 192.168.43.1:8080/dash to see the FTC-Dashboard");
         if (isLeftSideConnected) {
             telemetry.addData("LeftFront - Position", leftFrontEncoder.getCurrentPosition());
             telemetry.addData("LeftFront - Voltage", leftFrontEncoder.getVoltage());
