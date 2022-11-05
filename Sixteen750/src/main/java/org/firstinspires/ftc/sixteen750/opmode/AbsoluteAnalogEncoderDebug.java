@@ -12,7 +12,8 @@ import org.firstinspires.ftc.sixteen750.swerve_util.AbsoluteAnalogEncoder;
 public class AbsoluteAnalogEncoderDebug extends CommandOpMode {
     AbsoluteAnalogEncoder leftFrontEncoder, leftRearEncoder, rightRearEncoder, rightFrontEncoder;
 
-    boolean isLeftSideConnected, isRightSideConnected = true;
+    boolean isLeftSideConnected = true;
+    boolean isRightSideConnected = true;
 
     @Override
     public void uponInit() {
@@ -33,7 +34,7 @@ public class AbsoluteAnalogEncoderDebug extends CommandOpMode {
 
     @Override
     public void runLoop() {
-        telemetry.addLine("Visit 192.168.43.1:8080/dash to see the FTC-Dashboard");
+//        telemetry.addLine("Visit 192.168.43.1:8080/dash to see the FTC-Dashboard");
         if (isLeftSideConnected) {
             telemetry.addData("LeftFront - Position", leftFrontEncoder.getCurrentPosition());
             telemetry.addData("LeftFront - Voltage", leftFrontEncoder.getVoltage());

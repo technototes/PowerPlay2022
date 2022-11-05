@@ -25,7 +25,8 @@ public class ServoTest extends CommandOpMode {
     public static double servoStopPower = 0.0;
     public static boolean alsoEncoder = true;
 
-    boolean isLeftSideConnected, isRightSideConnected = true;
+    boolean isLeftSideConnected = true;
+    boolean isRightSideConnected = true;
 
     @Override
     public void uponInit() {
