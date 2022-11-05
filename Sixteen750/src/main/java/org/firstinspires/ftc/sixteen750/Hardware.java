@@ -22,12 +22,12 @@ public class Hardware {
         public static String RR_MOTOR = "rrmotor";
         public static String IMU = "imu";
 
-        public static String CLAW_SERVO = "claw";
-        public static String FLIPPER_SERVO = "flipper";
-        public static String ELBOW_SERVO = "elbow";
-        public static String CLAW_SENSOR = "claw_sensor";
-        public static String LIFT_LEFT_MOTOR = "lift_left_motor";
-        public static String LIFT_RIGHT_MOTOR = "lift_right_motor";
+        public static String CLAW_SERVO = "clawServo";
+        public static String FLIPPER_SERVO = "flipperServo";
+        public static String ELBOW_SERVO = "elbowServo";
+        public static String CLAW_SENSOR = "clawSensor";
+        public static String LIFT_LEFT_MOTOR = "liftLiftMotor";
+        public static String LIFT_RIGHT_MOTOR = "liftRightMotor";
     }
 
     public EncodedMotor<DcMotorEx> flDriveMotor;
