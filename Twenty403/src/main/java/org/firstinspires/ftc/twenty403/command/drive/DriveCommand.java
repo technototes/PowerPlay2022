@@ -52,7 +52,7 @@ public class DriveCommand implements Command {
             double offBy = close - heading;
             // Normalize the error to -1 to 1
             double normalized = Math.max(Math.min(offBy / 45, 1.), -1.);
-            // Dead zone of 5 degrees
+            // Dead zone of 5 degreesLiftHighJunctionCommand(liftSubsystem)
             if (Math.abs(normalized) < STRAIGHTEN_DEAD_ZONE) {
                 return 0.0;
             }
