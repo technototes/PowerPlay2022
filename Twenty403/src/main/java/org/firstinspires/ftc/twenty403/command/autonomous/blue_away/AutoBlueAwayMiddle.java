@@ -19,7 +19,8 @@ public class AutoBlueHomeLeft extends SequentialCommandGroup {
 */
 public class AutoBlueAwayMiddle extends SequentialCommandGroup {
     public AutoBlueAwayMiddle(DrivebaseSubsystem drivebaseSubsystem) {
-        super(new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.START_TO_MIDDLE_PARK),
+        super(
+                new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.START_TO_MIDDLE_PARK),
                 CommandScheduler.getInstance()::terminateOpMode);
     }
 }

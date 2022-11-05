@@ -7,8 +7,8 @@ import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
 import com.qualcomm.robotcore.util.ElapsedTime;
+
 import com.technototes.library.hardware2.HardwareBuilder;
 import com.technototes.library.util.Alliance;
 
@@ -30,7 +30,7 @@ public class SimpleTeleOpMode extends LinearOpMode {
         ElapsedTime time = new ElapsedTime();
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            switch ((int)Math.floor(time.seconds() / 4) % 4) {
+            switch ((int) Math.floor(time.seconds() / 4) % 4) {
                 case 0:
                     hardware.flDriveMotor.setSpeed(0.2);
                     hardware.frDriveMotor.setSpeed(0.0);
