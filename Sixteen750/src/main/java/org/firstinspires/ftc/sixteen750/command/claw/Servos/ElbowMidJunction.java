@@ -14,6 +14,6 @@ public class ElbowMidJunction implements Command {
 
     @Override
     public void execute() {
-        subsystem.elbowMidiumJunction();
+        subsystem.elbowMediumJunction();
     }
 }

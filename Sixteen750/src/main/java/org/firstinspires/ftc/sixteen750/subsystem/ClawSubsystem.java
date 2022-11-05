@@ -8,18 +8,19 @@ import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.subsystem.Subsystem;
 
 public class ClawSubsystem implements Subsystem {
-    public static double OPEN_CLAW_SERVO_POS = .8;
-    public static double CLOSE_CLAW_SERVO_POS = .5;
-    public static double ELBOW_CARRY_SERVO_POS = .4;
-    public static double ELBOW_RELEASE_SERVO_POS = .0;
-    public static double GROUND_JUNCTION = 2;
-    public static double GROUND_ELBOW = 1;
-    public static double LOW_JUNCTION = 10;
-    public static double LOW_ELBOW = 2;
-    public static double MID_JUNCTION = 25;
-    public static double MID_ELBOW = 3;
-    public static double HIGH_JUNCTION = 35;
-    public static double HIGH_ELBOW = 4;
+    public static double CLAW_OPEN = 0.8;
+    public static double CLAW_CLOSE = 0.5;
+    public static double ELBOW_CARRY = 0.4;
+    public static double ELBOW_RELEASE = 0.0;
+    public static double FLIPPER_GROUND_JUNCTION = 2;
+    public static double ELBOW_GROUND = 1;
+    public static double FLIPPER_LOW_JUNCTION = 10;
+    public static double ELBOW_LOW = 2;
+    public static double FLIPPER_MID_JUNCTION = 25;
+    public static double ELBOW_MID = 3;
+    public static double FLIPPER_HIGH_JUNCTION = 35;
+    public static double ELBOW_HIGH = 4;
+
     private Servo clawServo;
     private Servo flipperServo;
     private Servo elbowServo;
@@ -46,50 +47,50 @@ public class ClawSubsystem implements Subsystem {
     }
 
     public void open() {
-        clawServo.setPosition(OPEN_CLAW_SERVO_POS);
+        clawServo.setPosition(CLAW_OPEN);
     }
 
     public void close() {
-        clawServo.setPosition(CLOSE_CLAW_SERVO_POS);
+        clawServo.setPosition(CLAW_CLOSE);
     }
 
     public void carry() {
         close();
-        elbowServo.setPosition(ELBOW_CARRY_SERVO_POS);
+        elbowServo.setPosition(ELBOW_CARRY);
     }
 
     public void release() {
-        elbowServo.setPosition(ELBOW_RELEASE_SERVO_POS);
+        elbowServo.setPosition(ELBOW_RELEASE);
         open();
     }
 
     public void scoreGroundJunction() {
-        flipperServo.setPosition(GROUND_JUNCTION);
-        elbowServo.setPosition(GROUND_ELBOW);
+        flipperServo.setPosition(FLIPPER_GROUND_JUNCTION);
+        elbowServo.setPosition(ELBOW_GROUND);
     }
 
     public void flipperLowJunction() {
-        flipperServo.setPosition(LOW_JUNCTION);
+        flipperServo.setPosition(FLIPPER_LOW_JUNCTION);
     }
 
     public void elbowLowJunction() {
-        elbowServo.setPosition(LOW_ELBOW);
+        elbowServo.setPosition(ELBOW_LOW);
     }
 
     public void flipperMediumJunction() {
-        flipperServo.setPosition(MID_JUNCTION);
+        flipperServo.setPosition(FLIPPER_MID_JUNCTION);
     }
 
-    public void elbowMidiumJunction() {
-        elbowServo.setPosition(MID_ELBOW);
+    public void elbowMediumJunction() {
+        elbowServo.setPosition(ELBOW_MID);
     }
 
     public void flipperHighJunction() {
-        flipperServo.setPosition(HIGH_JUNCTION);
+        flipperServo.setPosition(FLIPPER_HIGH_JUNCTION);
     }
 
     public void elbowHighJunction() {
-        elbowServo.setPosition(HIGH_ELBOW);
+        elbowServo.setPosition(ELBOW_HIGH);
     }
 
     public boolean isConeClose() {
