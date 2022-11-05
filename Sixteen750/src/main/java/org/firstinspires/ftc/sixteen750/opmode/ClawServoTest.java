@@ -20,9 +20,9 @@ public class ClawServoTest extends CommandOpMode {
     public Hardware hardware;
 
     // clockwise is order
-    public static double upBtnServoPosition = 0.45;
-    public static double rightBtnServoPosition = 0.47;
-    public static double downBtnServoPosition = 0.5;
+    public static double upBtnServoPosition = 0.49;
+    public static double rightBtnServoPosition = 0.5;
+    public static double downBtnServoPosition = 0.51;
     public static double leftBtnServoPosition = 0.6;
 
     @Override
@@ -40,6 +40,11 @@ public class ClawServoTest extends CommandOpMode {
          * Min: 0.4
          * Firmly grab: 0.45
          * Open: 0.6
+         *
+         * 25 KG Servo
+         * 1: Fully Open
+         * 0: Fully closed
+         * Ideal Range: 0.5-0.6
          * */
         if (gamepad1.dpad_up) {
             hardware.clawServo.setPosition(upBtnServoPosition); // better not to go below this value

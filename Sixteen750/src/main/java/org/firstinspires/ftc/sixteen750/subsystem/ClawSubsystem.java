@@ -8,8 +8,8 @@ import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.subsystem.Subsystem;
 
 public class ClawSubsystem implements Subsystem {
-    public static double CLAW_OPEN = 0.8;
-    public static double CLAW_CLOSE = 0.5;
+    public static double CLAW_OPEN = 0.6; // Verified
+    public static double CLAW_CLOSE = 0.5; // Verified
     public static double ELBOW_CARRY = 0.4;
     public static double ELBOW_RELEASE = 0.0;
     public static double FLIPPER_GROUND_JUNCTION = 2;
