@@ -2,7 +2,6 @@ package org.firstinspires.ftc.sixteen750;
 
 import static org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.sixteen750.swerve_util.AbsoluteAnalogEncoder;
 
 import com.acmerobotics.dashboard.config.Config;
@@ -64,7 +63,7 @@ public class Hardware {
     public DistanceSensor clawDistance;
 
     public Hardware(HardwareMap hwMap) {
-        if (RobotConstant.DRIVE_CONNECTED) {
+        if (RobotConstant.SWERVE_DRIVE_CONNECTED) {
             leftFrontMotor = new EncodedMotor<>(HardwareConstant.LF_MOTOR);
             leftRearMotor = new EncodedMotor<>(HardwareConstant.LR_MOTOR);
             rightFrontMotor = new EncodedMotor<>(HardwareConstant.RF_MOTOR);

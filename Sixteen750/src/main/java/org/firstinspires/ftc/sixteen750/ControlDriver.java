@@ -26,7 +26,7 @@ public class ControlDriver {
 
         AssignNamedControllerButton();
 
-        if (RobotConstant.DRIVE_CONNECTED) {
+        if (RobotConstant.SWERVE_DRIVE_CONNECTED) {
             bindDriveControls();
         }
         if (RobotConstant.CLAW_CONNECTED) {
