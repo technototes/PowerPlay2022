@@ -39,7 +39,7 @@ spotless {
         target project.fileTree(project.rootDir) {
             include 'Twenty403/**/*.java', 'Sixteen750/**/*.java', 'ForTeaching/**/*.java'
             exclude '**/generated/**'
-            exclude '**/AutoConstantBlue.java', '**/AutoConstantsBlue.java', '**/AutoConstantsRed.java' // Frequently used
+            exclude '**/AutoConst*.java' // Frequently used
             exclude '**/ExperimentalSwerveDrive.java', '**/swerve_util/**', '**/SwerveDrivebaseSubsystem.java' // Mostly old code
         }
         removeUnusedImports()
