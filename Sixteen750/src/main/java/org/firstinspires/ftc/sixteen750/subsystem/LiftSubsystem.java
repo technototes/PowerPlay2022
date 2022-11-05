@@ -242,8 +242,14 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         if (!isHardware) {
             return 0;
         }
-        // Invert the sign on this one to make it look like it's rotating the same way...
-        return -leftMotor.getEncoder().getPosition(); // .get() will cause NullPointerException
+        if (leftMotor.getEncoder() != null){
+            // Invert the sign on this one to make it look like it's rotating the same way...
+            return -leftMotor.getEncoder().getPosition(); // .get() will cause NullPointerException
+        }
+        else {
+            return 16750;
+        }
+
 //        return -leftMotor.get();
     }
 
@@ -251,8 +257,12 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         if (!isHardware || singleMotor) {
             return 0;
         }
-//        return rightMotor.getEncoder().getPosition(); // .get() will cause NullPointerException
+        if (rightMotor.getEncoder() != null) {
+            return rightMotor.getEncoder().getPosition(); // will cause NullPointerException when the encoder cable is bad
+        }
+        else {
+            return 16750;
+        }
 //        return rightMotor.get();
-        return 16750;
     }
 }
