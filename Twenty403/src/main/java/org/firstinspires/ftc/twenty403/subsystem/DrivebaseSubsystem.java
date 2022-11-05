@@ -23,6 +23,8 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
 
     @Config
     public abstract static class DriveConstants implements MecanumConstants {
+        public static double SLOW_MOTOR_SPEED = 0.6;
+        public static double FAST_MOTOR_SPEED = 1.0;
 
         @TicksPerRev
         public static final double TICKS_PER_REV = 537.6; // 2021: 28;
@@ -121,15 +123,15 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
         fr2 = fr;
         rl2 = rl;
         rr2 = rr;
-        speed = 0.3;
+        speed = DriveConstants.SLOW_MOTOR_SPEED;
     }
 
     public void fast() {
-        speed = 1;
+        speed = DriveConstants.FAST_MOTOR_SPEED;
     }
 
     public void slow() {
-        speed = 0.3;
+        speed = DriveConstants.SLOW_MOTOR_SPEED;
     }
 
     @Override
