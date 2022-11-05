@@ -11,7 +11,7 @@ public class Robot implements Loggable {
     @Config
     public static class RobotConstant {
         public static boolean DRIVE_CONNECTED = false;
-        public static boolean CLAW_CONNECTED = true;
+        public static boolean CLAW_CONNECTED = false;
         public static boolean LIFT_CONNECTED = true;
     }
 
@@ -36,7 +36,9 @@ public class Robot implements Loggable {
         }
 
         if (RobotConstant.LIFT_CONNECTED) {
-            liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, hardware.liftRightMotor);
+            // TODO: enable both motor as needed
+//          liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, hardware.liftRightMotor);
+            liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor);
         } else {
             liftSubsystem = new LiftSubsystem();
         }

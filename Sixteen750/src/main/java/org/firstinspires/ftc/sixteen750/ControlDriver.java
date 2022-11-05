@@ -3,6 +3,8 @@ package org.firstinspires.ftc.sixteen750;
 import org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
+import org.firstinspires.ftc.sixteen750.command.lift.LiftIncrementalMoveDownCommand;
+import org.firstinspires.ftc.sixteen750.command.lift.LiftIncrementalMoveUpCommand;
 
 import com.technototes.library.control.CommandAxis;
 import com.technototes.library.control.CommandButton;
@@ -14,8 +16,9 @@ public class ControlDriver {
     public CommandGamepad gamepad;
 
     public Stick driveLeftStick, driveRightStick;
-    public CommandButton resetGyroButton, driveStraightenButton, snailSpeedButton, liftUpButton, clawOpenButton;
-    public CommandAxis liftDownButton, clawCloseButton;
+    public CommandButton resetGyroButton, driveStraightenButton, snailSpeedButton;
+    public CommandAxis clawOpenButton, clawCloseButton;
+    public CommandButton liftUpButton, liftDownButton;
 
     public ControlDriver(CommandGamepad g, Robot r) {
         this.robot = r;
@@ -35,14 +38,15 @@ public class ControlDriver {
     }
 
     private void AssignNamedControllerButton() {
+        // TODO: re-assign buttons
         resetGyroButton = gamepad.rightStickButton;
         driveLeftStick = gamepad.leftStick;
         driveRightStick = gamepad.rightStick;
         driveStraightenButton = gamepad.square;
-        liftDownButton = gamepad.rightTrigger;
-        liftUpButton = gamepad.rightBumper;
+        liftUpButton = gamepad.leftBumper;
+        liftDownButton = gamepad.rightBumper;
         clawCloseButton = gamepad.leftTrigger;
-        clawOpenButton = gamepad.leftBumper;
+        clawOpenButton = gamepad.rightTrigger;
         // TODO: Identify other controls for
     }
 
@@ -63,7 +67,7 @@ public class ControlDriver {
 
     public void bindLiftControls() {
         // TODO: Name & Bind lift controls
-        // liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
-        // liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
+         liftUpButton.whenPressed(new LiftIncrementalMoveUpCommand(robot.liftSubsystem));
+         liftDownButton.whenPressed(new LiftIncrementalMoveDownCommand(robot.liftSubsystem));
     }
 }
