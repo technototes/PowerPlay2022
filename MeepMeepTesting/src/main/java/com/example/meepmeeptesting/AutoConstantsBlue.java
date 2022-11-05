@@ -20,7 +20,7 @@ import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationCon
 public class AutoConstantsBlue {
     // "Home" locations: (The side with the Red terminal)
     public static class Away {
-//        public static Pose2d START = new Pose2d(36, 66, toRadians(-90));
+        //        public static Pose2d START = new Pose2d(36, 66, toRadians(-90));
 //        public static Pose2d STACK = new Pose2d(60, 12, toRadians(0));
 //        public static Pose2d LEFT = new Pose2d(60, 36, toRadians(150));
 //        public static Pose2d MIDDLE = new Pose2d(36, 36, toRadians(90));
@@ -198,6 +198,20 @@ public class AutoConstantsBlue {
                 BETWEEN_TO_E_JUNCTION =
                         () -> function.apply(BETWEEN)
                                 .lineToLinearHeading(E_JUNCTION)
+                                .build(),
+                START_TO_LEFT_PARK =
+                        () -> function.apply(START)
+                                .lineToLinearHeading(LEFT)
+                                .build(),
+                START_TO_MIDDLE_PARK =
+                        () -> function.apply(START)
+                                .lineToLinearHeading(START)
+                                .lineToLinearHeading(MIDDLE)
+                                .build(),
+                START_TO_RIGHT_PARK =
+                        () -> function.apply(START)
+                                .lineToLinearHeading(START)
+                                .lineToLinearHeading(RIGHT)
                                 .build(),
 
         S_JUNCTION_TO_STACK =
