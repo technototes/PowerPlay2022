@@ -15,25 +15,27 @@ import com.technototes.library.subsystem.Subsystem;
 @Config
 public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     // TODO: THESE VALUES ARE ALL WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
-    public static double TICKS_INCH = 750;
-    public static double LGROUND_JUNCTION = 0.5 * TICKS_INCH;
-    public static double RGROUND_JUNCTION = 0.5 * TICKS_INCH;
-    public static double LLOW_JUNCTION = 12 * TICKS_INCH;
-    public static double RLOW_JUNCTION = 12 * TICKS_INCH;
-    public static double LMEDIUM_JUNCTION = 24 * TICKS_INCH;
-    public static double RMEDIUM_JUNCTION = 24 * TICKS_INCH;
-    public static double LHIGH_JUNCTION = 36 * TICKS_INCH;
-    public static double RHIGH_JUNCTION = 36 * TICKS_INCH;
-    public static double MAX_HEIGHT = 38 * TICKS_INCH;
-    public static double ABSOLUTE_MAX_HEIGHT;
+    public static double TICKS_INCH = 750; // WRONG,
+    public static double L_GROUND_JUNCTION = 0.5 * TICKS_INCH; // WRONG
+    public static double R_GROUND_JUNCTION = 0.5 * TICKS_INCH; // WRONG
+    public static double L_LOW_JUNCTION = 12 * TICKS_INCH; // WRONG
+    public static double R_LOW_JUNCTION = 12 * TICKS_INCH; // WRONG
+    public static double L_MEDIUM_JUNCTION = 24 * TICKS_INCH; // WRONG
+    public static double R_MEDIUM_JUNCTION = 24 * TICKS_INCH; // WRONG
+    public static double L_HIGH_JUNCTION = 36 * TICKS_INCH; // WRONG
+    public static double R_HIGH_JUNCTION = 36 * TICKS_INCH; // WRONG
+    public static double MAX_HEIGHT = 38 * TICKS_INCH; // WRONG
+    public static double LEFT_ABSOLUTE_MAX_HEIGHT = 544;
+    public static double RIGHT_ABSOLUTE_MAX_HEIGHT = 566;
     public static double MIN_HEIGHT = 0;
-    public static double ABSOLUTE_MIN_HEIGHT;
-    public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH;
-    public static double DEAD_ZONE = .25 * TICKS_INCH;
+    public static double LEFT_ABSOLUTE_MIN_HEIGHT = 0;
+    public static double RIGHT_ABSOLUTE_MIN_HEIGHT = 0;
+    public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH; // WRONG
+    public static double DEAD_ZONE = .25 * TICKS_INCH; // WRONG
     public static double MAX_MOTOR_SPEED = 0.8;
     public static double MIN_MOTOR_SPEED = -0.4; // Gravity
-    public static double LMOVE = 2.25 * TICKS_INCH;
-    public static double RMOVE = 2.25 * TICKS_INCH;
+    public static double L_INCREMENTAL_MOVE = 10;
+    public static double R_INCREMENTAL_MOVE = 10;
     public static PIDCoefficients PID = new PIDCoefficients(0.008, 0, 0.0005);
 
     private EncodedMotor<DcMotorEx> leftMotor;
@@ -198,28 +200,28 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         if (!isHardware) {
             return;
         }
-        setLiftPosition(LHIGH_JUNCTION, RHIGH_JUNCTION);
+        setLiftPosition(L_HIGH_JUNCTION, R_HIGH_JUNCTION);
     }
 
     public void midPole() {
         if (!isHardware) {
             return;
         }
-        setLiftPosition(LMEDIUM_JUNCTION, RMEDIUM_JUNCTION);
+        setLiftPosition(L_MEDIUM_JUNCTION, R_MEDIUM_JUNCTION);
     }
 
     public void lowPole() {
         if (!isHardware) {
             return;
         }
-        setLiftPosition(LLOW_JUNCTION, RLOW_JUNCTION);
+        setLiftPosition(L_LOW_JUNCTION, R_LOW_JUNCTION);
     }
 
     public void groundJunction() {
         if (!isHardware) {
             return;
         }
-        setLiftPosition(LGROUND_JUNCTION, RGROUND_JUNCTION);
+        setLiftPosition(L_GROUND_JUNCTION, R_GROUND_JUNCTION);
     }
 
     public void moveUp() {
@@ -228,7 +230,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
         // maybe getCurrentPosition instead of getTargetPosition
         double position = leftPidController.getTargetPosition();
-        setLiftPosition(position + LMOVE, position + RMOVE);
+        setLiftPosition(position + L_INCREMENTAL_MOVE, position + R_INCREMENTAL_MOVE);
     }
 
     public void moveDown() {
@@ -237,7 +239,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
         // maybe getCurrentPosition instead of getTargetPosition
         double position = leftPidController.getTargetPosition();
-        setLiftPosition(position - LMOVE, position - RMOVE);
+        setLiftPosition(position - L_INCREMENTAL_MOVE, position - R_INCREMENTAL_MOVE);
     }
 
     public double getLeftPos() {
@@ -246,8 +248,8 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
         if (leftMotor.getEncoder() != null) {
             // Invert the sign on this one to make it look like it's rotating the same way...
-            return -leftMotor.getEncoder().getPosition(); // will cause NullPointerException when running in single motor mode
-        //  return -leftMotor.get();
+            return leftMotor.getEncoder().getPosition(); // will cause NullPointerException when running in single motor mode
+        //  return leftMotor.get();
         } else {
             return 16750;
         }
@@ -258,10 +260,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
             return 0;
         }
         if (rightMotor.getEncoder() != null) {
-            return rightMotor
+            return -rightMotor
                     .getEncoder()
                     .getPosition(); // will cause NullPointerException when running in single motor mode
-        //  return rightMotor.get();
+        //  return -rightMotor.get();
         } else {
             return 16750;
         }
