@@ -10,11 +10,12 @@ import com.technototes.path.geometry.ConfigurablePose;
 import com.technototes.path.trajectorysequence.TrajectorySequence;
 import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
 
-public class AutoConstantsRed {
+public class
+AutoConstantsRed {
     // "Home" locations: (The side with the Red terminal)
     public static class Home {
         public static ConfigurablePose START = new ConfigurablePose(-36, -66, toRadians(90));
-        public static ConfigurablePose E_JUNCTION = new ConfigurablePose(-30, -8, 0.63);
+        public static ConfigurablePose E_JUNCTION = new ConfigurablePose(-30, -8, -0.63);
         public static ConfigurablePose STACK = new ConfigurablePose(-60, -17, toRadians(180));
         public static ConfigurablePose LEFT = new ConfigurablePose(-60, -14, 4.88);
         public static ConfigurablePose MIDDLE = new ConfigurablePose(-37, -16, 5.41);
@@ -29,8 +30,9 @@ public class AutoConstantsRed {
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
                 START_TO_E_JUNCTION =
                 b -> b.apply(START.toPose())
-                        .lineToLinearHeading(BETWEEN_START_E_JUNCTION.toPose())
-                        .lineToLinearHeading(E_JUNCTION.toPose())
+                        .splineTo(E_JUNCTION.toPose().vec(), -0.63)
+                        //.lineToLinearHeading(BETWEEN_START_E_JUNCTION.toPose())
+                        //.lineToLinearHeading(E_JUNCTION.toPose())
                         .build(),
                 E_JUNCTION_TO_STACK =
                         b -> b.apply(E_JUNCTION.toPose())

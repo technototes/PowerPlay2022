@@ -22,20 +22,20 @@ public class Hardware {
         public static String RR_MOTOR = "rrmotor";
         public static String IMU = "imu";
 
-        public static String CLAW_SERVO = "claw";
-        public static String FLIPPER_SERVO = "flipper";
-        public static String ELBOW_SERVO = "elbow";
-        public static String CLAW_SENSOR = "claw_sensor";
-        public static String LIFT_LEFT_MOTOR = "lift_left_motor";
-        public static String LIFT_RIGHT_MOTOR = "lift_right_motor";
+        public static String CLAW_SERVO = "clawServo";
+        public static String FLIPPER_SERVO = "flipperServo";
+        public static String ELBOW_SERVO = "elbowServo";
+        public static String CLAW_SENSOR = "clawSensor";
+        public static String LIFT_LEFT_MOTOR = "leftLiftMotor";
+        public static String LIFT_RIGHT_MOTOR = "rightLiftMotor";
     }
 
     public EncodedMotor<DcMotorEx> flDriveMotor;
     public EncodedMotor<DcMotorEx> frDriveMotor;
     public EncodedMotor<DcMotorEx> rlDriveMotor;
     public EncodedMotor<DcMotorEx> rrDriveMotor;
-    public EncodedMotor<DcMotorEx> LiftLeftMotor;
-    public EncodedMotor<DcMotorEx> LiftRightMotor;
+    public EncodedMotor<DcMotorEx> liftLeftMotor;
+    public EncodedMotor<DcMotorEx> liftRightMotor;
     public IMU imu;
     public Servo claw;
     public Servo flipper;
@@ -51,14 +51,15 @@ public class Hardware {
             imu = new IMU(HardwareConstant.IMU).remapAxes(AxesOrder.YXZ, IMU.AxesSigns.NNN);
         }
         if (RobotConstant.CLAW_CONNECTED) {
-            claw = new Servo(HardwareConstant.CLAW_SERVO);
+            claw = new Servo(HardwareConstant.CLAW_SERVO)
+                    .invert(); // no need to invert for gobilda super speed; might need to invert for the 25KG servo
             flipper = new Servo(HardwareConstant.FLIPPER_SERVO);
             elbow = new Servo(HardwareConstant.ELBOW_SERVO);
-            clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR);
+            //          clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR); // not installed
         }
         if (RobotConstant.LIFT_CONNECTED) {
-            LiftLeftMotor = new EncodedMotor<>(HardwareConstant.LIFT_LEFT_MOTOR);
-            LiftRightMotor = new EncodedMotor<>(HardwareConstant.LIFT_RIGHT_MOTOR);
+            liftLeftMotor = new EncodedMotor<>(HardwareConstant.LIFT_LEFT_MOTOR);
+            liftRightMotor = new EncodedMotor<>(HardwareConstant.LIFT_RIGHT_MOTOR);
         }
     }
 }

@@ -10,7 +10,7 @@ import com.technototes.library.logger.Loggable;
 public class Robot implements Loggable {
     @Config
     public static class RobotConstant {
-        public static boolean DRIVE_CONNECTED = true;
+        public static boolean DRIVE_CONNECTED = false;
         public static boolean CLAW_CONNECTED = true;
         public static boolean LIFT_CONNECTED = true;
     }
@@ -36,7 +36,7 @@ public class Robot implements Loggable {
         }
 
         if (RobotConstant.LIFT_CONNECTED) {
-            liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor /*, hardware.LiftRightMotor*/);
+            liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, hardware.liftRightMotor);
         } else {
             liftSubsystem = new LiftSubsystem();
         }

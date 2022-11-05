@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.Range;
 
 import com.technototes.library.hardware.motor.EncodedMotor;
-import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 
@@ -165,10 +164,12 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     //        return Math.abs(delta()) < DEAD_ZONE;
     //    }
 
-    @Log(name = "lEncMotor Pos (Actual)")
+    // TODO: enable as needed
+    //    @Log(name = "lEncMotor Pos (Actual)")
     public volatile String lpAndActual = "(unknown)";
 
-    @Log(name = "rEncMotor Pos (Actual)")
+    // TODO: enable as needed
+    //    @Log(name = "rEncMotor Pos (Actual)")
     public volatile String rpAndActual = "(unknown)";
 
     @Override
@@ -234,5 +235,33 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         // maybe getCurrentPosition instead of getTargetPosition
         double position = leftPidController.getTargetPosition();
         setLiftPosition(position - LMOVE, position - RMOVE);
+    }
+
+    public double getLeftPos() {
+        if (!isHardware) {
+            return 0;
+        }
+        if (leftMotor.getEncoder() != null) {
+            // Invert the sign on this one to make it look like it's rotating the same way...
+            return -leftMotor.getEncoder().getPosition(); // .get() will cause NullPointerException
+        } else {
+            return 16750;
+        }
+
+        //        return -leftMotor.get();
+    }
+
+    public double getRightPos() {
+        if (!isHardware || singleMotor) {
+            return 0;
+        }
+        if (rightMotor.getEncoder() != null) {
+            return rightMotor
+                    .getEncoder()
+                    .getPosition(); // will cause NullPointerException when the encoder cable is bad
+        } else {
+            return 16750;
+        }
+        //        return rightMotor.get();
     }
 }

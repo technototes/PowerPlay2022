@@ -21,12 +21,12 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     public static double LGROUND_JUNCTION = 265;
     public static double RGROUND_JUNCTION = 265;
-    public static double LLOW_JUNCTION = 2750;
-    public static double RLOW_JUNCTION = 2750;
-    public static double LMEDIUM_JUNCTION = 4670;
-    public static double RMEDIUM_JUNCTION = 4670;
-    public static double LHIGH_JUNCTION = 6460;
-    public static double RHIGH_JUNCTION = 6460;
+    public static double LLOW_JUNCTION = 2980; // 2750 old value
+    public static double RLOW_JUNCTION = 2980;
+    public static double LMEDIUM_JUNCTION = 4770; // 4670
+    public static double RMEDIUM_JUNCTION = 4770;
+    public static double LHIGH_JUNCTION = 6560; // 6460
+    public static double RHIGH_JUNCTION = 6560;
     public static double MAX_HEIGHT = 6600;
     public static double MIN_HEIGHT = 0;
     // TODO: THESE VALUES ARE PROBABLY WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
@@ -35,13 +35,13 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     // Values work 11/4/22
     public static double MAX_MOTOR_SPEED = 1;
-    public static double MIN_MOTOR_SPEED = -0.7; // Gravity
+    public static double MIN_MOTOR_SPEED = -0.5; // Gravity
 
     public static double LMOVE = 1.00 * TICKS_INCH;
     public static double RMOVE = 1.00 * TICKS_INCH;
 
     // We may need to adjust this. Make *very* small changes! Values work 11/4/22
-    public static PIDCoefficients PID = new PIDCoefficients(0.0008, 0.0002, 0.00005);
+    public static PIDCoefficients PID = new PIDCoefficients(0.0008, 0, 0.00005);
 
     private EncodedMotor<DcMotorEx> _leftMotor;
     private EncodedMotor<DcMotorEx> _rightMotor;
