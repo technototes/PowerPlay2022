@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
-@TeleOp(name = "ClawTestTeleOp")
-public class ClawTestTeleOpMode extends CommandOpMode {
+@TeleOp(name = "LiftTestTeleOp")
+public class ManualTestingOpMode extends CommandOpMode {
     public Robot robot;
     public Controls controls;
     public Hardware hardware;
