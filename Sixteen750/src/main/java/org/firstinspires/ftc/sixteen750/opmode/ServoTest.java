@@ -25,7 +25,8 @@ public class ServoTest extends CommandOpMode {
     public static double servoStopPower = 0.0;
     public static boolean alsoEncoder = true;
 
-    boolean isLeftSideConnected, isRightSideConnected = true;
+    boolean isLeftSideConnected = true;
+    boolean isRightSideConnected = true;
 
     @Override
     public void uponInit() {
@@ -112,6 +113,10 @@ public class ServoTest extends CommandOpMode {
                 telemetry.addData("LeftRear - Voltage", leftRearEncoder.getVoltage());
             }
         }
+        else {
+            telemetry.addLine("WARNING: Left Disconnected");
+        }
+
         if (isRightSideConnected){
             if (alsoEncoder) {
                 telemetry.addData("RightRear - Position", rightRearEncoder.getCurrentPosition());
@@ -119,6 +124,9 @@ public class ServoTest extends CommandOpMode {
                 telemetry.addData("RightFront - Position", rightFrontEncoder.getCurrentPosition());
                 telemetry.addData("RightFront - Voltage", rightFrontEncoder.getVoltage());
             }
+        }
+        else {
+            telemetry.addLine("WARNING: Right Disconnected");
         }
 
         telemetry.update();

@@ -25,7 +25,8 @@ public class MotorTest extends CommandOpMode {
     public static double motorSpeed = 0.3; // 0.1 is too little, the motor trying to move but not enough to move the robot; 0.2 is slightly better
     public static double motorStopSpeed = 0.0;
 
-    boolean isLeftSideConnected, isRightSideConnected = true;
+    boolean isLeftSideConnected = true;
+    boolean isRightSideConnected = true;
 
     @Override
     public void uponInit() {
@@ -96,9 +97,15 @@ public class MotorTest extends CommandOpMode {
             telemetry.addData("LeftFront - Motor - Encoder", leftFrontMotor.getEncoder().getPosition());
             telemetry.addData("LeftRear - Motor - Encoder", leftRearMotor.getEncoder().getPosition());
         }
+        else {
+            telemetry.addLine("WARNING: Left Disconnected");
+        }
         if (isRightSideConnected) {
             telemetry.addData("RightRear - Motor - Encoder", rightRearMotor.getEncoder().getPosition());
             telemetry.addData("RightFront - Motor - Encoder", rightFrontMotor.getEncoder().getPosition());
+        }
+        else {
+            telemetry.addLine("WARNING: Right Disconnected");
         }
 
         telemetry.addData("LeftFront - Motor - Pressed", isLeftFrontPressed);

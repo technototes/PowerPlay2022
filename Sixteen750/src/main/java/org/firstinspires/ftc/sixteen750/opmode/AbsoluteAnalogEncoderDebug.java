@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.sixteen750.opmode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.technototes.library.structure.CommandOpMode;
@@ -12,10 +14,12 @@ import org.firstinspires.ftc.sixteen750.swerve_util.AbsoluteAnalogEncoder;
 public class AbsoluteAnalogEncoderDebug extends CommandOpMode {
     AbsoluteAnalogEncoder leftFrontEncoder, leftRearEncoder, rightRearEncoder, rightFrontEncoder;
 
-    boolean isLeftSideConnected, isRightSideConnected = true;
+    boolean isLeftSideConnected = true;
+    boolean isRightSideConnected = true;
 
     @Override
     public void uponInit() {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         /// According to the alternative constructor in SwerveModule
         try {
             leftFrontEncoder = new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, "leftFrontEncoder"));
@@ -41,6 +45,9 @@ public class AbsoluteAnalogEncoderDebug extends CommandOpMode {
             telemetry.addData("LeftRear - Position", leftRearEncoder.getCurrentPosition());
             telemetry.addData("LeftRear - Voltage", leftRearEncoder.getVoltage());
         }
+        else {
+            telemetry.addLine("WARNING: Left Disconnected");
+        }
 
         if (isRightSideConnected) {
             telemetry.addData("RightRear - Position", rightRearEncoder.getCurrentPosition());
@@ -48,6 +55,9 @@ public class AbsoluteAnalogEncoderDebug extends CommandOpMode {
 
             telemetry.addData("RightFront - Position", rightFrontEncoder.getCurrentPosition());
             telemetry.addData("RightFront - Voltage", rightFrontEncoder.getVoltage());
+        }
+        else {
+            telemetry.addLine("WARNING: Right Disconnected");
         }
 
         telemetry.update();
