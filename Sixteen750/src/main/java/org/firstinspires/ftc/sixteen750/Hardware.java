@@ -51,7 +51,7 @@ public class Hardware {
             imu = new IMU(HardwareConstant.IMU).remapAxes(AxesOrder.YXZ, IMU.AxesSigns.NNN);
         }
         if (RobotConstant.CLAW_CONNECTED) {
-            claw = new Servo(HardwareConstant.CLAW_SERVO);
+            claw = new Servo(HardwareConstant.CLAW_SERVO); // no need to invert
             flipper = new Servo(HardwareConstant.FLIPPER_SERVO);
             elbow = new Servo(HardwareConstant.ELBOW_SERVO);
 //          clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR); // not installed
