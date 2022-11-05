@@ -76,7 +76,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     private void setTargetPosition(double lPos, double rPos) {
         if (!isHardwareConnected) {
-            return;
+            return; // this will be the only check so do not remove
         }
         if (singleMotor && leftPidController != null) {
             leftPidController.setTargetPosition(Range.clip(lPos, LEFT_ABSOLUTE_MIN_HEIGHT, LEFT_ABSOLUTE_MAX_HEIGHT));
@@ -88,23 +88,13 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     }
 
     public void setTop() {
-        if (!isHardwareConnected) {
-            return;
-        }
-        leftPidController.setTargetPosition(MAX_HEIGHT);
-        if (singleMotor == false) {
-            rightPidController.setTargetPosition(MAX_HEIGHT);
-        }
+        // null check will be done in setTargetPosition()
+        this.setTargetPosition(LEFT_ABSOLUTE_MAX_HEIGHT, RIGHT_ABSOLUTE_MAX_HEIGHT);
     }
 
     public void setBottom() {
-        if (!isHardwareConnected) {
-            return;
-        }
-        leftPidController.setTargetPosition(MIN_HEIGHT);
-        if (singleMotor == false) {
-            rightPidController.setTargetPosition(MIN_HEIGHT);
-        }
+        // null check will be done in setTargetPosition()
+        this.setTargetPosition(LEFT_ABSOLUTE_MIN_HEIGHT, RIGHT_ABSOLUTE_MIN_HEIGHT);
     }
 
     public void stop() {
@@ -112,8 +102,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
             return;
         }
         // By resetting the pidController, it stops the periodic function from making changes
-        leftPidController.reset();
-        if (singleMotor == false) {
+        if (singleMotor && leftPidController != null) {
+            leftPidController.reset();
+        }
+        else if (leftPidController != null && rightPidController != null) {
+            leftPidController.reset();
             rightPidController.reset();
         }
     }
@@ -123,8 +116,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
             return;
         }
         // Just set the target position to the current position to get the motor to stop, yes?
-        leftPidController.setTargetPosition(leftMotor.get());
-        if (!singleMotor) {
+        if (singleMotor && leftPidController != null) {
+            leftPidController.setTargetPosition(leftMotor.get());
+        }
+        else if (leftPidController != null && rightPidController != null) {
+            leftPidController.setTargetPosition(leftMotor.get());
             rightPidController.setTargetPosition(rightMotor.get());
         }
     }
@@ -134,8 +130,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
             return;
         }
         setTargetPosition(lVal, rVal);
-        lpAndActual = String.format("%d (%d)", (int) lVal, leftMotor.get().intValue());
-        if (singleMotor == false) {
+        if (singleMotor && leftMotor != null){
+            lpAndActual = String.format("%d (%d)", (int) lVal, leftMotor.get().intValue());
+        }
+        else if (leftMotor != null && rightMotor != null) {
+            lpAndActual = String.format("%d (%d)", (int) lVal, leftMotor.get().intValue());
             rpAndActual = String.format("%d (%d)", (int) rVal, rightMotor.get().intValue());
         }
     }
@@ -205,49 +204,39 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     //    }
 
     public void highPole() {
-        if (!isHardwareConnected) {
-            return;
-        }
+        // null check will be done in setTargetPosition()
         setTargetPositionWithLogging(L_HIGH_JUNCTION, R_HIGH_JUNCTION);
     }
 
     public void midPole() {
-        if (!isHardwareConnected) {
-            return;
-        }
+        // null check will be done in setTargetPosition()
         setTargetPositionWithLogging(L_MEDIUM_JUNCTION, R_MEDIUM_JUNCTION);
     }
 
     public void lowPole() {
-        if (!isHardwareConnected) {
-            return;
-        }
+        // null check will be done in setTargetPosition()
         setTargetPositionWithLogging(L_LOW_JUNCTION, R_LOW_JUNCTION);
     }
 
     public void groundJunction() {
-        if (!isHardwareConnected) {
-            return;
-        }
+        // null check will be done in setTargetPosition()
         setTargetPositionWithLogging(L_GROUND_JUNCTION, R_GROUND_JUNCTION);
     }
 
     public void moveUp() {
-        if (!isHardwareConnected) {
-            return;
+        if (isHardwareConnected && leftPidController != null) {
+            // maybe getCurrentPosition instead of getTargetPosition
+            double rightTargetPosition = leftPidController.getTargetPosition();
+            setTargetPositionWithLogging(rightTargetPosition + L_INCREMENTAL_MOVE, rightTargetPosition + R_INCREMENTAL_MOVE);
         }
-        // maybe getCurrentPosition instead of getTargetPosition
-        double rightTargetPosition = leftPidController.getTargetPosition();
-        setTargetPositionWithLogging(rightTargetPosition + L_INCREMENTAL_MOVE, rightTargetPosition + R_INCREMENTAL_MOVE);
     }
 
     public void moveDown() {
-        if (!isHardwareConnected) {
-            return;
+        if (isHardwareConnected && leftPidController != null) {
+            // maybe getCurrentPosition instead of getTargetPosition
+            double leftTargetPosition = leftPidController.getTargetPosition();
+            setTargetPositionWithLogging(leftTargetPosition - L_INCREMENTAL_MOVE, leftTargetPosition - R_INCREMENTAL_MOVE);
         }
-        // maybe getCurrentPosition instead of getTargetPosition
-        double leftTargetPosition = leftPidController.getTargetPosition();
-        setTargetPositionWithLogging(leftTargetPosition - L_INCREMENTAL_MOVE, leftTargetPosition - R_INCREMENTAL_MOVE);
     }
 
     public double getLeftPos() {
