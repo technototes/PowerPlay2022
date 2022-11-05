@@ -19,6 +19,8 @@ import com.technototes.library.subsystem.Subsystem;
 public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double TICKS_INCH = 265;
 
+    public static double LIntake_Position = 0;
+    public static double RIntake_Position = 0;
     public static double LGROUND_JUNCTION = 265;
     public static double RGROUND_JUNCTION = 265;
     public static double LLOW_JUNCTION = 2980; // 2750 old value
@@ -195,6 +197,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     public void groundJunction() {
         setLiftPosition(LGROUND_JUNCTION, RGROUND_JUNCTION);
+    }
+
+    public void intakePos() {
+        setLiftPosition(LIntake_Position, RIntake_Position);
     }
 
     public void moveUp() {
