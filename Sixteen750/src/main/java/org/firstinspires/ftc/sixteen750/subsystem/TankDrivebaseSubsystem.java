@@ -87,10 +87,10 @@ public class TankDrivebaseSubsystem extends TankDrive {
          * angular distances although most angular parameters are wrapped in Math.toRadians() for
          * convenience. Make sure to exclude any gear ratio included in MOTOR_CONFIG from GEAR_RATIO.
          */
-        // TODO: change them to actual values
-        public static double WHEEL_RADIUS = 2.83465; // in
-        public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-        public static double TRACK_WIDTH = 1; // in, center to center of wheel
+        // copied from swerve drive
+        public static double WHEEL_RADIUS = 1.4; // in
+        public static double GEAR_RATIO = 1/(3.5*1.5*2); // output (wheel) speed / input (motor) speed
+        public static double TRACK_WIDTH = 9; // in
 
         /*
          * These are the feedforward parameters used to model the drive motor behavior. If you are using
