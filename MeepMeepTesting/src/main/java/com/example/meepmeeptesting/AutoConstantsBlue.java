@@ -204,14 +204,14 @@ public class AutoConstantsBlue {
                                 .lineToLinearHeading(LEFT)
                                 .build(),
                 START_TO_MIDDLE_PARK =
-                        b -> b.apply(START.toPose())
-                                .lineToLinearHeading(START.toPose())
-                                .lineToLinearHeading(MIDDLE.toPose())
+                        () -> function.apply(START)
+                                .lineToLinearHeading(START)
+                                .lineToLinearHeading(MIDDLE)
                                 .build(),
                 START_TO_RIGHT_PARK =
-                        b -> b.apply(START.toPose())
-                                .lineToLinearHeading(START.toPose())
-                                .lineToLinearHeading(RIGHT.toPose())
+                        () -> function.apply(START)
+                                .lineToLinearHeading(START)
+                                .lineToLinearHeading(RIGHT)
                                 .build(),
 
         S_JUNCTION_TO_STACK =

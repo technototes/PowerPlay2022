@@ -14,7 +14,7 @@ import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.twenty403.command.autonomous.blue_home.AutoBlueHomeParkingSelectionCycleCommand;
 import org.firstinspires.ftc.twenty403.command.autonomous.blue_home.AutoBlueHomeParkingSelectionPreLoadCommand;
 
-@Autonomous(name = "BlueHomePreLoad")
+@Autonomous(name = "BlueHomeCycle")
 public class BlueHomeCycle extends CommandOpMode {
     public Robot robot;
     public Controls controls;
