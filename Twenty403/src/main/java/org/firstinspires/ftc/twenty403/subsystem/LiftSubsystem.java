@@ -33,15 +33,15 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH;
     public static double DEAD_ZONE = .25 * TICKS_INCH;
 
-    // We can probably bump these up higher, but not until things are generally working
-    public static double MAX_MOTOR_SPEED = 0.6;
-    public static double MIN_MOTOR_SPEED = -0.3; // Gravity
+    // Values work 11/4/22
+    public static double MAX_MOTOR_SPEED = 1;
+    public static double MIN_MOTOR_SPEED = -0.7; // Gravity
 
     public static double LMOVE = 1.00 * TICKS_INCH;
     public static double RMOVE = 1.00 * TICKS_INCH;
 
-    // We may need to adjust this. Make *very* small changes!
-    public static PIDCoefficients PID = new PIDCoefficients(0.008, 0, 0.0005);
+    // We may need to adjust this. Make *very* small changes! Values work 11/4/22
+    public static PIDCoefficients PID = new PIDCoefficients(0.0008, 0.0002, 0.00005);
 
     private EncodedMotor<DcMotorEx> _leftMotor;
     private EncodedMotor<DcMotorEx> _rightMotor;
@@ -62,6 +62,8 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
         _leftMotor = lm;
         _rightMotor = rm;
+
+        PIDCoefficients pid = new PIDCoefficients(PID.kP, PID.kI, PID.kD);
 
         rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
         leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
