@@ -10,7 +10,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import com.technototes.library.structure.CommandOpMode;
 
-@TeleOp(name = "LiftTestTeleOp")
+@TeleOp(group = "Test-Hardware")
+@SuppressWarnings("unused")
 public class LiftMotorTest extends CommandOpMode {
     public Robot robot;
     public ControlDriver controls;
