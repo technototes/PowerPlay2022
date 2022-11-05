@@ -165,10 +165,12 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     //        return Math.abs(delta()) < DEAD_ZONE;
     //    }
 
-    @Log(name = "lEncMotor Pos (Actual)")
+    // TODO: enable as needed
+//    @Log(name = "lEncMotor Pos (Actual)")
     public volatile String lpAndActual = "(unknown)";
 
-    @Log(name = "rEncMotor Pos (Actual)")
+    // TODO: enable as needed
+//    @Log(name = "rEncMotor Pos (Actual)")
     public volatile String rpAndActual = "(unknown)";
 
     @Override
@@ -241,13 +243,13 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
             return 0;
         }
         // Invert the sign on this one to make it look like it's rotating the same way...
-        return -leftMotor.get();
+        return -leftMotor.getEncoder().getPosition(); // .get() will cause NullPointerException
     }
 
     public double getRightPos() {
         if (!isHardware || singleMotor) {
             return 0;
         }
-        return rightMotor.get();
+        return rightMotor.getEncoder().getPosition(); // .get() will cause NullPointerException
     }
 }
