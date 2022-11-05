@@ -28,10 +28,10 @@ public class AutoConstantsBlue {
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
                 START_TO_W_JUNCTION =
-                        b -> b.apply(START.toPose())
-                                .lineToLinearHeading(BETWEEN_START_W_JUNCTION.toPose())
-                                .lineToLinearHeading(W_JUNCTION.toPose())
-                                .build(),
+                b -> b.apply(START.toPose())
+                        .lineToLinearHeading(BETWEEN_START_W_JUNCTION.toPose())
+                        .lineToLinearHeading(W_JUNCTION.toPose())
+                        .build(),
                 W_JUNCTION_TO_STACK =
                         b -> b.apply(W_JUNCTION.toPose())
                                 .lineToLinearHeading(BETWEEN_W_JUNCTION_STACK.toPose())
@@ -56,8 +56,20 @@ public class AutoConstantsBlue {
                         b -> b.apply(W_JUNCTION.toPose())
                                 .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
                                 .lineToLinearHeading(RIGHT.toPose())
-                                .build();
+                                .build(),
 
+        START_TO_LEFT_PARK =
+                b -> b.apply(START.toPose())
+                        .lineToLinearHeading(LEFT.toPose())
+                        .build(),
+                START_TO_MIDDLE_PARK =
+                        b -> b.apply(START.toPose())
+                                .lineToLinearHeading(MIDDLE.toPose())
+                                .build(),
+                START_TO_RIGHT_PARK =
+                        b -> b.apply(START.toPose())
+                                .lineToLinearHeading(RIGHT.toPose())
+                                .build();
 
 
     }
@@ -104,8 +116,20 @@ public class AutoConstantsBlue {
                         b -> b.apply(E_JUNCTION.toPose())
                                 .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
                                 .lineToLinearHeading(RIGHT.toPose())
-                                .build();
+                                .build(),
 
+        START_TO_LEFT_PARK =
+                b -> b.apply(START.toPose())
+                        .lineToLinearHeading(LEFT.toPose())
+                        .build(),
+                START_TO_MIDDLE_PARK =
+                        b -> b.apply(START.toPose())
+                                .lineToLinearHeading(MIDDLE.toPose())
+                                .build(),
 
+        START_TO_RIGHT_PARK =
+                b -> b.apply(START.toPose())
+                        .lineToLinearHeading(RIGHT.toPose())
+                        .build();
     }
 }
