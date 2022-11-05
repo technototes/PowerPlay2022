@@ -17,6 +17,8 @@ public class LiftHeightCommand implements Command {
     @Override
     public void execute() {
         switch (height) {
+            case Intake:
+                lift.intakePos();
             case Ground:
                 lift.groundJunction();
                 break;
