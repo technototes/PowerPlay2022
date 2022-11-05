@@ -11,6 +11,7 @@ import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationConstraint;
 
 import java.util.Arrays;
+import java.util.Stack;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -121,7 +122,8 @@ public class AutoConstantsRed {
 
                 START_TO_W_JUNCTION =
                 () -> function.apply(START)
-                        .splineTo(W_JUNCTION.vec(), W_JUNCTION.getHeading())
+//                        .splineTo(W_JUNCTION.vec(), W_JUNCTION.getHeading())
+                        .splineTo(W_JUNCTION.vec(), Math.toRadians(-50))
                         .build(),
         //START_TO_S_JUNCTION=
         //   () -> function.apply(START).lineToLinearHeading().build()
@@ -146,7 +148,7 @@ public class AutoConstantsRed {
                                 .build(),
                 W_JUNCTION_TO_PARK_MIDDLE =
                         () -> function.apply(W_JUNCTION)
-                                .lineToLinearHeading(PARK_MIDDLE)
+                                .splineTo(PARK_MIDDLE.vec(), Math.toRadians(-90))
                                 .build(),
                 S_JUNCTION_TO_PARK_LEFT =
                         () -> function.apply(E_JUNCTION)
@@ -189,6 +191,4 @@ public class AutoConstantsRed {
                                 .lineToLinearHeading(W_JUNCTION)
                                 .build();
     }
-
 }
-

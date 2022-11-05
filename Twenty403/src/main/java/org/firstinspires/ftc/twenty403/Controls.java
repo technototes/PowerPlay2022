@@ -4,6 +4,8 @@ import org.firstinspires.ftc.twenty403.Robot.RobotConstant;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
+import org.firstinspires.ftc.twenty403.command.drive.SlowCommand;
+import org.firstinspires.ftc.twenty403.command.drive.TurboCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftDownCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftGroundJunctionCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
@@ -24,6 +26,7 @@ public class Controls {
     public CommandButton resetGyroButton, driveStraightenButton, snailSpeedButton, liftUpButton, clawOpenButton;
     public CommandButton liftDownButton, clawCloseButton, liftDownButtonBackup, clawCloseButtonBackup;
     public CommandButton liftGround, liftLow, liftMedium, liftHigh;
+    public CommandButton turboButton;
 
     public Controls(CommandGamepad g, Robot r) {
         this.robot = r;
@@ -46,7 +49,7 @@ public class Controls {
         resetGyroButton = gamepad.rightStickButton;
         driveLeftStick = gamepad.leftStick;
         driveRightStick = gamepad.rightStick;
-        driveStraightenButton = gamepad.triangle;
+        turboButton = gamepad.triangle;
 
         liftUpButton = gamepad.square;
         liftDownButton = gamepad.cross;
@@ -67,6 +70,8 @@ public class Controls {
         CommandScheduler.getInstance()
                 .scheduleJoystick(new DriveCommand(
                         robot.drivebaseSubsystem, driveLeftStick, driveRightStick, driveStraightenButton));
+        turboButton.whenPressed(new TurboCommand(robot.drivebaseSubsystem));
+        turboButton.whenReleased(new SlowCommand(robot.drivebaseSubsystem));
         // TODO: We probably want buttons to reset the Gyro...
         //   resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
         //   snailSpeedButton.whilePressedOnce(new SetSpeedCommand(robot.drivebaseSubsystem));
