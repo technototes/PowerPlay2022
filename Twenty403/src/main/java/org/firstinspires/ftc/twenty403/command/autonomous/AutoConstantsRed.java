@@ -58,6 +58,18 @@ AutoConstantsRed {
                         b -> b.apply(E_JUNCTION.toPose())
                                 .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
                                 .lineToLinearHeading(RIGHT.toPose())
+                                .build(),
+                START_TO_LEFT_PARK =
+                        b -> b.apply(START.toPose())
+                                .lineToLinearHeading(LEFT.toPose())
+                                .build(),
+                START_TO_RIGHT_PARK =
+                        b -> b.apply(START.toPose())
+                                .lineToLinearHeading(RIGHT.toPose())
+                                .build(),
+                START_TO_MIDDLE_PARK =
+                        b -> b.apply(START.toPose())
+                                .lineToLinearHeading(MIDDLE.toPose())
                                 .build();
 
     }
@@ -71,7 +83,9 @@ AutoConstantsRed {
         public static ConfigurablePose W_JUNCTION = new ConfigurablePose(26, -9, 2.2);
         public static ConfigurablePose BETWEEN_START_W_JUNCTION = new ConfigurablePose(36, -21, 2);
         public static ConfigurablePose BETWEEN_W_JUNCTION_STACK = new ConfigurablePose(36, -14, .4);
-        public static ConfigurablePose BETWEEN_STACK_W_JUNCTION = new ConfigurablePose(36, -14, 3);
+        public static ConfigurablePose LOW_JUNCTION_LEFT = new ConfigurablePose(24,-48, toRadians(120));
+        public static ConfigurablePose LOW_JUNCTION_RIGHT = new ConfigurablePose(48,-24, toRadians(60)); public static ConfigurablePose BETWEEN_STACK_W_JUNCTION = new ConfigurablePose(36, -14, 3);
+
 
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
@@ -106,6 +120,19 @@ AutoConstantsRed {
                         b -> b.apply(W_JUNCTION.toPose())
                                 .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
                                 .lineToLinearHeading(RIGHT.toPose())
+                                .build(),
+                START_TO_LEFT_PARK =
+                        b -> b.apply(START.toPose())
+                                .lineToLinearHeading(LEFT.toPose())
+                                .build(),
+                START_TO_RIGHT_PARK =
+                        b -> b.apply(START.toPose())
+                                .lineToLinearHeading(RIGHT.toPose())
+                                .build(),
+                START_TO_MIDDLE_PARK =
+                        b -> b.apply(START.toPose())
+                                .lineToLinearHeading(MIDDLE.toPose())
                                 .build();
+
     }
 }
