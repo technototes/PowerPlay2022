@@ -96,9 +96,15 @@ public class MotorTest extends CommandOpMode {
             telemetry.addData("LeftFront - Motor - Encoder", leftFrontMotor.getEncoder().getPosition());
             telemetry.addData("LeftRear - Motor - Encoder", leftRearMotor.getEncoder().getPosition());
         }
+        else {
+            telemetry.addLine("WARNING: Left Disconnected");
+        }
         if (isRightSideConnected) {
             telemetry.addData("RightRear - Motor - Encoder", rightRearMotor.getEncoder().getPosition());
             telemetry.addData("RightFront - Motor - Encoder", rightFrontMotor.getEncoder().getPosition());
+        }
+        else {
+            telemetry.addLine("WARNING: Right Disconnected");
         }
 
         telemetry.addData("LeftFront - Motor - Pressed", isLeftFrontPressed);

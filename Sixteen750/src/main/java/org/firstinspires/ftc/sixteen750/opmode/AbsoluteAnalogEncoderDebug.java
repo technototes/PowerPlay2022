@@ -41,6 +41,9 @@ public class AbsoluteAnalogEncoderDebug extends CommandOpMode {
             telemetry.addData("LeftRear - Position", leftRearEncoder.getCurrentPosition());
             telemetry.addData("LeftRear - Voltage", leftRearEncoder.getVoltage());
         }
+        else {
+            telemetry.addLine("WARNING: Left Disconnected");
+        }
 
         if (isRightSideConnected) {
             telemetry.addData("RightRear - Position", rightRearEncoder.getCurrentPosition());
@@ -48,6 +51,9 @@ public class AbsoluteAnalogEncoderDebug extends CommandOpMode {
 
             telemetry.addData("RightFront - Position", rightFrontEncoder.getCurrentPosition());
             telemetry.addData("RightFront - Voltage", rightFrontEncoder.getVoltage());
+        }
+        else {
+            telemetry.addLine("WARNING: Right Disconnected");
         }
 
         telemetry.update();
