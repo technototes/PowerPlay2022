@@ -34,8 +34,8 @@ public class Hardware {
     public EncodedMotor<DcMotorEx> frDriveMotor;
     public EncodedMotor<DcMotorEx> rlDriveMotor;
     public EncodedMotor<DcMotorEx> rrDriveMotor;
-    public EncodedMotor<DcMotorEx> LiftLeftMotor;
-    public EncodedMotor<DcMotorEx> LiftRightMotor;
+    public EncodedMotor<DcMotorEx> liftLeftMotor;
+    public EncodedMotor<DcMotorEx> liftRightMotor;
     public IMU imu;
     public Servo claw;
     public Servo flipper;
@@ -54,11 +54,11 @@ public class Hardware {
             claw = new Servo(HardwareConstant.CLAW_SERVO);
             flipper = new Servo(HardwareConstant.FLIPPER_SERVO);
             elbow = new Servo(HardwareConstant.ELBOW_SERVO);
-            clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR);
+//          clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR); // not installed
         }
         if (RobotConstant.LIFT_CONNECTED) {
-            LiftLeftMotor = new EncodedMotor<>(HardwareConstant.LIFT_LEFT_MOTOR);
-            LiftRightMotor = new EncodedMotor<>(HardwareConstant.LIFT_RIGHT_MOTOR);
+            liftLeftMotor = new EncodedMotor<>(HardwareConstant.LIFT_LEFT_MOTOR);
+            liftRightMotor = new EncodedMotor<>(HardwareConstant.LIFT_RIGHT_MOTOR);
         }
     }
 }
