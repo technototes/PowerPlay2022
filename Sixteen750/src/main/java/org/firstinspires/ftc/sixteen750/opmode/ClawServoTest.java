@@ -9,6 +9,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.structure.CommandOpMode;
 
 @Config
@@ -18,6 +19,8 @@ public class ClawServoTest extends CommandOpMode {
     public Robot robot;
     public ControlDriver controls;
     public Hardware hardware;
+
+    Servo targetServo;
 
     // clockwise is order
     public static double upBtnServoPosition = 0.49;
@@ -31,6 +34,7 @@ public class ClawServoTest extends CommandOpMode {
         robot = new Robot(hardware);
         controls = new ControlDriver(driverGamepad, robot);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        targetServo = hardware.flipperServo;
     }
 
     @Override
@@ -47,17 +51,17 @@ public class ClawServoTest extends CommandOpMode {
          * Ideal Range: 0.5-0.6
          * */
         if (gamepad1.dpad_up) {
-            hardware.clawServo.setPosition(upBtnServoPosition); // better not to go below this value
+            targetServo.setPosition(upBtnServoPosition); // better not to go below this value
         } else if (gamepad1.dpad_right) {
-            hardware.clawServo.setPosition(rightBtnServoPosition);
+            targetServo.setPosition(rightBtnServoPosition);
         } else if (gamepad1.dpad_down) {
-            hardware.clawServo.setPosition(downBtnServoPosition);
+            targetServo.setPosition(downBtnServoPosition);
         } else if (gamepad1.dpad_left) {
-            hardware.clawServo.setPosition(leftBtnServoPosition);
+            targetServo.setPosition(leftBtnServoPosition);
         } else if (gamepad1.square) {
-            hardware.clawServo.setPosition(1);
+            targetServo.setPosition(1);
         } else if (gamepad1.circle) {
-            hardware.clawServo.setPosition(0);
+            targetServo.setPosition(0);
         }
 
         telemetry.addData("Claw Servo Position", robot.clawSubsystem.getClawPosition());
