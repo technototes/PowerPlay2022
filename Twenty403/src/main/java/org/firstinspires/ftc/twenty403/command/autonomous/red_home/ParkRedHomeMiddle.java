@@ -8,6 +8,6 @@ import com.technototes.path.command.TrajectorySequenceCommand;
 
 public class ParkRedHomeMiddle extends SequentialCommandGroup {
     public ParkRedHomeMiddle(DrivebaseSubsystem drivebaseSubsystem) {
-         super(new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsRed.Home.START_TO_MIDDLE_PARK));
+        super(new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsRed.Home.START_TO_MIDDLE_PARK));
     }
 }
