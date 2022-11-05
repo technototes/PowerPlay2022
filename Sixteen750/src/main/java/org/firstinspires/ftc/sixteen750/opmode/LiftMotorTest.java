@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.technototes.library.structure.CommandOpMode;
 
 @TeleOp(name = "LiftTestTeleOp")
-public class LiftTestTeleOpMode extends CommandOpMode {
+public class LiftMotorTest extends CommandOpMode {
     public Robot robot;
     public ControlDriver controls;
     public Hardware hardware;

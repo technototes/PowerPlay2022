@@ -14,7 +14,7 @@ import com.technototes.library.structure.CommandOpMode;
 @Config
 @TeleOp(group = "Test-Hardware")
 @SuppressWarnings("unused")
-public class JustClawTest extends CommandOpMode {
+public class ClawServoTest extends CommandOpMode {
     public Robot robot;
     public ControlDriver controls;
     public Hardware hardware;

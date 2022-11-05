@@ -15,7 +15,7 @@ import com.technototes.library.structure.CommandOpMode;
 @Config
 @TeleOp(group = "Test-Hardware")
 @SuppressWarnings("unused")
-public class MotorTest extends CommandOpMode {
+public class DriveMotorTest extends CommandOpMode {
     ElapsedTime t;
 
     EncodedMotor<DcMotorEx> leftFrontMotor, leftRearMotor, rightRearMotor, rightFrontMotor;

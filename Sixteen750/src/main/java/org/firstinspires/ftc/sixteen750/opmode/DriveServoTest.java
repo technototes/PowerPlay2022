@@ -14,7 +14,7 @@ import org.firstinspires.ftc.sixteen750.swerve_util.AbsoluteAnalogEncoder;
 @Config
 @TeleOp(group = "Test-Hardware")
 @SuppressWarnings("unused")
-public class ServoTest extends CommandOpMode {
+public class DriveServoTest extends CommandOpMode {
     ElapsedTime t;
 
     CRServo leftFrontServo, leftRearServo, rightRearServo, rightFrontServo;
