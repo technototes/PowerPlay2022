@@ -8,6 +8,6 @@ import com.technototes.path.command.TrajectorySequenceCommand;
 
 public class AutoRedAwayLeft extends SequentialCommandGroup {
     public AutoRedAwayLeft(DrivebaseSubsystem drivebaseSubsystem) {
-        super(new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsRed.Away.START_TO_LEFT_PARK));
+        //super(new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsRed.Away.START_TO_LEFT_PARK));
     }
 }

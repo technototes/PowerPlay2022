@@ -11,28 +11,28 @@ public class AutoTestDrivebaseCommand extends SequentialCommandGroup {
 
     public AutoTestDrivebaseCommand(MecanumDrivebaseSubsystem drive) {
         super(
-                new TrajectorySequenceCommand(drive, AutoConstantsBlue.Away.START_TO_E_JUNCTION),
-                new TrajectorySequenceCommand(drive, AutoConstantsBlue.Away.E_JUNCTION_TO_STACK),
-                new TrajectorySequenceCommand(drive, AutoConstantsBlue.Away.STACK_TO_E_JUNCTION),
-                new TrajectorySequenceCommand(drive, AutoConstantsBlue.Away.E_JUNCTION_TO_STACK),
-                new TrajectorySequenceCommand(drive, AutoConstantsBlue.Away.STACK_TO_E_JUNCTION),
-                new TrajectorySequenceCommand(drive, AutoConstantsBlue.Away.E_JUNCTION_TO_STACK),
-                new TrajectorySequenceCommand(drive, AutoConstantsBlue.Away.STACK_TO_E_JUNCTION),
-                new TrajectorySequenceCommand(drive, AutoConstantsBlue.Away.E_JUNCTION_TO_STACK),
-                new TrajectorySequenceCommand(drive, AutoConstantsBlue.Away.STACK_TO_E_JUNCTION),
-                new TrajectorySequenceCommand(drive, AutoConstantsBlue.Away.E_JUNCTION_TO_STACK),
-                new TrajectorySequenceCommand(drive, AutoConstantsBlue.Away.STACK_TO_E_JUNCTION),
-                new TrajectorySequenceCommand(drive, AutoConstantsBlue.Away.E_JUNCTION_TO_LEFT_PARK),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.START_TO_W_JUNCTION),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.W_JUNCTION_TO_STACK),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.STACK_TO_W_JUNCTION),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.W_JUNCTION_TO_STACK),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.STACK_TO_W_JUNCTION),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.W_JUNCTION_TO_STACK),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.STACK_TO_W_JUNCTION),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.W_JUNCTION_TO_STACK),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.STACK_TO_W_JUNCTION),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.W_JUNCTION_TO_STACK),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.STACK_TO_W_JUNCTION),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Away.W_JUNCTION_TO_LEFT_PARK),
                 CommandScheduler.getInstance()::terminateOpMode
                 //                .alongWith(new ConeReadyToScoreCommand(cone)),
                 // new ClawOpenCommand(claw),
-                //                new AutoBlueHomeConeStackCommand(drive, lift, claw),
-                //                new AutoBlueHomeConeStackCommand(drive, lift, claw),
-                //                new AutoBlueHomeConeStackCommand(drive, lift, claw),
-                //                new AutoBlueHomeConeStackCommand(drive, lift, claw)
+                //                new AutoBlueAwayConeStackCommand(drive, lift, claw),
+                //                new AutoBlueAwayConeStackCommand(drive, lift, claw),
+                //                new AutoBlueAwayConeStackCommand(drive, lift, claw),
+                //                new AutoBlueAwayConeStackCommand(drive, lift, claw)
                 /*new TrajectorySequenceCommand(
                         drive,
-                        Robot.Trajectories.BLUE_PARK_LOCATION_HOME)/*
+                        Robot.Trajectories.BLUE_PARK_LOCATION_Away)/*
                 /*Placeholder for what we're doing for parking*/
                 );
     }

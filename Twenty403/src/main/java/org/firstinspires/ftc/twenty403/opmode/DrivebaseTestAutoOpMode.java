@@ -5,6 +5,7 @@ import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.VisionCommand;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsBlue;
+import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsRed;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoTestDrivebaseCommand;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 
@@ -23,8 +24,8 @@ public class DrivebaseTestAutoOpMode extends CommandOpMode {
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
-        robot = new Robot(hardware, Alliance.BLUE, StartingPosition.AWAY);
-        robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Away.START.toPose());
+        robot = new Robot(hardware, Alliance.RED, StartingPosition.AWAY);
+        robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsRed.Away.START.toPose());
         CommandScheduler.getInstance()
                 .scheduleForState(
                         new AutoTestDrivebaseCommand(robot.drivebaseSubsystem), CommandOpMode.OpModeState.RUN);

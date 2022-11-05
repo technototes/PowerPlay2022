@@ -10,7 +10,7 @@ import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 public class AutoBlueHomeGroup extends SequentialCommandGroup {
     public AutoBlueHomeGroup(MecanumDrivebaseSubsystem drive /*, LiftSubsystem lift, ClawSubsystem claw*/) {
         super(
-                new TrajectorySequenceCommand(drive, AutoConstantsBlue.Home.START_TO_E_JUNCTION),
+                //new TrajectorySequenceCommand(drive, AutoConstantsBlue.Home.START_TO_E_JUNCTION),
                 CommandScheduler.getInstance()::terminateOpMode
                 //                .alongWith(new ConeReadyToScoreCommand(cone)),
                 // new ClawOpenCommand(claw),

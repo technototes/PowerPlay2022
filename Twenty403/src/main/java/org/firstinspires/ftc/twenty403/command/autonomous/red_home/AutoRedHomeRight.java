@@ -19,6 +19,6 @@ import com.technototes.path.command.TrajectorySequenceCommand;
 
 public class AutoRedHomeRight extends SequentialCommandGroup {
     public AutoRedHomeRight(DrivebaseSubsystem drivebaseSubsystem) {
-        super(new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsRed.Home.START_TO_RIGHT_PARK));
+        //super(new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsRed.Home.START_TO_RIGHT_PARK));
     }
 }
