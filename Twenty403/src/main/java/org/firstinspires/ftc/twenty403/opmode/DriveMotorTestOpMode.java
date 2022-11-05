@@ -8,11 +8,12 @@ import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.technototes.library.hardware2.HardwareBuilder;
 import com.technototes.library.util.Alliance;
 
-@Autonomous(name = "Encoder/IMU Testing")
-public class SimpleAutoOpMode extends LinearOpMode {
+@Autonomous(name = "Drive Motor Test")
+public class DriveMotorTestOpMode extends LinearOpMode {
     public Robot robot;
     public Hardware hardware;
 
@@ -26,8 +27,40 @@ public class SimpleAutoOpMode extends LinearOpMode {
 
         waitForStart();
 
+        ElapsedTime time = new ElapsedTime();
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+            switch ((int)Math.floor(time.seconds() / 4) % 4) {
+                case 0:
+                    hardware.flDriveMotor.setSpeed(0.2);
+                    hardware.frDriveMotor.setSpeed(0.0);
+                    hardware.rlDriveMotor.setSpeed(0.0);
+                    hardware.rrDriveMotor.setSpeed(0.0);
+                    telemetry.addData("MOTOR", "FL");
+                    break;
+                case 1:
+                    hardware.flDriveMotor.setSpeed(0.0);
+                    hardware.frDriveMotor.setSpeed(0.2);
+                    hardware.rlDriveMotor.setSpeed(0.0);
+                    hardware.rrDriveMotor.setSpeed(0.0);
+                    telemetry.addData("MOTOR", "FR");
+                    break;
+                case 2:
+                    hardware.flDriveMotor.setSpeed(0.0);
+                    hardware.frDriveMotor.setSpeed(0.0);
+                    hardware.rlDriveMotor.setSpeed(0.2);
+                    hardware.rrDriveMotor.setSpeed(0.0);
+                    telemetry.addData("MOTOR", "RL");
+                    break;
+                case 3:
+                    hardware.flDriveMotor.setSpeed(0.0);
+                    hardware.frDriveMotor.setSpeed(0.0);
+                    hardware.rlDriveMotor.setSpeed(0.0);
+                    hardware.rrDriveMotor.setSpeed(0.2);
+                    telemetry.addData("MOTOR", "RR");
+                    break;
+                default:
+            }
             telemetry.addData("FL Encoder", hardware.flDriveMotor.getSensorValue());
             telemetry.addData("FR Encoder", hardware.frDriveMotor.getSensorValue());
             telemetry.addData("RL Encoder", hardware.rlDriveMotor.getSensorValue());
