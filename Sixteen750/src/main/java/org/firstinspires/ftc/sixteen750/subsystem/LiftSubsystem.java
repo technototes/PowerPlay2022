@@ -25,7 +25,9 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double LHIGH_JUNCTION = 36 * TICKS_INCH;
     public static double RHIGH_JUNCTION = 36 * TICKS_INCH;
     public static double MAX_HEIGHT = 38 * TICKS_INCH;
+    public static double ABSOLUTE_MAX_HEIGHT;
     public static double MIN_HEIGHT = 0;
+    public static double ABSOLUTE_MIN_HEIGHT;
     public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH;
     public static double DEAD_ZONE = .25 * TICKS_INCH;
     public static double MAX_MOTOR_SPEED = 0.8;
@@ -42,18 +44,19 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     private EncodedMotor<DcMotorEx> rightMotor;
     private PIDFController rightPidController;
 
-    public LiftSubsystem(EncodedMotor<DcMotorEx> lm, EncodedMotor<DcMotorEx> rm) {
-        leftMotor = lm;
-        leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
+    public LiftSubsystem(EncodedMotor<DcMotorEx> leftM, EncodedMotor<DcMotorEx> rightM) {
+        this.leftMotor = leftM;
+        this.leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
 
-        rightMotor = rm;
-        rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
-        singleMotor = false;
-        isHardware = true;
+        this.rightMotor = rightM;
+        this.rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
+        this.singleMotor = false;
+        this.isHardware = true;
     }
 
-    public LiftSubsystem(EncodedMotor<DcMotorEx> oneMotor) {
-        leftMotor = oneMotor;
+    // TODO: figure out which motor to use in single motor mode
+    public LiftSubsystem(EncodedMotor<DcMotorEx> leftM) {
+        leftMotor = leftM;
         leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
         singleMotor = false;
         rightMotor = null;
@@ -69,13 +72,13 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         rightPidController = null;
     }
 
-    private void setPosition(double lpos, double rpos) {
+    private void setPosition(double lPos, double rPos) {
         if (!isHardware) {
             return;
         }
-        leftPidController.setTargetPosition(Range.clip(lpos, MIN_HEIGHT, MAX_HEIGHT));
+        leftPidController.setTargetPosition(Range.clip(lPos, MIN_HEIGHT, MAX_HEIGHT));
         if (singleMotor == false) {
-            rightPidController.setTargetPosition(Range.clip(rpos, MIN_HEIGHT, MAX_HEIGHT));
+            rightPidController.setTargetPosition(Range.clip(rPos, MIN_HEIGHT, MAX_HEIGHT));
         }
     }
 
@@ -121,14 +124,14 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
     }
 
-    private void setLiftPosition(double lval, double rval) {
+    private void setLiftPosition(double lVal, double rVal) {
         if (!isHardware) {
             return;
         }
-        setPosition(lval, rval);
-        lpAndActual = String.format("%d (%d)", (int) lval, leftMotor.get().intValue());
+        setPosition(lVal, rVal);
+        lpAndActual = String.format("%d (%d)", (int) lVal, leftMotor.get().intValue());
         if (singleMotor == false) {
-            rpAndActual = String.format("%d (%d)", (int) rval, rightMotor.get().intValue());
+            rpAndActual = String.format("%d (%d)", (int) rVal, rightMotor.get().intValue());
         }
     }
 
@@ -139,13 +142,13 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         if (!isHardware) {
             return;
         }
-        double ltargetSpeed = leftPidController.update(leftMotor.get());
-        double lclippedSpeed = Range.clip(ltargetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
-        leftMotor.setSpeed(lclippedSpeed);
+        double lTargetSpeed = leftPidController.update(leftMotor.get());
+        double lClippedSpeed = Range.clip(lTargetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
+        leftMotor.setSpeed(lClippedSpeed);
         if (!singleMotor) {
-            double rtargetSpeed = rightPidController.update(rightMotor.get());
-            double rclippedSpeed = Range.clip(rtargetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
-            rightMotor.setSpeed(rclippedSpeed);
+            double rTargetSpeed = rightPidController.update(rightMotor.get());
+            double rClippedSpeed = Range.clip(rTargetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
+            rightMotor.setSpeed(rClippedSpeed);
             // For logging purposes, I'm also doing this, to ensure that both values are updated
         }
         double rightTarget = 0;
@@ -243,12 +246,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
         if (leftMotor.getEncoder() != null) {
             // Invert the sign on this one to make it look like it's rotating the same way...
-            return -leftMotor.getEncoder().getPosition(); // .get() will cause NullPointerException
+            return -leftMotor.getEncoder().getPosition(); // will cause NullPointerException when running in single motor mode
+        //  return -leftMotor.get();
         } else {
             return 16750;
         }
-
-        //        return -leftMotor.get();
     }
 
     public double getRightPos() {
@@ -258,10 +260,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         if (rightMotor.getEncoder() != null) {
             return rightMotor
                     .getEncoder()
-                    .getPosition(); // will cause NullPointerException when the encoder cable is bad
+                    .getPosition(); // will cause NullPointerException when running in single motor mode
+        //  return rightMotor.get();
         } else {
             return 16750;
         }
-        //        return rightMotor.get();
+
     }
 }

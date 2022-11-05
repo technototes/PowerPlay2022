@@ -4,16 +4,16 @@ import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 
 import com.technototes.library.command.Command;
 
-public class LiftMoveDownCommand implements Command {
+public class LiftIncrementalMoveUpCommand implements Command {
     private LiftSubsystem liftSubsystem;
 
-    public LiftMoveDownCommand(LiftSubsystem ls) {
+    public LiftIncrementalMoveUpCommand(LiftSubsystem ls) {
         liftSubsystem = ls;
         addRequirements(ls);
     }
 
     @Override
     public void execute() {
-        liftSubsystem.moveDown();
+        liftSubsystem.moveUp();
     }
 }
