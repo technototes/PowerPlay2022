@@ -77,8 +77,8 @@ public class AutoConstantsBlue {
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
                 START_TO_E_JUNCTION =
                 b -> b.apply(START.toPose())
-                        .lineToLinearHeading(BETWEEN_START_E_JUNCTION.toPose())
-                        .lineToLinearHeading(E_JUNCTION.toPose())
+                        .splineTo(BETWEEN_START_E_JUNCTION.toPose().vec(), BETWEEN_START_E_JUNCTION.toPose().getHeading())
+                        .splineTo(E_JUNCTION.toPose().vec(), E_JUNCTION.toPose().getHeading())
                         .build(),
                 E_JUNCTION_TO_STACK =
                         b -> b.apply(E_JUNCTION.toPose())
