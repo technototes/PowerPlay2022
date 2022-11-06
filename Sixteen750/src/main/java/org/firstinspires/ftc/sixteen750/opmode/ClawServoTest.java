@@ -25,8 +25,8 @@ public class ClawServoTest extends CommandOpMode {
     // clockwise is order
     public static double upBtnServoPosition = 0.49;
     public static double rightBtnServoPosition = 0.5;
-    public static double downBtnServoPosition = 0.51;
-    public static double leftBtnServoPosition = 0.6;
+    public static double downBtnServoPosition = 0.15;
+    public static double leftBtnServoPosition = 0.14;
 
     @Override
     public void uponInit() {
@@ -62,6 +62,10 @@ public class ClawServoTest extends CommandOpMode {
             targetServo.setPosition(1);
         } else if (gamepad1.circle) {
             targetServo.setPosition(0);
+        } else if (gamepad1.right_bumper) {
+            hardware.clawServo.setPosition(0.5);
+        } else if (gamepad1.left_bumper) {
+            hardware.clawServo.setPosition(0.6);
         }
 
         telemetry.addData("Claw Servo Position", robot.clawSubsystem.getClawPosition());

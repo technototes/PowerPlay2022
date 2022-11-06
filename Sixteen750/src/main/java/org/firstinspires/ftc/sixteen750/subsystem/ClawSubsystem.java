@@ -20,7 +20,7 @@ public class ClawSubsystem implements Subsystem {
     public static double ELBOW_MID = 3;
     public static double FLIPPER_HIGH_JUNCTION = 35;
     public static double ELBOW_HIGH = 4;
-    public static double FLIPPER_STATIONARY = 0;
+    public static double FLIPPER_STATIONARY = 0.17; // Verified
 
     private Servo clawServo;
     private Servo flipperServo;

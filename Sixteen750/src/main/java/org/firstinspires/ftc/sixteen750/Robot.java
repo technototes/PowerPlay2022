@@ -41,9 +41,8 @@ public class Robot implements Loggable {
         }
 
         if (RobotConstant.LIFT_CONNECTED) {
-            // TODO: enable both motor as needed
-//          liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, hardware.liftRightMotor);
-            liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, null);
+          liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, hardware.liftRightMotor);
+//            liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, null);
         } else {
             liftSubsystem = new LiftSubsystem(null, null);
         }
