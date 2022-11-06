@@ -56,16 +56,22 @@ public class RegularTankDrive extends CommandOpMode {
         } else {
             rightStickValue = 0;
         }
-        drive.setMotorPowers(Range.clip(leftStickValue, -1, 1), -Range.clip(rightStickValue, -1, 1));
+        double adjustedLeftStickValue = Range.clip(leftStickValue * -1, -1, 1);
+        double adjustedRightStickValue = Range.clip(rightStickValue * 1, -1, 1);
+        drive.setMotorPowers(adjustedLeftStickValue, adjustedLeftStickValue);
         drive.update();
 
-        telemetry.addData("Left Stick", leftStickValue);
-        telemetry.addData("Right Stick", rightStickValue);
+        telemetry.addData("Left Stick", adjustedLeftStickValue);
+        telemetry.addData("Right Stick", adjustedRightStickValue);
 
         telemetry.addData("LeftFront Motor Power", drive.getLeftFrontMotorVelocity());
         telemetry.addData("LeftRear Motor Power", drive.getLeftRearMotorVelocity());
         telemetry.addData("RightFront Motor Power", drive.getRightFrontMotorVelocity());
         telemetry.addData("RightRear Motor Power", drive.getRightRearMotorVelocity());
+
+        telemetry.addData("Claw Servo Position", robot.clawSubsystem.getClawPosition());
+        telemetry.addData("Flipper Servo Position", robot.clawSubsystem.getFlipperPosition());
+        telemetry.addData("Elbow Servo Position", robot.clawSubsystem.getElbowPosition());
         telemetry.update();
     }
 }
