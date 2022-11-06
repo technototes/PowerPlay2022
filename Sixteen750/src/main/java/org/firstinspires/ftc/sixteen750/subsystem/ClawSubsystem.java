@@ -94,6 +94,10 @@ public class ClawSubsystem implements Subsystem {
         elbowServo.setPosition(ELBOW_HIGH);
     }
 
+    public void flipperNormal(){
+        flipperServo.setPosition(FLIPPER_STATIONARY);
+    }
+
     public boolean isConeClose() {
         if (sensor.getDistance(DistanceUnit.CM) <= 4.0) {
             return true;

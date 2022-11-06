@@ -11,7 +11,7 @@ import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
 
-public class ControlDriver {
+public class DriverControls {
     public Robot robot;
     public CommandGamepad gamepad;
 
@@ -20,7 +20,7 @@ public class ControlDriver {
     public CommandAxis clawOpenButton, clawCloseButton;
     public CommandButton liftUpButton, liftDownButton;
 
-    public ControlDriver(CommandGamepad g, Robot r) {
+    public DriverControls(CommandGamepad g, Robot r) {
         this.robot = r;
         gamepad = g;
 
@@ -67,7 +67,7 @@ public class ControlDriver {
 
     public void bindLiftControls() {
         // TODO: Name & Bind lift controls
-         liftUpButton.whenPressed(new LiftIncrementalMoveUpCommand(robot.liftSubsystem));
-         liftDownButton.whenPressed(new LiftIncrementalMoveDownCommand(robot.liftSubsystem));
+        liftUpButton.whenPressed(new LiftIncrementalMoveUpCommand(robot.liftSubsystem));
+        liftDownButton.whenPressed(new LiftIncrementalMoveDownCommand(robot.liftSubsystem));
     }
 }

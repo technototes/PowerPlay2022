@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.sixteen750.opmode;
 
-import org.firstinspires.ftc.sixteen750.ControlDriver;
+import org.firstinspires.ftc.sixteen750.DriverControls;
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
 
@@ -17,7 +17,7 @@ import com.technototes.library.structure.CommandOpMode;
 @SuppressWarnings("unused")
 public class ClawServoTest extends CommandOpMode {
     public Robot robot;
-    public ControlDriver controls;
+    public DriverControls controls;
     public Hardware hardware;
 
     Servo targetServo;
@@ -32,7 +32,7 @@ public class ClawServoTest extends CommandOpMode {
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware);
-        controls = new ControlDriver(driverGamepad, robot);
+        controls = new DriverControls(driverGamepad, robot);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         targetServo = hardware.elbowServo;
     }
