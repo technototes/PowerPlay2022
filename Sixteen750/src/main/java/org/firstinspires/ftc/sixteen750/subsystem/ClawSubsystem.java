@@ -153,18 +153,18 @@ public class ClawSubsystem implements Subsystem {
     }
 
     public void flipperServoIncrementalDown(){
-        flipperServo.setPosition(Range.clip(flipperServo.getPosition() - 0.01, 0, 1));
+        flipperServo.setPosition(Range.clip(flipperServo.getPosition() - 0.02, 0, 1));
     }
 
     public void flipperServoIncrementalUp(){
-        flipperServo.setPosition(Range.clip(flipperServo.getPosition() + 0.01, 0, 1));
+        flipperServo.setPosition(Range.clip(flipperServo.getPosition() + 0.02, 0, 1));
     }
 
     public void elbowServoIncrementalDown(){
-        elbowServo.setPosition(Range.clip(elbowServo.getPosition() - 0.01, 0, 1));
+        elbowServo.setPosition(Range.clip(elbowServo.getPosition() - 0.03, 0, 1));
     }
 
     public void elbowServoIncrementalUp(){
-        elbowServo.setPosition(Range.clip(elbowServo.getPosition() + 0.01, 0, 1));
+        elbowServo.setPosition(Range.clip(elbowServo.getPosition() + 0.03, 0, 1));
     }
 }
