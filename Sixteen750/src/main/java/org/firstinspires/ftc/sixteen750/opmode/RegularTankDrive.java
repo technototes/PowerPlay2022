@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.sixteen750.opmode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 import com.technototes.library.structure.CommandOpMode;
@@ -12,6 +14,8 @@ import org.firstinspires.ftc.sixteen750.OperatorControls;
 import org.firstinspires.ftc.sixteen750.Robot;
 import org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem;
 
+@Config
+@TeleOp(group = "Tank")
 public class RegularTankDrive extends CommandOpMode {
     TankDrivebaseSubsystem drive;
     Robot robot;
