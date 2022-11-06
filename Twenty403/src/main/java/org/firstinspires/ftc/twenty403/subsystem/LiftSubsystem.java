@@ -37,7 +37,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     // Values work 11/4/22
     public static double MAX_MOTOR_SPEED = 1;
-    public static double MIN_MOTOR_SPEED = -0.5; // Gravity
+    public static double MIN_MOTOR_SPEED = -0.75; // Gravity
 
     public static double LMOVE = 1.00 * TICKS_INCH;
     public static double RMOVE = 1.00 * TICKS_INCH;
