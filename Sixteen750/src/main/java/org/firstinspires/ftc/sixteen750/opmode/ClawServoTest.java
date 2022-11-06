@@ -2,9 +2,9 @@ package org.firstinspires.ftc.sixteen750.opmode;
 
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.CLAW_CLOSE;
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.CLAW_OPEN;
-import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.ELBOW_CONING;
+import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.ELBOW_INTAKE;
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.ELBOW_UPWARD;
-import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.FLIPPER_NORMAL;
+import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.FLIPPER_UPPER_NORMAL;
 
 import org.firstinspires.ftc.sixteen750.DriverControls;
 import org.firstinspires.ftc.sixteen750.Hardware;
@@ -64,7 +64,7 @@ public class ClawServoTest extends CommandOpMode {
         } else if (gamepad1.triangle) {
             hardware.elbowServo.setPosition(ELBOW_UPWARD);
         } else if (gamepad1.x) {
-            hardware.elbowServo.setPosition(ELBOW_CONING);
+            hardware.elbowServo.setPosition(ELBOW_INTAKE);
         }
 
         if (gamepad2.dpad_up){
@@ -86,7 +86,7 @@ public class ClawServoTest extends CommandOpMode {
             hardware.flipperServo.setPosition(0);
         }
         else if (gamepad2.triangle){
-            hardware.flipperServo.setPosition(FLIPPER_NORMAL);
+            hardware.flipperServo.setPosition(FLIPPER_UPPER_NORMAL);
         }
         else if (gamepad2.x){
 

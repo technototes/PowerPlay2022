@@ -16,4 +16,10 @@ public class ClawCloseCommand implements Command {
     public void execute() {
         subsystem.close();
     }
+
+    @Override
+    public boolean isFinished() {
+        // TODO: Adjust this duration
+        return getRuntime().seconds() > 0.5;
+    }
 }

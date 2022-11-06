@@ -20,12 +20,16 @@ public class ClawSubsystem implements Subsystem {
     public static double ELBOW_MID = 3;
     public static double FLIPPER_HIGH_JUNCTION = 35;
     public static double ELBOW_HIGH = 4;
-    public static double FLIPPER_NORMAL = 0.1;//
+
+    public static double FLIPPER_UPPER_NORMAL = 0.4; // Verified
+    public static double FLIPPER_LOWER_NORMAL = 0.5; // Verified
+    public static double FLIPPER_SCORE_MID_JUNCTION = 0.18; // Verified
 
     public static double ELBOW_MIN_RANGE = 0.3;
     public static double ELBOW_MAX_RANGE = 0.7;
     public static double ELBOW_UPWARD = 0.9; // Verified
-    public static double ELBOW_CONING = 0.2;
+    public static double ELBOW_INTAKE = 0.18; // Verified
+    public static double ELBOW_SCORE_MID = 0.9; // Verified
 
 
     private Servo clawServo;
@@ -101,7 +105,7 @@ public class ClawSubsystem implements Subsystem {
     }
 
     public void flipperNormal(){
-        flipperServo.setPosition(FLIPPER_NORMAL);
+        flipperServo.setPosition(FLIPPER_UPPER_NORMAL);
     }
 
     public void elbowUpward(){
@@ -129,5 +133,25 @@ public class ClawSubsystem implements Subsystem {
 
     public double getElbowPosition() {
         return elbowServo.getPosition();
+    }
+
+    public void elbowIntake(){
+        elbowServo.setPosition(ELBOW_INTAKE);
+    }
+
+    public void flipperPreIntake(){
+        flipperServo.setPosition(FLIPPER_UPPER_NORMAL);
+    }
+
+    public void flipperIntake(){
+        flipperServo.setPosition(FLIPPER_LOWER_NORMAL);
+    }
+
+    public void elbowScoreMidJunction(){
+        elbowServo.setPosition(ELBOW_SCORE_MID);
+    }
+
+    public void flipperScoreMidJunction(){
+        flipperServo.setPosition(FLIPPER_SCORE_MID_JUNCTION);
     }
 }
