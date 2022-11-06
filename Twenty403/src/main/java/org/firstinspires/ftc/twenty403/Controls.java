@@ -4,6 +4,7 @@ import org.firstinspires.ftc.twenty403.Robot.RobotConstant;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
+import org.firstinspires.ftc.twenty403.command.drive.ResetGyroCommand;
 import org.firstinspires.ftc.twenty403.command.drive.SlowCommand;
 import org.firstinspires.ftc.twenty403.command.drive.TurboCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftDownCommand;
@@ -76,7 +77,7 @@ public class Controls {
         turboButton.whenPressed(new TurboCommand(robot.drivebaseSubsystem));
         turboButton.whenReleased(new SlowCommand(robot.drivebaseSubsystem));
         // TODO: We probably want buttons to reset the Gyro...
-        //   resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
+        resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
         //   snailSpeedButton.whilePressedOnce(new SetSpeedCommand(robot.drivebaseSubsystem));
     }
 
