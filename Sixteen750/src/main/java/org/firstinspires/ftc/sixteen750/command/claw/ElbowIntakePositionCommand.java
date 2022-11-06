@@ -17,9 +17,9 @@ public class ElbowIntakePositionCommand implements Command {
         clawSubsystem.elbowIntake();
     }
 
-    @Override
-    public boolean isFinished() {
-        // TODO: Adjust this duration
-        return getRuntime().seconds() > 1.0;
-    }
+//    @Override
+//    public boolean isFinished() {
+//        // TODO: Adjust this duration
+//        return getRuntime().seconds() > 0.5;
+//    }
 }

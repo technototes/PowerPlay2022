@@ -17,9 +17,9 @@ public class ElbowScoreMidJunctionCommand implements Command {
         this.clawSubsystem.elbowScoreMidJunction();
     }
 
-    @Override
-    public boolean isFinished() {
-        // TODO: Adjust this duration
-        return getRuntime().seconds() > 1.0;
-    }
+//    @Override
+//    public boolean isFinished() {
+//        // TODO: Adjust this duration
+//        return getRuntime().seconds() > 0.5;
+//    }
 }

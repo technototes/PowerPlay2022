@@ -17,9 +17,9 @@ public class FlipperIntakePositionCommand implements Command {
         this.clawSubsystem.flipperIntake();
     }
 
-    @Override
-    public boolean isFinished() {
-        // TODO: Adjust this duration
-        return getRuntime().seconds() > 1.0;
-    }
+//    @Override
+//    public boolean isFinished() {
+//        // TODO: Adjust this duration
+//        return getRuntime().seconds() > 1.0;
+//    }
 }
