@@ -59,7 +59,7 @@ public class RegularTankDrive extends CommandOpMode {
         }
         double adjustedLeftStickValue = Range.clip(leftStickValue * -1, -1, 1);
         double adjustedRightStickValue = Range.clip(rightStickValue * 1, -1, 1);
-        drive.setMotorPowers(adjustedLeftStickValue, adjustedLeftStickValue);
+        drive.setMotorPowers(adjustedLeftStickValue, adjustedRightStickValue);
         drive.update();
 
         telemetry.addData("Left Stick Value", leftStickValue);
