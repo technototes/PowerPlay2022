@@ -29,7 +29,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double RMEDIUM_JUNCTION = 4770;
     public static double LHIGH_JUNCTION = 6560; // 6460
     public static double RHIGH_JUNCTION = 6560;
-    public static double MAX_HEIGHT = 6600;
+    public static double MAX_HEIGHT = 7000;
     public static double MIN_HEIGHT = 0;
     // TODO: THESE VALUES ARE PROBABLY WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
     public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH;
