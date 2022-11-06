@@ -2,13 +2,14 @@ package org.firstinspires.ftc.sixteen750.opmode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.technototes.library.structure.CommandOpMode;
 
 import org.firstinspires.ftc.sixteen750.swerve_util.AbsoluteAnalogEncoder;
 
-
+@Disabled
 @TeleOp(group = "Test-Hardware")
 @SuppressWarnings("unused")
 public class AbsoluteAnalogEncoderDebug extends CommandOpMode {

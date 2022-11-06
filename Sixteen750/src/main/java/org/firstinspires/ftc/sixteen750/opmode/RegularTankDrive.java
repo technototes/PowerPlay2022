@@ -16,6 +16,7 @@ import org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem;
 
 @Config
 @TeleOp(group = "Tank")
+@SuppressWarnings("unused")
 public class RegularTankDrive extends CommandOpMode {
     TankDrivebaseSubsystem drive;
     Robot robot;
@@ -23,7 +24,7 @@ public class RegularTankDrive extends CommandOpMode {
     DriverControls driverControls;
     OperatorControls operatorControls;
 
-    public static final double STICK_DEAD_ZONE = 0.1;
+    public static final double STICK_DEAD_ZONE = 0.05;
 
     @Override
     public void uponInit() {
@@ -61,8 +62,10 @@ public class RegularTankDrive extends CommandOpMode {
         drive.setMotorPowers(adjustedLeftStickValue, adjustedLeftStickValue);
         drive.update();
 
-        telemetry.addData("Left Stick", adjustedLeftStickValue);
+        telemetry.addData("Left Stick Value", leftStickValue);
+        telemetry.addData("Left Stick Adjusted Value", adjustedLeftStickValue);
         telemetry.addData("Right Stick", adjustedRightStickValue);
+        telemetry.addData("Right Stick Adjusted Value", adjustedRightStickValue);
 
         telemetry.addData("LeftFront Motor Power", drive.getLeftFrontMotorVelocity());
         telemetry.addData("LeftRear Motor Power", drive.getLeftRearMotorVelocity());

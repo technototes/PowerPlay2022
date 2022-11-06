@@ -4,6 +4,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
+import com.qualcomm.robotcore.util.Range;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.subsystem.Subsystem;
 
@@ -149,5 +150,21 @@ public class ClawSubsystem implements Subsystem {
 
     public void flipperScoreMidJunction(){
         flipperServo.setPosition(FLIPPER_SCORE_MID_JUNCTION);
+    }
+
+    public void flipperServoIncrementalDown(){
+        flipperServo.setPosition(Range.clip(flipperServo.getPosition() - 0.01, 0, 1));
+    }
+
+    public void flipperServoIncrementalUp(){
+        flipperServo.setPosition(Range.clip(flipperServo.getPosition() + 0.01, 0, 1));
+    }
+
+    public void elbowServoIncrementalDown(){
+        elbowServo.setPosition(Range.clip(elbowServo.getPosition() - 0.01, 0, 1));
+    }
+
+    public void elbowServoIncrementalUp(){
+        elbowServo.setPosition(Range.clip(elbowServo.getPosition() + 0.01, 0, 1));
     }
 }

@@ -11,6 +11,7 @@ import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawReadyToScoreCommandGroup;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawScoreCommandGroup;
 import org.firstinspires.ftc.sixteen750.command.claw.FlipperNormalCommand;
+import org.firstinspires.ftc.sixteen750.command.claw.FlipperServoIncrementalDownCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftIncrementalMoveDownCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftIncrementalMoveUpCommand;
 
@@ -22,6 +23,7 @@ public class OperatorControls {
     public CommandAxis clawOpenButton, clawCloseButton;
     public CommandButton normalizeFlipperButton, readyToScoreButton, scoreMidJunctionButton;
     public CommandButton rumbleTestButton;
+    public CommandButton flipperUpButton, flipperDownButton, elbowUpButton, elbowDownButton;
 
     public OperatorControls(CommandGamepad g, Robot r) {
         this.robot = r;
@@ -51,6 +53,15 @@ public class OperatorControls {
         normalizeFlipperButton.whenPressed(new FlipperNormalCommand(robot.clawSubsystem));
         readyToScoreButton.whenPressed(new ClawReadyToScoreCommandGroup(robot.clawSubsystem));
         scoreMidJunctionButton.whenPressed(new ClawScoreCommandGroup(robot.clawSubsystem));
+
+        this.flipperDownButton = gamepad.dpadLeft;
+        this.flipperUpButton = gamepad.dpadRight;
+        this.elbowDownButton = gamepad.dpadDown;
+        this.elbowUpButton = gamepad.dpadUp;
+        flipperDownButton.whenPressed(new FlipperServoIncrementalDownCommand(robot.clawSubsystem));
+        flipperUpButton.whenPressed(new FlipperServoIncrementalDownCommand(robot.clawSubsystem));
+        elbowDownButton.whenPressed(new FlipperServoIncrementalDownCommand(robot.clawSubsystem));
+        elbowUpButton.whenPressed(new FlipperServoIncrementalDownCommand(robot.clawSubsystem));
     }
 
     public void bindCoDriverLiftControls() {
