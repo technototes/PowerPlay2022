@@ -2,6 +2,7 @@ package org.firstinspires.ftc.sixteen750.opmode;
 
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.CLAW_CLOSE;
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.CLAW_OPEN;
+import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.ELBOW_CONING;
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.ELBOW_UPWARD;
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.FLIPPER_NORMAL;
 
@@ -45,25 +46,50 @@ public class ClawServoTest extends CommandOpMode {
     @Override
     public void runLoop() {
         if (gamepad1.dpad_up) {
-            targetServo.setPosition(upBtnServoPosition); // better not to go below this value
+            hardware.elbowServo.setPosition(upBtnServoPosition); // better not to go below this value
         } else if (gamepad1.dpad_right) {
-            targetServo.setPosition(rightBtnServoPosition);
+            hardware.elbowServo.setPosition(rightBtnServoPosition);
         } else if (gamepad1.dpad_down) {
-            targetServo.setPosition(downBtnServoPosition);
+            hardware.elbowServo.setPosition(downBtnServoPosition);
         } else if (gamepad1.dpad_left) {
-            targetServo.setPosition(leftBtnServoPosition);
+            hardware.elbowServo.setPosition(leftBtnServoPosition);
         } else if (gamepad1.square) {
-            targetServo.setPosition(1);
+            hardware.elbowServo.setPosition(1);
         } else if (gamepad1.circle) {
-            targetServo.setPosition(0);
+            hardware.elbowServo.setPosition(0);
         } else if (gamepad1.right_bumper) {
             hardware.clawServo.setPosition(CLAW_CLOSE);
         } else if (gamepad1.left_bumper) {
             hardware.clawServo.setPosition(CLAW_OPEN);
         } else if (gamepad1.triangle) {
-            hardware.flipperServo.setPosition(FLIPPER_NORMAL);
-        } else if (gamepad1.x) {
             hardware.elbowServo.setPosition(ELBOW_UPWARD);
+        } else if (gamepad1.x) {
+            hardware.elbowServo.setPosition(ELBOW_CONING);
+        }
+
+        if (gamepad2.dpad_up){
+            hardware.flipperServo.setPosition(upBtnServoPosition);
+        }
+        else if (gamepad2.dpad_right){
+            hardware.flipperServo.setPosition(rightBtnServoPosition);
+        }
+        else if (gamepad2.dpad_down){
+            hardware.flipperServo.setPosition(downBtnServoPosition);
+        }
+        else if (gamepad2.dpad_left){
+            hardware.flipperServo.setPosition(leftBtnServoPosition);
+        }
+        else if (gamepad2.square){
+            hardware.flipperServo.setPosition(1);
+        }
+        else if (gamepad2.circle){
+            hardware.flipperServo.setPosition(0);
+        }
+        else if (gamepad2.triangle){
+            hardware.flipperServo.setPosition(FLIPPER_NORMAL);
+        }
+        else if (gamepad2.x){
+
         }
 
         telemetry.addData("Claw Servo Position", robot.clawSubsystem.getClawPosition());
