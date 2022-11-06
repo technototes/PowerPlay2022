@@ -4,10 +4,10 @@ import com.technototes.library.command.Command;
 
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 
-public class FlipperIntakeCommand implements Command {
+public class FlipperIntakePositionCommand implements Command {
     private ClawSubsystem clawSubsystem;
 
-    public FlipperIntakeCommand(ClawSubsystem s) {
+    public FlipperIntakePositionCommand(ClawSubsystem s) {
         this.clawSubsystem = s;
         addRequirements(this.clawSubsystem);
     }
