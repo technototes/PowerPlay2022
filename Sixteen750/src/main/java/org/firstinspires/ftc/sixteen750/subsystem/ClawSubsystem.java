@@ -57,22 +57,22 @@ public class ClawSubsystem implements Subsystem {
         sensor = null;
     }
 
-    public void open() {
+    public void clawOpen() {
         clawServo.setPosition(CLAW_OPEN);
     }
 
-    public void close() {
+    public void clawClose() {
         clawServo.setPosition(CLAW_CLOSE);
     }
 
     public void carry() {
-        close();
+        clawClose();
         elbowServo.setPosition(ELBOW_CARRY);
     }
 
     public void release() {
         elbowServo.setPosition(ELBOW_RELEASE);
-        open();
+        clawOpen();
     }
 
     public void scoreGroundJunction() {
@@ -117,10 +117,6 @@ public class ClawSubsystem implements Subsystem {
             return true;
         }
         return false;
-    }
-
-    public Servo getServo() {
-        return clawServo;
     }
 
     public double getClawPosition() {

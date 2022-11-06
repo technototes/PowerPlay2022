@@ -14,7 +14,7 @@ public class ClawCloseCommand implements Command {
 
     @Override
     public void execute() {
-        subsystem.close();
+        subsystem.clawClose();
     }
 
     @Override
