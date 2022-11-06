@@ -45,10 +45,6 @@ public class DriverControls {
 //        driveLeftStick = gamepad.leftStick;
 //        driveRightStick = gamepad.rightStick;
 //        driveStraightenButton = gamepad.square;
-        liftUpButton = gamepad.leftBumper;
-        liftDownButton = gamepad.rightBumper;
-        clawCloseButton = gamepad.leftTrigger;
-        clawOpenButton = gamepad.rightTrigger;
         // TODO: Identify other controls for
         rumbleTestButton = gamepad.x;
 
@@ -65,14 +61,16 @@ public class DriverControls {
     }
 
     public void bindClawControls() {
-        // TODO: Name & Bind claw controls
-        clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-        clawCloseButton.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
+        this.clawCloseButton = gamepad.leftTrigger;
+        this.clawOpenButton = gamepad.rightTrigger;
+        this.clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
+        this.clawCloseButton.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
     }
 
     public void bindLiftControls() {
-        // TODO: Name & Bind lift controls
-        liftUpButton.whenPressed(new LiftIncrementalMoveUpCommand(robot.liftSubsystem));
-        liftDownButton.whenPressed(new LiftIncrementalMoveDownCommand(robot.liftSubsystem));
+        this.liftUpButton = gamepad.leftBumper;
+        this.liftDownButton = gamepad.rightBumper;
+        this.liftUpButton.whenPressed(new LiftIncrementalMoveUpCommand(robot.liftSubsystem));
+        this.liftDownButton.whenPressed(new LiftIncrementalMoveDownCommand(robot.liftSubsystem));
     }
 }

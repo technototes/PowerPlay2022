@@ -28,6 +28,7 @@ public class OperatorControls {
         this.gamepad = g;
 
         assignNamedControllerButton();
+
         if (RobotConstant.CLAW_CONNECTED) {
             bindCoDriverClawControls();
         }
@@ -37,17 +38,14 @@ public class OperatorControls {
     }
 
     public void assignNamedControllerButton() {
-        this.liftDownButton = gamepad.leftBumper;
-        this.liftUpButton = gamepad.rightBumper;
-        this.normalizeFlipperButton = gamepad.triangle;
-        this.readyToScoreButton = gamepad.square;
-        this.scoreMidJunctionButton = gamepad.circle;
         this.rumbleTestButton = gamepad.x;
-
         rumbleTestButton.whenPressed(new RumbleTestCommand(gamepad));
     }
 
     public void bindCoDriverClawControls() {
+        this.normalizeFlipperButton = gamepad.triangle;
+        this.readyToScoreButton = gamepad.square;
+        this.scoreMidJunctionButton = gamepad.circle;
         clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
         clawCloseButton.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
         normalizeFlipperButton.whenPressed(new FlipperNormalCommand(robot.clawSubsystem));
@@ -56,6 +54,8 @@ public class OperatorControls {
     }
 
     public void bindCoDriverLiftControls() {
+        this.liftDownButton = gamepad.leftBumper;
+        this.liftUpButton = gamepad.rightBumper;
         liftUpButton.whenPressed(new LiftIncrementalMoveUpCommand(robot.liftSubsystem));
         liftDownButton.whenPressed(new LiftIncrementalMoveDownCommand(robot.liftSubsystem));
     }
