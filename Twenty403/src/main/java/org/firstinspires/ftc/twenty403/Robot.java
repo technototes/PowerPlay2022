@@ -15,9 +15,9 @@ public class Robot implements Loggable {
     @Config
     public static class RobotConstant {
         public static boolean DRIVE_CONNECTED = true;
-        public static boolean CLAW_CONNECTED = false;
-        public static boolean LIFT_CONNECTED = false;
-        public static boolean LIFT_MOVE_MOTORS = false;
+        public static boolean CLAW_CONNECTED = true;
+        public static boolean LIFT_CONNECTED = true;
+        public static boolean LIFT_MOVE_MOTORS = true;
 
         public static boolean CAMERA_CONNECTED = true;
 
