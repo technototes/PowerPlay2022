@@ -27,10 +27,11 @@ public class BasicTankDriveOpMode extends CommandOpMode {
     }
 
     @Override
-    public void uponStart() {}
+    public void uponStart() {
+    }
 
     @Override
-    public void runLoop(){
+    public void runLoop() {
         // TODO: maybe use setWeightedDrivePower()?
         double leftStickValue, rightStickValue;
         if (Math.abs(gamepad1.left_stick_y) > DEAD_ZONE) {
@@ -43,8 +44,9 @@ public class BasicTankDriveOpMode extends CommandOpMode {
         } else {
             rightStickValue = 0;
         }
-        drive.setMotorPowers(Range.clip(leftStickValue, -1, 1), Range.clip(rightStickValue, -1, 1));
+        drive.setMotorPowers(Range.clip(leftStickValue * -0.8, -1, 1), Range.clip(rightStickValue * 1, -1, 1));
         drive.update();
+
 
         telemetry.addData("Left Stick", leftStickValue);
         telemetry.addData("Right Stick", rightStickValue);
