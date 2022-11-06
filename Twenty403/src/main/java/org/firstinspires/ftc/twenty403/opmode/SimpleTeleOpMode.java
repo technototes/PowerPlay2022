@@ -6,12 +6,14 @@ import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import com.technototes.library.hardware2.HardwareBuilder;
 import com.technototes.library.util.Alliance;
 
+@Disabled
 @Autonomous(name = "Encoder/IMU Testing")
 public class SimpleTeleOpMode extends LinearOpMode {
     public Robot robot;
