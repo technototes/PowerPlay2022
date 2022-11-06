@@ -7,7 +7,7 @@ import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 public class ArmRetractCommand extends SequentialCommandGroup {
     public ArmRetractCommand(ClawSubsystem s) {
         super(
-                new ElbowIntakePositionCommand(s),
+                new ElbowGroundIntakePositionCommand(s),
                 new FlipperPreIntakeCommand(s)
         );
     }

@@ -4,10 +4,10 @@ import com.technototes.library.command.SequentialCommandGroup;
 
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 
-public class ClawReadyToScoreCommandGroup extends SequentialCommandGroup {
-    public ClawReadyToScoreCommandGroup(ClawSubsystem s) {
+public class ClawReadyToIntakeGroundCommandGroup extends SequentialCommandGroup {
+    public ClawReadyToIntakeGroundCommandGroup(ClawSubsystem s) {
         super(
-                new ElbowIntakePositionCommand(s),
+                new ElbowGroundIntakePositionCommand(s),
                 new FlipperPreIntakeCommand(s),
                 new ClawOpenCommand(s)
         );

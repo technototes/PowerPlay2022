@@ -8,12 +8,11 @@ import org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
 import org.firstinspires.ftc.sixteen750.command.claw.ArmRetractCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
-import org.firstinspires.ftc.sixteen750.command.claw.ClawReadyToScoreCommandGroup;
+import org.firstinspires.ftc.sixteen750.command.claw.ClawReadyToIntakeGroundCommandGroup;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawScoreCommandGroup;
 import org.firstinspires.ftc.sixteen750.command.claw.ElbowServoIncrementalDownCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ElbowServoIncrementalUpCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.FlipperIntakePositionCommand;
-import org.firstinspires.ftc.sixteen750.command.claw.FlipperNormalCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.FlipperServoIncrementalDownCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.FlipperServoIncrementalUpCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftIncrementalMoveDownCommand;
@@ -58,7 +57,7 @@ public class OperatorControls {
         this.scoreMidJunctionButton = gamepad.circle;
         this.flipperIntakePositionButton = gamepad.x;
         armRetractButton.whenPressed(new ArmRetractCommand(robot.clawSubsystem));
-        readyToScoreButton.whenPressed(new ClawReadyToScoreCommandGroup(robot.clawSubsystem));
+        readyToScoreButton.whenPressed(new ClawReadyToIntakeGroundCommandGroup(robot.clawSubsystem));
         scoreMidJunctionButton.whenPressed(new ClawScoreCommandGroup(robot.clawSubsystem));
         flipperIntakePositionButton.whenPressed(new FlipperIntakePositionCommand(robot.clawSubsystem));
 

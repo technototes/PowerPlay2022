@@ -132,7 +132,7 @@ public class ClawSubsystem implements Subsystem {
         return elbowServo.getPosition();
     }
 
-    public void elbowIntake(){
+    public void elbowGroundIntake(){
         elbowServo.setPosition(ELBOW_INTAKE);
     }
 

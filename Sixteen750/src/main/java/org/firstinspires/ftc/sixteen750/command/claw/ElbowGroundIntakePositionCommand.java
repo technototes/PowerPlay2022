@@ -4,17 +4,17 @@ import com.technototes.library.command.Command;
 
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 
-public class ElbowIntakePositionCommand implements Command {
+public class ElbowGroundIntakePositionCommand implements Command {
     private ClawSubsystem clawSubsystem;
 
-    public ElbowIntakePositionCommand(ClawSubsystem s) {
+    public ElbowGroundIntakePositionCommand(ClawSubsystem s) {
         clawSubsystem = s;
         addRequirements(s);
     }
 
     @Override
     public void execute() {
-        clawSubsystem.elbowIntake();
+        clawSubsystem.elbowGroundIntake();
     }
 
 //    @Override
