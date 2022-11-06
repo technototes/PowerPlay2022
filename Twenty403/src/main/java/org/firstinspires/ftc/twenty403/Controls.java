@@ -9,6 +9,7 @@ import org.firstinspires.ftc.twenty403.command.drive.TurboCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftDownCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftGroundJunctionCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
+import org.firstinspires.ftc.twenty403.command.lift.LiftIntakeCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftLowJunctionCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftMidJunctionCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
@@ -24,7 +25,7 @@ public class Controls {
 
     public Stick driveLeftStick, driveRightStick;
     public CommandButton resetGyroButton, driveStraightenButton, snailSpeedButton, liftUpButton, clawOpenButton;
-    public CommandButton liftDownButton, clawCloseButton, liftDownButtonBackup, clawCloseButtonBackup;
+    public CommandButton liftDownButton, clawCloseButton, liftDownButtonBackup, clawCloseButtonBackup, liftIntakePos;
     public CommandButton liftGround, liftLow, liftMedium, liftHigh;
     public CommandButton turboButton;
 
@@ -50,12 +51,14 @@ public class Controls {
         driveLeftStick = gamepad.leftStick;
         driveRightStick = gamepad.rightStick;
         turboButton = gamepad.triangle;
-
         liftUpButton = gamepad.square;
         liftDownButton = gamepad.cross;
+
         liftDownButtonBackup = gamepad.rightTrigger.getAsButton();
+        liftIntakePos = gamepad.circle;
+
         clawOpenButton = gamepad.leftBumper;
-        clawCloseButtonBackup = gamepad.circle;
+        clawCloseButtonBackup = gamepad.rightBumper;
         clawCloseButton = gamepad.leftTrigger.getAsButton();
 
         liftGround = gamepad.dpadDown;
@@ -89,6 +92,8 @@ public class Controls {
         liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
         liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
         liftDownButtonBackup.whenPressed(new LiftDownCommand(robot.liftSubsystem));
+        liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));
+
         liftLow.whenPressed(new LiftLowJunctionCommand(robot.liftSubsystem));
         liftGround.whenPressed(new LiftGroundJunctionCommand(robot.liftSubsystem));
         liftMedium.whenPressed(new LiftMidJunctionCommand(robot.liftSubsystem));
