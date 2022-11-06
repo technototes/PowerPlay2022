@@ -5,6 +5,7 @@ import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 
 import org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
+import org.firstinspires.ftc.sixteen750.command.RumbleTestCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawReadyToScoreCommandGroup;
@@ -20,6 +21,7 @@ public class OperatorControls {
     public CommandButton liftUpButton, liftDownButton;
     public CommandAxis clawOpenButton, clawCloseButton;
     public CommandButton normalizeFlipperButton, readyToScoreButton, scoreMidJunctionButton;
+    public CommandButton rumbleTestButton;
 
     public OperatorControls(CommandGamepad g, Robot r) {
         this.robot = r;
@@ -38,8 +40,11 @@ public class OperatorControls {
         this.liftDownButton = gamepad.leftBumper;
         this.liftUpButton = gamepad.rightBumper;
         this.normalizeFlipperButton = gamepad.triangle;
-        this.readyToScoreButton = gamepad.x;
+        this.readyToScoreButton = gamepad.square;
         this.scoreMidJunctionButton = gamepad.circle;
+        this.rumbleTestButton = gamepad.x;
+
+        rumbleTestButton.whenPressed(new RumbleTestCommand(gamepad));
     }
 
     public void bindCoDriverClawControls() {

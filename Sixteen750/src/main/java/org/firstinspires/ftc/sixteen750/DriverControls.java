@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.sixteen750;
 
 import org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
+import org.firstinspires.ftc.sixteen750.command.RumbleTestCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftIncrementalMoveDownCommand;
@@ -19,12 +20,13 @@ public class DriverControls {
     public CommandButton resetGyroButton, driveStraightenButton, snailSpeedButton;
     public CommandAxis clawOpenButton, clawCloseButton;
     public CommandButton liftUpButton, liftDownButton;
+    public CommandButton rumbleTestButton;
 
     public DriverControls(CommandGamepad g, Robot r) {
         this.robot = r;
         gamepad = g;
 
-        AssignNamedControllerButton();
+        assignNamedControllerButton();
 
         if (RobotConstant.SWERVE_DRIVE_CONNECTED) {
             bindDriveControls();
@@ -37,17 +39,20 @@ public class DriverControls {
         }
     }
 
-    private void AssignNamedControllerButton() {
+    private void assignNamedControllerButton() {
         // TODO: re-assign buttons
-        resetGyroButton = gamepad.rightStickButton;
-        driveLeftStick = gamepad.leftStick;
-        driveRightStick = gamepad.rightStick;
-        driveStraightenButton = gamepad.square;
+//        resetGyroButton = gamepad.rightStickButton;
+//        driveLeftStick = gamepad.leftStick;
+//        driveRightStick = gamepad.rightStick;
+//        driveStraightenButton = gamepad.square;
         liftUpButton = gamepad.leftBumper;
         liftDownButton = gamepad.rightBumper;
         clawCloseButton = gamepad.leftTrigger;
         clawOpenButton = gamepad.rightTrigger;
         // TODO: Identify other controls for
+        rumbleTestButton = gamepad.x;
+
+        rumbleTestButton.whenPressed(new RumbleTestCommand(gamepad));
     }
 
     public void bindDriveControls() {
