@@ -12,7 +12,7 @@ public class Robot implements Loggable {
     @Config
     public static class RobotConstant {
         public static boolean SWERVE_DRIVE_CONNECTED = false;
-        public static boolean TANK_DRIVE_CONNECTED = false;
+        public static boolean TANK_DRIVE_CONNECTED = true;
         public static boolean CLAW_CONNECTED = true;
         public static boolean LIFT_CONNECTED = false;
     }

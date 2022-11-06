@@ -4,6 +4,7 @@ import com.technototes.library.control.CommandAxis;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 
+import org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawReadyToScoreCommandGroup;
@@ -23,6 +24,14 @@ public class OperatorControls {
     public OperatorControls(CommandGamepad g, Robot r) {
         this.robot = r;
         this.gamepad = g;
+
+        assignNamedControllerButton();
+        if (RobotConstant.CLAW_CONNECTED) {
+            bindCoDriverClawControls();
+        }
+        if (RobotConstant.LIFT_CONNECTED) {
+            bindCoDriverLiftControls();
+        }
     }
 
     public void assignNamedControllerButton() {
