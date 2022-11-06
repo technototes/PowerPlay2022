@@ -5,13 +5,17 @@ import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.VisionCommand;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsRed;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
-import org.firstinspires.ftc.twenty403.command.autonomous.red_away.AutoRedAwayParkingSelectionCommand;
+import org.firstinspires.ftc.twenty403.command.autonomous.red_away.AutoRedAwayParkingSelectionJustParkCommand;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import com.technototes.library.command.CommandScheduler;
+import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
-public class RedAwayPreloadOpMode extends CommandOpMode {
+@Autonomous(name = "RedAwayParkOnly")
+public class RedAwayPark extends CommandOpMode {
     public Robot robot;
     public Hardware hardware;
 
@@ -22,7 +26,10 @@ public class RedAwayPreloadOpMode extends CommandOpMode {
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsRed.Away.START.toPose());
         CommandScheduler.getInstance()
                 .scheduleForState(
-                        new AutoRedAwayParkingSelectionCommand(robot.drivebaseSubsystem, robot.visionSystem),
+                        new SequentialCommandGroup(
+                                new AutoRedAwayParkingSelectionJustParkCommand(
+                                        robot.drivebaseSubsystem, robot.visionSystem),
+                                CommandScheduler.getInstance()::terminateOpMode),
                         CommandOpMode.OpModeState.RUN);
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
             CommandScheduler.getInstance().scheduleInit(new VisionCommand(robot.visionSystem));

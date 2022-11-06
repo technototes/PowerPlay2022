@@ -14,7 +14,7 @@ import com.technototes.library.subsystem.Subsystem;
 public class ClawSubsystem implements Subsystem {
     // Correct numbers, tested
     public static double OPEN_SERVO_POSITION = .29;
-    public static double CLOSE_SERVO_POSITION = .39;
+    public static double CLOSE_SERVO_POSITION = .42;
 
     private Servo clawServo;
     private DistanceSensor sensor;

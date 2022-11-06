@@ -5,7 +5,7 @@ import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.VisionCommand;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsRed;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
-import org.firstinspires.ftc.twenty403.command.autonomous.red_home.AutoRedHomeParkingSelectionCommand;
+import org.firstinspires.ftc.twenty403.command.autonomous.red_home.AutoRedHomeParkingSelectionJustParkCommand;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -15,7 +15,7 @@ import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
 @Autonomous(name = "RedHomeParkOnly")
-public class RedHomeParkOpMode extends CommandOpMode {
+public class RedHomePark extends CommandOpMode {
     public Robot robot;
     public Hardware hardware;
 
@@ -27,7 +27,8 @@ public class RedHomeParkOpMode extends CommandOpMode {
         CommandScheduler.getInstance()
                 .scheduleForState(
                         new SequentialCommandGroup(
-                                new AutoRedHomeParkingSelectionCommand(robot.drivebaseSubsystem, robot.visionSystem),
+                                new AutoRedHomeParkingSelectionJustParkCommand(
+                                        robot.drivebaseSubsystem, robot.visionSystem),
                                 CommandScheduler.getInstance()::terminateOpMode),
                         OpModeState.RUN);
         if (Robot.RobotConstant.CAMERA_CONNECTED) {

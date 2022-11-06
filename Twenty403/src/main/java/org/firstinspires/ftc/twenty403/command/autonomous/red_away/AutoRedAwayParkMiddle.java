@@ -6,8 +6,8 @@ import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.path.command.TrajectorySequenceCommand;
 
-public class ParkRedAwayMiddle extends SequentialCommandGroup {
-    public ParkRedAwayMiddle(DrivebaseSubsystem drivebaseSubsystem) {
+public class AutoRedAwayParkMiddle extends SequentialCommandGroup {
+    public AutoRedAwayParkMiddle(DrivebaseSubsystem drivebaseSubsystem) {
         super(new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsRed.Away.START_TO_MIDDLE_PARK));
     }
 }

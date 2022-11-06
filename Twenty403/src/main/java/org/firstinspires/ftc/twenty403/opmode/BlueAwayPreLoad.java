@@ -11,6 +11,7 @@ import org.firstinspires.ftc.twenty403.command.autonomous.blue_away.AutoBlueAway
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import com.technototes.library.command.CommandScheduler;
+import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
@@ -27,8 +28,13 @@ public class BlueAwayPreLoad extends CommandOpMode {
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Away.START.toPose());
         CommandScheduler.getInstance()
                 .scheduleForState(
-                        new AutoBlueAwayParkingSelectionPreLoadCommand(
-                                robot.drivebaseSubsystem, robot.visionSystem, robot.liftSubsystem, robot.clawSubsystem),
+                        new SequentialCommandGroup(
+                                new AutoBlueAwayParkingSelectionPreLoadCommand(
+                                        robot.drivebaseSubsystem,
+                                        robot.visionSystem,
+                                        robot.liftSubsystem,
+                                        robot.clawSubsystem),
+                                CommandScheduler.getInstance()::terminateOpMode),
                         CommandOpMode.OpModeState.RUN);
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
             CommandScheduler.getInstance().scheduleInit(new VisionCommand(robot.visionSystem));

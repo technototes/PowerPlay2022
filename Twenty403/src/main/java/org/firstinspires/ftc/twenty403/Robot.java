@@ -22,7 +22,7 @@ public class Robot implements Loggable {
         public static boolean CAMERA_CONNECTED = true;
 
         // Are we using 1 or 2 motors?
-        public static boolean DUAL_LIFT_SETUP = false;
+        public static boolean DUAL_LIFT_SETUP = true;
     }
 
     public DrivebaseSubsystem drivebaseSubsystem;
