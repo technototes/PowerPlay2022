@@ -9,7 +9,8 @@ public class ClawReadyToScoreCommandGroup extends SequentialCommandGroup {
         super(
                 new ElbowIntakePositionCommand(s),
                 new FlipperPreIntakeCommand(s),
-                new ClawOpenCommand(s)
+                new ClawOpenCommand(s),
+                new FlipperIntakeCommand(s)
         );
     }
 }
