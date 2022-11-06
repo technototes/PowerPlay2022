@@ -20,7 +20,12 @@ public class ClawSubsystem implements Subsystem {
     public static double ELBOW_MID = 3;
     public static double FLIPPER_HIGH_JUNCTION = 35;
     public static double ELBOW_HIGH = 4;
-    public static double FLIPPER_STATIONARY = 0.17; // Verified
+    public static double FLIPPER_NORMAL = 0.17; // Verified
+
+    public static double ELBOW_MIN_RANGE = 0.3;
+    public static double ELBOW_MAX_RANGE = 0.7;
+    public static double ELBOW_UPWARD = 0.7;
+
 
     private Servo clawServo;
     private Servo flipperServo;
@@ -95,7 +100,11 @@ public class ClawSubsystem implements Subsystem {
     }
 
     public void flipperNormal(){
-        flipperServo.setPosition(FLIPPER_STATIONARY);
+        flipperServo.setPosition(FLIPPER_NORMAL);
+    }
+
+    public void elbowUpward(){
+        elbowServo.setPosition(ELBOW_UPWARD);
     }
 
     public boolean isConeClose() {

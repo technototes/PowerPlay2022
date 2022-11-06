@@ -1,5 +1,10 @@
 package org.firstinspires.ftc.sixteen750.opmode;
 
+import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.CLAW_CLOSE;
+import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.CLAW_OPEN;
+import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.ELBOW_UPWARD;
+import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.FLIPPER_NORMAL;
+
 import org.firstinspires.ftc.sixteen750.DriverControls;
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
@@ -39,17 +44,6 @@ public class ClawServoTest extends CommandOpMode {
 
     @Override
     public void runLoop() {
-        /*
-         * GoBilda Super Speed Servo
-         * Min: 0.4
-         * Firmly grab: 0.45
-         * Open: 0.6
-         *
-         * 25 KG Servo
-         * 1: Fully Open
-         * 0: Fully closed
-         * Ideal Range: 0.5-0.6
-         * */
         if (gamepad1.dpad_up) {
             targetServo.setPosition(upBtnServoPosition); // better not to go below this value
         } else if (gamepad1.dpad_right) {
@@ -63,11 +57,13 @@ public class ClawServoTest extends CommandOpMode {
         } else if (gamepad1.circle) {
             targetServo.setPosition(0);
         } else if (gamepad1.right_bumper) {
-            hardware.clawServo.setPosition(0.5);
+            hardware.clawServo.setPosition(CLAW_CLOSE);
         } else if (gamepad1.left_bumper) {
-            hardware.clawServo.setPosition(0.6);
+            hardware.clawServo.setPosition(CLAW_OPEN);
         } else if (gamepad1.triangle) {
-            hardware.flipperServo.setPosition(0.17);
+            hardware.flipperServo.setPosition(FLIPPER_NORMAL);
+        } else if (gamepad1.x) {
+            hardware.elbowServo.setPosition(ELBOW_UPWARD);
         }
 
         telemetry.addData("Claw Servo Position", robot.clawSubsystem.getClawPosition());

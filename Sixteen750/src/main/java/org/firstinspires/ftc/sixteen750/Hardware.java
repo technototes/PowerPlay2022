@@ -85,7 +85,7 @@ public class Hardware {
         if (RobotConstant.CLAW_CONNECTED) {
             clawServo = new Servo(HardwareConstant.CLAW_SERVO).invert(); // no need to invert for gobilda super speed; might need to invert for the 25KG servo
             flipperServo = new Servo(HardwareConstant.FLIPPER_SERVO);
-            elbowServo = new Servo(HardwareConstant.ELBOW_SERVO);
+            elbowServo = new Servo(HardwareConstant.ELBOW_SERVO).invert();
 //          clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR); // not installed
         }
         if (RobotConstant.LIFT_CONNECTED) {
