@@ -46,9 +46,8 @@ public class DriverControls {
 //        driveRightStick = gamepad.rightStick;
 //        driveStraightenButton = gamepad.square;
         // TODO: Identify other controls for
-        rumbleTestButton = gamepad.x;
-
-        rumbleTestButton.whenPressed(new RumbleTestCommand(gamepad));
+//        rumbleTestButton = gamepad.x;
+//        rumbleTestButton.whenPressed(new RumbleTestCommand(gamepad));
     }
 
     public void bindDriveControls() {

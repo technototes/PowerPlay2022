@@ -40,8 +40,8 @@ public class OperatorControls {
     }
 
     public void assignNamedControllerButton() {
-        this.rumbleTestButton = gamepad.x;
-        rumbleTestButton.whenPressed(new RumbleTestCommand(gamepad));
+//        this.rumbleTestButton = gamepad.x;
+//        rumbleTestButton.whenPressed(new RumbleTestCommand(gamepad));
     }
 
     public void bindCoDriverClawControls() {
