@@ -29,7 +29,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double RMEDIUM_JUNCTION = 4770;
     public static double LHIGH_JUNCTION = 6560; // 6460
     public static double RHIGH_JUNCTION = 6560;
-    public static double MAX_HEIGHT = 6600;
+    public static double MAX_HEIGHT = 7000;
     public static double MIN_HEIGHT = 0;
     // TODO: THESE VALUES ARE PROBABLY WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
     public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH;
@@ -37,7 +37,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     // Values work 11/4/22
     public static double MAX_MOTOR_SPEED = 1;
-    public static double MIN_MOTOR_SPEED = -0.5; // Gravity
+    public static double MIN_MOTOR_SPEED = -0.75; // Gravity
 
     public static double LMOVE = 1.00 * TICKS_INCH;
     public static double RMOVE = 1.00 * TICKS_INCH;
@@ -85,7 +85,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         _rightMotor = null;
 
         leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
-        rightPidController = null;
+        rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
     }
 
     public LiftSubsystem() {
@@ -95,8 +95,8 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         _leftMotor = null;
         _rightMotor = null;
 
-        leftPidController = null;
-        rightPidController = null;
+        leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
+        rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
     }
 
     //    public double delta() {

@@ -9,11 +9,13 @@ import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsBlue;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
+@Disabled
 @Autonomous(name = "Simple Drivebase Test")
 public class DrivebaseTestAutoOpMode extends CommandOpMode {
     public Robot robot;

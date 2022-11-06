@@ -23,18 +23,19 @@ AutoConstantsRed {
         public static ConfigurablePose BETWEEN_START_E_JUNCTION = new ConfigurablePose(-36, -21, toRadians(75));
         public static ConfigurablePose BETWEEN_E_JUNCTION_STACK = new ConfigurablePose(-36, -14, toRadians(180));
         public static ConfigurablePose BETWEEN_STACK_E_JUNCTION = new ConfigurablePose(-36, -14, toRadians(75));
+        public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(58, 60, toRadians(180));
+        public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(14, 60, toRadians(180));
         public static ConfigurablePose VISION_BETWEEN_RIGHT = new ConfigurablePose(-12,-55, toRadians(90));
         public static ConfigurablePose VISION_BETWEEN_LEFT = new ConfigurablePose(-55,-55, toRadians(90));
-
 
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
                 START_TO_E_JUNCTION =
                 b -> b.apply(START.toPose())
-                        .splineTo(E_JUNCTION.toPose().vec(), -0.63)
-                        //.lineToLinearHeading(BETWEEN_START_E_JUNCTION.toPose())
-                        //.lineToLinearHeading(E_JUNCTION.toPose())
+                        //.splineTo(E_JUNCTION.toPose().vec(), -0.63)
+                        .lineToLinearHeading(BETWEEN_START_E_JUNCTION.toPose())
+                        .lineToLinearHeading(E_JUNCTION.toPose())
                         .build(),
                 E_JUNCTION_TO_STACK =
                         b -> b.apply(E_JUNCTION.toPose())
@@ -63,10 +64,12 @@ AutoConstantsRed {
                                 .build(),
                 START_TO_LEFT_PARK =
                         b -> b.apply(START.toPose())
+                                .lineToLinearHeading(BETWEEN_START_LEFT.toPose())
                                 .lineToLinearHeading(LEFT.toPose())
                                 .build(),
                 START_TO_RIGHT_PARK =
                         b -> b.apply(START.toPose())
+                                .lineToLinearHeading(BETWEEN_START_RIGHT.toPose())
                                 .lineToLinearHeading(RIGHT.toPose())
                                 .build(),
                 START_TO_MIDDLE_PARK =
@@ -92,6 +95,8 @@ AutoConstantsRed {
         public static ConfigurablePose BETWEEN_W_JUNCTION_STACK = new ConfigurablePose(36, -14, .4);
         public static ConfigurablePose LOW_JUNCTION_LEFT = new ConfigurablePose(24,-48, toRadians(120));
         public static ConfigurablePose LOW_JUNCTION_RIGHT = new ConfigurablePose(48,-24, toRadians(60)); public static ConfigurablePose BETWEEN_STACK_W_JUNCTION = new ConfigurablePose(36, -14, 3);
+        public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(-15, 60, toRadians(90));
+        public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(-60, 60, toRadians(90));
 
 
         // These are 'trajectory pieces' which should be named like this:
@@ -130,10 +135,12 @@ AutoConstantsRed {
                                 .build(),
                 START_TO_LEFT_PARK =
                         b -> b.apply(START.toPose())
+                                .lineToLinearHeading(BETWEEN_START_LEFT.toPose())
                                 .lineToLinearHeading(LEFT.toPose())
                                 .build(),
                 START_TO_RIGHT_PARK =
                         b -> b.apply(START.toPose())
+                                .lineToLinearHeading(BETWEEN_START_RIGHT.toPose())
                                 .lineToLinearHeading(RIGHT.toPose())
                                 .build(),
                 START_TO_MIDDLE_PARK =

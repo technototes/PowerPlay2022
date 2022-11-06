@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.twenty403.command.autonomous.red_away;
+package org.firstinspires.ftc.twenty403.command.autonomous.red_home;
 
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsRed;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
@@ -10,13 +10,13 @@ import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.path.command.TrajectorySequenceCommand;
 
-public class PreloadRedAwayLeft extends SequentialCommandGroup {
-    public PreloadRedAwayLeft(
+public class AutoRedHomePreLoadLeft extends SequentialCommandGroup {
+    public AutoRedHomePreLoadLeft(
             DrivebaseSubsystem drivebaseSubsystem, ClawSubsystem clawSubsystem, LiftSubsystem liftSubsystem) {
         super(
-                new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsRed.Away.START_TO_W_JUNCTION)
+                new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsRed.Home.START_TO_E_JUNCTION)
                         .alongWith(new LiftHighJunctionCommand(liftSubsystem)),
                 new ClawOpenCommand(clawSubsystem),
-                new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsRed.Away.W_JUNCTION_TO_LEFT_PARK));
+                new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsRed.Home.E_JUNCTION_TO_LEFT_PARK));
     }
 }
