@@ -85,7 +85,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         _rightMotor = null;
 
         leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
-        rightPidController = null;
+        rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
     }
 
     public LiftSubsystem() {
@@ -95,8 +95,8 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         _leftMotor = null;
         _rightMotor = null;
 
-        leftPidController = null;
-        rightPidController = null;
+        leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
+        rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
     }
 
     //    public double delta() {
