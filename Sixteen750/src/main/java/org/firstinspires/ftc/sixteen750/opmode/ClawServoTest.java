@@ -23,10 +23,10 @@ public class ClawServoTest extends CommandOpMode {
     Servo targetServo;
 
     // clockwise is order
-    public static double upBtnServoPosition = 0.49;
-    public static double rightBtnServoPosition = 0.5;
-    public static double downBtnServoPosition = 0.15;
-    public static double leftBtnServoPosition = 0.14;
+    public static double upBtnServoPosition = 0.2;
+    public static double rightBtnServoPosition = 0.4;
+    public static double downBtnServoPosition = 0.6;
+    public static double leftBtnServoPosition = 0.8;
 
     @Override
     public void uponInit() {
@@ -34,7 +34,7 @@ public class ClawServoTest extends CommandOpMode {
         robot = new Robot(hardware);
         controls = new ControlDriver(driverGamepad, robot);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        targetServo = hardware.flipperServo;
+        targetServo = hardware.elbowServo;
     }
 
     @Override
@@ -66,6 +66,8 @@ public class ClawServoTest extends CommandOpMode {
             hardware.clawServo.setPosition(0.5);
         } else if (gamepad1.left_bumper) {
             hardware.clawServo.setPosition(0.6);
+        } else if (gamepad1.triangle) {
+            hardware.flipperServo.setPosition(0.17);
         }
 
         telemetry.addData("Claw Servo Position", robot.clawSubsystem.getClawPosition());
