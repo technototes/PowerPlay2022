@@ -12,7 +12,7 @@ public class AutoBlueHomeParkingSelectionJustParkCommand extends ChoiceCommand {
             VisionSubsystem visionSubsystem, DrivebaseSubsystem drivebaseSubsystem) {
         super(
                 new Pair<>(visionSubsystem.visionPipeline::left, new AutoBlueHomeParkingLeft(drivebaseSubsystem)),
-                new Pair<>(visionSubsystem.visionPipeline::middle, new AutoBlueHomeParkingRight(drivebaseSubsystem)),
+                new Pair<>(visionSubsystem.visionPipeline::middle, new AutoBlueHomeParkingMiddle(drivebaseSubsystem)),
                 new Pair<>(visionSubsystem.visionPipeline::right, new AutoBlueHomeParkingRight(drivebaseSubsystem)));
     }
 }
