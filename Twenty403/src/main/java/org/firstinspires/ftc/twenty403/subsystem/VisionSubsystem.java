@@ -17,8 +17,8 @@ public class VisionSubsystem implements Subsystem, Loggable {
         // This is a super-low res image. I don't think we need higher resolution...
         // Note: This may be too small for the older camera.
         // I think it only goes down to 320 x 240
-        public static int WIDTH = 160;
-        public static int HEIGHT = 120;
+        public static int WIDTH = 320;
+        public static int HEIGHT = 240;
         // Change this if the camera is oriented differently
         public static OpenCvCameraRotation ROTATION = OpenCvCameraRotation.UPRIGHT;
         // Turn this on if we want to see the debug image

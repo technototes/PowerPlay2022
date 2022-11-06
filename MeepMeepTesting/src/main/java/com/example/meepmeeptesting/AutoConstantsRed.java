@@ -11,18 +11,15 @@ import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationConstraint;
 
 import java.util.Arrays;
-import java.util.Stack;
 import java.util.function.Function;
 import java.util.function.Supplier;
-
-import javax.naming.ldap.StartTlsRequest;
 
 public class AutoConstantsRed {
     public static class Away {
         public static Pose2d START = new Pose2d(36, -66, toRadians(90));
         public static Pose2d STACK = new Pose2d(60, -12, toRadians(0));
 
-        public static Pose2d PARK_LEFT = new Pose2d(12, -36, toRadians(-90));
+        public static Pose2d PARK_LEFT = new Pose2d(12, -36, toRadians(90));
         public static Pose2d PARK_MIDDLE = new Pose2d(36, -36, toRadians(-90));
         public static Pose2d PARK_RIGHT = new Pose2d(60, -36, toRadians(180));
 
@@ -33,6 +30,8 @@ public class AutoConstantsRed {
         public static Pose2d W_JUNCTION_TO_BETWEEN = new Pose2d(34, -15, toRadians(0));
         //left facing between
         public static Pose2d STACK_TO_BETWEEN = new Pose2d(37, -12, toRadians(180));
+
+        public static Pose2d LOW_TO_BETWEEN = new Pose2d(33,-60,toRadians(165));
 
         public static Pose2d LOW_JUNCTION_LEFT = new Pose2d(26,-52, toRadians(120));
         public static Pose2d LOW_JUNCTION_RIGHT = new Pose2d(48,-24, toRadians(60));
@@ -90,10 +89,26 @@ public class AutoConstantsRed {
         //SOUTH_JUNCTION_TO_PARK_RIGHT =
         // ()->function.apply(JUNCTION).lineToLinearHeading(PARK_RIGHT).build()
 
+
+        //Left Low Junction
         START_TO_LEFT_LOW =
                 () -> function.apply(START).lineToLinearHeading(LOW_JUNCTION_LEFT).build(),
+
+        LEFT_LOW_TO_BETWEEN_LEFT =
+                () -> function.apply(LOW_JUNCTION_LEFT).lineToLinearHeading(LOW_TO_BETWEEN).build(),
+        BETWEEN_TO_PARK_LEFT =
+                () -> function.apply(LOW_TO_BETWEEN).splineTo(PARK_LEFT.vec(),PARK_LEFT.getHeading()).build(),
+
+        LEFT_LOW_TO_PARK_MIDDLE =
+                () -> function.apply(LOW_JUNCTION_LEFT).lineToLinearHeading(PARK_MIDDLE).build(),
+
+        LEFT_LOW_TO_BETWEEN_RIGHT =
+                () -> function.apply(LOW_JUNCTION_LEFT).lineToLinearHeading(PARK_MIDDLE).build(),
+
+        //Right Low Junction
         START_TO_RIGHT_LOW =
-                () -> function.apply(START).splineTo(LOW_JUNCTION_RIGHT.vec(), LOW_JUNCTION_RIGHT.getHeading() /*,Math.toRadians(60)*/).build();
+                () -> function.apply(START).splineTo(LOW_JUNCTION_RIGHT.vec(), LOW_JUNCTION_RIGHT.getHeading()).build();
+
 
     }
 
