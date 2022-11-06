@@ -12,8 +12,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.technototes.library.hardware2.HardwareBuilder;
 import com.technototes.library.util.Alliance;
 
-@Autonomous(name = "Drive Motor Test")
-public class DriveMotorTestOpMode extends LinearOpMode {
+@Autonomous(name = "Encoder/IMU Testing")
+public class SimpleTeleOpMode extends LinearOpMode {
     public Robot robot;
     public Hardware hardware;
 

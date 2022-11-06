@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.twenty403.command.lift;
 
-import com.technototes.library.command.Command;
-
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
+
+import com.technototes.library.command.Command;
 
 public class LiftCollectCommand implements Command {
     private LiftSubsystem liftSubsystem;

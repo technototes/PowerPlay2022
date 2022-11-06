@@ -25,7 +25,9 @@ AutoConstantsRed {
         public static ConfigurablePose BETWEEN_STACK_E_JUNCTION = new ConfigurablePose(-36, -14, toRadians(75));
         public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(58, 60, toRadians(180));
         public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(14, 60, toRadians(180));
-
+        public static ConfigurablePose VISION_BETWEEN_RIGHT = new ConfigurablePose(-12,-55, toRadians(90));
+        public static ConfigurablePose VISION_BETWEEN_LEFT = new ConfigurablePose(-55,-55, toRadians(90));
+        
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
@@ -73,6 +75,11 @@ AutoConstantsRed {
                 START_TO_MIDDLE_PARK =
                         b -> b.apply(START.toPose())
                                 .lineToLinearHeading(MIDDLE.toPose())
+                                .build(),
+                START_TO_LEFTPARK =
+                        b -> b.apply(START.toPose())
+                                .lineToLinearHeading(VISION_BETWEEN_LEFT.toPose())
+                                .lineToLinearHeading(LEFT.toPose())
                                 .build();
 
     }

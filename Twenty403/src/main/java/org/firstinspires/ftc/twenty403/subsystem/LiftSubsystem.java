@@ -41,7 +41,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     public static double LMOVE = 1.00 * TICKS_INCH;
     public static double RMOVE = 1.00 * TICKS_INCH;
-    public static double CONE_HEIGHT_DIFFERENCE = 1.2 *TICKS_INCH;
+    public static double CONE_HEIGHT_DIFFERENCE = 1.2 * TICKS_INCH;
     // We may need to adjust this. Make *very* small changes! Values work 11/4/22
     public static PIDCoefficients PID = new PIDCoefficients(0.0008, 0, 0.00005);
 
@@ -173,7 +173,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         rightPidController.setTargetPosition(getRightPos());
     }
 
-    public double changeCollectHeight(){
+    public double changeCollectHeight() {
         coneNumber--;
         return coneNumber * CONE_HEIGHT_DIFFERENCE;
     }
@@ -250,5 +250,4 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
         return _rightMotor.get();
     }
-
 }

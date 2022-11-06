@@ -51,9 +51,9 @@ public class Controls {
         driveLeftStick = gamepad.leftStick;
         driveRightStick = gamepad.rightStick;
         turboButton = gamepad.triangle;
-
         liftUpButton = gamepad.square;
         liftDownButton = gamepad.cross;
+
         liftDownButtonBackup = gamepad.rightTrigger.getAsButton();
         liftIntakePos = gamepad.circle;
 

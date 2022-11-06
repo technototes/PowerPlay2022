@@ -9,7 +9,8 @@ import com.technototes.path.command.TrajectorySequenceCommand;
 
 public class AutoBlueAwayLeft extends SequentialCommandGroup {
     public AutoBlueAwayLeft(DrivebaseSubsystem drivebaseSubsystem) {
-        super(new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.START_TO_LEFT_PARK),
+        super(
+                new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.START_TO_LEFT_PARK),
                 CommandScheduler.getInstance()::terminateOpMode);
     }
 }
