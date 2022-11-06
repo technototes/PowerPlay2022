@@ -11,6 +11,7 @@ import org.firstinspires.ftc.twenty403.command.autonomous.blue_home.AutoBlueHome
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import com.technototes.library.command.CommandScheduler;
+import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
@@ -27,8 +28,13 @@ public class BlueHomeCycle extends CommandOpMode {
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Home.START.toPose());
         CommandScheduler.getInstance()
                 .scheduleForState(
-                        new AutoBlueHomeParkingSelectionCycleCommand(
-                                robot.visionSystem, robot.drivebaseSubsystem, robot.clawSubsystem, robot.liftSubsystem),
+                        new SequentialCommandGroup(
+                                new AutoBlueHomeParkingSelectionCycleCommand(
+                                        robot.visionSystem,
+                                        robot.drivebaseSubsystem,
+                                        robot.clawSubsystem,
+                                        robot.liftSubsystem),
+                                CommandScheduler.getInstance()::terminateOpMode),
                         CommandOpMode.OpModeState.RUN);
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
             CommandScheduler.getInstance().scheduleInit(new VisionCommand(robot.visionSystem));

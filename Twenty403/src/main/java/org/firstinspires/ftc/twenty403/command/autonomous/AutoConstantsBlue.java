@@ -18,11 +18,11 @@ public class AutoConstantsBlue {
         public static ConfigurablePose START = new ConfigurablePose(36, -66, toRadians(90));
         public static ConfigurablePose STACK = new ConfigurablePose(60, -12, toRadians(0));
         public static ConfigurablePose LEFT = new ConfigurablePose(15, -14, 4.71);
-        public static ConfigurablePose MIDDLE = new ConfigurablePose(36, -14, 4.71);
+        public static ConfigurablePose MIDDLE = new ConfigurablePose(36, -14.2, 4.7);
         public static ConfigurablePose RIGHT = new ConfigurablePose(60, -15, 3.93);
         public static ConfigurablePose W_JUNCTION = new ConfigurablePose(26, -9, 2.2);
         public static ConfigurablePose BETWEEN_START_W_JUNCTION = new ConfigurablePose(36, -21, 2);
-        public static ConfigurablePose BETWEEN_W_JUNCTION_STACK = new ConfigurablePose(36, -14, .4);
+        public static ConfigurablePose BETWEEN_W_JUNCTION_STACK = new ConfigurablePose(35, -14, .4);
         public static ConfigurablePose BETWEEN_STACK_W_JUNCTION = new ConfigurablePose(36, -14, 3);
         public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(15, -60, toRadians(90));
         public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(60, -60, toRadians(90));
