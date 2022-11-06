@@ -44,7 +44,7 @@ public class BasicTankDriveOpMode extends CommandOpMode {
         } else {
             rightStickValue = 0;
         }
-        drive.setMotorPowers(Range.clip(leftStickValue * -0.8, -1, 1), Range.clip(rightStickValue * 1, -1, 1));
+        drive.setMotorPowers(Range.clip(leftStickValue * -1, -1, 1), Range.clip(rightStickValue * 1, -1, 1));
         drive.update();
 
 
