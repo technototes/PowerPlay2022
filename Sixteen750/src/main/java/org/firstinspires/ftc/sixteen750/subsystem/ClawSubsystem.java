@@ -24,7 +24,7 @@ public class ClawSubsystem implements Subsystem {
 
     public static double FLIPPER_UPPER_NORMAL = 0.4; // Verified
     public static double FLIPPER_LOWER_NORMAL = 0.5; // Verified
-    public static double FLIPPER_SCORE_MID_JUNCTION = 0.18; // Verified
+    public static double FLIPPER_SCORE_MID_JUNCTION = 0.26; // Verified
 
     public static double ELBOW_MIN_RANGE = 0.3;
     public static double ELBOW_MAX_RANGE = 0.7;
