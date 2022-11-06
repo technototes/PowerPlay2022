@@ -45,11 +45,13 @@ public class OperatorControls {
     }
 
     public void bindCoDriverClawControls() {
+        this.clawOpenButton = gamepad.rightTrigger;
+        this.clawCloseButton = gamepad.leftTrigger;
+        clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
+        clawCloseButton.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
         this.normalizeFlipperButton = gamepad.triangle;
         this.readyToScoreButton = gamepad.square;
         this.scoreMidJunctionButton = gamepad.circle;
-        clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-        clawCloseButton.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
         normalizeFlipperButton.whenPressed(new FlipperNormalCommand(robot.clawSubsystem));
         readyToScoreButton.whenPressed(new ClawReadyToScoreCommandGroup(robot.clawSubsystem));
         scoreMidJunctionButton.whenPressed(new ClawScoreCommandGroup(robot.clawSubsystem));
