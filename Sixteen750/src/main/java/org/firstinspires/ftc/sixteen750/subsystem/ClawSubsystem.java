@@ -10,7 +10,7 @@ import com.technototes.library.subsystem.Subsystem;
 
 public class ClawSubsystem implements Subsystem {
     public static double CLAW_OPEN = 0.6; // Verified
-    public static double CLAW_CLOSE = 0.5; // Verified
+    public static double CLAW_CLOSE = 0.45; // Verified
     public static double ELBOW_CARRY = 0.4;
     public static double ELBOW_RELEASE = 0.0;
     public static double FLIPPER_GROUND_JUNCTION = 2;
@@ -29,7 +29,7 @@ public class ClawSubsystem implements Subsystem {
     public static double ELBOW_MIN_RANGE = 0.3;
     public static double ELBOW_MAX_RANGE = 0.7;
     public static double ELBOW_UPWARD = 0.9; // Verified
-    public static double ELBOW_INTAKE = 0.18; // Verified
+    public static double ELBOW_INTAKE = 0.22; // Verified
     public static double ELBOW_SCORE_MID = 0.9; // Verified
 
 
