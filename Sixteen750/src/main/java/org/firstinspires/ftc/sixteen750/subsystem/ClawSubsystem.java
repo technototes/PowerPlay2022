@@ -29,7 +29,7 @@ public class ClawSubsystem implements Subsystem {
     public static double ELBOW_MIN_RANGE = 0.3;
     public static double ELBOW_MAX_RANGE = 0.7;
     public static double ELBOW_UPWARD = 0.9; // Verified
-    public static double ELBOW_INTAKE = 0.22; // Verified
+    public static double ELBOW_INTAKE = 0.2; // Verified
     public static double ELBOW_SCORE_MID = 0.9; // Verified
 
 
