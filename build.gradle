@@ -38,7 +38,9 @@ spotless {
         // target('Twenty403/**/*.java', 'Sixteen750/**/*.java', 'ForTeaching/**/*.java')
         target project.fileTree(project.rootDir) {
             include 'Twenty403/**/*.java', 'Sixteen750/**/*.java', 'ForTeaching/**/*.java'
-            exclude '**/generated/**', '**/AutoConst*.java'
+            exclude '**/generated/**'
+            exclude '**/AutoConst*.java' // Frequently used
+            exclude '**/ExperimentalSwerveDrive.java', '**/swerve_util/**', '**/SwerveDrivebaseSubsystem.java' // Mostly old code
         }
         removeUnusedImports()
         palantirJavaFormat("2.27.0")
