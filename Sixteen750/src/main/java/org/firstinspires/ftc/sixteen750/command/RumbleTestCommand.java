@@ -6,7 +6,7 @@ import com.technototes.library.control.CommandGamepad;
 public class RumbleTestCommand implements Command {
     CommandGamepad gamepad;
 
-    public RumbleTestCommand(CommandGamepad gamepad){
+    public RumbleTestCommand(CommandGamepad gamepad) {
         this.gamepad = gamepad;
     }
 

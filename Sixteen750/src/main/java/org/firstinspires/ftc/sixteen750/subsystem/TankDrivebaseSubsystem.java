@@ -5,6 +5,14 @@ import static org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem.
 
 import androidx.annotation.NonNull;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.firstinspires.ftc.sixteen750.swerve_util.LynxModuleUtil;
+import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequence;
+import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequenceBuilder;
+import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequenceRunner;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.drive.DriveSignal;
@@ -29,14 +37,6 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
-import org.firstinspires.ftc.sixteen750.swerve_util.LynxModuleUtil;
-import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequence;
-import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequenceBuilder;
-import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequenceRunner;
-
-import java.util.Arrays;
-import java.util.List;
-
 @Config
 public class TankDrivebaseSubsystem extends TankDrive {
     public static PIDCoefficients AXIAL_PID = new PIDCoefficients(0, 0, 0);
@@ -48,8 +48,10 @@ public class TankDrivebaseSubsystem extends TankDrive {
 
     private TrajectorySequenceRunner trajectorySequenceRunner;
 
-    private static final TrajectoryVelocityConstraint VEL_CONSTRAINT = getVelocityConstraint(TankDriveConstants.MAX_VEL, TankDriveConstants.MAX_ANG_VEL, TankDriveConstants.TRACK_WIDTH);
-    private static final TrajectoryAccelerationConstraint accelConstraint = getAccelerationConstraint(TankDriveConstants.MAX_ACCEL);
+    private static final TrajectoryVelocityConstraint VEL_CONSTRAINT = getVelocityConstraint(
+            TankDriveConstants.MAX_VEL, TankDriveConstants.MAX_ANG_VEL, TankDriveConstants.TRACK_WIDTH);
+    private static final TrajectoryAccelerationConstraint accelConstraint =
+            getAccelerationConstraint(TankDriveConstants.MAX_ACCEL);
 
     private TrajectoryFollower follower;
 
@@ -76,8 +78,8 @@ public class TankDrivebaseSubsystem extends TankDrive {
          * from DriveVelocityPIDTuner.
          */
         public static final boolean RUN_USING_ENCODER = true;
-        public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0, 0, 0,
-                getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
+        public static PIDFCoefficients MOTOR_VELO_PID =
+                new PIDFCoefficients(0, 0, 0, getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
 
         /*
          * These are physical constants that can be determined from your robot (including the track
@@ -89,7 +91,7 @@ public class TankDrivebaseSubsystem extends TankDrive {
          */
         // copied from swerve drive
         public static double WHEEL_RADIUS = 1.4; // in
-        public static double GEAR_RATIO = 1/(3.5*1.5*2); // output (wheel) speed / input (motor) speed
+        public static double GEAR_RATIO = 1 / (3.5 * 1.5 * 2); // output (wheel) speed / input (motor) speed
         public static double TRACK_WIDTH = 9; // in
 
         /*
@@ -114,7 +116,6 @@ public class TankDrivebaseSubsystem extends TankDrive {
         public static double MAX_ANG_VEL = Math.toRadians(60);
         public static double MAX_ANG_ACCEL = Math.toRadians(60);
 
-
         public static double encoderTicksToInches(double ticks) {
             return WHEEL_RADIUS * 2 * Math.PI * GEAR_RATIO * ticks / TICKS_PER_REV;
         }
@@ -124,22 +125,22 @@ public class TankDrivebaseSubsystem extends TankDrive {
         }
 
         public static double getMotorVelocityF(double ticksPerSecond) {
-            // see https://docs.google.com/document/d/1tyWrXDfMidwYyP_5H4mZyVgaEswhOC35gvdmP-V-5hA/edit#heading=h.61g9ixenznbx
+            // see
+            // https://docs.google.com/document/d/1tyWrXDfMidwYyP_5H4mZyVgaEswhOC35gvdmP-V-5hA/edit#heading=h.61g9ixenznbx
             return 32767 / ticksPerSecond;
         }
     }
 
-    public TankDrivebaseSubsystem(HardwareMap hardwareMap,
-                                  DcMotorEx leftFrontMotor,
-                                  DcMotorEx leftRearMotor,
-                                  DcMotorEx rightFrontMotor,
-                                  DcMotorEx rightRearMotor,
-                                  BNO055IMU imu
-    ) {
+    public TankDrivebaseSubsystem(
+            HardwareMap hardwareMap,
+            DcMotorEx leftFrontMotor,
+            DcMotorEx leftRearMotor,
+            DcMotorEx rightFrontMotor,
+            DcMotorEx rightRearMotor,
+            BNO055IMU imu) {
         super(TankDriveConstants.kV, TankDriveConstants.kA, TankDriveConstants.kStatic, TankDriveConstants.TRACK_WIDTH);
 
-        follower = new TankPIDVAFollower(AXIAL_PID, CROSS_TRACK_PID,
-                new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5);
+        follower = new TankPIDVAFollower(AXIAL_PID, CROSS_TRACK_PID, new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5);
 
         LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
 
@@ -171,8 +172,10 @@ public class TankDrivebaseSubsystem extends TankDrive {
         //        /
         //       / +X axis
         //
-        // This diagram is derived from the axes in section 3.4 https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bno055-ds000.pdf
-        // and the placement of the dot/orientation from https://docs.revrobotics.com/rev-control-system/control-system-overview/dimensions#imu-location
+        // This diagram is derived from the axes in section 3.4
+        // https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bno055-ds000.pdf
+        // and the placement of the dot/orientation from
+        // https://docs.revrobotics.com/rev-control-system/control-system-overview/dimensions#imu-location
         //
         // For example, if +Y in this diagram faces downwards, you would use AxisDirection.NEG_Y.
         // BNO055IMUUtil.remapZAxis(imu, AxisDirection.NEG_Y);
@@ -218,8 +221,7 @@ public class TankDrivebaseSubsystem extends TankDrive {
                 hardwareMap.get(DcMotorEx.class, "leftRearMotor"),
                 hardwareMap.get(DcMotorEx.class, "rightFrontMotor"),
                 hardwareMap.get(DcMotorEx.class, "rightRearMotor"),
-                hardwareMap.get(BNO055IMU.class, "imu")
-        );
+                hardwareMap.get(BNO055IMU.class, "imu"));
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
@@ -236,18 +238,12 @@ public class TankDrivebaseSubsystem extends TankDrive {
 
     public TrajectorySequenceBuilder trajectorySequenceBuilder(Pose2d startPose) {
         return new TrajectorySequenceBuilder(
-                startPose,
-                VEL_CONSTRAINT, accelConstraint,
-                TankDriveConstants.MAX_ANG_VEL, MAX_ANG_ACCEL
-        );
+                startPose, VEL_CONSTRAINT, accelConstraint, TankDriveConstants.MAX_ANG_VEL, MAX_ANG_ACCEL);
     }
 
     public void turnAsync(double angle) {
         trajectorySequenceRunner.followTrajectorySequenceAsync(
-                trajectorySequenceBuilder(getPoseEstimate())
-                        .turn(angle)
-                        .build()
-        );
+                trajectorySequenceBuilder(getPoseEstimate()).turn(angle).build());
     }
 
     public void turn(double angle) {
@@ -256,11 +252,9 @@ public class TankDrivebaseSubsystem extends TankDrive {
     }
 
     public void followTrajectoryAsync(Trajectory trajectory) {
-        trajectorySequenceRunner.followTrajectorySequenceAsync(
-                trajectorySequenceBuilder(trajectory.start())
-                        .addTrajectory(trajectory)
-                        .build()
-        );
+        trajectorySequenceRunner.followTrajectorySequenceAsync(trajectorySequenceBuilder(trajectory.start())
+                .addTrajectory(trajectory)
+                .build());
     }
 
     public void followTrajectory(Trajectory trajectory) {
@@ -281,7 +275,6 @@ public class TankDrivebaseSubsystem extends TankDrive {
         return trajectorySequenceRunner.getLastPoseError();
     }
 
-
     public void update() {
         updatePoseEstimate();
         DriveSignal signal = trajectorySequenceRunner.update(getPoseEstimate(), getPoseVelocity());
@@ -289,8 +282,7 @@ public class TankDrivebaseSubsystem extends TankDrive {
     }
 
     public void waitForIdle() {
-        while (!Thread.currentThread().isInterrupted() && isBusy())
-            update();
+        while (!Thread.currentThread().isInterrupted() && isBusy()) update();
     }
 
     public boolean isBusy() {
@@ -311,9 +303,10 @@ public class TankDrivebaseSubsystem extends TankDrive {
 
     public void setPIDFCoefficients(DcMotor.RunMode runMode, PIDFCoefficients coefficients) {
         PIDFCoefficients compensatedCoefficients = new PIDFCoefficients(
-                coefficients.p, coefficients.i, coefficients.d,
-                coefficients.f * 12 / batteryVoltageSensor.getVoltage()
-        );
+                coefficients.p,
+                coefficients.i,
+                coefficients.d,
+                coefficients.f * 12 / batteryVoltageSensor.getVoltage());
         for (DcMotorEx motor : motors) {
             motor.setPIDFCoefficients(runMode, compensatedCoefficients);
         }
@@ -324,21 +317,15 @@ public class TankDrivebaseSubsystem extends TankDrive {
 
         if (Math.abs(drivePower.getX()) + Math.abs(drivePower.getHeading()) > 1) {
             // re-normalize the powers according to the weights
-            double denom = VX_WEIGHT * Math.abs(drivePower.getX())
-                    + OMEGA_WEIGHT * Math.abs(drivePower.getHeading());
+            double denom = VX_WEIGHT * Math.abs(drivePower.getX()) + OMEGA_WEIGHT * Math.abs(drivePower.getHeading());
 
-            vel = new Pose2d(
-                    VX_WEIGHT * drivePower.getX(),
-                    0,
-                    OMEGA_WEIGHT * drivePower.getHeading()
-            ).div(denom);
+            vel = new Pose2d(VX_WEIGHT * drivePower.getX(), 0, OMEGA_WEIGHT * drivePower.getHeading()).div(denom);
         }
 
         setDrivePower(vel);
     }
 
-    @NonNull
-    @Override
+    @NonNull @Override
     public List<Double> getWheelPositions() {
         double leftSum = 0, rightSum = 0;
         for (DcMotorEx leftMotor : leftMotors) {
@@ -381,27 +368,29 @@ public class TankDrivebaseSubsystem extends TankDrive {
         return (double) imu.getAngularVelocity().zRotationRate;
     }
 
-    public static TrajectoryVelocityConstraint getVelocityConstraint(double maxVel, double maxAngularVel, double trackWidth) {
+    public static TrajectoryVelocityConstraint getVelocityConstraint(
+            double maxVel, double maxAngularVel, double trackWidth) {
         return new MinVelocityConstraint(Arrays.asList(
-                new AngularVelocityConstraint(maxAngularVel),
-                new TankVelocityConstraint(maxVel, trackWidth)
-        ));
+                new AngularVelocityConstraint(maxAngularVel), new TankVelocityConstraint(maxVel, trackWidth)));
     }
 
     public static TrajectoryAccelerationConstraint getAccelerationConstraint(double maxAccel) {
         return new ProfileAccelerationConstraint(maxAccel);
     }
 
-    public double getLeftFrontMotorVelocity(){
+    public double getLeftFrontMotorVelocity() {
         return leftMotors.get(0).getVelocity();
     }
-    public double getLeftRearMotorVelocity(){
+
+    public double getLeftRearMotorVelocity() {
         return leftMotors.get(1).getVelocity();
     }
-    public double getRightFrontMotorVelocity(){
+
+    public double getRightFrontMotorVelocity() {
         return rightMotors.get(0).getVelocity();
     }
-    public double getRightRearMotorVelocity(){
+
+    public double getRightRearMotorVelocity() {
         return rightMotors.get(1).getVelocity();
     }
 }

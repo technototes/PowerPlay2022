@@ -67,28 +67,21 @@ public class ClawServoTest extends CommandOpMode {
             hardware.elbowServo.setPosition(ELBOW_INTAKE);
         }
 
-        if (gamepad2.dpad_up){
+        if (gamepad2.dpad_up) {
             hardware.flipperServo.setPosition(upBtnServoPosition);
-        }
-        else if (gamepad2.dpad_right){
+        } else if (gamepad2.dpad_right) {
             hardware.flipperServo.setPosition(rightBtnServoPosition);
-        }
-        else if (gamepad2.dpad_down){
+        } else if (gamepad2.dpad_down) {
             hardware.flipperServo.setPosition(downBtnServoPosition);
-        }
-        else if (gamepad2.dpad_left){
+        } else if (gamepad2.dpad_left) {
             hardware.flipperServo.setPosition(leftBtnServoPosition);
-        }
-        else if (gamepad2.square){
+        } else if (gamepad2.square) {
             hardware.flipperServo.setPosition(1);
-        }
-        else if (gamepad2.circle){
+        } else if (gamepad2.circle) {
             hardware.flipperServo.setPosition(0);
-        }
-        else if (gamepad2.triangle){
+        } else if (gamepad2.triangle) {
             hardware.flipperServo.setPosition(FLIPPER_UPPER_NORMAL);
-        }
-        else if (gamepad2.x){
+        } else if (gamepad2.x) {
 
         }
 

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.sixteen750.opmode;
 
+import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -7,9 +9,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.technototes.library.structure.CommandOpMode;
 
-import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem;
+import com.technototes.library.structure.CommandOpMode;
 
 @Disabled
 @Config
@@ -40,12 +41,12 @@ public class AllInOneDebug extends CommandOpMode {
     }
 
     @Override
-    public void runLoop(){
+    public void runLoop() {
         drive.update();
         double loopSeconds = t.seconds();
         t.reset();
         telemetry.addLine("Visit 192.168.43.1:8080/dash to see the FTC-Dashboard");
-        telemetry.addData("looptime",1/loopSeconds);
+        telemetry.addData("looptime", 1 / loopSeconds);
 
         //  TelemetryPacket packet = new TelemetryPacket();
         //  Canvas fieldOverlay = packet.fieldOverlay();

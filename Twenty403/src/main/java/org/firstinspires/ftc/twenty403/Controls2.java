@@ -1,10 +1,5 @@
 package org.firstinspires.ftc.twenty403;
 
-import com.technototes.library.command.CommandScheduler;
-import com.technototes.library.control.CommandButton;
-import com.technototes.library.control.CommandGamepad;
-import com.technototes.library.control.Stick;
-
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
@@ -18,6 +13,11 @@ import org.firstinspires.ftc.twenty403.command.lift.LiftIntakeCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftLowJunctionCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftMidJunctionCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
+
+import com.technototes.library.command.CommandScheduler;
+import com.technototes.library.control.CommandButton;
+import com.technototes.library.control.CommandGamepad;
+import com.technototes.library.control.Stick;
 
 public class Controls2 {
     public Robot robot;
@@ -52,22 +52,21 @@ public class Controls2 {
         driveRightStick = gamepad.rightStick;
         turboButton = gamepad.leftStickButton;
 
-        liftUpButton = gamepad.dpadRight; //square
-        liftDownButton = gamepad.dpadDown; //cross
-        liftIntakePos = gamepad.dpadLeft; //circle
+        liftUpButton = gamepad.dpadRight; // square
+        liftDownButton = gamepad.dpadDown; // cross
+        liftIntakePos = gamepad.dpadLeft; // circle
 
-//        liftDownButtonBackup = gamepad.rightTrigger.getAsButton();
+        //        liftDownButtonBackup = gamepad.rightTrigger.getAsButton();
 
+        clawOpenButton = gamepad.rightBumper; // left
+        clawCloseButton = gamepad.leftBumper; // right
 
-        clawOpenButton = gamepad.rightBumper; //left
-        clawCloseButton = gamepad.leftBumper; //right
+        //        clawCloseButtonBackup = gamepad.leftTrigger.getAsButton();
 
-//        clawCloseButtonBackup = gamepad.leftTrigger.getAsButton();
-
-        liftGround = gamepad.cross; //dpadDown
-        liftLow = gamepad.square; //dpadLeft
-        liftMedium = gamepad.circle; //dpadRight
-        liftHigh = gamepad.triangle; //dpadUp
+        liftGround = gamepad.cross; // dpadDown
+        liftLow = gamepad.square; // dpadLeft
+        liftMedium = gamepad.circle; // dpadRight
+        liftHigh = gamepad.triangle; // dpadUp
 
         // TODO: Identify other controls for
     }
@@ -87,15 +86,15 @@ public class Controls2 {
         // TODO: Name & Bind claw controls
         clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
         clawOpenButton.whenReleased(new ClawCloseCommand(robot.clawSubsystem));
-        //clawCloseButton.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
-        //clawCloseButtonBackup.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
+        // clawCloseButton.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
+        // clawCloseButtonBackup.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
     }
 
     public void bindLiftControls() {
         // TODO: Name & Bind lift controls
         liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
         liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
-        //liftDownButtonBackup.whenPressed(new LiftDownCommand(robot.liftSubsystem));
+        // liftDownButtonBackup.whenPressed(new LiftDownCommand(robot.liftSubsystem));
         liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));
 
         liftLow.whenPressed(new LiftLowJunctionCommand(robot.liftSubsystem));
@@ -104,4 +103,3 @@ public class Controls2 {
         liftHigh.whenPressed(new LiftHighJunctionCommand(robot.liftSubsystem));
     }
 }
-

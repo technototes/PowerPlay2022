@@ -17,9 +17,9 @@ public class ClawOpenCommand implements Command {
         this.subsystem.clawOpen();
     }
 
-//    @Override
-//    public boolean isFinished() {
-//        // TODO: Adjust this duration
-//        return getRuntime().seconds() > 0.3;
-//    }
+    //    @Override
+    //    public boolean isFinished() {
+    //        // TODO: Adjust this duration
+    //        return getRuntime().seconds() > 0.3;
+    //    }
 }

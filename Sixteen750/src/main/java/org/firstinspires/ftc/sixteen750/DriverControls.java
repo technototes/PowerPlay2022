@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.sixteen750;
 
 import org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
-import org.firstinspires.ftc.sixteen750.command.RumbleTestCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftIncrementalMoveDownCommand;
@@ -41,13 +40,13 @@ public class DriverControls {
 
     private void assignNamedControllerButton() {
         // TODO: re-assign buttons
-//        resetGyroButton = gamepad.rightStickButton;
-//        driveLeftStick = gamepad.leftStick;
-//        driveRightStick = gamepad.rightStick;
-//        driveStraightenButton = gamepad.square;
+        //        resetGyroButton = gamepad.rightStickButton;
+        //        driveLeftStick = gamepad.leftStick;
+        //        driveRightStick = gamepad.rightStick;
+        //        driveStraightenButton = gamepad.square;
         // TODO: Identify other controls for
-//        rumbleTestButton = gamepad.x;
-//        rumbleTestButton.whenPressed(new RumbleTestCommand(gamepad));
+        //        rumbleTestButton = gamepad.x;
+        //        rumbleTestButton.whenPressed(new RumbleTestCommand(gamepad));
     }
 
     public void bindDriveControls() {

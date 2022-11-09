@@ -2,7 +2,6 @@ package org.firstinspires.ftc.sixteen750;
 
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
-import org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem;
 
 import com.acmerobotics.dashboard.config.Config;
 
@@ -17,7 +16,7 @@ public class Robot implements Loggable {
         public static boolean LIFT_CONNECTED = false;
     }
 
-//    public TankDrivebaseSubsystem tankDriveSubsystem;
+    //    public TankDrivebaseSubsystem tankDriveSubsystem;
     public ClawSubsystem clawSubsystem;
     public LiftSubsystem liftSubsystem;
 
@@ -31,9 +30,8 @@ public class Robot implements Loggable {
             //                    hardware.imu)
             //            )
         }
-        if (RobotConstant.TANK_DRIVE_CONNECTED) {
+        if (RobotConstant.TANK_DRIVE_CONNECTED) {}
 
-        }
         if (RobotConstant.CLAW_CONNECTED) {
             clawSubsystem = new ClawSubsystem(hardware.clawServo, hardware.flipperServo, hardware.elbowServo);
         } else {
@@ -41,8 +39,8 @@ public class Robot implements Loggable {
         }
 
         if (RobotConstant.LIFT_CONNECTED) {
-          liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, hardware.liftRightMotor);
-//            liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, null);
+            liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, hardware.liftRightMotor);
+            //            liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, null);
         } else {
             liftSubsystem = new LiftSubsystem(null, null);
         }

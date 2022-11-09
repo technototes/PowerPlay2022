@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.sixteen750.command.claw;
 
-import com.technototes.library.command.Command;
-
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
+
+import com.technototes.library.command.Command;
 
 public class FlipperIntakePositionCommand implements Command {
     private ClawSubsystem clawSubsystem;
@@ -17,9 +17,9 @@ public class FlipperIntakePositionCommand implements Command {
         this.clawSubsystem.flipperIntake();
     }
 
-//    @Override
-//    public boolean isFinished() {
-//        // TODO: Adjust this duration
-//        return getRuntime().seconds() > 1.0;
-//    }
+    //    @Override
+    //    public boolean isFinished() {
+    //        // TODO: Adjust this duration
+    //        return getRuntime().seconds() > 1.0;
+    //    }
 }

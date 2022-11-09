@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.sixteen750.opmode;
 
+import org.firstinspires.ftc.sixteen750.swerve_util.AbsoluteAnalogEncoder;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.technototes.library.structure.CommandOpMode;
 
-import org.firstinspires.ftc.sixteen750.swerve_util.AbsoluteAnalogEncoder;
+import com.technototes.library.structure.CommandOpMode;
 
 @Disabled
 @TeleOp(group = "Test-Hardware")
@@ -45,8 +46,7 @@ public class AbsoluteAnalogEncoderDebug extends CommandOpMode {
 
             telemetry.addData("LeftRear - Position", leftRearEncoder.getCurrentPosition());
             telemetry.addData("LeftRear - Voltage", leftRearEncoder.getVoltage());
-        }
-        else {
+        } else {
             telemetry.addLine("WARNING: Left Disconnected");
         }
 
@@ -56,8 +56,7 @@ public class AbsoluteAnalogEncoderDebug extends CommandOpMode {
 
             telemetry.addData("RightFront - Position", rightFrontEncoder.getCurrentPosition());
             telemetry.addData("RightFront - Voltage", rightFrontEncoder.getVoltage());
-        }
-        else {
+        } else {
             telemetry.addLine("WARNING: Right Disconnected");
         }
 

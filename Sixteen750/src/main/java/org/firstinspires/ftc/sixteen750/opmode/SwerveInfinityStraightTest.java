@@ -1,15 +1,15 @@
 package org.firstinspires.ftc.sixteen750.opmode;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem;
+import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequence;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem;
-import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequence;
 
 @Config
 @Autonomous(group = "Test-Path")
@@ -18,7 +18,7 @@ public class SwerveInfinityStraightTest extends LinearOpMode {
     public static double DISTANCE = 100; // in
     int loopCount = 0;
 
-    public Integer updateCallback(SwerveDrivebaseSubsystem drive, Telemetry telemetry){
+    public Integer updateCallback(SwerveDrivebaseSubsystem drive, Telemetry telemetry) {
         telemetry.addLine("Visit 192.168.43.1:8080/dash to see the FTC-Dashboard");
         Pose2d poseEstimate = drive.getPoseEstimate();
         telemetry.addData("X", poseEstimate.getX());

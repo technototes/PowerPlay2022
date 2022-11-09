@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.sixteen750.command.claw;
 
-import com.technototes.library.command.Command;
-
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
+
+import com.technototes.library.command.Command;
 
 public class ElbowServoIncrementalUpCommand implements Command {
     private final ClawSubsystem clawSubsystem;

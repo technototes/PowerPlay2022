@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.sixteen750.command.claw;
 
-import com.technototes.library.command.Command;
-
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
+
+import com.technototes.library.command.Command;
 
 public class ElbowScoreMidJunctionCommand implements Command {
     private ClawSubsystem clawSubsystem;
@@ -17,9 +17,9 @@ public class ElbowScoreMidJunctionCommand implements Command {
         this.clawSubsystem.elbowScoreMidJunction();
     }
 
-//    @Override
-//    public boolean isFinished() {
-//        // TODO: Adjust this duration
-//        return getRuntime().seconds() > 0.5;
-//    }
+    //    @Override
+    //    public boolean isFinished() {
+    //        // TODO: Adjust this duration
+    //        return getRuntime().seconds() > 0.5;
+    //    }
 }

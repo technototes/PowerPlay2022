@@ -51,8 +51,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
             this.leftMotor = leftM;
             this.leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
             this.isLeftConnected = true;
-        }
-        else {
+        } else {
             this.isLeftConnected = false;
         }
 
@@ -70,7 +69,8 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
             leftPidController.setTargetPosition(Range.clip(lPos, LEFT_ABSOLUTE_MIN_HEIGHT, LEFT_ABSOLUTE_MAX_HEIGHT));
         }
         if (isRightConnected) {
-            rightPidController.setTargetPosition(Range.clip(rPos, RIGHT_ABSOLUTE_MIN_HEIGHT, RIGHT_ABSOLUTE_MAX_HEIGHT));
+            rightPidController.setTargetPosition(
+                    Range.clip(rPos, RIGHT_ABSOLUTE_MIN_HEIGHT, RIGHT_ABSOLUTE_MAX_HEIGHT));
         }
     }
 
@@ -106,7 +106,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     private void setTargetPositionWithLogging(double lVal, double rVal) {
         setTargetPosition(lVal, rVal);
-        if (isLeftConnected){
+        if (isLeftConnected) {
             lpAndActual = String.format("%d (%d)", (int) lVal, leftMotor.get().intValue());
         }
         if (isRightConnected) {
@@ -129,11 +129,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
             rightMotor.setSpeed(rClippedSpeed);
             // For logging purposes, I'm also doing this, to ensure that both values are updated
         }
-//        double rightTarget = 0;
-//        if (!singleMotor) {
-//            rightTarget = rightPidController.getTargetPosition();
-//        }
-//        setTargetPositionWithLogging(leftPidController.getTargetPosition(), rightTarget);
+        //        double rightTarget = 0;
+        //        if (!singleMotor) {
+        //            rightTarget = rightPidController.getTargetPosition();
+        //        }
+        //        setTargetPositionWithLogging(leftPidController.getTargetPosition(), rightTarget);
     }
 
     //    public double delta() {
@@ -196,7 +196,8 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         if (isLeftConnected) {
             // maybe getCurrentPosition instead of getTargetPosition
             double rightTargetPosition = leftPidController.getTargetPosition();
-            setTargetPositionWithLogging(rightTargetPosition + L_INCREMENTAL_MOVE, rightTargetPosition + R_INCREMENTAL_MOVE);
+            setTargetPositionWithLogging(
+                    rightTargetPosition + L_INCREMENTAL_MOVE, rightTargetPosition + R_INCREMENTAL_MOVE);
         }
     }
 
@@ -204,7 +205,8 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         if (isRightConnected) {
             // maybe getCurrentPosition instead of getTargetPosition
             double leftTargetPosition = leftPidController.getTargetPosition();
-            setTargetPositionWithLogging(leftTargetPosition - L_INCREMENTAL_MOVE, leftTargetPosition - R_INCREMENTAL_MOVE);
+            setTargetPositionWithLogging(
+                    leftTargetPosition - L_INCREMENTAL_MOVE, leftTargetPosition - R_INCREMENTAL_MOVE);
         }
     }
 
@@ -218,9 +220,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public double getRightPos() {
         if (isRightConnected) {
             // Invert the sign on this one to make it look like it's rotating the same way...
-            return -rightMotor
-                    .getEncoder()
-                    .getPosition();
+            return -rightMotor.getEncoder().getPosition();
         }
         return 0.0;
     }

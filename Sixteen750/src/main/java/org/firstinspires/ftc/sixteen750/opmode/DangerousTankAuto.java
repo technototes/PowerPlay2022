@@ -1,14 +1,15 @@
 package org.firstinspires.ftc.sixteen750.opmode;
 
+import org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem;
-
 @Autonomous(name = "Move Forward")
 public class DangerousTankAuto extends LinearOpMode {
     public static int DURATION_MS = 300;
+
     @Override
     public void runOpMode() throws InterruptedException {
         TankDrivebaseSubsystem drive = new TankDrivebaseSubsystem(hardwareMap);
