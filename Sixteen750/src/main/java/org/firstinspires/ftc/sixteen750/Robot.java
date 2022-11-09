@@ -2,6 +2,7 @@ package org.firstinspires.ftc.sixteen750;
 
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem;
 
 import com.acmerobotics.dashboard.config.Config;
 
@@ -10,17 +11,18 @@ import com.technototes.library.logger.Loggable;
 public class Robot implements Loggable {
     @Config
     public static class RobotConstant {
-        public static boolean DRIVE_CONNECTED = false;
+        public static boolean SWERVE_DRIVE_CONNECTED = false;
+        public static boolean TANK_DRIVE_CONNECTED = true;
         public static boolean CLAW_CONNECTED = true;
-        public static boolean LIFT_CONNECTED = true;
+        public static boolean LIFT_CONNECTED = false;
     }
 
-    // public DriveBaseSubsystem driveBaseSubsystem;
+//    public TankDrivebaseSubsystem tankDriveSubsystem;
     public ClawSubsystem clawSubsystem;
     public LiftSubsystem liftSubsystem;
 
     public Robot(Hardware hardware) {
-        if (RobotConstant.DRIVE_CONNECTED) {
+        if (RobotConstant.SWERVE_DRIVE_CONNECTED) {
             //            driveBaseSubsystem(
             //                    hardware.flDriveMotor,
             //                    hardware.frDriveMotor,
@@ -29,16 +31,20 @@ public class Robot implements Loggable {
             //                    hardware.imu)
             //            )
         }
+        if (RobotConstant.TANK_DRIVE_CONNECTED) {
+
+        }
         if (RobotConstant.CLAW_CONNECTED) {
-            clawSubsystem = new ClawSubsystem(hardware.claw, hardware.flipper, hardware.elbow);
+            clawSubsystem = new ClawSubsystem(hardware.clawServo, hardware.flipperServo, hardware.elbowServo);
         } else {
             clawSubsystem = new ClawSubsystem();
         }
 
         if (RobotConstant.LIFT_CONNECTED) {
-            liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, hardware.liftRightMotor);
+          liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, hardware.liftRightMotor);
+//            liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, null);
         } else {
-            liftSubsystem = new LiftSubsystem();
+            liftSubsystem = new LiftSubsystem(null, null);
         }
     }
 }

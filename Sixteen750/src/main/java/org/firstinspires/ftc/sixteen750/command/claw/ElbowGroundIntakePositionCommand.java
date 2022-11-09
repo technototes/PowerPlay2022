@@ -1,20 +1,20 @@
 package org.firstinspires.ftc.sixteen750.command.claw;
 
-import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
-
 import com.technototes.library.command.Command;
 
-public class ClawCloseCommand implements Command {
-    private ClawSubsystem subsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 
-    public ClawCloseCommand(ClawSubsystem s) {
-        subsystem = s;
+public class ElbowGroundIntakePositionCommand implements Command {
+    private ClawSubsystem clawSubsystem;
+
+    public ElbowGroundIntakePositionCommand(ClawSubsystem s) {
+        clawSubsystem = s;
         addRequirements(s);
     }
 
     @Override
     public void execute() {
-        subsystem.clawClose();
+        clawSubsystem.elbowGroundIntake();
     }
 
 //    @Override

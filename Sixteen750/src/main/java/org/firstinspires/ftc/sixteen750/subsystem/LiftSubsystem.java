@@ -15,120 +15,102 @@ import com.technototes.library.subsystem.Subsystem;
 @Config
 public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     // TODO: THESE VALUES ARE ALL WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
-    public static double TICKS_INCH = 750;
-    public static double LGROUND_JUNCTION = 0.5 * TICKS_INCH;
-    public static double RGROUND_JUNCTION = 0.5 * TICKS_INCH;
-    public static double LLOW_JUNCTION = 12 * TICKS_INCH;
-    public static double RLOW_JUNCTION = 12 * TICKS_INCH;
-    public static double LMEDIUM_JUNCTION = 24 * TICKS_INCH;
-    public static double RMEDIUM_JUNCTION = 24 * TICKS_INCH;
-    public static double LHIGH_JUNCTION = 36 * TICKS_INCH;
-    public static double RHIGH_JUNCTION = 36 * TICKS_INCH;
-    public static double MAX_HEIGHT = 38 * TICKS_INCH;
+    public static double TICKS_INCH = 750; // WRONG,
+    public static double L_GROUND_JUNCTION = 0.5 * TICKS_INCH; // WRONG
+    public static double R_GROUND_JUNCTION = 0.5 * TICKS_INCH; // WRONG
+    public static double L_LOW_JUNCTION = 12 * TICKS_INCH; // WRONG
+    public static double R_LOW_JUNCTION = 12 * TICKS_INCH; // WRONG
+    public static double L_MEDIUM_JUNCTION = 24 * TICKS_INCH; // WRONG
+    public static double R_MEDIUM_JUNCTION = 24 * TICKS_INCH; // WRONG
+    public static double L_HIGH_JUNCTION = 36 * TICKS_INCH; // WRONG
+    public static double R_HIGH_JUNCTION = 36 * TICKS_INCH; // WRONG
+    public static double MAX_HEIGHT = 38 * TICKS_INCH; // WRONG
+    public static double LEFT_ABSOLUTE_MAX_HEIGHT = 1651;
+    public static double RIGHT_ABSOLUTE_MAX_HEIGHT = 1651; // COPIED FROM LEFT
     public static double MIN_HEIGHT = 0;
-    public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH;
-    public static double DEAD_ZONE = .25 * TICKS_INCH;
+    public static double LEFT_ABSOLUTE_MIN_HEIGHT = 15;
+    public static double RIGHT_ABSOLUTE_MIN_HEIGHT = 15; // COPIED FROM LEFT
+    public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH; // WRONG
+    public static double DEAD_ZONE = .25 * TICKS_INCH; // WRONG
     public static double MAX_MOTOR_SPEED = 0.8;
     public static double MIN_MOTOR_SPEED = -0.4; // Gravity
-    public static double LMOVE = 2.25 * TICKS_INCH;
-    public static double RMOVE = 2.25 * TICKS_INCH;
+    public static double L_INCREMENTAL_MOVE = 10;
+    public static double R_INCREMENTAL_MOVE = 10;
     public static PIDCoefficients PID = new PIDCoefficients(0.008, 0, 0.0005);
 
     private EncodedMotor<DcMotorEx> leftMotor;
     private PIDFController leftPidController;
+    private final boolean isLeftConnected;
 
-    private boolean singleMotor;
-    private boolean isHardware;
     private EncodedMotor<DcMotorEx> rightMotor;
     private PIDFController rightPidController;
+    private final boolean isRightConnected;
 
-    public LiftSubsystem(EncodedMotor<DcMotorEx> lm, EncodedMotor<DcMotorEx> rm) {
-        leftMotor = lm;
-        leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
-
-        rightMotor = rm;
-        rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
-        singleMotor = false;
-        isHardware = true;
-    }
-
-    public LiftSubsystem(EncodedMotor<DcMotorEx> oneMotor) {
-        leftMotor = oneMotor;
-        leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
-        singleMotor = false;
-        rightMotor = null;
-        rightPidController = null;
-        isHardware = true;
-    }
-
-    public LiftSubsystem() {
-        isHardware = false;
-        leftMotor = null;
-        rightMotor = null;
-        leftPidController = null;
-        rightPidController = null;
-    }
-
-    private void setPosition(double lpos, double rpos) {
-        if (!isHardware) {
-            return;
+    public LiftSubsystem(EncodedMotor<DcMotorEx> leftM, EncodedMotor<DcMotorEx> rightM) {
+        if (leftM != null) {
+            this.leftMotor = leftM;
+            this.leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
+            this.isLeftConnected = true;
         }
-        leftPidController.setTargetPosition(Range.clip(lpos, MIN_HEIGHT, MAX_HEIGHT));
-        if (singleMotor == false) {
-            rightPidController.setTargetPosition(Range.clip(rpos, MIN_HEIGHT, MAX_HEIGHT));
+        else {
+            this.isLeftConnected = false;
+        }
+
+        if (rightM != null) {
+            this.rightMotor = rightM;
+            this.rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
+            this.isRightConnected = true;
+        } else {
+            this.isRightConnected = false;
+        }
+    }
+
+    private void setTargetPosition(double lPos, double rPos) {
+        if (isLeftConnected) {
+            leftPidController.setTargetPosition(Range.clip(lPos, LEFT_ABSOLUTE_MIN_HEIGHT, LEFT_ABSOLUTE_MAX_HEIGHT));
+        }
+        if (isRightConnected) {
+            rightPidController.setTargetPosition(Range.clip(rPos, RIGHT_ABSOLUTE_MIN_HEIGHT, RIGHT_ABSOLUTE_MAX_HEIGHT));
         }
     }
 
     public void setTop() {
-        if (!isHardware) {
-            return;
-        }
-        leftPidController.setTargetPosition(MAX_HEIGHT);
-        if (singleMotor == false) {
-            rightPidController.setTargetPosition(MAX_HEIGHT);
-        }
+        // null check will be done in setTargetPosition()
+        this.setTargetPosition(LEFT_ABSOLUTE_MAX_HEIGHT, RIGHT_ABSOLUTE_MAX_HEIGHT);
     }
 
     public void setBottom() {
-        if (!isHardware) {
-            return;
-        }
-        leftPidController.setTargetPosition(MIN_HEIGHT);
-        if (singleMotor == false) {
-            rightPidController.setTargetPosition(MIN_HEIGHT);
-        }
+        // null check will be done in setTargetPosition()
+        this.setTargetPosition(LEFT_ABSOLUTE_MIN_HEIGHT, RIGHT_ABSOLUTE_MIN_HEIGHT);
     }
 
     public void stop() {
-        if (!isHardware) {
-            return;
-        }
         // By resetting the pidController, it stops the periodic function from making changes
-        leftPidController.reset();
-        if (singleMotor == false) {
+        if (isLeftConnected) {
+            leftPidController.reset();
+        }
+        if (isRightConnected) {
             rightPidController.reset();
         }
     }
 
     public void halt() {
-        if (!isHardware) {
-            return;
-        }
         // Just set the target position to the current position to get the motor to stop, yes?
-        leftPidController.setTargetPosition(leftMotor.get());
-        if (!singleMotor) {
-            rightPidController.setTargetPosition(rightMotor.get());
+        if (isLeftConnected) {
+            leftPidController.setTargetPosition(this.getLeftPos());
+        }
+        if (isRightConnected) {
+            rightPidController.setTargetPosition(this.getRightPos());
         }
     }
 
-    private void setLiftPosition(double lval, double rval) {
-        if (!isHardware) {
-            return;
+    private void setTargetPositionWithLogging(double lVal, double rVal) {
+        setTargetPosition(lVal, rVal);
+        if (isLeftConnected){
+            lpAndActual = String.format("%d (%d)", (int) lVal, leftMotor.get().intValue());
         }
-        setPosition(lval, rval);
-        lpAndActual = String.format("%d (%d)", (int) lval, leftMotor.get().intValue());
-        if (singleMotor == false) {
-            rpAndActual = String.format("%d (%d)", (int) rval, rightMotor.get().intValue());
+        if (isRightConnected) {
+            rpAndActual = String.format("%d (%d)", (int) rVal, rightMotor.get().intValue());
         }
     }
 
@@ -136,23 +118,22 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     // So you can just call "setTop" in a command and it will get there "as soon as it can"
     @Override
     public void periodic() {
-        if (!isHardware) {
-            return;
+        if (isLeftConnected) {
+            double leftTargetSpeed = leftPidController.update(getLeftPos());
+            double leftClippedSpeed = Range.clip(leftTargetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
+            leftMotor.setSpeed(leftClippedSpeed);
         }
-        double ltargetSpeed = leftPidController.update(leftMotor.get());
-        double lclippedSpeed = Range.clip(ltargetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
-        leftMotor.setSpeed(lclippedSpeed);
-        if (!singleMotor) {
-            double rtargetSpeed = rightPidController.update(rightMotor.get());
-            double rclippedSpeed = Range.clip(rtargetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
-            rightMotor.setSpeed(rclippedSpeed);
+        if (isRightConnected) {
+            double rTargetSpeed = rightPidController.update(getRightPos());
+            double rClippedSpeed = Range.clip(rTargetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
+            rightMotor.setSpeed(rClippedSpeed);
             // For logging purposes, I'm also doing this, to ensure that both values are updated
         }
-        double rightTarget = 0;
-        if (!singleMotor) {
-            rightTarget = rightPidController.getTargetPosition();
-        }
-        setLiftPosition(leftPidController.getTargetPosition(), rightTarget);
+//        double rightTarget = 0;
+//        if (!singleMotor) {
+//            rightTarget = rightPidController.getTargetPosition();
+//        }
+//        setTargetPositionWithLogging(leftPidController.getTargetPosition(), rightTarget);
     }
 
     //    public double delta() {
@@ -174,11 +155,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     @Override
     public Double get() {
-        if (!isHardware) {
-            return 0.0;
-        }
         // Not sure about this one
-        return leftPidController.getTargetPosition();
+        if (isLeftConnected) {
+            return leftPidController.getTargetPosition();
+        }
+        return 0.0;
         //        return rightPidController.getTargetPosition();
     }
 
@@ -192,76 +173,55 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     //    }
 
     public void highPole() {
-        if (!isHardware) {
-            return;
-        }
-        setLiftPosition(LHIGH_JUNCTION, RHIGH_JUNCTION);
+        // null check will be done in setTargetPosition()
+        setTargetPositionWithLogging(L_HIGH_JUNCTION, R_HIGH_JUNCTION);
     }
 
     public void midPole() {
-        if (!isHardware) {
-            return;
-        }
-        setLiftPosition(LMEDIUM_JUNCTION, RMEDIUM_JUNCTION);
+        // null check will be done in setTargetPosition()
+        setTargetPositionWithLogging(L_MEDIUM_JUNCTION, R_MEDIUM_JUNCTION);
     }
 
     public void lowPole() {
-        if (!isHardware) {
-            return;
-        }
-        setLiftPosition(LLOW_JUNCTION, RLOW_JUNCTION);
+        // null check will be done in setTargetPosition()
+        setTargetPositionWithLogging(L_LOW_JUNCTION, R_LOW_JUNCTION);
     }
 
     public void groundJunction() {
-        if (!isHardware) {
-            return;
-        }
-        setLiftPosition(LGROUND_JUNCTION, RGROUND_JUNCTION);
+        // null check will be done in setTargetPosition()
+        setTargetPositionWithLogging(L_GROUND_JUNCTION, R_GROUND_JUNCTION);
     }
 
     public void moveUp() {
-        if (!isHardware) {
-            return;
+        if (isLeftConnected) {
+            // maybe getCurrentPosition instead of getTargetPosition
+            double rightTargetPosition = leftPidController.getTargetPosition();
+            setTargetPositionWithLogging(rightTargetPosition + L_INCREMENTAL_MOVE, rightTargetPosition + R_INCREMENTAL_MOVE);
         }
-        // maybe getCurrentPosition instead of getTargetPosition
-        double position = leftPidController.getTargetPosition();
-        setLiftPosition(position + LMOVE, position + RMOVE);
     }
 
     public void moveDown() {
-        if (!isHardware) {
-            return;
+        if (isRightConnected) {
+            // maybe getCurrentPosition instead of getTargetPosition
+            double leftTargetPosition = leftPidController.getTargetPosition();
+            setTargetPositionWithLogging(leftTargetPosition - L_INCREMENTAL_MOVE, leftTargetPosition - R_INCREMENTAL_MOVE);
         }
-        // maybe getCurrentPosition instead of getTargetPosition
-        double position = leftPidController.getTargetPosition();
-        setLiftPosition(position - LMOVE, position - RMOVE);
     }
 
     public double getLeftPos() {
-        if (!isHardware) {
-            return 0;
+        if (isLeftConnected) {
+            return leftMotor.getEncoder().getPosition();
         }
-        if (leftMotor.getEncoder() != null) {
-            // Invert the sign on this one to make it look like it's rotating the same way...
-            return -leftMotor.getEncoder().getPosition(); // .get() will cause NullPointerException
-        } else {
-            return 16750;
-        }
-
-        //        return -leftMotor.get();
+        return 0.0;
     }
 
     public double getRightPos() {
-        if (!isHardware || singleMotor) {
-            return 0;
-        }
-        if (rightMotor.getEncoder() != null) {
-            return rightMotor
+        if (isRightConnected) {
+            // Invert the sign on this one to make it look like it's rotating the same way...
+            return -rightMotor
                     .getEncoder()
-                    .getPosition(); // will cause NullPointerException when the encoder cable is bad
-        } else {
-            return 16750;
+                    .getPosition();
         }
-        //        return rightMotor.get();
+        return 0.0;
     }
 }

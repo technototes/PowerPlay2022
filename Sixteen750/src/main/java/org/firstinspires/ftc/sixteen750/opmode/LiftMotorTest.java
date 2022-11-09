@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.sixteen750.opmode;
 
-import org.firstinspires.ftc.sixteen750.ControlDriver;
+import org.firstinspires.ftc.sixteen750.DriverControls;
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
 
@@ -10,17 +10,18 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import com.technototes.library.structure.CommandOpMode;
 
-@TeleOp(name = "LiftTestTeleOp")
-public class LiftTestTeleOpMode extends CommandOpMode {
+@TeleOp(group = "Test-Hardware")
+@SuppressWarnings("unused")
+public class LiftMotorTest extends CommandOpMode {
     public Robot robot;
-    public ControlDriver controls;
+    public DriverControls controls;
     public Hardware hardware;
 
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware);
-        controls = new ControlDriver(driverGamepad, robot);
+        controls = new DriverControls(driverGamepad, robot);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
