@@ -1,18 +1,19 @@
 package org.firstinspires.ftc.sixteen750.opmode;
 
+import org.firstinspires.ftc.sixteen750.DriverControls;
+import org.firstinspires.ftc.sixteen750.Hardware;
+import org.firstinspires.ftc.sixteen750.OperatorControls;
+import org.firstinspires.ftc.sixteen750.Robot;
+import org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
-import com.technototes.library.structure.CommandOpMode;
 
-import org.firstinspires.ftc.sixteen750.DriverControls;
-import org.firstinspires.ftc.sixteen750.Hardware;
-import org.firstinspires.ftc.sixteen750.OperatorControls;
-import org.firstinspires.ftc.sixteen750.Robot;
-import org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem;
+import com.technototes.library.structure.CommandOpMode;
 
 @Config
 @TeleOp(group = "Tank")
@@ -43,7 +44,7 @@ public class RegularTankDrive extends CommandOpMode {
     public void uponStart() {}
 
     @Override
-    public void runLoop(){
+    public void runLoop() {
         // TODO: maybe use setWeightedDrivePower()?
         // TODO: use controls class since this might conflict with CommandGamepad
         double leftStickValue, rightStickValue;

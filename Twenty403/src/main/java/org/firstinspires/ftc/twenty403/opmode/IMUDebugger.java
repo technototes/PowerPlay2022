@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.twenty403.opmode;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.technototes.library.structure.CommandOpMode;
-import com.technototes.library.util.Alliance;
-
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
+
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import com.technototes.library.structure.CommandOpMode;
+import com.technototes.library.util.Alliance;
 
 @TeleOp(name = "IMU Test")
 public class IMUDebugger extends CommandOpMode {
@@ -20,7 +21,7 @@ public class IMUDebugger extends CommandOpMode {
     }
 
     @Override
-    public void runLoop(){
+    public void runLoop() {
         telemetry.addData("ExternalHeading", robot.drivebaseSubsystem.getExternalHeading());
         telemetry.addData("ExternalHeadingVelocity", robot.drivebaseSubsystem.getExternalHeadingVelocity());
 

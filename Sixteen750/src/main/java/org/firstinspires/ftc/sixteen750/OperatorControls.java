@@ -1,9 +1,5 @@
 package org.firstinspires.ftc.sixteen750;
 
-import com.technototes.library.control.CommandAxis;
-import com.technototes.library.control.CommandButton;
-import com.technototes.library.control.CommandGamepad;
-
 import org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
 import org.firstinspires.ftc.sixteen750.command.claw.ArmRetractCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
@@ -17,6 +13,10 @@ import org.firstinspires.ftc.sixteen750.command.claw.FlipperServoIncrementalDown
 import org.firstinspires.ftc.sixteen750.command.claw.FlipperServoIncrementalUpCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftIncrementalMoveDownCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftIncrementalMoveUpCommand;
+
+import com.technototes.library.control.CommandAxis;
+import com.technototes.library.control.CommandButton;
+import com.technototes.library.control.CommandGamepad;
 
 public class OperatorControls {
     public Robot robot;
@@ -43,8 +43,8 @@ public class OperatorControls {
     }
 
     public void assignNamedControllerButton() {
-//        this.rumbleTestButton = gamepad.x;
-//        rumbleTestButton.whenPressed(new RumbleTestCommand(gamepad));
+        //        this.rumbleTestButton = gamepad.x;
+        //        rumbleTestButton.whenPressed(new RumbleTestCommand(gamepad));
     }
 
     public void bindCoDriverClawControls() {

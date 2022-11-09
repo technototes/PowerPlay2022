@@ -3,8 +3,8 @@ package org.firstinspires.ftc.sixteen750.subsystem;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import com.qualcomm.robotcore.hardware.DistanceSensor;
-
 import com.qualcomm.robotcore.util.Range;
+
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.subsystem.Subsystem;
 
@@ -31,7 +31,6 @@ public class ClawSubsystem implements Subsystem {
     public static double ELBOW_UPWARD = 0.9; // Verified
     public static double ELBOW_INTAKE = 0.2; // Verified
     public static double ELBOW_SCORE_MID = 0.9; // Verified
-
 
     private Servo clawServo;
     private Servo flipperServo;
@@ -105,11 +104,11 @@ public class ClawSubsystem implements Subsystem {
         elbowServo.setPosition(ELBOW_HIGH);
     }
 
-    public void flipperNormal(){
+    public void flipperNormal() {
         flipperServo.setPosition(FLIPPER_UPPER_NORMAL);
     }
 
-    public void elbowUpward(){
+    public void elbowUpward() {
         elbowServo.setPosition(ELBOW_UPWARD);
     }
 
@@ -132,39 +131,39 @@ public class ClawSubsystem implements Subsystem {
         return elbowServo.getPosition();
     }
 
-    public void elbowGroundIntake(){
+    public void elbowGroundIntake() {
         elbowServo.setPosition(ELBOW_INTAKE);
     }
 
-    public void flipperPreIntake(){
+    public void flipperPreIntake() {
         flipperServo.setPosition(FLIPPER_UPPER_NORMAL);
     }
 
-    public void flipperIntake(){
+    public void flipperIntake() {
         flipperServo.setPosition(FLIPPER_LOWER_NORMAL);
     }
 
-    public void elbowScoreMidJunction(){
+    public void elbowScoreMidJunction() {
         elbowServo.setPosition(ELBOW_SCORE_MID);
     }
 
-    public void flipperScoreMidJunction(){
+    public void flipperScoreMidJunction() {
         flipperServo.setPosition(FLIPPER_SCORE_MID_JUNCTION);
     }
 
-    public void flipperServoIncrementalDown(){
+    public void flipperServoIncrementalDown() {
         flipperServo.setPosition(Range.clip(flipperServo.getPosition() - 0.02, 0, 1));
     }
 
-    public void flipperServoIncrementalUp(){
+    public void flipperServoIncrementalUp() {
         flipperServo.setPosition(Range.clip(flipperServo.getPosition() + 0.02, 0, 1));
     }
 
-    public void elbowServoIncrementalDown(){
+    public void elbowServoIncrementalDown() {
         elbowServo.setPosition(Range.clip(elbowServo.getPosition() - 0.03, 0, 1));
     }
 
-    public void elbowServoIncrementalUp(){
+    public void elbowServoIncrementalUp() {
         elbowServo.setPosition(Range.clip(elbowServo.getPosition() + 0.03, 0, 1));
     }
 }

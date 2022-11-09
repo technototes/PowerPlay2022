@@ -1,14 +1,15 @@
 package org.firstinspires.ftc.sixteen750.opmode;
 
+import org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
-import com.technototes.library.structure.CommandOpMode;
 
-import org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem;
+import com.technototes.library.structure.CommandOpMode;
 
 @Config
 @TeleOp(name = "BasicTankDrive", group = "Tank")
@@ -27,8 +28,7 @@ public class BasicTankDriveOpMode extends CommandOpMode {
     }
 
     @Override
-    public void uponStart() {
-    }
+    public void uponStart() {}
 
     @Override
     public void runLoop() {
@@ -46,7 +46,6 @@ public class BasicTankDriveOpMode extends CommandOpMode {
         }
         drive.setMotorPowers(Range.clip(leftStickValue * -1, -1, 1), Range.clip(rightStickValue * 1, -1, 1));
         drive.update();
-
 
         telemetry.addData("Left Stick", leftStickValue);
         telemetry.addData("Right Stick", rightStickValue);
