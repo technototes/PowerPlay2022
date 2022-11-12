@@ -18,7 +18,7 @@ import com.technototes.library.control.CommandAxis;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 
-public class OperatorControls {
+public class ControlsOperator {
     public Robot robot;
     public CommandGamepad gamepad;
 
@@ -28,7 +28,7 @@ public class OperatorControls {
     public CommandButton rumbleTestButton;
     public CommandButton flipperUpButton, flipperDownButton, elbowUpButton, elbowDownButton;
 
-    public OperatorControls(CommandGamepad g, Robot r) {
+    public ControlsOperator(CommandGamepad g, Robot r) {
         this.robot = r;
         this.gamepad = g;
 

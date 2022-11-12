@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.sixteen750.opmode.teleop;
 
-import org.firstinspires.ftc.sixteen750.DriverControls;
+import org.firstinspires.ftc.sixteen750.ControlsDriver;
 import org.firstinspires.ftc.sixteen750.Hardware;
-import org.firstinspires.ftc.sixteen750.OperatorControls;
+import org.firstinspires.ftc.sixteen750.ControlsOperator;
 import org.firstinspires.ftc.sixteen750.Robot;
 import org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem;
 
@@ -22,8 +22,8 @@ public class RegularTankDrive extends CommandOpMode {
     TankDrivebaseSubsystem drive;
     Robot robot;
     Hardware hardware;
-    DriverControls driverControls;
-    OperatorControls operatorControls;
+    ControlsDriver driverControls;
+    ControlsOperator operatorControls;
 
     public static final double STICK_DEAD_ZONE = 0.05;
 
@@ -31,8 +31,8 @@ public class RegularTankDrive extends CommandOpMode {
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware);
-        driverControls = new DriverControls(driverGamepad, robot);
-        operatorControls = new OperatorControls(codriverGamepad, robot);
+        driverControls = new ControlsDriver(driverGamepad, robot);
+        operatorControls = new ControlsOperator(codriverGamepad, robot);
 
         drive = new TankDrivebaseSubsystem(hardwareMap);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
