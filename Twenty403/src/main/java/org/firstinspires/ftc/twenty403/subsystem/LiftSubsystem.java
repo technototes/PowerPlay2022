@@ -31,6 +31,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double RHIGH_JUNCTION = 6560;
     public static double MAX_HEIGHT = 7000;
     public static double MIN_HEIGHT = 0;
+
+    public static double LEFT_ACTUAL_ZERO = 0;
+    public static double RIGHT_ACTUAL_ZERO = 0;
+
+
     // TODO: THESE VALUES ARE PROBABLY WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
     public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH;
     public static double DEAD_ZONE = .25 * TICKS_INCH;
@@ -236,18 +241,29 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         rMotorPower = String.format("Power assigned: %f", rp);
     }
 
+    public void setNewZero() {
+        if (!isHardware) {
+            return;
+        }
+        LEFT_ACTUAL_ZERO = _leftMotor.get();
+        if (singleMotor) {
+            return;
+        }
+        RIGHT_ACTUAL_ZERO = _rightMotor.get();
+    }
+
     private double getLeftPos() {
         if (!isHardware) {
             return 0;
         }
         // Invert the sign on this one to make it look like it's rotating the same way...
-        return -_leftMotor.get();
+        return -(_leftMotor.get() - LEFT_ACTUAL_ZERO);
     }
 
     private double getRightPos() {
         if (!isHardware || singleMotor) {
             return 0;
         }
-        return _rightMotor.get();
+        return _rightMotor.get() - RIGHT_ACTUAL_ZERO;
     }
 }
