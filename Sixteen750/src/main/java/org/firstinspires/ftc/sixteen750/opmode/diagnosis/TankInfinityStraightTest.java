@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.sixteen750.opmode;
+package org.firstinspires.ftc.sixteen750.opmode.diagnosis;
 
 import org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem;
 import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequence;

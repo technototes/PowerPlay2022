@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.sixteen750.opmode;
+package org.firstinspires.ftc.sixteen750.opmode.diagnosis;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
