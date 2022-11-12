@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.twenty403;
 
+import java.util.function.BooleanSupplier;
+
 import org.firstinspires.ftc.twenty403.Robot.RobotConstant;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
@@ -17,23 +19,44 @@ import org.firstinspires.ftc.twenty403.command.lift.LiftSetZeroCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
 
 import com.technototes.library.command.CommandScheduler;
+import com.technototes.library.command.ConditionalCommand;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
 
 public class Controls {
+    // This is a helper that returns true of both of the buttons are pressed
+    // We're using it so you can pull both triggers for "override" behavior
+    public class BothButtons implements BooleanSupplier {
+        CommandButton a, b;
+
+        public BothButtons(CommandButton btn1, CommandButton btn2) {
+            a = btn1;
+            b = btn2;
+        }
+
+        @Override
+        public boolean getAsBoolean() {
+            return a.getAsBoolean() && b.getAsBoolean();
+        }
+    }
+
     public Robot robot;
     public CommandGamepad gamepad;
 
     public Stick driveLeftStick, driveRightStick;
     public CommandButton resetGyroButton, driveStraightenButton, snailSpeedButton, liftUpButton, clawOpenButton;
     public CommandButton liftDownButton, clawCloseButton, liftDownButtonBackup, clawCloseButtonBackup, liftIntakePos;
-    public CommandButton liftGround, liftLow, liftMedium, liftHigh, liftZeroButton;
+    public CommandButton liftGroundOrOverrideDown, liftLow, liftMedium, liftHighOrOverrideUp, liftZeroButton;
     public CommandButton turboButton;
+
+    public BothButtons override;
 
     public Controls(CommandGamepad g, Robot r) {
         this.robot = r;
         gamepad = g;
+
+        override = new BothButtons(g.leftTrigger.getAsButton(0.5), g.rightTrigger.getAsButton(.5));
 
         AssignNamedControllerButton();
 
@@ -64,10 +87,10 @@ public class Controls {
         clawCloseButtonBackup = gamepad.rightBumper;
         clawCloseButton = gamepad.leftTrigger.getAsButton();
 
-        liftGround = gamepad.dpadDown;
+        liftGroundOrOverrideDown = gamepad.dpadDown;
         liftLow = gamepad.dpadLeft;
         liftMedium = gamepad.dpadRight;
-        liftHigh = gamepad.dpadUp;
+        liftHighOrOverrideUp = gamepad.dpadUp;
 
         // TODO: Identify other controls for
     }
@@ -98,9 +121,13 @@ public class Controls {
         liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));
 
         liftLow.whenPressed(new LiftLowJunctionCommand(robot.liftSubsystem));
-        liftGround.whenPressed(new LiftGroundJunctionCommand(robot.liftSubsystem));
+        liftGroundOrOverrideDown.whenPressed(new ConditionalCommand(
+                override,
+                new LiftDownCommand(robot.liftSubsystem),
+                new LiftGroundJunctionCommand(robot.liftSubsystem)));
         liftMedium.whenPressed(new LiftMidJunctionCommand(robot.liftSubsystem));
-        liftHigh.whenPressed(new LiftHighJunctionCommand(robot.liftSubsystem));
+        liftHighOrOverrideUp.whenPressed(new ConditionalCommand(
+                override, new LiftUpCommand(robot.liftSubsystem), new LiftHighJunctionCommand(robot.liftSubsystem)));
         liftZeroButton.whenPressed(new LiftSetZeroCommand((robot.liftSubsystem)));
     }
 }

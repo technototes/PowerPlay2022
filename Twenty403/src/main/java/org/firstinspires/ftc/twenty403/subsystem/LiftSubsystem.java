@@ -35,7 +35,6 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double LEFT_ACTUAL_ZERO = 0;
     public static double RIGHT_ACTUAL_ZERO = 0;
 
-
     // TODO: THESE VALUES ARE PROBABLY WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
     public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH;
     public static double DEAD_ZONE = .25 * TICKS_INCH;
@@ -226,7 +225,6 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         double rposition = rightPidController.getTargetPosition();
         setLiftPosition(lposition - LMOVE, rposition - RMOVE);
     }
-
 
     public void moveUp_OVERRIDE() {
         // maybe getCurrentPosition instead of getTargetPosition
