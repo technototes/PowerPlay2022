@@ -17,14 +17,14 @@ AutoConstantsRed {
         public static ConfigurablePose START = new ConfigurablePose(-36, -66, toRadians(90));
         public static ConfigurablePose E_JUNCTION = new ConfigurablePose(-30, -8, -0.63);
         public static ConfigurablePose STACK = new ConfigurablePose(-60, -17, toRadians(180));
-        public static ConfigurablePose LEFT = new ConfigurablePose(-60, -14, 4.88);
-        public static ConfigurablePose MIDDLE = new ConfigurablePose(-37, -16, 5.41);
-        public static ConfigurablePose RIGHT = new ConfigurablePose(-12, -13, 5.41);
+        public static ConfigurablePose LEFT = new ConfigurablePose(-58, -23, toRadians(90));
+        public static ConfigurablePose MIDDLE = new ConfigurablePose(-37, -18, toRadians(90));
+        public static ConfigurablePose RIGHT = new ConfigurablePose(-14, -17, toRadians(90));
         public static ConfigurablePose BETWEEN_START_E_JUNCTION = new ConfigurablePose(-36, -21, toRadians(75));
         public static ConfigurablePose BETWEEN_E_JUNCTION_STACK = new ConfigurablePose(-36, -14, toRadians(180));
         public static ConfigurablePose BETWEEN_STACK_E_JUNCTION = new ConfigurablePose(-36, -14, toRadians(75));
-        public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(58, 60, toRadians(180));
-        public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(14, 60, toRadians(180));
+        public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(-58, -60, toRadians(90));
+        public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(-14, -60, toRadians(90));
         public static ConfigurablePose VISION_BETWEEN_RIGHT = new ConfigurablePose(-12,-55, toRadians(90));
         public static ConfigurablePose VISION_BETWEEN_LEFT = new ConfigurablePose(-55,-55, toRadians(90));
 
@@ -87,16 +87,16 @@ AutoConstantsRed {
     public static class Away {
         public static ConfigurablePose START = new ConfigurablePose(36, -66, toRadians(90));
         public static ConfigurablePose STACK = new ConfigurablePose(60, -12, toRadians(0));
-        public static ConfigurablePose LEFT = new ConfigurablePose(12, -14, 4.71);
-        public static ConfigurablePose MIDDLE = new ConfigurablePose(36, -14, 4.71);
-        public static ConfigurablePose RIGHT = new ConfigurablePose(60, -11, 3.93);
+        public static ConfigurablePose LEFT = new ConfigurablePose(15, -16, toRadians(90));
+        public static ConfigurablePose MIDDLE = new ConfigurablePose(36, -16, toRadians(90));
+        public static ConfigurablePose RIGHT = new ConfigurablePose(60, -17, toRadians(90));
         public static ConfigurablePose W_JUNCTION = new ConfigurablePose(26, -9, 2.2);
         public static ConfigurablePose BETWEEN_START_W_JUNCTION = new ConfigurablePose(36, -21, 2);
         public static ConfigurablePose BETWEEN_W_JUNCTION_STACK = new ConfigurablePose(36, -14, .4);
         public static ConfigurablePose LOW_JUNCTION_LEFT = new ConfigurablePose(24,-48, toRadians(120));
         public static ConfigurablePose LOW_JUNCTION_RIGHT = new ConfigurablePose(48,-24, toRadians(60)); public static ConfigurablePose BETWEEN_STACK_W_JUNCTION = new ConfigurablePose(36, -14, 3);
-        public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(-15, 60, toRadians(90));
-        public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(-60, 60, toRadians(90));
+        public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(15, -60, toRadians(90));
+        public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(60, -60, toRadians(90));
 
 
         // These are 'trajectory pieces' which should be named like this:
