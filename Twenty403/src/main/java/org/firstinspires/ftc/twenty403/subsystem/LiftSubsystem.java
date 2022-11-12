@@ -116,6 +116,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     private void setLiftPosition(double lval, double rval) {
         double lpos = Range.clip(lval, MIN_HEIGHT, MAX_HEIGHT);
         double rpos = Range.clip(rval, MIN_HEIGHT, MAX_HEIGHT);
+        setLiftPosition_OVERRIDE(lpos, rpos);
+    }
+
+    private void setLiftPosition_OVERRIDE(double lpos, double rpos) {
         leftPidController.setTargetPosition(lpos);
         rightPidController.setTargetPosition(rpos);
         lpAndActual = String.format("%d (%d)", (int) lpos, (int) getLeftPos());
@@ -222,6 +226,21 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         setLiftPosition(lposition - LMOVE, rposition - RMOVE);
     }
 
+
+    public void moveUp_OVERRIDE() {
+        // maybe getCurrentPosition instead of getTargetPosition
+        double lposition = leftPidController.getTargetPosition();
+        double rposition = rightPidController.getTargetPosition();
+        setLiftPosition_OVERRIDE(lposition + LMOVE, rposition + RMOVE);
+    }
+
+    public void moveDown_OVERRIDE() {
+        // maybe getCurrentPosition instead of getTargetPosition
+        double lposition = leftPidController.getTargetPosition();
+        double rposition = rightPidController.getTargetPosition();
+        setLiftPosition_OVERRIDE(lposition - LMOVE, rposition - RMOVE);
+    }
+
     /*
      * The following functions are the only ones that actually touch hardware.
      * Since the motors rotate opposite directions, we can deal with that in these
@@ -245,11 +264,15 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         if (!isHardware) {
             return;
         }
+        double curLeft = leftPidController.getTargetPosition();
         LEFT_ACTUAL_ZERO = _leftMotor.get();
+        leftPidController.setTargetPosition(curLeft + LEFT_ACTUAL_ZERO);
         if (singleMotor) {
             return;
         }
+        double curRight = rightPidController.getTargetPosition();
         RIGHT_ACTUAL_ZERO = _rightMotor.get();
+        rightPidController.setTargetPosition(curRight - RIGHT_ACTUAL_ZERO);
     }
 
     private double getLeftPos() {

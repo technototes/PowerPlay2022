@@ -13,6 +13,7 @@ import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftIntakeCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftLowJunctionCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftMidJunctionCommand;
+import org.firstinspires.ftc.twenty403.command.lift.LiftSetZeroCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
 
 import com.technototes.library.command.CommandScheduler;
@@ -27,7 +28,7 @@ public class Controls {
     public Stick driveLeftStick, driveRightStick;
     public CommandButton resetGyroButton, driveStraightenButton, snailSpeedButton, liftUpButton, clawOpenButton;
     public CommandButton liftDownButton, clawCloseButton, liftDownButtonBackup, clawCloseButtonBackup, liftIntakePos;
-    public CommandButton liftGround, liftLow, liftMedium, liftHigh;
+    public CommandButton liftGround, liftLow, liftMedium, liftHigh, liftZeroButton;
     public CommandButton turboButton;
 
     public Controls(CommandGamepad g, Robot r) {
@@ -49,6 +50,7 @@ public class Controls {
 
     private void AssignNamedControllerButton() {
         resetGyroButton = gamepad.rightStickButton;
+        liftZeroButton = gamepad.leftStickButton;
         driveLeftStick = gamepad.leftStick;
         driveRightStick = gamepad.rightStick;
         turboButton = gamepad.triangle;
@@ -99,5 +101,6 @@ public class Controls {
         liftGround.whenPressed(new LiftGroundJunctionCommand(robot.liftSubsystem));
         liftMedium.whenPressed(new LiftMidJunctionCommand(robot.liftSubsystem));
         liftHigh.whenPressed(new LiftHighJunctionCommand(robot.liftSubsystem));
+        liftZeroButton.whenPressed(new LiftSetZeroCommand((robot.liftSubsystem)));
     }
 }
