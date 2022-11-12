@@ -140,7 +140,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         //        if (leftError > DEAD_ZONE || rightError > DEAD_ZONE) {
         //        }
         setMotorPower(lclippedSpeed, rclippedSpeed);
-        setLiftPosition(leftPidController.getTargetPosition(), rightPidController.getTargetPosition());
+        setLiftPosition_OVERRIDE(leftPidController.getTargetPosition(), rightPidController.getTargetPosition());
     }
 
     //    public boolean isAtTarget() {

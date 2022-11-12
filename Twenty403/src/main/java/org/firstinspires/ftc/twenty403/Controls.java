@@ -15,6 +15,8 @@ import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftIntakeCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftLowJunctionCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftMidJunctionCommand;
+import org.firstinspires.ftc.twenty403.command.lift.LiftMoveDownOverrideCommand;
+import org.firstinspires.ftc.twenty403.command.lift.LiftMoveUpOverrideCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftSetZeroCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
 
@@ -88,6 +90,7 @@ public class Controls {
         clawCloseButton = gamepad.leftTrigger.getAsButton();
 
         liftGroundOrOverrideDown = gamepad.dpadDown;
+
         liftLow = gamepad.dpadLeft;
         liftMedium = gamepad.dpadRight;
         liftHighOrOverrideUp = gamepad.dpadUp;
@@ -103,6 +106,7 @@ public class Controls {
         turboButton.whenReleased(new SlowCommand(robot.drivebaseSubsystem));
         // TODO: We probably want buttons to reset the Gyro...
         resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
+
         //   snailSpeedButton.whilePressedOnce(new SetSpeedCommand(robot.drivebaseSubsystem));
     }
 
@@ -123,11 +127,13 @@ public class Controls {
         liftLow.whenPressed(new LiftLowJunctionCommand(robot.liftSubsystem));
         liftGroundOrOverrideDown.whenPressed(new ConditionalCommand(
                 override,
-                new LiftDownCommand(robot.liftSubsystem),
+                new LiftMoveDownOverrideCommand(robot.liftSubsystem),
                 new LiftGroundJunctionCommand(robot.liftSubsystem)));
         liftMedium.whenPressed(new LiftMidJunctionCommand(robot.liftSubsystem));
         liftHighOrOverrideUp.whenPressed(new ConditionalCommand(
-                override, new LiftUpCommand(robot.liftSubsystem), new LiftHighJunctionCommand(robot.liftSubsystem)));
+                override,
+                new LiftMoveUpOverrideCommand(robot.liftSubsystem),
+                new LiftHighJunctionCommand(robot.liftSubsystem)));
         liftZeroButton.whenPressed(new LiftSetZeroCommand((robot.liftSubsystem)));
     }
 }
