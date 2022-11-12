@@ -75,6 +75,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
         rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
         leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
+        setNewZero();
     }
 
     // Before:
