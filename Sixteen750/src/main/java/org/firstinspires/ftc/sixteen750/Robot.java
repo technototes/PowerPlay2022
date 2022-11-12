@@ -29,9 +29,9 @@ public class Robot implements Loggable {
         if (RobotConstant.TANK_DRIVE_ENABLED) {}
 
         if (RobotConstant.CLAW_ENABLED) {
-            clawSubsystem = new ClawSubsystem(hardware.clawServo, hardware.flipperServo, hardware.elbowServo);
+            clawSubsystem = new ClawSubsystem(hardware.clawServo, hardware.flipperServo, hardware.elbowServo, null);
         } else {
-            clawSubsystem = new ClawSubsystem();
+            clawSubsystem = new ClawSubsystem(null, null, null, null);
         }
 
         if (RobotConstant.LIFT_ENABLED) {
