@@ -27,13 +27,13 @@ public class DriverControls {
 
         assignNamedControllerButton();
 
-        if (RobotConstant.SWERVE_DRIVE_CONNECTED) {
+        if (RobotConstant.SWERVE_DRIVE_ENABLED) {
             bindDriveControls();
         }
-        if (RobotConstant.CLAW_CONNECTED) {
+        if (RobotConstant.CLAW_ENABLED) {
             bindClawControls();
         }
-        if (RobotConstant.LIFT_CONNECTED) {
+        if (RobotConstant.LIFT_ENABLED) {
             bindLiftControls();
         }
     }
