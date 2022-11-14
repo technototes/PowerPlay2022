@@ -31,6 +31,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double RHIGH_JUNCTION = 6560;
     public static double MAX_HEIGHT = 7000;
     public static double MIN_HEIGHT = 0;
+
+    public static double LEFT_ACTUAL_ZERO = 0;
+    public static double RIGHT_ACTUAL_ZERO = 0;
+
     // TODO: THESE VALUES ARE PROBABLY WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
     public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH;
     public static double DEAD_ZONE = .25 * TICKS_INCH;
@@ -70,6 +74,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
         rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
         leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
+        setNewZero();
     }
 
     // Before:
@@ -111,6 +116,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     private void setLiftPosition(double lval, double rval) {
         double lpos = Range.clip(lval, MIN_HEIGHT, MAX_HEIGHT);
         double rpos = Range.clip(rval, MIN_HEIGHT, MAX_HEIGHT);
+        setLiftPosition_OVERRIDE(lpos, rpos);
+    }
+
+    private void setLiftPosition_OVERRIDE(double lpos, double rpos) {
         leftPidController.setTargetPosition(lpos);
         rightPidController.setTargetPosition(rpos);
         lpAndActual = String.format("%d (%d)", (int) lpos, (int) getLeftPos());
@@ -131,7 +140,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         //        if (leftError > DEAD_ZONE || rightError > DEAD_ZONE) {
         //        }
         setMotorPower(lclippedSpeed, rclippedSpeed);
-        setLiftPosition(leftPidController.getTargetPosition(), rightPidController.getTargetPosition());
+        setLiftPosition_OVERRIDE(leftPidController.getTargetPosition(), rightPidController.getTargetPosition());
     }
 
     //    public boolean isAtTarget() {
@@ -217,6 +226,20 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         setLiftPosition(lposition - LMOVE, rposition - RMOVE);
     }
 
+    public void moveUp_OVERRIDE() {
+        // maybe getCurrentPosition instead of getTargetPosition
+        double lposition = leftPidController.getTargetPosition();
+        double rposition = rightPidController.getTargetPosition();
+        setLiftPosition_OVERRIDE(lposition + LMOVE, rposition + RMOVE);
+    }
+
+    public void moveDown_OVERRIDE() {
+        // maybe getCurrentPosition instead of getTargetPosition
+        double lposition = leftPidController.getTargetPosition();
+        double rposition = rightPidController.getTargetPosition();
+        setLiftPosition_OVERRIDE(lposition - LMOVE, rposition - RMOVE);
+    }
+
     /*
      * The following functions are the only ones that actually touch hardware.
      * Since the motors rotate opposite directions, we can deal with that in these
@@ -236,18 +259,33 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         rMotorPower = String.format("Power assigned: %f", rp);
     }
 
+    public void setNewZero() {
+        if (!isHardware) {
+            return;
+        }
+        double curLeft = leftPidController.getTargetPosition();
+        LEFT_ACTUAL_ZERO = _leftMotor.get();
+        leftPidController.setTargetPosition(curLeft + LEFT_ACTUAL_ZERO);
+        if (singleMotor) {
+            return;
+        }
+        double curRight = rightPidController.getTargetPosition();
+        RIGHT_ACTUAL_ZERO = _rightMotor.get();
+        rightPidController.setTargetPosition(curRight - RIGHT_ACTUAL_ZERO);
+    }
+
     private double getLeftPos() {
         if (!isHardware) {
             return 0;
         }
         // Invert the sign on this one to make it look like it's rotating the same way...
-        return -_leftMotor.get();
+        return -(_leftMotor.get() - LEFT_ACTUAL_ZERO);
     }
 
     private double getRightPos() {
         if (!isHardware || singleMotor) {
             return 0;
         }
-        return _rightMotor.get();
+        return _rightMotor.get() - RIGHT_ACTUAL_ZERO;
     }
 }

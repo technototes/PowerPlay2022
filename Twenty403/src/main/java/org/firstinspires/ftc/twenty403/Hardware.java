@@ -27,8 +27,10 @@ public class Hardware {
 
         public static String CLAW_SERVO = "claw";
         // public static String CLAW_SENSOR = "claw_sensor";
-        public static String LIFT_LEFT_MOTOR = "LLIFT";
-        public static String LIFT_RIGHT_MOTOR = "RLIFT";
+        // public static String LIFT_LEFT_MOTOR = "LLIFT";
+        public static String LIFT_LEFT_MOTOR = "FRMOTOR";
+        // public static String LIFT_RIGHT_MOTOR = "RLIFT";
+        public static String LIFT_RIGHT_MOTOR = "FLMOTOR";
     }
 
     public EncodedMotor<DcMotorEx> flDriveMotor;
@@ -59,7 +61,9 @@ public class Hardware {
         }
         if (RobotConstant.LIFT_CONNECTED) {
             LiftLeftMotor = new EncodedMotor<>(HardwareConstant.LIFT_LEFT_MOTOR);
-            LiftRightMotor = new EncodedMotor<>(HardwareConstant.LIFT_RIGHT_MOTOR);
+            if (RobotConstant.DUAL_LIFT_SETUP) {
+                LiftRightMotor = new EncodedMotor<>(HardwareConstant.LIFT_RIGHT_MOTOR);
+            }
         }
         if (RobotConstant.CAMERA_CONNECTED) {
             camera = new Webcam(HardwareConstant.CAMERA);
