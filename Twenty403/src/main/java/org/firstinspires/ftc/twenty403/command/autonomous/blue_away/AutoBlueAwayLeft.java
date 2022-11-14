@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.twenty403.command.autonomous.blue_away;
 
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsBlue;
-import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
-import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 
 import com.technototes.library.command.CommandScheduler;
