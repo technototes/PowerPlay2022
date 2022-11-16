@@ -21,6 +21,13 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>, Loggable {
 
+    public enum Mode {
+        Beacon,
+        Junction,
+        Inactive
+    }
+
+    public Mode activeMode;
     public Alliance alliance;
     public StartingPosition side;
 
@@ -28,6 +35,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         super();
         alliance = teamAlliance;
         side = startSide;
+        activeMode = Mode.Beacon;
     }
 
     @Config
@@ -166,10 +174,17 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         fps = 1000 / time.milliseconds();
         time.reset();
 
-        inputToCr(input);
+        if (activeMode == Mode.Inactive) {
+            return input;
+        }
+        if (activeMode == Mode.Beacon) {
+            inputToCr(input);
 
-        if (VisionSubsystem.VisionSubsystemConstants.DEBUG_VIEW) {
-            sendBitmap();
+            if (VisionSubsystem.VisionSubsystemConstants.DEBUG_VIEW) {
+                sendBitmap();
+            }
+        } else {
+            // In here: Do the Junction Detection code!
         }
         return input;
     }
