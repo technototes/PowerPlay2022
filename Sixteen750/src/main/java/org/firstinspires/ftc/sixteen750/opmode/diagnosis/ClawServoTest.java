@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.sixteen750.opmode;
+package org.firstinspires.ftc.sixteen750.opmode.diagnosis;
 
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.CLAW_CLOSE;
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.CLAW_OPEN;
@@ -6,7 +6,7 @@ import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.ELBOW_INT
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.ELBOW_UPWARD;
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.FLIPPER_UPPER_NORMAL;
 
-import org.firstinspires.ftc.sixteen750.DriverControls;
+import org.firstinspires.ftc.sixteen750.ControlsDriver;
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
 
@@ -23,7 +23,7 @@ import com.technototes.library.structure.CommandOpMode;
 @SuppressWarnings("unused")
 public class ClawServoTest extends CommandOpMode {
     public Robot robot;
-    public DriverControls controls;
+    public ControlsDriver controls;
     public Hardware hardware;
 
     Servo targetServo;
@@ -38,7 +38,7 @@ public class ClawServoTest extends CommandOpMode {
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware);
-        controls = new DriverControls(driverGamepad, robot);
+        controls = new ControlsDriver(driverGamepad, robot);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         targetServo = hardware.elbowServo;
     }

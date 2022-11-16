@@ -14,7 +14,7 @@ public class ElbowGroundIntakePositionCommand implements Command {
 
     @Override
     public void execute() {
-        clawSubsystem.elbowGroundIntake();
+        clawSubsystem.elbowIntakeGround();
     }
 
     //    @Override

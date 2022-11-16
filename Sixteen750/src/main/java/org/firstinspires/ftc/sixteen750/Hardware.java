@@ -15,6 +15,8 @@ import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.sensor.IMU;
 import com.technototes.library.hardware.servo.Servo;
 
+import java.util.ArrayList;
+
 public class Hardware {
     @Config
     public static class HardwareConstant {
@@ -62,8 +64,10 @@ public class Hardware {
     public Servo elbowServo;
     public DistanceSensor clawDistance;
 
+    public ArrayList<String> hardwareWarnings = new ArrayList<>();
+
     public Hardware(HardwareMap hwMap) {
-        if (RobotConstant.SWERVE_DRIVE_CONNECTED) {
+        if (RobotConstant.SWERVE_DRIVE_ENABLED) {
             leftFrontMotor = new EncodedMotor<>(HardwareConstant.LF_MOTOR);
             leftRearMotor = new EncodedMotor<>(HardwareConstant.LR_MOTOR);
             rightFrontMotor = new EncodedMotor<>(HardwareConstant.RF_MOTOR);
@@ -83,16 +87,19 @@ public class Hardware {
             // the  axes order
             imu = new IMU(HardwareConstant.IMU);
         }
-        if (RobotConstant.CLAW_CONNECTED) {
-            clawServo = new Servo(HardwareConstant.CLAW_SERVO)
-                    .invert(); // no need to invert for gobilda super speed; might need to invert for the 25KG servo
+        if (RobotConstant.CLAW_ENABLED) {
+            clawServo = new Servo(HardwareConstant.CLAW_SERVO).invert();
             flipperServo = new Servo(HardwareConstant.FLIPPER_SERVO);
             elbowServo = new Servo(HardwareConstant.ELBOW_SERVO).invert();
             //          clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR); // not installed
         }
-        if (RobotConstant.LIFT_CONNECTED) {
-            liftLeftMotor = new EncodedMotor<>(HardwareConstant.LIFT_LEFT_MOTOR);
-            liftRightMotor = new EncodedMotor<>(HardwareConstant.LIFT_RIGHT_MOTOR);
+        if (RobotConstant.LIFT_ENABLED) {
+            try {
+                liftLeftMotor = new EncodedMotor<>(HardwareConstant.LIFT_LEFT_MOTOR);
+                liftRightMotor = new EncodedMotor<>(HardwareConstant.LIFT_RIGHT_MOTOR);
+            } catch (Exception e) {
+                hardwareWarnings.add("At lease one lift motors not found");
+            }
         }
     }
 }

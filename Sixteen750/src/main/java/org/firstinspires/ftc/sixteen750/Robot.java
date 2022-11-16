@@ -10,37 +10,33 @@ import com.technototes.library.logger.Loggable;
 public class Robot implements Loggable {
     @Config
     public static class RobotConstant {
-        public static boolean SWERVE_DRIVE_CONNECTED = false;
-        public static boolean TANK_DRIVE_CONNECTED = true;
-        public static boolean CLAW_CONNECTED = true;
-        public static boolean LIFT_CONNECTED = false;
+        public static boolean SWERVE_DRIVE_ENABLED = false;
+        public static boolean TANK_DRIVE_ENABLED = true;
+        public static boolean CLAW_ENABLED = true;
+        public static boolean LIFT_ENABLED = false;
     }
 
-    //    public TankDrivebaseSubsystem tankDriveSubsystem;
     public ClawSubsystem clawSubsystem;
     public LiftSubsystem liftSubsystem;
 
+    public boolean isSwerveDriveConnected = false;
+    public boolean isTankDriveConnected = false;
+    public boolean isClawConnected = false;
+    public boolean isLiftConnected = false;
+
     public Robot(Hardware hardware) {
-        if (RobotConstant.SWERVE_DRIVE_CONNECTED) {
-            //            driveBaseSubsystem(
-            //                    hardware.flDriveMotor,
-            //                    hardware.frDriveMotor,
-            //                    hardware.rlDriveMotor,
-            //                    hardware.rrDriveMotor,
-            //                    hardware.imu)
-            //            )
-        }
-        if (RobotConstant.TANK_DRIVE_CONNECTED) {}
+        if (RobotConstant.SWERVE_DRIVE_ENABLED) {}
+        if (RobotConstant.TANK_DRIVE_ENABLED) {}
 
-        if (RobotConstant.CLAW_CONNECTED) {
-            clawSubsystem = new ClawSubsystem(hardware.clawServo, hardware.flipperServo, hardware.elbowServo);
+        if (RobotConstant.CLAW_ENABLED) {
+            clawSubsystem = new ClawSubsystem(hardware.clawServo, hardware.flipperServo, hardware.elbowServo, null);
         } else {
-            clawSubsystem = new ClawSubsystem();
+            clawSubsystem = new ClawSubsystem(null, null, null, null);
         }
 
-        if (RobotConstant.LIFT_CONNECTED) {
+        if (RobotConstant.LIFT_ENABLED) {
             liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, hardware.liftRightMotor);
-            //            liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, null);
+            // liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, null);
         } else {
             liftSubsystem = new LiftSubsystem(null, null);
         }

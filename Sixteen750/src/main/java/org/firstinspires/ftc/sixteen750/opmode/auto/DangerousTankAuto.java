@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.sixteen750.opmode;
+package org.firstinspires.ftc.sixteen750.opmode.auto;
 
 import org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem;
 
