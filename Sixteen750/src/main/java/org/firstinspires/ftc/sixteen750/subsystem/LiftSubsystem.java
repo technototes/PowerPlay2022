@@ -37,8 +37,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double L_MIN_MOTOR_SPEED = -0.4; // Unverified, Gravity
     public static double R_MAX_MOTOR_SPEED = 0.8; // Unverified
     public static double R_MIN_MOTOR_SPEED = -0.4; // Unverified, Gravity
-    public static double L_INCREMENTAL_MOVE = 10;
-    public static double R_INCREMENTAL_MOVE = 10;
+    public static double L_REGULAR_MOVE = 10;
+    public static double R_REGULAR_MOVE = 10;
+    public static double L_TINY_MOVE = 5; // When close to the upper limit
+    public static double R_TINY_MOVE = 5; // When close to the upper limit
     public static PIDCoefficients L_PID = new PIDCoefficients(0.008, 0, 0.0005); // Unverified
     public static PIDCoefficients R_PID = new PIDCoefficients(0.008, 0, 0.0005); // Unverified
     public static double TOLERANCE_ZONE = 2; // Unverified
@@ -211,7 +213,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         if (isLeftConnected) {
             // maybe getCurrentPosition instead of getTargetPosition
             double rightTargetPosition = leftPidController.getTargetPosition();
-            setTargetPositionWithLogging(rightTargetPosition + L_INCREMENTAL_MOVE, rightTargetPosition + R_INCREMENTAL_MOVE);
+            setTargetPositionWithLogging(rightTargetPosition + L_REGULAR_MOVE, rightTargetPosition + R_REGULAR_MOVE);
         }
     }
 
@@ -219,7 +221,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         if (isRightConnected) {
             // maybe getCurrentPosition instead of getTargetPosition
             double leftTargetPosition = leftPidController.getTargetPosition();
-            setTargetPositionWithLogging(leftTargetPosition - L_INCREMENTAL_MOVE, leftTargetPosition - R_INCREMENTAL_MOVE);
+            setTargetPositionWithLogging(leftTargetPosition - L_REGULAR_MOVE, leftTargetPosition - R_REGULAR_MOVE);
         }
     }
 }
