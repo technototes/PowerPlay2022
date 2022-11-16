@@ -90,7 +90,6 @@ public class Controls {
         turboButton.whenReleased(new SlowCommand(robot.drivebaseSubsystem));
         // TODO: We probably want buttons to reset the Gyro...
         resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
-
     }
 
     public void bindClawControls() {
@@ -106,17 +105,16 @@ public class Controls {
         liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));
 
         liftLow.whenPressed(new LiftLowJunctionCommand(robot.liftSubsystem));
-        liftGroundOrOverrideDown.whenPressed(
-                new ConditionalCommand(override,
-                    new LiftMoveDownOverrideCommand(robot.liftSubsystem),
-                    new LiftGroundJunctionCommand(robot.liftSubsystem)));
+        liftGroundOrOverrideDown.whenPressed(new ConditionalCommand(
+                override,
+                new LiftMoveDownOverrideCommand(robot.liftSubsystem),
+                new LiftGroundJunctionCommand(robot.liftSubsystem)));
         liftMedium.whenPressed(new LiftMidJunctionCommand(robot.liftSubsystem));
         liftHighOrOverrideUp.whenPressed(new ConditionalCommand(
                 override,
                 new LiftMoveUpOverrideCommand(robot.liftSubsystem),
                 new LiftHighJunctionCommand(robot.liftSubsystem)));
-        liftOverrideZeroButton.whenPressed(new ConditionalCommand(
-                override,
-                new LiftSetZeroCommand(robot.liftSubsystem)));
+        liftOverrideZeroButton.whenPressed(
+                new ConditionalCommand(override, new LiftSetZeroCommand(robot.liftSubsystem)));
     }
 }

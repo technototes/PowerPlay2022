@@ -63,10 +63,8 @@ public class Controls2 {
         liftIntakePos = gamepad.dpadLeft; // circle
         liftOverrideZeroButton = gamepad.share;
 
-
         clawOpenButton = gamepad.rightBumper; // left
         clawCloseButton = gamepad.leftBumper; // right
-
 
         liftGroundOrOverrideDown = gamepad.cross; // dpadDown
         liftLow = gamepad.square; // dpadLeft
@@ -80,8 +78,8 @@ public class Controls2 {
 
     public void bindDriveControls() {
         CommandScheduler.getInstance()
-                .scheduleJoystick(new DriveCommand(
-                        robot.drivebaseSubsystem, driveLeftStick, driveRightStick, driveStraighten));
+                .scheduleJoystick(
+                        new DriveCommand(robot.drivebaseSubsystem, driveLeftStick, driveRightStick, driveStraighten));
         turboButton.whenPressed(new TurboCommand(robot.drivebaseSubsystem));
         turboButton.whenReleased(new SlowCommand(robot.drivebaseSubsystem));
         // TODO: We probably want buttons to reset the Gyro...
@@ -99,20 +97,18 @@ public class Controls2 {
         liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
         liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
         liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));
-        liftOverrideZeroButton.whenPressed(new ConditionalCommand(
+        liftOverrideZeroButton.whenPressed(
+                new ConditionalCommand(override, new LiftSetZeroCommand(robot.liftSubsystem)));
+
+        liftGroundOrOverrideDown.whenPressed(new ConditionalCommand(
                 override,
-                new LiftSetZeroCommand(robot.liftSubsystem)));
-
-
-        liftGroundOrOverrideDown.whenPressed(
-                new ConditionalCommand(override,
-                    new LiftMoveDownOverrideCommand(robot.liftSubsystem),
-                    new LiftGroundJunctionCommand(robot.liftSubsystem)));
+                new LiftMoveDownOverrideCommand(robot.liftSubsystem),
+                new LiftGroundJunctionCommand(robot.liftSubsystem)));
         liftLow.whenPressed(new LiftLowJunctionCommand(robot.liftSubsystem));
         liftMedium.whenPressed(new LiftMidJunctionCommand(robot.liftSubsystem));
-        liftHighOrOverrideUp.whenPressed(
-                new ConditionalCommand(override,
-                        new LiftMoveUpOverrideCommand(robot.liftSubsystem),
-                        new LiftHighJunctionCommand(robot.liftSubsystem)));
+        liftHighOrOverrideUp.whenPressed(new ConditionalCommand(
+                override,
+                new LiftMoveUpOverrideCommand(robot.liftSubsystem),
+                new LiftHighJunctionCommand(robot.liftSubsystem)));
     }
 }

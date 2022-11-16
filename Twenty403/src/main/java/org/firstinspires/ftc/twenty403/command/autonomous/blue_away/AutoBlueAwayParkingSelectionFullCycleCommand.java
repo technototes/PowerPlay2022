@@ -2,15 +2,12 @@ package org.firstinspires.ftc.twenty403.command.autonomous.blue_away;
 
 import android.util.Pair;
 
-import com.technototes.library.command.ChoiceCommand;
-
-import org.firstinspires.ftc.twenty403.command.autonomous.blue_away.AutoBlueAwayFullCycleLeft;
-import org.firstinspires.ftc.twenty403.command.autonomous.blue_away.AutoBlueAwayFullCycleMiddle;
-import org.firstinspires.ftc.twenty403.command.autonomous.blue_away.AutoBlueAwayFullCycleRight;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
+
+import com.technototes.library.command.ChoiceCommand;
 
 public class AutoBlueAwayParkingSelectionFullCycleCommand extends ChoiceCommand {
     public AutoBlueAwayParkingSelectionFullCycleCommand(
