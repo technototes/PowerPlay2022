@@ -48,7 +48,7 @@ public class DriveCommand implements Command {
             // headingInRads is [0-2pi]
             double heading = -Math.toDegrees(headingInRads);
             // Snap to the closest 90 or 270 degree angle (for going through the depot)
-            double close = MathUtils.closestTo(heading, 90, 270);
+            double close = MathUtils.closestTo(heading, 0, 90, 180, 270, 360);
             double offBy = close - heading;
             // Normalize the error to -1 to 1
             double normalized = Math.max(Math.min(offBy / 45, 1.), -1.);

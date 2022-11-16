@@ -15,8 +15,8 @@ import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
-@Autonomous(name = "BlueHomeFullCycle")
-public class BlueHomeFullCycle extends CommandOpMode {
+@Autonomous(name = "RightFullCycle")
+public class RightFullCycle extends CommandOpMode {
     public Robot robot;
     public Controls controls;
     public Hardware hardware;
