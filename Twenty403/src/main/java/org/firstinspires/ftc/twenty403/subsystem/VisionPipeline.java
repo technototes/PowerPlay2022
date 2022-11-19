@@ -22,9 +22,9 @@ import org.openftc.easyopencv.OpenCvPipeline;
 public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>, Loggable {
 
     public enum Mode {
-        Beacon,
+        Signal,
         Junction,
-        Inactive
+        Inactive,
     }
 
     public Mode activeMode;
@@ -35,7 +35,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         super();
         alliance = teamAlliance;
         side = startSide;
-        activeMode = Mode.Beacon;
+        activeMode = Mode.Signal;
     }
 
     @Config
@@ -177,7 +177,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         if (activeMode == Mode.Inactive) {
             return input;
         }
-        if (activeMode == Mode.Beacon) {
+        if (activeMode == Mode.Signal) {
             inputToCr(input);
 
             if (VisionSubsystem.VisionSubsystemConstants.DEBUG_VIEW) {

@@ -42,7 +42,16 @@ public class VisionSubsystem implements Subsystem, Loggable {
 
     public void startVisionPipeline() {
         camera.setPipeline(visionPipeline);
+        // The i -> lambda appears to be for *error reporting* so this line is silly:
         camera.openCameraDeviceAsync(this::startStreaming, i -> startVisionPipeline());
+    }
+
+    public void pauseScanning() {
+        visionPipeline.activeMode = VisionPipeline.Mode.Inactive;
+    }
+
+    public void startJunctionScanning() {
+        visionPipeline.activeMode = VisionPipeline.Mode.Junction;
     }
 
     public void stopVisionPipeline() {
