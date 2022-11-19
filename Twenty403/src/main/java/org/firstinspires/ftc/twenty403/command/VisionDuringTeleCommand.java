@@ -25,6 +25,8 @@ public class VisionDuringTeleCommand implements Command {
     public void execute() {
         if (scanButton.getAsBoolean() == true) {
             subsystem.startJunctionScanning();
+        } else {
+            subsystem.pauseScanning();
         }
     }
 
