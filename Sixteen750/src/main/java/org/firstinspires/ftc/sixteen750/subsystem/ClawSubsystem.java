@@ -127,7 +127,7 @@ public class ClawSubsystem implements Subsystem {
     }
 
     public void flipperServoIncrementalUp() {
-        setFlipperServoPosition(Range.clip(getFlipperPosition()+ 0.02, 0, 1));
+        setFlipperServoPosition(Range.clip(getFlipperPosition() + 0.02, 0, 1));
     }
 
     public void elbowServoIncrementalDown() {
