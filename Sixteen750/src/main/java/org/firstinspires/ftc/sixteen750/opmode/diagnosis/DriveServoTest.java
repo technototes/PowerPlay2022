@@ -23,7 +23,7 @@ public class DriveServoTest extends CommandOpMode {
     AbsoluteAnalogEncoder leftFrontEncoder, leftRearEncoder, rightRearEncoder, rightFrontEncoder;
     boolean isLeftFrontPressed, isLeftRearPressed, isRightRearPressed, isRightFrontPressed = false;
 
-    public static double servoPower = 0.3; // 0.1 is too little
+    public static double servoPower = 0.4; // 0.1 is too little
     public static double servoStopPower = 0.0;
     public static boolean alsoEncoder = true;
 

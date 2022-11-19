@@ -12,7 +12,6 @@ import com.technototes.library.structure.CommandOpMode;
 
 import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem;
 
-@Disabled
 @SuppressWarnings("unused")
 @TeleOp(name = "ExperimentalSwerveDrive", group = "Swerve")
 public class ExperimentalSwerveDrive extends CommandOpMode {
