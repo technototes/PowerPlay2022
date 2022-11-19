@@ -27,9 +27,9 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double RLOW_JUNCTION = 1280;
     public static double LMEDIUM_JUNCTION = 2230;
     public static double RMEDIUM_JUNCTION = 2230;
-    public static double LHIGH_JUNCTION = 3070;
-    public static double RHIGH_JUNCTION = 3070;
-    public static double MAX_HEIGHT = 3340;
+    public static double LHIGH_JUNCTION = 3400;
+    public static double RHIGH_JUNCTION = 3300;
+    public static double MAX_HEIGHT = 3400;
     public static double MIN_HEIGHT = 0;
 
     // Don't change these: They're used for user-redefining the 'zero' location during gameplay
@@ -46,7 +46,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     public static double LMOVE = 1.00 * TICKS_INCH;
     public static double RMOVE = 1.00 * TICKS_INCH;
-    public static double CONE_HEIGHT_DIFFERENCE = 1.2 * TICKS_INCH;
+    public static double CONE_HEIGHT_DIFFERENCE = .9 * TICKS_INCH;
     // We may need to adjust this. Make *very* small changes! Values work 11/4/22
     public static PIDCoefficients PID = new PIDCoefficients(0.0008, 0, 0.00005);
 
