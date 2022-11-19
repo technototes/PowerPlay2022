@@ -142,11 +142,9 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         // Not sure about this one
         if (isLeftConnected) {
             return leftPidController.getTargetPosition();
-        }
-        else if (isRightConnected) {
+        } else if (isRightConnected) {
             return rightPidController.getTargetPosition();
-        }
-        else {
+        } else {
             return 0.0;
         }
     }

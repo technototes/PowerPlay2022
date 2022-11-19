@@ -19,22 +19,22 @@ import com.technototes.library.subsystem.Subsystem;
 public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double TICKS_INCH = 89;
 
-    public static double LIntake_Position = 0;
-    public static double RIntake_Position = 0;
-    public static double LGROUND_JUNCTION = 155;
-    public static double RGROUND_JUNCTION = 155;
-    public static double LLOW_JUNCTION = 1280;
-    public static double RLOW_JUNCTION = 1280;
-    public static double LMEDIUM_JUNCTION = 2230;
-    public static double RMEDIUM_JUNCTION = 2230;
-    public static double LHIGH_JUNCTION = 3070;
-    public static double RHIGH_JUNCTION = 3070;
+    public static double INTAKE_POSITION_LEFT = 0;
+    public static double INTAKE_POSITION_RIGHT = 0;
+    public static double GROUND_JUNCTION_LEFT = 155;
+    public static double GROUND_JUNCTION_RIGHT = 155;
+    public static double LOW_JUNCTION_LEFT = 1280;
+    public static double LOW_JUNCTION_RIGHT = 1280;
+    public static double MEDIUM_JUNCTION_LEFT = 2230;
+    public static double MEDIUM_JUNCTION_RIGHT = 2230;
+    public static double HIGH_JUNCTION_LEFT = 3070;
+    public static double HIGH_JUNCTION_RIGHT = 3070;
     public static double MAX_HEIGHT = 3340;
     public static double MIN_HEIGHT = 0;
 
     // Don't change these: They're used for user-redefining the 'zero' location during gameplay
-    public static double LEFT_ACTUAL_ZERO = 0;
-    public static double RIGHT_ACTUAL_ZERO = 0;
+    public static double ACTUAL_ZERO_LEFT = 0;
+    public static double ACTUAL_ZERO_RIGHT = 0;
 
     // TODO: THESE VALUES ARE PROBABLY WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
     public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH;
@@ -42,13 +42,13 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     // Values work 11/4/22
     public static double MAX_MOTOR_SPEED = 1;
-    public static double MIN_MOTOR_SPEED = -0.75; // Gravity
+    public static double MIN_MOTOR_SPEED = -0.6; // Gravity
 
-    public static double LMOVE = 1.00 * TICKS_INCH;
-    public static double RMOVE = 1.00 * TICKS_INCH;
+    public static double MOVE_LEFT = 1.00 * TICKS_INCH;
+    public static double MOVE_RIGHT = 1.00 * TICKS_INCH;
     public static double CONE_HEIGHT_DIFFERENCE = 1.2 * TICKS_INCH;
     // We may need to adjust this. Make *very* small changes! Values work 11/4/22
-    public static PIDCoefficients PID = new PIDCoefficients(0.0008, 0, 0.00005);
+    public static PIDCoefficients PID = new PIDCoefficients(0.003, 0.0005, 0 /*0.00005*/);
 
     private EncodedMotor<DcMotorEx> _leftMotor;
     private EncodedMotor<DcMotorEx> _rightMotor;
@@ -194,51 +194,51 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     }
 
     public void highPole() {
-        setLiftPosition(LHIGH_JUNCTION, RHIGH_JUNCTION);
+        setLiftPosition(HIGH_JUNCTION_LEFT, HIGH_JUNCTION_RIGHT);
     }
 
     public void midPole() {
-        setLiftPosition(LMEDIUM_JUNCTION, RMEDIUM_JUNCTION);
+        setLiftPosition(MEDIUM_JUNCTION_LEFT, MEDIUM_JUNCTION_RIGHT);
     }
 
     public void lowPole() {
-        setLiftPosition(LLOW_JUNCTION, RLOW_JUNCTION);
+        setLiftPosition(LOW_JUNCTION_LEFT, LOW_JUNCTION_RIGHT);
     }
 
     public void groundJunction() {
-        setLiftPosition(LGROUND_JUNCTION, RGROUND_JUNCTION);
+        setLiftPosition(GROUND_JUNCTION_LEFT, GROUND_JUNCTION_RIGHT);
     }
 
     public void intakePos() {
-        setLiftPosition(LIntake_Position, RIntake_Position);
+        setLiftPosition(INTAKE_POSITION_LEFT, INTAKE_POSITION_RIGHT);
     }
 
     public void moveUp() {
         // maybe getCurrentPosition instead of getTargetPosition
         double lposition = leftPidController.getTargetPosition();
         double rposition = rightPidController.getTargetPosition();
-        setLiftPosition(lposition + LMOVE, rposition + RMOVE);
+        setLiftPosition(lposition + MOVE_LEFT, rposition + MOVE_RIGHT);
     }
 
     public void moveDown() {
         // maybe getCurrentPosition instead of getTargetPosition
         double lposition = leftPidController.getTargetPosition();
         double rposition = rightPidController.getTargetPosition();
-        setLiftPosition(lposition - LMOVE, rposition - RMOVE);
+        setLiftPosition(lposition - MOVE_LEFT, rposition - MOVE_RIGHT);
     }
 
     public void moveUp_OVERRIDE() {
         // maybe getCurrentPosition instead of getTargetPosition
         double lposition = leftPidController.getTargetPosition();
         double rposition = rightPidController.getTargetPosition();
-        setLiftPosition_OVERRIDE(lposition + LMOVE, rposition + RMOVE);
+        setLiftPosition_OVERRIDE(lposition + MOVE_LEFT, rposition + MOVE_RIGHT);
     }
 
     public void moveDown_OVERRIDE() {
         // maybe getCurrentPosition instead of getTargetPosition
         double lposition = leftPidController.getTargetPosition();
         double rposition = rightPidController.getTargetPosition();
-        setLiftPosition_OVERRIDE(lposition - LMOVE, rposition - RMOVE);
+        setLiftPosition_OVERRIDE(lposition - MOVE_LEFT, rposition - MOVE_RIGHT);
     }
 
     /*
@@ -265,14 +265,14 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
             return;
         }
         double curLeft = leftPidController.getTargetPosition();
-        LEFT_ACTUAL_ZERO = _leftMotor.get();
-        leftPidController.setTargetPosition(curLeft + LEFT_ACTUAL_ZERO);
+        ACTUAL_ZERO_LEFT = _leftMotor.get();
+        leftPidController.setTargetPosition(curLeft + ACTUAL_ZERO_LEFT);
         if (singleMotor) {
             return;
         }
         double curRight = rightPidController.getTargetPosition();
-        RIGHT_ACTUAL_ZERO = _rightMotor.get();
-        rightPidController.setTargetPosition(curRight - RIGHT_ACTUAL_ZERO);
+        ACTUAL_ZERO_RIGHT = _rightMotor.get();
+        rightPidController.setTargetPosition(curRight - ACTUAL_ZERO_RIGHT);
     }
 
     private double getLeftPos() {
@@ -280,13 +280,13 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
             return 0;
         }
         // Invert the sign on this one to make it look like it's rotating the same way...
-        return -(_leftMotor.get() - LEFT_ACTUAL_ZERO);
+        return -(_leftMotor.get() - ACTUAL_ZERO_LEFT);
     }
 
     private double getRightPos() {
         if (!isHardware || singleMotor) {
             return 0;
         }
-        return _rightMotor.get() - RIGHT_ACTUAL_ZERO;
+        return _rightMotor.get() - ACTUAL_ZERO_RIGHT;
     }
 }

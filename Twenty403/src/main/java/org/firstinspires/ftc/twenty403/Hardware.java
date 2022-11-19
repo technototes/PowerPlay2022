@@ -29,7 +29,6 @@ public class Hardware {
         // public static String CLAW_SENSOR = "claw_sensor";
         public static String LIFT_LEFT_MOTOR = "LLIFT";
         public static String LIFT_RIGHT_MOTOR = "RLIFT";
-
     }
 
     public EncodedMotor<DcMotorEx> flDriveMotor;
