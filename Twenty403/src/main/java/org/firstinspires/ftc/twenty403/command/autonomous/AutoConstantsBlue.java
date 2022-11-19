@@ -16,12 +16,12 @@ public class AutoConstantsBlue {
     @Config
     public static class Home {
         public static ConfigurablePose START = new ConfigurablePose(36, -66, toRadians(90));
-        public static ConfigurablePose STACK = new ConfigurablePose(60, -12, toRadians(0));
+        public static ConfigurablePose STACK = new ConfigurablePose(65, -12, toRadians(0));
         public static ConfigurablePose LEFT = new ConfigurablePose(15, -16,toRadians(90));
         public static ConfigurablePose MIDDLE = new ConfigurablePose(36, -16, toRadians(90));
         public static ConfigurablePose RIGHT = new ConfigurablePose(60, -17, toRadians(90));
-        public static ConfigurablePose W_JUNCTION = new ConfigurablePose(32, -9, 2.2);
-        public static ConfigurablePose BETWEEN_START_W_JUNCTION = new ConfigurablePose(36, -21, 2);
+        public static ConfigurablePose W_JUNCTION = new ConfigurablePose(30, -8, 2.2);
+        public static ConfigurablePose BETWEEN_START_W_JUNCTION = new ConfigurablePose(37, -15, 3.5);
         public static ConfigurablePose BETWEEN_W_JUNCTION_STACK = new ConfigurablePose(35, -14, .4);
         public static ConfigurablePose BETWEEN_STACK_W_JUNCTION = new ConfigurablePose(36, -14, 3);
         public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(15, -60, toRadians(90));
@@ -92,7 +92,7 @@ public class AutoConstantsBlue {
         public static ConfigurablePose LEFT = new ConfigurablePose(-58, -22, toRadians(90));
         public static ConfigurablePose MIDDLE = new ConfigurablePose(-37, -16, toRadians(90));
         public static ConfigurablePose RIGHT = new ConfigurablePose(-14, -15, toRadians(90));
-        public static ConfigurablePose BETWEEN_START_E_JUNCTION = new ConfigurablePose(-36, -21, toRadians(75));
+        public static ConfigurablePose BETWEEN_START_E_JUNCTION = new ConfigurablePose(-36, -21, toRadians(150));
         public static ConfigurablePose BETWEEN_E_JUNCTION_STACK = new ConfigurablePose(-36, -14, toRadians(180));
         public static ConfigurablePose BETWEEN_STACK_E_JUNCTION = new ConfigurablePose(-36, -14, toRadians(75));
         public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(-58, -60, toRadians(90));
