@@ -17,21 +17,22 @@ import com.technototes.library.subsystem.Subsystem;
 
 @Config
 public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
-    public static double TICKS_INCH = 265;
+    public static double TICKS_INCH = 89;
 
     public static double LIntake_Position = 0;
     public static double RIntake_Position = 0;
-    public static double LGROUND_JUNCTION = 265;
-    public static double RGROUND_JUNCTION = 265;
-    public static double LLOW_JUNCTION = 2980; // 2750 old value
-    public static double RLOW_JUNCTION = 2980;
-    public static double LMEDIUM_JUNCTION = 4770; // 4670
-    public static double RMEDIUM_JUNCTION = 4770;
-    public static double LHIGH_JUNCTION = 6560; // 6460
-    public static double RHIGH_JUNCTION = 6560;
-    public static double MAX_HEIGHT = 7000;
+    public static double LGROUND_JUNCTION = 155;
+    public static double RGROUND_JUNCTION = 155;
+    public static double LLOW_JUNCTION = 1280;
+    public static double RLOW_JUNCTION = 1280;
+    public static double LMEDIUM_JUNCTION = 2230;
+    public static double RMEDIUM_JUNCTION = 2230;
+    public static double LHIGH_JUNCTION = 3070;
+    public static double RHIGH_JUNCTION = 3070;
+    public static double MAX_HEIGHT = 3340;
     public static double MIN_HEIGHT = 0;
 
+    // Don't change these: They're used for user-redefining the 'zero' location during gameplay
     public static double LEFT_ACTUAL_ZERO = 0;
     public static double RIGHT_ACTUAL_ZERO = 0;
 
