@@ -41,9 +41,9 @@ public class AbsoluteAnalogEncoderDebug extends CommandOpMode {
         telemetry.addLine("Visit 192.168.43.1:8080/dash to see the FTC-Dashboard");
         if (isLeftSideConnected) {
             telemetry.addData("LeftFront - Position", leftFrontEncoder.getCurrentPosition());
-            telemetry.addData("LeftFront - Voltage", leftFrontEncoder.getVoltage());
-
             telemetry.addData("LeftRear - Position", leftRearEncoder.getCurrentPosition());
+
+            telemetry.addData("LeftFront - Voltage", leftFrontEncoder.getVoltage());
             telemetry.addData("LeftRear - Voltage", leftRearEncoder.getVoltage());
         } else {
             telemetry.addLine("WARNING: Left Disconnected");
@@ -51,9 +51,9 @@ public class AbsoluteAnalogEncoderDebug extends CommandOpMode {
 
         if (isRightSideConnected) {
             telemetry.addData("RightRear - Position", rightRearEncoder.getCurrentPosition());
-            telemetry.addData("RightRear - Voltage", rightRearEncoder.getVoltage());
-
             telemetry.addData("RightFront - Position", rightFrontEncoder.getCurrentPosition());
+
+            telemetry.addData("RightRear - Voltage", rightRearEncoder.getVoltage());
             telemetry.addData("RightFront - Voltage", rightFrontEncoder.getVoltage());
         } else {
             telemetry.addLine("WARNING: Right Disconnected");
