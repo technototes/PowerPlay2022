@@ -19,6 +19,7 @@ public class LiftHeightCommand implements Command {
         switch (height) {
             case Intake:
                 lift.intakePos();
+                break;
             case Ground:
                 lift.groundJunction();
                 break;
