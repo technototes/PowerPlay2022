@@ -11,9 +11,7 @@ import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.path.command.TrajectorySequenceCommand;
-//autonomous for blue away and red home
-//parks in middle position
-//scores preload & 2 more cones from stack
+
 public class AutoBlueAwayFullCycleMiddle extends SequentialCommandGroup {
     public AutoBlueAwayFullCycleMiddle(
             DrivebaseSubsystem drivebaseSubsystem, ClawSubsystem clawSubsystem, LiftSubsystem liftSubsystem) {

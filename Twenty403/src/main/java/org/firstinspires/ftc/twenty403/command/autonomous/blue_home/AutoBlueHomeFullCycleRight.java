@@ -12,9 +12,9 @@ import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.path.command.TrajectorySequenceCommand;
 
-//autonomous for blue home and red away
-//parks in right position
-//scores preload & 2 more cones from stack
+// autonomous for blue home and red away
+// parks in right position
+// scores preload & 2 more cones from stack
 public class AutoBlueHomeFullCycleRight extends SequentialCommandGroup {
     public AutoBlueHomeFullCycleRight(
             DrivebaseSubsystem drivebaseSubsystem, ClawSubsystem clawSubsystem, LiftSubsystem liftSubsystem) {
