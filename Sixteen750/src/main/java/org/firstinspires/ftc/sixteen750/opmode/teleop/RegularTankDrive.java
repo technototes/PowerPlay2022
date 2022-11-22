@@ -4,7 +4,7 @@ import org.firstinspires.ftc.sixteen750.ControlsDriver;
 import org.firstinspires.ftc.sixteen750.ControlsOperator;
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
-import org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.TankDriveSubsystem;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -19,7 +19,7 @@ import com.technototes.library.structure.CommandOpMode;
 @TeleOp(group = "Tank")
 @SuppressWarnings("unused")
 public class RegularTankDrive extends CommandOpMode {
-    TankDrivebaseSubsystem drive;
+    TankDriveSubsystem drive;
     Robot robot;
     Hardware hardware;
     ControlsDriver driverControls;
@@ -34,7 +34,7 @@ public class RegularTankDrive extends CommandOpMode {
         driverControls = new ControlsDriver(driverGamepad, robot);
         operatorControls = new ControlsOperator(codriverGamepad, robot);
 
-        drive = new TankDrivebaseSubsystem(hardwareMap);
+        drive = new TankDriveSubsystem(hardwareMap);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         drive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());

@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.sixteen750.opmode.diagnosis;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.SwerveDriveSubsystem;
 import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequence;
 
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -18,7 +18,7 @@ public class SwerveInfinityStraightTest extends LinearOpMode {
     public static double DISTANCE = 100; // in
     int loopCount = 0;
 
-    public Integer updateCallback(SwerveDrivebaseSubsystem drive, Telemetry telemetry) {
+    public Integer updateCallback(SwerveDriveSubsystem drive, Telemetry telemetry) {
         telemetry.addLine("Visit 192.168.43.1:8080/dash to see the FTC-Dashboard");
         Pose2d poseEstimate = drive.getPoseEstimate();
         telemetry.addData("X", poseEstimate.getX());
@@ -41,7 +41,7 @@ public class SwerveInfinityStraightTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        SwerveDrivebaseSubsystem drive = new SwerveDrivebaseSubsystem(hardwareMap);
+        SwerveDriveSubsystem drive = new SwerveDriveSubsystem(hardwareMap);
 
         TrajectorySequence trajectory = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
                 .forward(DISTANCE)

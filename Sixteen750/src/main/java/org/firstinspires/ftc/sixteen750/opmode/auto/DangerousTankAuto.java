@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.sixteen750.opmode.auto;
 
-import org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.TankDriveSubsystem;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -12,7 +12,7 @@ public class DangerousTankAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        TankDrivebaseSubsystem drive = new TankDrivebaseSubsystem(hardwareMap);
+        TankDriveSubsystem drive = new TankDriveSubsystem(hardwareMap);
         waitForStart();
         if (isStopRequested()) return;
         ElapsedTime time = new ElapsedTime();

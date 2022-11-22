@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.sixteen750.opmode.teleop;
 
-import org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.TankDriveSubsystem;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -15,13 +15,13 @@ import com.technototes.library.structure.CommandOpMode;
 @TeleOp(name = "BasicTankDrive", group = "Tank")
 @SuppressWarnings("unused")
 public class BasicTankDriveOpMode extends CommandOpMode {
-    TankDrivebaseSubsystem drive;
+    TankDriveSubsystem drive;
 
     public static final double DEAD_ZONE = 0.1;
 
     @Override
     public void uponInit() {
-        drive = new TankDrivebaseSubsystem(hardwareMap);
+        drive = new TankDriveSubsystem(hardwareMap);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         drive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());

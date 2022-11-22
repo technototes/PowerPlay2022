@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.sixteen750.opmode.diagnosis;
 
-import org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.TankDriveSubsystem;
 import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequence;
 
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -21,7 +21,7 @@ public class TankInfinityStraightTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        TankDrivebaseSubsystem drive = new TankDrivebaseSubsystem(hardwareMap);
+        TankDriveSubsystem drive = new TankDriveSubsystem(hardwareMap);
 
         TrajectorySequence trajectory = drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
                 .forward(DISTANCE)

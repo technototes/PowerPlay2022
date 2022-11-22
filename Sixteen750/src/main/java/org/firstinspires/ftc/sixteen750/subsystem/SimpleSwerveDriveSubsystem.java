@@ -6,7 +6,7 @@ import org.firstinspires.ftc.sixteen750.swerve_util.SwerveModule;
 
 import java.util.ArrayList;
 
-public class SimpleSwerveDrivebaseSubsystem implements Subsystem {
+public class SimpleSwerveDriveSubsystem implements Subsystem {
     private SwerveModule leftFrontModule;
     private SwerveModule leftRearModule;
     private SwerveModule rightFrontModule;
@@ -14,10 +14,10 @@ public class SimpleSwerveDrivebaseSubsystem implements Subsystem {
     private ArrayList<SwerveModule> modules;
 
 
-    public SimpleSwerveDrivebaseSubsystem(SwerveModule leftFrontModule,
-                                          SwerveModule leftRearModule,
-                                          SwerveModule rightFrontModule,
-                                          SwerveModule rightRearModule
+    public SimpleSwerveDriveSubsystem(SwerveModule leftFrontModule,
+                                      SwerveModule leftRearModule,
+                                      SwerveModule rightFrontModule,
+                                      SwerveModule rightRearModule
     ) {
         this.leftFrontModule = leftFrontModule;
         this.leftRearModule = leftRearModule;
