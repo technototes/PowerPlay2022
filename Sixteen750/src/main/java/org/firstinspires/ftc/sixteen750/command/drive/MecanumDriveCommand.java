@@ -6,17 +6,18 @@ import java.util.function.DoubleSupplier;
 import com.technototes.library.command.Command;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.Stick;
-import com.technototes.library.subsystem.drivebase.DrivebaseSubsystem;
 import com.technototes.library.util.MathUtils;
 
-public class DriveCommand implements Command {
+import org.firstinspires.ftc.sixteen750.subsystem.MecanumDriveSubsystem;
+
+public class MecanumDriveCommand implements Command {
     // TODO: change to actual drive-base subsystem
     static double STRAIGHTEN_DEAD_ZONE = 0.08;
-    public DrivebaseSubsystem subsystem;
+    public MecanumDriveSubsystem subsystem;
     public DoubleSupplier x, y, r;
     public BooleanSupplier straight;
 
-    public DriveCommand(DrivebaseSubsystem sub, Stick stick1, Stick stick2) {
+    public MecanumDriveCommand(MecanumDriveSubsystem sub, Stick stick1, Stick stick2) {
         addRequirements(sub);
         subsystem = sub;
         x = stick1.getXSupplier();
@@ -25,7 +26,7 @@ public class DriveCommand implements Command {
         straight = null;
     }
 
-    public DriveCommand(DrivebaseSubsystem sub, Stick stick1, Stick stick2, CommandButton straighten) {
+    public MecanumDriveCommand(MecanumDriveSubsystem sub, Stick stick1, Stick stick2, CommandButton straighten) {
         addRequirements(sub);
         subsystem = sub;
         x = stick1.getXSupplier();

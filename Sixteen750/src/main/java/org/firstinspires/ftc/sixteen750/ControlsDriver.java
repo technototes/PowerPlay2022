@@ -3,9 +3,11 @@ package org.firstinspires.ftc.sixteen750;
 import org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
+import org.firstinspires.ftc.sixteen750.command.drive.MecanumDriveCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftIncrementalMoveDownCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftIncrementalMoveUpCommand;
 
+import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.control.CommandAxis;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
@@ -50,9 +52,9 @@ public class ControlsDriver {
     }
 
     public void bindDriveControls() {
-        // CommandScheduler.getInstance()
-        //  .scheduleJoystick(new DriveCommand(
-        //      robot.drivebaseSubsystem, driveLeftStick, driveRightStick, driveStraightenButton));
+         CommandScheduler.getInstance()
+          .scheduleJoystick(new MecanumDriveCommand(
+              robot.mecanumDriveSubsystem, gamepad.leftStick, gamepad.rightStick, gamepad.square));
         // TODO: We probably want buttons to reset the Gyro...
         // resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
         // snailSpeedButton.whilePressedOnce(new SetSpeedCommand(robot.drivebaseSubsystem));

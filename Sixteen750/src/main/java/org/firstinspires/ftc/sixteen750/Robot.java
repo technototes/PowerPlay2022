@@ -2,6 +2,7 @@ package org.firstinspires.ftc.sixteen750;
 
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.MecanumDriveSubsystem;
 
 import com.acmerobotics.dashboard.config.Config;
 
@@ -11,22 +12,30 @@ public class Robot implements Loggable {
     @Config
     public static class RobotConstant {
         public static boolean SWERVE_DRIVE_ENABLED = false;
-        public static boolean TANK_DRIVE_ENABLED = true;
+        public static boolean TANK_DRIVE_ENABLED = false;
+        public static boolean MECANUM_DRIVE_ENABLED = true;
         public static boolean CLAW_ENABLED = false;
         public static boolean LIFT_ENABLED = false;
     }
 
     public ClawSubsystem clawSubsystem;
     public LiftSubsystem liftSubsystem;
+    public MecanumDriveSubsystem mecanumDriveSubsystem;
 
     public boolean isSwerveDriveConnected = false;
     public boolean isTankDriveConnected = false;
+    public boolean isMecanumDriveConnected = false;
     public boolean isClawConnected = false;
     public boolean isLiftConnected = false;
 
     public Robot(Hardware hardware) {
         if (RobotConstant.SWERVE_DRIVE_ENABLED) {}
         if (RobotConstant.TANK_DRIVE_ENABLED) {}
+
+        if (RobotConstant.MECANUM_DRIVE_ENABLED) {
+            /// Don't forget to check the order of the motors
+            mecanumDriveSubsystem = new MecanumDriveSubsystem(hardware.leftFrontMotor, hardware.rightFrontMotor, hardware.leftRearMotor, hardware.rightRearMotor, hardware.imu, null);
+        }
 
         if (RobotConstant.CLAW_ENABLED) {
             clawSubsystem = new ClawSubsystem(hardware.clawServo, hardware.flipperServo, hardware.elbowServo, null);

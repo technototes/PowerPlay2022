@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
 
 import java.util.ArrayList;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.sixteen750.swerve_util.AbsoluteAnalogEncoder;
 
 import com.acmerobotics.dashboard.config.Config;
@@ -46,14 +47,6 @@ public class Hardware {
     public EncodedMotor<DcMotorEx> leftRearMotor;
     public EncodedMotor<DcMotorEx> rightFrontMotor;
     public EncodedMotor<DcMotorEx> rightRearMotor;
-    public CRServo leftFrontServo;
-    public CRServo leftRearServo;
-    public CRServo rightFrontServo;
-    public CRServo rightRearServo;
-    public AbsoluteAnalogEncoder leftFrontEncoder;
-    public AbsoluteAnalogEncoder leftRearEncoder;
-    public AbsoluteAnalogEncoder rightFrontEncoder;
-    public AbsoluteAnalogEncoder rightRearEncoder;
     public IMU imu;
 
     public EncodedMotor<DcMotorEx> liftLeftMotor;
@@ -73,19 +66,7 @@ public class Hardware {
             rightFrontMotor = new EncodedMotor<>(HardwareConstant.RF_MOTOR);
             rightRearMotor = new EncodedMotor<>(HardwareConstant.RR_MOTOR);
 
-            leftFrontServo = hwMap.crservo.get(HardwareConstant.LF_SERVO);
-            leftRearServo = hwMap.crservo.get(HardwareConstant.LR_SERVO);
-            rightFrontServo = hwMap.crservo.get(HardwareConstant.RF_SERVO);
-            rightRearServo = hwMap.crservo.get(HardwareConstant.RR_SERVO);
-
-            leftFrontEncoder = new AbsoluteAnalogEncoder(hwMap.get(AnalogInput.class, HardwareConstant.LF_ENCODER));
-            leftRearEncoder = new AbsoluteAnalogEncoder(hwMap.get(AnalogInput.class, HardwareConstant.LR_ENCODER));
-            rightFrontEncoder = new AbsoluteAnalogEncoder(hwMap.get(AnalogInput.class, HardwareConstant.RF_ENCODER));
-            rightRearEncoder = new AbsoluteAnalogEncoder(hwMap.get(AnalogInput.class, HardwareConstant.RR_ENCODER));
-
-            //          imu = new IMU(HardwareConstant.IMU).remapAxes(AxesOrder.YXZ, IMU.AxesSigns.NNN); // TODO: figure
-            // the  axes order
-            imu = new IMU(HardwareConstant.IMU);
+            imu = new IMU(HardwareConstant.IMU).remapAxes(AxesOrder.YXZ, IMU.AxesSigns.NNN); // TODO: figure the axes order
         }
         if (RobotConstant.CLAW_ENABLED) {
             clawServo = new Servo(HardwareConstant.CLAW_SERVO).invert();

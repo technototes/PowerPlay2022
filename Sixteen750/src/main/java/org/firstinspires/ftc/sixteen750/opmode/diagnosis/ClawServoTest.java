@@ -19,7 +19,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.structure.CommandOpMode;
 
-@Disabled
 @Config
 @TeleOp(group = "Test-Hardware")
 @SuppressWarnings("unused")
