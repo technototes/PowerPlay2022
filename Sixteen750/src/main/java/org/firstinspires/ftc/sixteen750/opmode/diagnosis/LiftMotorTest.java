@@ -6,10 +6,12 @@ import org.firstinspires.ftc.sixteen750.Robot;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import com.technototes.library.structure.CommandOpMode;
 
+@Disabled
 @TeleOp(group = "Test-Hardware")
 @SuppressWarnings("unused")
 public class LiftMotorTest extends CommandOpMode {
