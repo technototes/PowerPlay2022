@@ -48,18 +48,18 @@ public class ControlsOperator {
     }
 
     public void bindCoDriverClawControls() {
-//      this.clawOpenButton = gamepad.rightTrigger;
-//      this.clawCloseButton = gamepad.leftTrigger;
-//      clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-//      clawCloseButton.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
-//      this.armRetractButton = gamepad.triangle;
-//      this.readyToScoreButton = gamepad.square;
-//      this.scoreMidJunctionButton = gamepad.circle;
-//      this.flipperIntakePositionButton = gamepad.x;
-//      armRetractButton.whenPressed(new ArmRetractCommand(robot.clawSubsystem));
-//      readyToScoreButton.whenPressed(new ClawReadyToIntakeGroundCommandGroup(robot.clawSubsystem));
-//      scoreMidJunctionButton.whenPressed(new ClawScoreCommandGroup(robot.clawSubsystem));
-//      flipperIntakePositionButton.whenPressed(new FlipperIntakePositionCommand(robot.clawSubsystem));
+        //      this.clawOpenButton = gamepad.rightTrigger;
+        //      this.clawCloseButton = gamepad.leftTrigger;
+        //      clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
+        //      clawCloseButton.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
+        //      this.armRetractButton = gamepad.triangle;
+        //      this.readyToScoreButton = gamepad.square;
+        //      this.scoreMidJunctionButton = gamepad.circle;
+        //      this.flipperIntakePositionButton = gamepad.x;
+        //      armRetractButton.whenPressed(new ArmRetractCommand(robot.clawSubsystem));
+        //      readyToScoreButton.whenPressed(new ClawReadyToIntakeGroundCommandGroup(robot.clawSubsystem));
+        //      scoreMidJunctionButton.whenPressed(new ClawScoreCommandGroup(robot.clawSubsystem));
+        //      flipperIntakePositionButton.whenPressed(new FlipperIntakePositionCommand(robot.clawSubsystem));
         // What if we don't assign them to a variable?
         gamepad.rightTrigger.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
         gamepad.leftTrigger.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
@@ -68,14 +68,14 @@ public class ControlsOperator {
         gamepad.circle.whenPressed(new ClawScoreCommandGroup(robot.clawSubsystem));
         gamepad.x.whenPressed(new FlipperIntakePositionCommand(robot.clawSubsystem));
 
-//      this.flipperDownButton = gamepad.dpadLeft;
-//      this.flipperUpButton = gamepad.dpadRight;
-//      this.elbowDownButton = gamepad.dpadDown;
-//      this.elbowUpButton = gamepad.dpadUp;
-//      flipperDownButton.whenPressed(new FlipperServoIncrementalDownCommand(robot.clawSubsystem));
-//      flipperUpButton.whenPressed(new FlipperServoIncrementalUpCommand(robot.clawSubsystem));
-//      elbowDownButton.whenPressed(new ElbowServoIncrementalDownCommand(robot.clawSubsystem));
-//      elbowUpButton.whenPressed(new ElbowServoIncrementalUpCommand(robot.clawSubsystem));
+        //      this.flipperDownButton = gamepad.dpadLeft;
+        //      this.flipperUpButton = gamepad.dpadRight;
+        //      this.elbowDownButton = gamepad.dpadDown;
+        //      this.elbowUpButton = gamepad.dpadUp;
+        //      flipperDownButton.whenPressed(new FlipperServoIncrementalDownCommand(robot.clawSubsystem));
+        //      flipperUpButton.whenPressed(new FlipperServoIncrementalUpCommand(robot.clawSubsystem));
+        //      elbowDownButton.whenPressed(new ElbowServoIncrementalDownCommand(robot.clawSubsystem));
+        //      elbowUpButton.whenPressed(new ElbowServoIncrementalUpCommand(robot.clawSubsystem));
         gamepad.dpadLeft.whenPressed(new FlipperServoIncrementalDownCommand(robot.clawSubsystem));
         gamepad.dpadRight.whenPressed(new FlipperServoIncrementalUpCommand(robot.clawSubsystem));
         gamepad.dpadDown.whenPressed(new ElbowServoIncrementalDownCommand(robot.clawSubsystem));
@@ -83,10 +83,10 @@ public class ControlsOperator {
     }
 
     public void bindCoDriverLiftControls() {
-//      this.liftDownButton = gamepad.leftBumper;
-//      this.liftUpButton = gamepad.rightBumper;
-//      liftUpButton.whenPressed(new LiftIncrementalMoveUpCommand(robot.liftSubsystem));
-//      liftDownButton.whenPressed(new LiftIncrementalMoveDownCommand(robot.liftSubsystem));
+        //      this.liftDownButton = gamepad.leftBumper;
+        //      this.liftUpButton = gamepad.rightBumper;
+        //      liftUpButton.whenPressed(new LiftIncrementalMoveUpCommand(robot.liftSubsystem));
+        //      liftDownButton.whenPressed(new LiftIncrementalMoveDownCommand(robot.liftSubsystem));
         gamepad.leftBumper.whenPressed(new LiftIncrementalMoveUpCommand(robot.liftSubsystem));
         gamepad.rightBumper.whenPressed(new LiftIncrementalMoveDownCommand(robot.liftSubsystem));
     }

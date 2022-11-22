@@ -59,19 +59,19 @@ public class ControlsDriver {
     }
 
     public void bindClawControls() {
-//        this.clawCloseButton = gamepad.leftTrigger;
-//        this.clawOpenButton = gamepad.rightTrigger;
-//        this.clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-//        this.clawCloseButton.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
+        //        this.clawCloseButton = gamepad.leftTrigger;
+        //        this.clawOpenButton = gamepad.rightTrigger;
+        //        this.clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
+        //        this.clawCloseButton.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
         gamepad.leftTrigger.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
         gamepad.rightTrigger.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
     }
 
     public void bindLiftControls() {
-//        this.liftUpButton = gamepad.leftBumper;
-//        this.liftDownButton = gamepad.rightBumper;
-//        this.liftUpButton.whenPressed(new LiftIncrementalMoveUpCommand(robot.liftSubsystem));
-//        this.liftDownButton.whenPressed(new LiftIncrementalMoveDownCommand(robot.liftSubsystem));
+        //        this.liftUpButton = gamepad.leftBumper;
+        //        this.liftDownButton = gamepad.rightBumper;
+        //        this.liftUpButton.whenPressed(new LiftIncrementalMoveUpCommand(robot.liftSubsystem));
+        //        this.liftDownButton.whenPressed(new LiftIncrementalMoveDownCommand(robot.liftSubsystem));
         gamepad.leftBumper.whenPressed(new LiftIncrementalMoveUpCommand(robot.liftSubsystem));
         gamepad.rightBumper.whenPressed(new LiftIncrementalMoveDownCommand(robot.liftSubsystem));
     }

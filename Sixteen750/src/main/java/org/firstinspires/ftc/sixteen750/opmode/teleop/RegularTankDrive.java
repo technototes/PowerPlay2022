@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.sixteen750.opmode.teleop;
 
 import org.firstinspires.ftc.sixteen750.ControlsDriver;
-import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.ControlsOperator;
+import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
 import org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem;
 
