@@ -34,7 +34,7 @@ public class Robot implements Loggable {
 
         if (RobotConstant.MECANUM_DRIVE_ENABLED) {
             /// Don't forget to check the order of the motors
-            mecanumDriveSubsystem = new MecanumDriveSubsystem(hardware.leftFrontMotor, hardware.rightFrontMotor, hardware.leftRearMotor, hardware.rightRearMotor, hardware.imu, null);
+            mecanumDriveSubsystem = new MecanumDriveSubsystem(hardware.leftFrontMotor, hardware.rightFrontMotor, hardware.leftRearMotor, hardware.rightRearMotor, hardware.imu);
         }
 
         if (RobotConstant.CLAW_ENABLED) {
