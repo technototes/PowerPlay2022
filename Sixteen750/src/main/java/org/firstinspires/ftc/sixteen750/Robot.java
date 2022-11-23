@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.sixteen750;
 
+import org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.MecanumDriveSubsystem;
@@ -15,10 +16,12 @@ public class Robot implements Loggable {
         public static boolean TANK_DRIVE_ENABLED = false;
         public static boolean MECANUM_DRIVE_ENABLED = true;
         public static boolean CLAW_ENABLED = false;
+        public static boolean ARM_ENABLED = false;
         public static boolean LIFT_ENABLED = false;
     }
 
     public ClawSubsystem clawSubsystem;
+    public ArmSubsystem armSubsystem;
     public LiftSubsystem liftSubsystem;
     public MecanumDriveSubsystem mecanumDriveSubsystem;
 
@@ -26,6 +29,7 @@ public class Robot implements Loggable {
     public boolean isTankDriveConnected = false;
     public boolean isMecanumDriveConnected = false;
     public boolean isClawConnected = false;
+    public boolean isArmConnected = false;
     public boolean isLiftConnected = false;
 
     public Robot(Hardware hardware) {
@@ -38,9 +42,15 @@ public class Robot implements Loggable {
         }
 
         if (RobotConstant.CLAW_ENABLED) {
-            clawSubsystem = new ClawSubsystem(hardware.clawServo, hardware.flipperServo, hardware.elbowServo, null);
+            clawSubsystem = new ClawSubsystem(hardware.clawServo,null);
         } else {
-            clawSubsystem = new ClawSubsystem(null, null, null, null);
+            clawSubsystem = new ClawSubsystem(null, null);
+        }
+
+        if (RobotConstant.ARM_ENABLED) {
+            armSubsystem = new ArmSubsystem(hardware.flipperServo, hardware.elbowServo);
+        } else {
+            armSubsystem = new ArmSubsystem(null, null);
         }
 
         if (RobotConstant.LIFT_ENABLED) {

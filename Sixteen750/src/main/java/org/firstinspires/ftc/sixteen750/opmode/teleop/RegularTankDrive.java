@@ -74,8 +74,8 @@ public class RegularTankDrive extends CommandOpMode {
         telemetry.addData("RightRear Motor Power", drive.getRightRearMotorVelocity());
 
         telemetry.addData("Claw Servo Position", robot.clawSubsystem.getClawPosition());
-        telemetry.addData("Flipper Servo Position", robot.clawSubsystem.getFlipperPosition());
-        telemetry.addData("Elbow Servo Position", robot.clawSubsystem.getElbowPosition());
+        telemetry.addData("Flipper Servo Position", robot.armSubsystem.getFlipperPosition());
+        telemetry.addData("Elbow Servo Position", robot.armSubsystem.getElbowPosition());
         telemetry.update();
     }
 }
