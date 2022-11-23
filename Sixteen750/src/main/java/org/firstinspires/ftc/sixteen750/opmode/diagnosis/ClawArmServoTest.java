@@ -37,8 +37,8 @@ public class ClawArmServoTest extends CommandOpMode {
 
     @Override
     public void uponInit() {
-        hardware = new Hardware(hardwareMap);
-        robot = new Robot(hardware);
+        hardware = new Hardware(hardwareMap, false, false, true, true);
+        robot = new Robot(hardware, false, false, true, true);
         controls = new ControlsDriver(driverGamepad, robot);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         targetServo = hardware.elbowServo;
