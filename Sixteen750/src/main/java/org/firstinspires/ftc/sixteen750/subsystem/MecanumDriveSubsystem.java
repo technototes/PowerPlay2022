@@ -16,10 +16,10 @@ public class MecanumDriveSubsystem extends MecanumDrivebaseSubsystem implements 
 
     public abstract static class MecanumDriveConstants implements MecanumConstants {
         @TicksPerRev
-        public static final double TICKS_PER_REV = 0; // TODO: set ticks per rev
+        public static final double TICKS_PER_REV = 537.7; // called Encoder Resolution in datasheet, ((((1+(46/17))) * (1+(46/11))) * 28)
 
         @MaxRPM
-        public static final double MAX_RPM = 0; //TODO: set max rpm
+        public static final double MAX_RPM = 312; // 5203 Series Yellow Jacket Planetary Gear Motor (19.2:1 Ratio)
 
         @UseDriveEncoder
         public static final boolean RUN_USING_ENCODER = true;
@@ -28,16 +28,16 @@ public class MecanumDriveSubsystem extends MecanumDrivebaseSubsystem implements 
         public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(20, 0, 3, MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
 
         @WheelRadius
-        public static double WHEEL_RADIUS = 1.88976; // in, TODO: verify this
+        public static double WHEEL_RADIUS = 1.88976; // in
 
         @GearRatio
-        public static double GEAR_RATIO = 0; // TODO: set gear ratio
+        public static double GEAR_RATIO = 1 / 19.2 ; // 5203 Series Yellow Jacket Planetary Gear Motor (19.2:1 Ratio)
 
         @TrackWidth
-        public static double TRACK_WIDTH = 9.1875; // in, TODO: set track width
+        public static double TRACK_WIDTH = 12.283; // in, Strafer Chassis Kit V5
 
         @WheelBase
-        public static double WHEEL_BASE = 8.5; // in, TODO: set wheel
+        public static double WHEEL_BASE = 13.228; // in, Strafer Chassis Kit V5
 
         @KV
         public static double kV = 1.0 / MecanumConstants.rpmToVelocity(MAX_RPM, WHEEL_RADIUS, GEAR_RATIO);
