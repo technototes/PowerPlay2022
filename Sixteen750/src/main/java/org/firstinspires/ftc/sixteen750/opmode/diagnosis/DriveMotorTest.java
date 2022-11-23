@@ -19,8 +19,8 @@ public class DriveMotorTest extends CommandOpMode {
     EncodedMotor<DcMotorEx> leftFrontMotor, leftRearMotor, rightRearMotor, rightFrontMotor;
     boolean isLeftFrontPressed, isLeftRearPressed, isRightRearPressed, isRightFrontPressed = false;
 
-    public static double motorSpeed =
-            0.3; // 0.1 is too little, the motor trying to move but not enough to move the robot; 0.2 is slightly better
+    // 0.1 is too little, the motor trying to move but not enough to move the robot; 0.2 is slightly better
+    public static double motorSpeed = 0.3;
     public static double motorStopSpeed = 0.0;
 
     boolean isLeftSideConnected = true;
@@ -59,28 +59,24 @@ public class DriveMotorTest extends CommandOpMode {
             leftFrontMotor.setSpeed(motorSpeed);
             isLeftFrontPressed = true;
         } else {
-            leftFrontMotor.setSpeed(motorStopSpeed);
             isLeftFrontPressed = false;
         }
         if (this.gamepad1.dpad_down && isLeftSideConnected) {
             leftRearMotor.setSpeed(motorSpeed);
             isLeftRearPressed = true;
         } else {
-            leftRearMotor.setSpeed(motorStopSpeed);
             isLeftRearPressed = false;
         }
         if (this.gamepad1.dpad_up && isRightSideConnected) {
             rightRearMotor.setSpeed(motorSpeed);
             isRightRearPressed = true;
         } else {
-            rightRearMotor.setSpeed(motorStopSpeed);
             isRightRearPressed = false;
         }
         if (this.gamepad1.dpad_right && isRightSideConnected) {
             rightFrontMotor.setSpeed(motorSpeed);
             isRightFrontPressed = true;
         } else {
-            rightFrontMotor.setSpeed(motorStopSpeed);
             isRightFrontPressed = false;
         }
 
