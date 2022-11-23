@@ -59,8 +59,8 @@ public class Hardware {
 
     public ArrayList<String> hardwareWarnings = new ArrayList<>();
 
-    public Hardware(HardwareMap hwMap) {
-        if (RobotConstant.SWERVE_DRIVE_ENABLED) {
+    public Hardware(HardwareMap hwMap, boolean enableMecanum, boolean enableLift, boolean enableArm, boolean enableClaw) {
+        if (enableMecanum) {
             leftFrontMotor = new EncodedMotor<>(HardwareConstant.LF_MOTOR);
             leftRearMotor = new EncodedMotor<>(HardwareConstant.LR_MOTOR);
             rightFrontMotor = new EncodedMotor<>(HardwareConstant.RF_MOTOR);
@@ -68,13 +68,8 @@ public class Hardware {
 
             imu = new IMU(HardwareConstant.IMU).remapAxes(AxesOrder.YXZ, IMU.AxesSigns.NNN); // TODO: figure the axes order
         }
-        if (RobotConstant.CLAW_ENABLED) {
-            clawServo = new Servo(HardwareConstant.CLAW_SERVO).invert();
-            flipperServo = new Servo(HardwareConstant.FLIPPER_SERVO);
-            elbowServo = new Servo(HardwareConstant.ELBOW_SERVO).invert();
-            //          clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR); // not installed
-        }
-        if (RobotConstant.LIFT_ENABLED) {
+
+        if (enableLift) {
             try {
                 liftLeftMotor = new EncodedMotor<>(HardwareConstant.LIFT_LEFT_MOTOR);
                 liftRightMotor = new EncodedMotor<>(HardwareConstant.LIFT_RIGHT_MOTOR);
@@ -82,5 +77,19 @@ public class Hardware {
                 hardwareWarnings.add("At lease one lift motors not found");
             }
         }
+
+        if (enableArm) {
+            flipperServo = new Servo(HardwareConstant.FLIPPER_SERVO);
+            elbowServo = new Servo(HardwareConstant.ELBOW_SERVO).invert();
+        }
+
+        if (enableClaw) {
+            clawServo = new Servo(HardwareConstant.CLAW_SERVO).invert();
+            //          clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR); // not installed
+        }
+    }
+
+    public Hardware(HardwareMap hwMap) {
+        this(hwMap, RobotConstant.MECANUM_DRIVE_ENABLED, RobotConstant.LIFT_ENABLED, RobotConstant.ARM_ENABLED, RobotConstant.CLAW_ENABLED);
     }
 }

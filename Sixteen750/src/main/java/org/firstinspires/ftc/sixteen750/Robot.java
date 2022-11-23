@@ -32,33 +32,34 @@ public class Robot implements Loggable {
     public boolean isArmConnected = false;
     public boolean isLiftConnected = false;
 
-    public Robot(Hardware hardware) {
-        if (RobotConstant.SWERVE_DRIVE_ENABLED) {}
-        if (RobotConstant.TANK_DRIVE_ENABLED) {}
-
-        if (RobotConstant.MECANUM_DRIVE_ENABLED) {
+    public Robot(Hardware hardware, boolean enableMecanumDrive, boolean enableLift, boolean enableArm, boolean enableClaw) {
+        if (enableMecanumDrive) {
             /// Don't forget to check the order of the motors
             mecanumDriveSubsystem = new MecanumDriveSubsystem(hardware.leftFrontMotor, hardware.rightFrontMotor, hardware.leftRearMotor, hardware.rightRearMotor, hardware.imu);
         }
 
-        if (RobotConstant.CLAW_ENABLED) {
-            clawSubsystem = new ClawSubsystem(hardware.clawServo,null);
-        } else {
-            clawSubsystem = new ClawSubsystem(null, null);
-        }
-
-        if (RobotConstant.ARM_ENABLED) {
-            armSubsystem = new ArmSubsystem(hardware.flipperServo, hardware.elbowServo);
-        } else {
-            armSubsystem = new ArmSubsystem(null, null);
-        }
-
-        if (RobotConstant.LIFT_ENABLED) {
+        if (enableLift) {
             liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, hardware.liftRightMotor);
             // liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, null);
         } else {
             liftSubsystem = new LiftSubsystem(null, null);
         }
+
+        if (enableArm) {
+            armSubsystem = new ArmSubsystem(hardware.flipperServo, hardware.elbowServo);
+        } else {
+            armSubsystem = new ArmSubsystem(null, null);
+        }
+
+        if (enableClaw) {
+            clawSubsystem = new ClawSubsystem(hardware.clawServo,null);
+        } else {
+            clawSubsystem = new ClawSubsystem(null, null);
+        }
+    }
+
+    public Robot(Hardware hardware) {
+        this(hardware, RobotConstant.MECANUM_DRIVE_ENABLED, RobotConstant.CLAW_ENABLED, RobotConstant.ARM_ENABLED, RobotConstant.LIFT_ENABLED);
     }
 }
 /*
