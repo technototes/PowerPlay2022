@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.twenty403.opmode;
 
-import org.firstinspires.ftc.twenty403.Controls;
+import org.firstinspires.ftc.twenty403.Controls.Controls;
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.VisionCommand;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsBlue;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
-import org.firstinspires.ftc.twenty403.command.autonomous.blue_home.AutoBlueHomeParkingSelectionJustParkCommand;
+import org.firstinspires.ftc.twenty403.command.autonomous.blue_home.AutoBlueHomeParkingSelectionPreLoadCommand;
+import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -15,8 +16,8 @@ import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
-@Autonomous(name = "BlueHomeTerminal")
-public class BlueHomeTerminal extends CommandOpMode {
+@Autonomous(name = "BlueHomePreLoad")
+public class RightPreLoad extends CommandOpMode {
     public Robot robot;
     public Controls controls;
     public Hardware hardware;
@@ -29,13 +30,12 @@ public class BlueHomeTerminal extends CommandOpMode {
         CommandScheduler.getInstance()
                 .scheduleForState(
                         new SequentialCommandGroup(
-                                // Kevin: I think this file didn't get added from the laptop :(
-                                //   *****************************************
-                                //   *** CHECK ON ALL 3 LAPTOPS ON TUESDAY ***
-                                //   *****************************************
-                                // new AutoBlueHomeParkingSelectionTerminalCommand(
-                                new AutoBlueHomeParkingSelectionJustParkCommand(
-                                        robot.visionSystem, robot.drivebaseSubsystem),
+                                new ClawCloseCommand(robot.clawSubsystem),
+                                new AutoBlueHomeParkingSelectionPreLoadCommand(
+                                        robot.visionSystem,
+                                        robot.drivebaseSubsystem,
+                                        robot.clawSubsystem,
+                                        robot.liftSubsystem),
                                 CommandScheduler.getInstance()::terminateOpMode),
                         CommandOpMode.OpModeState.RUN);
         if (Robot.RobotConstant.CAMERA_CONNECTED) {

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.twenty403.opmode;
+package org.firstinspires.ftc.twenty403.opmode.OldAutos;
 
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
@@ -9,11 +9,12 @@ import org.firstinspires.ftc.twenty403.command.autonomous.red_away.AutoRedAwayPa
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
-
+@Disabled
 @Autonomous(name = "RedAwayParkOnly")
 public class RedAwayPark extends CommandOpMode {
     public Robot robot;

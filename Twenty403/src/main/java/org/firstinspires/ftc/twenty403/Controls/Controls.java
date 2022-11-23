@@ -1,5 +1,7 @@
-package org.firstinspires.ftc.twenty403;
+package org.firstinspires.ftc.twenty403.Controls;
 
+import org.firstinspires.ftc.twenty403.Robot;
+import org.firstinspires.ftc.twenty403.Robot.RobotConstant;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
@@ -20,34 +22,40 @@ import org.firstinspires.ftc.twenty403.helpers.BothButtons;
 
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.ConditionalCommand;
+import com.technototes.library.control.CommandAxis;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
 
-public class Controls2 {
+public class Controls {
+
     public Robot robot;
     public CommandGamepad gamepad;
 
     public Stick driveLeftStick, driveRightStick;
-    public CommandButton resetGyroButton, driveStraighten, turboButton;
-    public CommandButton liftDownButton, liftUpButton, clawOpenButton, clawCloseButton, liftOverrideZeroButton;
-    public CommandButton liftGroundOrOverrideDown, liftLow, liftMedium, liftHighOrOverrideUp, liftIntakePos;
+    public CommandButton resetGyroButton, driveStraightenButton, liftUpButton, clawOpenButton;
+    public CommandButton liftDownButton, clawCloseButton, liftIntakePos;
+    public CommandButton liftGroundOrOverrideDown, liftLow, liftMedium, liftHighOrOverrideUp, liftOverrideZeroButton;
+    public CommandButton turboButton;
+    public CommandAxis driveStraight;
+
     public BothButtons override;
 
-    public Controls2(CommandGamepad g, Robot r) {
+    public Controls(CommandGamepad g, Robot r) {
         this.robot = r;
         gamepad = g;
-        override = new BothButtons(g.leftTrigger.getAsButton(0.5), g.rightTrigger.getAsButton(0.5));
+
+        override = new BothButtons(g.leftTrigger.getAsButton(0.5));
 
         AssignNamedControllerButton();
 
-        if (Robot.RobotConstant.DRIVE_CONNECTED) {
+        if (RobotConstant.DRIVE_CONNECTED) {
             bindDriveControls();
         }
-        if (Robot.RobotConstant.CLAW_CONNECTED) {
+        if (RobotConstant.CLAW_CONNECTED) {
             bindClawControls();
         }
-        if (Robot.RobotConstant.LIFT_CONNECTED) {
+        if (RobotConstant.LIFT_CONNECTED) {
             bindLiftControls();
         }
     }
@@ -56,30 +64,34 @@ public class Controls2 {
         resetGyroButton = gamepad.rightStickButton;
         driveLeftStick = gamepad.leftStick;
         driveRightStick = gamepad.rightStick;
-        turboButton = gamepad.leftStickButton;
+        driveStraight = gamepad.rightTrigger;
 
-        liftUpButton = gamepad.dpadRight; // square
-        liftDownButton = gamepad.dpadDown; // cross
-        liftIntakePos = gamepad.dpadLeft; // circle
+        turboButton = gamepad.triangle;
+        liftUpButton = gamepad.square;
+        liftDownButton = gamepad.cross;
+        liftIntakePos = gamepad.circle;
+
+        clawOpenButton = gamepad.leftBumper;
+        clawCloseButton = gamepad.leftTrigger.getAsButton();
+
+        liftLow = gamepad.dpadLeft;
+        liftMedium = gamepad.dpadRight;
+
         liftOverrideZeroButton = gamepad.share;
+        liftGroundOrOverrideDown = gamepad.dpadDown;
+        liftHighOrOverrideUp = gamepad.dpadUp;
 
-        clawOpenButton = gamepad.rightBumper; // left
-        clawCloseButton = gamepad.leftBumper; // right
 
-        liftGroundOrOverrideDown = gamepad.cross; // dpadDown
-        liftLow = gamepad.square; // dpadLeft
-        liftMedium = gamepad.circle; // dpadRight
-        liftHighOrOverrideUp = gamepad.triangle; // dpadUp
 
-        driveStraighten = gamepad.options;
 
-        // TODO: Identify other controls for
+        // TODO: Identify other controls for drive straighten button
+        driveStraightenButton = gamepad.options;
     }
 
     public void bindDriveControls() {
         CommandScheduler.getInstance()
-                .scheduleJoystick(
-                        new DriveCommand(robot.drivebaseSubsystem, driveLeftStick, driveRightStick, driveStraighten));
+                .scheduleJoystick(new DriveCommand(
+                        robot.drivebaseSubsystem, driveLeftStick, driveRightStick, driveStraight));
         turboButton.whenPressed(new TurboCommand(robot.drivebaseSubsystem));
         turboButton.whenReleased(new SlowCommand(robot.drivebaseSubsystem));
         // TODO: We probably want buttons to reset the Gyro...
@@ -89,7 +101,7 @@ public class Controls2 {
     public void bindClawControls() {
         // TODO: Name & Bind claw controls
         clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-        clawCloseButton.whenReleased(new ClawCloseCommand(robot.clawSubsystem));
+        clawCloseButton.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
     }
 
     public void bindLiftControls() {
@@ -97,18 +109,18 @@ public class Controls2 {
         liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
         liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
         liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));
-        liftOverrideZeroButton.whenPressed(
-                new ConditionalCommand(override, new LiftSetZeroCommand(robot.liftSubsystem)));
 
+        liftLow.whenPressed(new LiftLowJunctionCommand(robot.liftSubsystem));
         liftGroundOrOverrideDown.whenPressed(new ConditionalCommand(
                 override,
                 new LiftMoveDownOverrideCommand(robot.liftSubsystem),
                 new LiftGroundJunctionCommand(robot.liftSubsystem)));
-        liftLow.whenPressed(new LiftLowJunctionCommand(robot.liftSubsystem));
         liftMedium.whenPressed(new LiftMidJunctionCommand(robot.liftSubsystem));
         liftHighOrOverrideUp.whenPressed(new ConditionalCommand(
                 override,
                 new LiftMoveUpOverrideCommand(robot.liftSubsystem),
                 new LiftHighJunctionCommand(robot.liftSubsystem)));
+        liftOverrideZeroButton.whenPressed(
+                new ConditionalCommand(override, new LiftSetZeroCommand(robot.liftSubsystem)));
     }
 }

@@ -7,15 +7,14 @@ import com.technototes.library.control.CommandButton;
 // This is a helper that returns true of both of the buttons are pressed
 // We're using it so you can pull both triggers for "override" behavior
 public class BothButtons implements BooleanSupplier {
-    CommandButton a, b;
+    CommandButton a;
 
-    public BothButtons(CommandButton btn1, CommandButton btn2) {
+    public BothButtons(CommandButton btn1 ) {
         a = btn1;
-        b = btn2;
     }
 
     @Override
     public boolean getAsBoolean() {
-        return a.getAsBoolean() && b.getAsBoolean();
+        return a.getAsBoolean();
     }
 }
