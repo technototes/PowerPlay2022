@@ -50,6 +50,9 @@ public class ControlSingle {
         if (Robot.RobotConstant.LIFT_CONNECTED) {
             bindLiftControls();
         }
+        if (Robot.RobotConstant.CAMERA_CONNECTED) {
+            bindAlignControls();
+        }
     }
 
     private void AssignNamedControllerButton() {
@@ -84,7 +87,8 @@ public class ControlSingle {
                     robot.drivebaseSubsystem,
                     driveLeftStick,
                     driveRightStick,
-                    driveStraight
+                    driveStraight,
+                    watchButton
                 )
             );
         turboButton.whenPressed(new TurboCommand(robot.drivebaseSubsystem));

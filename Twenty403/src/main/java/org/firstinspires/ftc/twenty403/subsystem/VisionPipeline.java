@@ -98,7 +98,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
     public volatile double junctionX = -1;
 
     @LogConfig.Run(duringRun = true, duringInit = true)
-    @Log.Number(name = "Junction Y")**
+    @Log.Number(name = "Junction Y")
     public volatile double junctionY = -1;
 
     private ElapsedTime time = new ElapsedTime();
@@ -186,12 +186,14 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         for (int j = customColorSpace.height() - 1; j > 0; j--) {
             for (int i = customColorSpace.width() - 1; i > 0; i--) {
                 double[] color = customColorSpace.get(j, i);
-                if (color[0] < VisionConstants.YELLOW + VisionConstants.RANGE &&
-                        color[0] > VisionConstants.YELLOW - VisionConstants.RANGE &&
-                        color[1] > VisionConstants.lowS &&
-                        color[1] < VisionConstants.highS &&
-                        color[2] > VisionConstants.lowV &&
-                        color[2] < VisionConstants.highV) {
+                if (
+                    color[0] < VisionConstants.YELLOW + VisionConstants.RANGE &&
+                    color[0] > VisionConstants.YELLOW - VisionConstants.RANGE &&
+                    color[1] > VisionConstants.lowS &&
+                    color[1] < VisionConstants.highS &&
+                    color[2] > VisionConstants.lowV &&
+                    color[2] < VisionConstants.highV
+                ) {
                     if (startX == -1) {
                         startX = i;
                     } else {
@@ -201,8 +203,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                     // The color choice makes things stripey, which makes it easier to identif
                     //if less than 20 for range after not seeing yellow than set both to -1 as not junction ypou are looking for
                 } else {
-                    if (startX != -1 &&
-                            (startX - endX < range) || endX == -1) {
+                    if (startX != -1 && (startX - endX < range) || endX == -1) {
                         startX = -1;
                         endX = -1;
                     }
@@ -257,6 +258,14 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
 
     public boolean right() {
         return rightDetected;
+    }
+
+    public double getJunctionX() {
+        return junctionX;
+    }
+
+    public double getJunctionY() {
+        return junctionY;
     }
 
     // Helper to send the bitmap to the FTC Dashboard
