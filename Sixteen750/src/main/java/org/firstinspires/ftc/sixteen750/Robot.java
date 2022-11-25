@@ -59,7 +59,7 @@ public class Robot implements Loggable {
     }
 
     public Robot(Hardware hardware) {
-        this(hardware, RobotConstant.MECANUM_DRIVE_ENABLED, RobotConstant.CLAW_ENABLED, RobotConstant.ARM_ENABLED, RobotConstant.LIFT_ENABLED);
+        this(hardware, RobotConstant.MECANUM_DRIVE_ENABLED, RobotConstant.LIFT_ENABLED, RobotConstant.ARM_ENABLED, RobotConstant.CLAW_ENABLED);
     }
 }
 /*
