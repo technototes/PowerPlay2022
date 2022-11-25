@@ -2,6 +2,8 @@ package org.firstinspires.ftc.sixteen750;
 
 import static org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
 
+import java.util.ArrayList;
+
 import org.firstinspires.ftc.sixteen750.swerve_util.AbsoluteAnalogEncoder;
 
 import com.acmerobotics.dashboard.config.Config;
@@ -14,8 +16,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.sensor.IMU;
 import com.technototes.library.hardware.servo.Servo;
-
-import java.util.ArrayList;
 
 public class Hardware {
     @Config
