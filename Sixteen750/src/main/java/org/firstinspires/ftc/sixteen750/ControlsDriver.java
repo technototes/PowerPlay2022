@@ -29,8 +29,8 @@ public class ControlsDriver {
 
         assignNamedControllerButton();
 
-        if (RobotConstant.SWERVE_DRIVE_ENABLED) {
-            bindDriveControls();
+        if (RobotConstant.MECANUM_DRIVE_ENABLED) {
+            bindMecanumDriveControls();
         }
         if (RobotConstant.CLAW_ENABLED) {
             bindClawControls();
@@ -51,7 +51,7 @@ public class ControlsDriver {
         // rumbleTestButton.whenPressed(new RumbleTestCommand(gamepad));
     }
 
-    public void bindDriveControls() {
+    public void bindMecanumDriveControls() {
          CommandScheduler.getInstance()
           .scheduleJoystick(new MecanumDriveCommand(
               robot.mecanumDriveSubsystem, gamepad.leftStick, gamepad.rightStick, gamepad.square));
