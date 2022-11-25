@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.sixteen750;
 
 import org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
+import org.firstinspires.ftc.sixteen750.command.ResetCommandSchedulerCommand;
 import org.firstinspires.ftc.sixteen750.command.arm.ArmRetractCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
@@ -40,6 +41,8 @@ public class ControlsOperator {
         if (RobotConstant.LIFT_ENABLED) {
             bindCoDriverLiftControls();
         }
+
+        gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand());
     }
 
     public void assignNamedControllerButton() {
