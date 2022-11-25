@@ -5,11 +5,8 @@ import static org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
 import java.util.ArrayList;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.sixteen750.swerve_util.AbsoluteAnalogEncoder;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -39,8 +36,8 @@ public class Hardware {
         public static String FLIPPER_SERVO = "flipperServo";
         public static String ELBOW_SERVO = "elbowServo";
         public static String CLAW_SENSOR = "clawSensor";
-        public static String LIFT_LEFT_MOTOR = "leftLiftMotor";
-        public static String LIFT_RIGHT_MOTOR = "rightLiftMotor";
+        public static String LEFT_LIFT_MOTOR = "leftLiftMotor";
+        public static String RIGHT_LIFT_MOTOR = "rightLiftMotor";
     }
 
     public EncodedMotor<DcMotorEx> leftFrontMotor;
@@ -71,10 +68,16 @@ public class Hardware {
 
         if (enableLift) {
             try {
-                liftLeftMotor = new EncodedMotor<>(HardwareConstant.LIFT_LEFT_MOTOR);
-                liftRightMotor = new EncodedMotor<>(HardwareConstant.LIFT_RIGHT_MOTOR);
+                liftLeftMotor = new EncodedMotor<>(HardwareConstant.LEFT_LIFT_MOTOR);
             } catch (Exception e) {
-                hardwareWarnings.add("At lease one lift motors not found");
+                liftLeftMotor = null;
+                hardwareWarnings.add("Left Lift Motor not found");
+            }
+            try {
+                liftRightMotor = new EncodedMotor<>(HardwareConstant.RIGHT_LIFT_MOTOR);
+            } catch (Exception e) {
+                liftRightMotor = null;
+                hardwareWarnings.add("Right Lift Motor not found");
             }
         }
 
@@ -85,7 +88,7 @@ public class Hardware {
 
         if (enableClaw) {
             clawServo = new Servo(HardwareConstant.CLAW_SERVO).invert();
-            //          clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR); // not installed
+            // clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR); // not installed
         }
     }
 
