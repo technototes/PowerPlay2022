@@ -42,13 +42,13 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     // Values work 11/4/22
     public static double MAX_MOTOR_SPEED = 1;
-    public static double MIN_MOTOR_SPEED = -0.6; // Gravity
+    public static double MIN_MOTOR_SPEED = -0.45; // Gravity old:-0.6
 
     public static double MOVE_LEFT = 1.00 * TICKS_INCH;
     public static double MOVE_RIGHT = 1.00 * TICKS_INCH;
     public static double CONE_HEIGHT_DIFFERENCE = .9 * TICKS_INCH;
     // We may need to adjust this. Make *very* small changes! Values work 11/4/22
-    public static PIDCoefficients PID = new PIDCoefficients(0.003, 0.0005, 0 /*0.00005*/);
+    public static PIDCoefficients PID = new PIDCoefficients(0.003, 0.0004, 0 /*0.00005*/); //kI old value 0.0005 kP 0.003
 
     private EncodedMotor<DcMotorEx> _leftMotor;
     private EncodedMotor<DcMotorEx> _rightMotor;

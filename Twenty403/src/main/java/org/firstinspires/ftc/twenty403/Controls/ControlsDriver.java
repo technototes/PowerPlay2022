@@ -49,20 +49,20 @@ public class ControlsDriver {
         turboButton = gamepad.leftStickButton;
         driveStraight = gamepad.rightTrigger;
 
-        liftUpButton = gamepad.dpadRight;
-
-        liftDownButton = gamepad.dpadDown;
-        liftIntakePos = gamepad.dpadLeft;
-
-        clawOpenButton = gamepad.rightBumper;
-        clawCloseButton = gamepad.leftBumper;
-
-        liftMedium = gamepad.circle;
-        liftHigh = gamepad.triangle;
-
-        liftGroundOrOverrideDown = gamepad.cross;
-        liftLowOrOverrideUp = gamepad.square;
-        liftOverrideZeroButton = gamepad.triangle;
+//        liftUpButton = gamepad.dpadRight;
+//
+//        liftDownButton = gamepad.dpadDown;
+//        liftIntakePos = gamepad.dpadLeft;
+//
+//        clawOpenButton = gamepad.rightBumper;
+//        clawCloseButton = gamepad.leftBumper;
+//
+//        liftMedium = gamepad.circle;
+//        liftHigh = gamepad.triangle;
+//
+//        liftGroundOrOverrideDown = gamepad.cross;
+//        liftLowOrOverrideUp = gamepad.square;
+//        liftOverrideZeroButton = gamepad.triangle;
 
 
         // TODO: Identify other controls for
