@@ -4,8 +4,12 @@ import org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.drive.MecanumDriveCommand;
+import org.firstinspires.ftc.sixteen750.command.lift.LiftGroundJunctionCommand;
+import org.firstinspires.ftc.sixteen750.command.lift.LiftHighPoleCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftIncrementalMoveDownCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftIncrementalMoveUpCommand;
+import org.firstinspires.ftc.sixteen750.command.lift.LiftLowPoleCommand;
+import org.firstinspires.ftc.sixteen750.command.lift.LiftMidPoleCommand;
 
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.control.CommandAxis;
@@ -76,5 +80,9 @@ public class ControlsDriver {
         //        this.liftDownButton.whenPressed(new LiftIncrementalMoveDownCommand(robot.liftSubsystem));
         gamepad.leftBumper.whenPressed(new LiftIncrementalMoveUpCommand(robot.liftSubsystem));
         gamepad.rightBumper.whenPressed(new LiftIncrementalMoveDownCommand(robot.liftSubsystem));
+        gamepad.square.whenPressed(new LiftLowPoleCommand(robot.liftSubsystem));
+        gamepad.triangle.whenPressed(new LiftMidPoleCommand(robot.liftSubsystem));
+        gamepad.circle.whenPressed(new LiftHighPoleCommand(robot.liftSubsystem));
+        gamepad.x.whenPressed(new LiftGroundJunctionCommand(robot.liftSubsystem));
     }
 }
