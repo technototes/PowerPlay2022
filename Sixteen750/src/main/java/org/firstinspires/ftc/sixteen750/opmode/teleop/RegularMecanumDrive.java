@@ -26,7 +26,6 @@ public class RegularMecanumDrive extends CommandOpMode {
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware);
         driverControls = new ControlsDriver(driverGamepad, robot);
-
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
@@ -37,6 +36,10 @@ public class RegularMecanumDrive extends CommandOpMode {
 
     @Override
     public void runLoop() {
-
+        telemetry.addData("External Heading", robot.mecanumDriveSubsystem.getExternalHeading());
+        telemetry.addData("Left Stick X", gamepad1.left_stick_x);
+        telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
+        telemetry.addData("Right Stick X", gamepad1.right_stick_x);
+        telemetry.addData("Right Stick Y", gamepad1.right_stick_y);
     }
 }

@@ -42,7 +42,7 @@ public class ControlsOperator {
             bindCoDriverLiftControls();
         }
 
-        gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand());
+        gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand(gamepad));
     }
 
     public void assignNamedControllerButton() {

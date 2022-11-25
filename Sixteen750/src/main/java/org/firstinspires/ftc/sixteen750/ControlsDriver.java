@@ -45,7 +45,7 @@ public class ControlsDriver {
             bindLiftControls();
         }
 
-        gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand());
+        gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand(gamepad));
     }
 
     private void assignNamedControllerButton() {
@@ -65,7 +65,7 @@ public class ControlsDriver {
               robot.mecanumDriveSubsystem, gamepad.leftStick, gamepad.rightStick, gamepad.square));
         // TODO: We probably want buttons to reset the Gyro...
         // resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
-        gamepad.rightStickButton.whenPressed(new ResetGyroCommand(robot.mecanumDriveSubsystem));
+        gamepad.rightStickButton.whenPressed(new ResetGyroCommand(robot.mecanumDriveSubsystem, gamepad));
         // snailSpeedButton.whilePressedOnce(new SetSpeedCommand(robot.drivebaseSubsystem));
     }
 
