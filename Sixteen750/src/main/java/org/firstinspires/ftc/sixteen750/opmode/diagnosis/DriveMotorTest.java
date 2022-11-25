@@ -10,13 +10,19 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.structure.CommandOpMode;
 
+import org.firstinspires.ftc.sixteen750.Hardware;
+
 @Config
 @TeleOp(group = "Test-Hardware")
 @SuppressWarnings("unused")
 public class DriveMotorTest extends CommandOpMode {
     ElapsedTime t;
 
-    EncodedMotor<DcMotorEx> leftFrontMotor, leftRearMotor, rightRearMotor, rightFrontMotor;
+    EncodedMotor<DcMotorEx> leftFrontMotor;
+    EncodedMotor<DcMotorEx> leftRearMotor;
+    EncodedMotor<DcMotorEx> rightFrontMotor;
+    EncodedMotor<DcMotorEx> rightRearMotor;
+
     boolean isLeftFrontPressed, isLeftRearPressed, isRightRearPressed, isRightFrontPressed = false;
 
     // 0.1 is too little, the motor trying to move but not enough to move the robot; 0.2 is slightly better
@@ -32,15 +38,15 @@ public class DriveMotorTest extends CommandOpMode {
 
         /// Note: here is using the hardware from TechnoLib
         try {
-            leftFrontMotor = new EncodedMotor<>(hardwareMap.get(DcMotorEx.class, "leftFrontMotor"));
-            leftRearMotor = new EncodedMotor<>(hardwareMap.get(DcMotorEx.class, "leftRearMotor"));
+            leftFrontMotor = new EncodedMotor<>(Hardware.HardwareConstant.LF_MOTOR);
+            leftRearMotor = new EncodedMotor<>(Hardware.HardwareConstant.LR_MOTOR);
         } catch (Exception e) {
             isLeftSideConnected = false;
         }
 
         try {
-            rightRearMotor = new EncodedMotor<>(hardwareMap.get(DcMotorEx.class, "rightRearMotor"));
-            rightFrontMotor = new EncodedMotor<>(hardwareMap.get(DcMotorEx.class, "rightFrontMotor"));
+            rightFrontMotor = new EncodedMotor<>(Hardware.HardwareConstant.RF_MOTOR);
+            rightRearMotor = new EncodedMotor<>(Hardware.HardwareConstant.RR_MOTOR);
         } catch (Exception e) {
             isRightSideConnected = false;
         }
