@@ -46,7 +46,9 @@ public class ControlsDriver {
         resetGyroButton = gamepad.rightStickButton;
         driveLeftStick = gamepad.leftStick;
         driveRightStick = gamepad.rightStick;
-        turboButton = gamepad.leftStickButton;
+
+        turboButton = gamepad.triangle;
+
         driveStraight = gamepad.rightTrigger;
 
         // liftUpButton = gamepad.dpadRight;
