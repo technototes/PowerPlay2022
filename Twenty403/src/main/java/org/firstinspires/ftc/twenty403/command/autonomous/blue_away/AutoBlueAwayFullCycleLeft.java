@@ -32,6 +32,12 @@ public class AutoBlueAwayFullCycleLeft extends SequentialCommandGroup {
                 new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.STACK_TO_E_JUNCTION)
                         .alongWith(new LiftHighJunctionCommand(liftSubsystem)),
                 new ClawOpenCommand(clawSubsystem),
+                new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.E_JUNCTION_TO_STACK)
+                        .alongWith(new LiftCollectCommand(liftSubsystem)),
+                new ClawCloseCommand(clawSubsystem),
+                new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.STACK_TO_E_JUNCTION)
+                        .alongWith(new LiftHighJunctionCommand(liftSubsystem)),
+                new ClawOpenCommand(clawSubsystem),
                 new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.E_JUNCTION_TO_LEFT_PARK)
                         .alongWith(new LiftCollectCommand(liftSubsystem)));
     }
