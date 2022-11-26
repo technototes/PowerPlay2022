@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.twenty403;
+package org.firstinspires.ftc.twenty403.Controls;
 
+import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.Robot.RobotConstant;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
@@ -21,6 +22,7 @@ import org.firstinspires.ftc.twenty403.helpers.BothButtons;
 
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.ConditionalCommand;
+import com.technototes.library.control.CommandAxis;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
@@ -35,6 +37,7 @@ public class Controls {
     public CommandButton liftDownButton, clawCloseButton, liftIntakePos;
     public CommandButton liftGroundOrOverrideDown, liftLow, liftMedium, liftHighOrOverrideUp, liftOverrideZeroButton;
     public CommandButton turboButton;
+    public CommandAxis driveStraight;
 
     public BothButtons override;
 
@@ -42,7 +45,7 @@ public class Controls {
         this.robot = r;
         gamepad = g;
 
-        override = new BothButtons(g.leftTrigger.getAsButton(0.5), g.rightTrigger.getAsButton(.5));
+        override = new BothButtons(g.leftTrigger.getAsButton(0.5));
 
         AssignNamedControllerButton();
 
@@ -59,23 +62,23 @@ public class Controls {
 
     private void AssignNamedControllerButton() {
         resetGyroButton = gamepad.rightStickButton;
-        liftOverrideZeroButton = gamepad.share;
         driveLeftStick = gamepad.leftStick;
         driveRightStick = gamepad.rightStick;
+        driveStraight = gamepad.rightTrigger;
+
         turboButton = gamepad.triangle;
         liftUpButton = gamepad.square;
         liftDownButton = gamepad.cross;
-
         liftIntakePos = gamepad.circle;
 
         clawOpenButton = gamepad.leftBumper;
-
         clawCloseButton = gamepad.leftTrigger.getAsButton();
-
-        liftGroundOrOverrideDown = gamepad.dpadDown;
 
         liftLow = gamepad.dpadLeft;
         liftMedium = gamepad.dpadRight;
+
+        liftOverrideZeroButton = gamepad.share;
+        liftGroundOrOverrideDown = gamepad.dpadDown;
         liftHighOrOverrideUp = gamepad.dpadUp;
 
         // TODO: Identify other controls for drive straighten button
@@ -84,8 +87,8 @@ public class Controls {
 
     public void bindDriveControls() {
         CommandScheduler.getInstance()
-                .scheduleJoystick(new DriveCommand(
-                        robot.drivebaseSubsystem, driveLeftStick, driveRightStick, driveStraightenButton));
+                .scheduleJoystick(
+                        new DriveCommand(robot.drivebaseSubsystem, driveLeftStick, driveRightStick, driveStraight));
         turboButton.whenPressed(new TurboCommand(robot.drivebaseSubsystem));
         turboButton.whenReleased(new SlowCommand(robot.drivebaseSubsystem));
         // TODO: We probably want buttons to reset the Gyro...

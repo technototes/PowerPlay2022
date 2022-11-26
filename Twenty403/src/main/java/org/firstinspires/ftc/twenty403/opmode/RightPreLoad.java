@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.twenty403.opmode;
 
-import org.firstinspires.ftc.twenty403.Controls;
+import org.firstinspires.ftc.twenty403.Controls.Controls;
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.VisionCommand;
@@ -17,7 +17,7 @@ import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
 @Autonomous(name = "BlueHomePreLoad")
-public class BlueHomePreLoad extends CommandOpMode {
+public class RightPreLoad extends CommandOpMode {
     public Robot robot;
     public Controls controls;
     public Hardware hardware;
