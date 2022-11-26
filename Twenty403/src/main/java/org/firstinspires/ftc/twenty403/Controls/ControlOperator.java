@@ -1,19 +1,8 @@
 package org.firstinspires.ftc.twenty403.Controls;
 
-import com.technototes.library.command.CommandScheduler;
-import com.technototes.library.command.ConditionalCommand;
-import com.technototes.library.control.CommandAxis;
-import com.technototes.library.control.CommandButton;
-import com.technototes.library.control.CommandGamepad;
-import com.technototes.library.control.Stick;
-
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
-import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
-import org.firstinspires.ftc.twenty403.command.drive.ResetGyroCommand;
-import org.firstinspires.ftc.twenty403.command.drive.SlowCommand;
-import org.firstinspires.ftc.twenty403.command.drive.TurboCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftDownCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftGroundJunctionCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
@@ -25,6 +14,12 @@ import org.firstinspires.ftc.twenty403.command.lift.LiftMoveUpOverrideCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftSetZeroCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
 import org.firstinspires.ftc.twenty403.helpers.BothButtons;
+
+import com.technototes.library.command.ConditionalCommand;
+import com.technototes.library.control.CommandAxis;
+import com.technototes.library.control.CommandButton;
+import com.technototes.library.control.CommandGamepad;
+import com.technototes.library.control.Stick;
 
 public class ControlOperator {
 
@@ -45,9 +40,9 @@ public class ControlOperator {
 
         AssignNamedControllerButton();
 
-//        if (Robot.RobotConstant.DRIVE_CONNECTED) {
-//            bindDriveControls();
-//        }
+        // if (Robot.RobotConstant.DRIVE_CONNECTED) {
+        //     bindDriveControls();
+        // }
         if (Robot.RobotConstant.CLAW_CONNECTED) {
             bindClawControls();
         }
@@ -57,11 +52,11 @@ public class ControlOperator {
     }
 
     private void AssignNamedControllerButton() {
-//        resetGyroButton = gamepad.rightStickButton;
-//        driveLeftStick = gamepad.leftStick;
-//        driveRightStick = gamepad.rightStick;
-//        turboButton = gamepad.leftStickButton;
-//        driveStraight = gamepad.rightTrigger;
+        // resetGyroButton = gamepad.rightStickButton;
+        // driveLeftStick = gamepad.leftStick;
+        // driveRightStick = gamepad.rightStick;
+        // turboButton = gamepad.leftStickButton;
+        // driveStraight = gamepad.rightTrigger;
 
         liftUpButton = gamepad.dpadRight;
 
@@ -78,19 +73,19 @@ public class ControlOperator {
         liftLowOrOverrideUp = gamepad.square;
         liftOverrideZeroButton = gamepad.triangle;
 
-
         // TODO: Identify other controls for
     }
 
-//    public void bindDriveControls() {
-//        CommandScheduler.getInstance()
-//                .scheduleJoystick(
-//                        new DriveCommand(robot.drivebaseSubsystem, driveLeftStick, driveRightStick, driveStraight));
-//        turboButton.whenPressed(new TurboCommand(robot.drivebaseSubsystem));
-//        turboButton.whenReleased(new SlowCommand(robot.drivebaseSubsystem));
-//        // TODO: We probably want buttons to reset the Gyro...
-//        resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
-//    }
+    // public void bindDriveControls() {
+    //     CommandScheduler.getInstance()
+    //         .scheduleJoystick(
+    //             new DriveCommand(robot.drivebaseSubsystem, driveLeftStick, driveRightStick,
+    //                              driveStraight));
+    //     turboButton.whenPressed(new TurboCommand(robot.drivebaseSubsystem));
+    //     turboButton.whenReleased(new SlowCommand(robot.drivebaseSubsystem));
+    //     // TODO: We probably want buttons to reset the Gyro...
+    //     resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
+    // }
 
     public void bindClawControls() {
         // TODO: Name & Bind claw controls
@@ -118,4 +113,3 @@ public class ControlOperator {
         liftHigh.whenPressed(new LiftHighJunctionCommand(robot.liftSubsystem));
     }
 }
-

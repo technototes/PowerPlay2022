@@ -81,17 +81,14 @@ public class Controls {
         liftGroundOrOverrideDown = gamepad.dpadDown;
         liftHighOrOverrideUp = gamepad.dpadUp;
 
-
-
-
         // TODO: Identify other controls for drive straighten button
         driveStraightenButton = gamepad.options;
     }
 
     public void bindDriveControls() {
         CommandScheduler.getInstance()
-                .scheduleJoystick(new DriveCommand(
-                        robot.drivebaseSubsystem, driveLeftStick, driveRightStick, driveStraight));
+                .scheduleJoystick(
+                        new DriveCommand(robot.drivebaseSubsystem, driveLeftStick, driveRightStick, driveStraight));
         turboButton.whenPressed(new TurboCommand(robot.drivebaseSubsystem));
         turboButton.whenReleased(new SlowCommand(robot.drivebaseSubsystem));
         // TODO: We probably want buttons to reset the Gyro...

@@ -9,7 +9,7 @@ import com.technototes.library.control.CommandButton;
 public class BothButtons implements BooleanSupplier {
     CommandButton a;
 
-    public BothButtons(CommandButton btn1 ) {
+    public BothButtons(CommandButton btn1) {
         a = btn1;
     }
 

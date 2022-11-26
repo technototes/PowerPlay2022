@@ -8,12 +8,13 @@ import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.twenty403.command.autonomous.red_home.AutoRedHomeParkingSelectionCycleCommand;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
+
 @Disabled
 @Autonomous(name = "RedHomeCycle")
 public class RedHomeCycle extends CommandOpMode {

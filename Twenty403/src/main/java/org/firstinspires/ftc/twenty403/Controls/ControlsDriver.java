@@ -34,12 +34,12 @@ public class ControlsDriver {
         if (Robot.RobotConstant.DRIVE_CONNECTED) {
             bindDriveControls();
         }
-//        if (Robot.RobotConstant.CLAW_CONNECTED) {
-//            bindClawControls();
-//        }
-//        if (Robot.RobotConstant.LIFT_CONNECTED) {
-//            bindLiftControls();
-//        }
+        // if (Robot.RobotConstant.CLAW_CONNECTED) {
+        //     bindClawControls();
+        // }
+        // if (Robot.RobotConstant.LIFT_CONNECTED) {
+        //     bindLiftControls();
+        // }
     }
 
     private void AssignNamedControllerButton() {
@@ -49,21 +49,20 @@ public class ControlsDriver {
         turboButton = gamepad.leftStickButton;
         driveStraight = gamepad.rightTrigger;
 
-//        liftUpButton = gamepad.dpadRight;
-//
-//        liftDownButton = gamepad.dpadDown;
-//        liftIntakePos = gamepad.dpadLeft;
-//
-//        clawOpenButton = gamepad.rightBumper;
-//        clawCloseButton = gamepad.leftBumper;
-//
-//        liftMedium = gamepad.circle;
-//        liftHigh = gamepad.triangle;
-//
-//        liftGroundOrOverrideDown = gamepad.cross;
-//        liftLowOrOverrideUp = gamepad.square;
-//        liftOverrideZeroButton = gamepad.triangle;
-
+        // liftUpButton = gamepad.dpadRight;
+        //
+        // liftDownButton = gamepad.dpadDown;
+        // liftIntakePos = gamepad.dpadLeft;
+        //
+        // clawOpenButton = gamepad.rightBumper;
+        // clawCloseButton = gamepad.leftBumper;
+        //
+        // liftMedium = gamepad.circle;
+        // liftHigh = gamepad.triangle;
+        //
+        // liftGroundOrOverrideDown = gamepad.cross;
+        // liftLowOrOverrideUp = gamepad.square;
+        // liftOverrideZeroButton = gamepad.triangle;
 
         // TODO: Identify other controls for
     }
@@ -78,29 +77,29 @@ public class ControlsDriver {
         resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
     }
 
-//    public void bindClawControls() {
-//        // TODO: Name & Bind claw controls
-//        clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-//        clawCloseButton.whenReleased(new ClawCloseCommand(robot.clawSubsystem));
-//    }
-//
-//    public void bindLiftControls() {
-//        // TODO: Name & Bind lift controls
-//        liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
-//        liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
-//        liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));
-//        liftOverrideZeroButton.whenPressed(
-//                new ConditionalCommand(override, new LiftSetZeroCommand(robot.liftSubsystem)));
-//
-//        liftGroundOrOverrideDown.whenPressed(new ConditionalCommand(
-//                override,
-//                new LiftMoveDownOverrideCommand(robot.liftSubsystem),
-//                new LiftGroundJunctionCommand(robot.liftSubsystem)));
-//        liftLowOrOverrideUp.whenPressed(new ConditionalCommand(
-//                override,
-//                new LiftMoveUpOverrideCommand(robot.liftSubsystem),
-//                new LiftLowJunctionCommand(robot.liftSubsystem)));
-//        liftMedium.whenPressed(new LiftMidJunctionCommand(robot.liftSubsystem));
-//        liftHigh.whenPressed(new LiftHighJunctionCommand(robot.liftSubsystem));
-//    }
+    // public void bindClawControls() {
+    //     // TODO: Name & Bind claw controls
+    //     clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
+    //     clawCloseButton.whenReleased(new ClawCloseCommand(robot.clawSubsystem));
+    // }
+    //
+    // public void bindLiftControls() {
+    //     // TODO: Name & Bind lift controls
+    //     liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
+    //     liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
+    //     liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));
+    //     liftOverrideZeroButton.whenPressed(
+    //             new ConditionalCommand(override, new LiftSetZeroCommand(robot.liftSubsystem)));
+    //
+    //     liftGroundOrOverrideDown.whenPressed(new ConditionalCommand(
+    //             override,
+    //             new LiftMoveDownOverrideCommand(robot.liftSubsystem),
+    //             new LiftGroundJunctionCommand(robot.liftSubsystem)));
+    //     liftLowOrOverrideUp.whenPressed(new ConditionalCommand(
+    //             override,
+    //             new LiftMoveUpOverrideCommand(robot.liftSubsystem),
+    //             new LiftLowJunctionCommand(robot.liftSubsystem)));
+    //     liftMedium.whenPressed(new LiftMidJunctionCommand(robot.liftSubsystem));
+    //     liftHigh.whenPressed(new LiftHighJunctionCommand(robot.liftSubsystem));
+    // }
 }
