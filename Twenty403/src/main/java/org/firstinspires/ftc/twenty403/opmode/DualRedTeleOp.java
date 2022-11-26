@@ -11,8 +11,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
-@TeleOp(name = "MeetNew TeleOp")
-public class ManualTeleOp2 extends CommandOpMode {
+@TeleOp(name = "Dual Red TeleOp")
+public class DualRedTeleOp extends CommandOpMode {
     public Robot robot;
     public ControlsDriver controlsDriver;
     public ControlOperator controlsOperator;
@@ -21,7 +21,7 @@ public class ManualTeleOp2 extends CommandOpMode {
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
-        robot = new Robot(hardware, Alliance.NONE, StartingPosition.NEUTRAL);
+        robot = new Robot(hardware, Alliance.RED, StartingPosition.NEUTRAL);
         controlsDriver = new ControlsDriver(driverGamepad, robot);
         controlsOperator = new ControlOperator(codriverGamepad, robot);
     }

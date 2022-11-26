@@ -29,6 +29,7 @@ public class Robot implements Loggable {
     public ClawSubsystem clawSubsystem;
     public LiftSubsystem liftSubsystem;
     public VisionSubsystem visionSystem;
+    public double initialVoltage;
 
     public Robot(Hardware hardware, Alliance team, StartingPosition whichSide) {
         if (RobotConstant.DRIVE_CONNECTED) {
@@ -39,22 +40,24 @@ public class Robot implements Loggable {
                     hardware.rrDriveMotor,
                     hardware.imu);
         }
-        if (RobotConstant.CLAW_CONNECTED) {
-            clawSubsystem = new ClawSubsystem(hardware.claw, hardware.clawDistance);
-        } else {
-            clawSubsystem = new ClawSubsystem();
-        }
         if (RobotConstant.LIFT_CONNECTED) {
             if (RobotConstant.DUAL_LIFT_SETUP) {
-                liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor, hardware.LiftRightMotor);
+                liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor, hardware.LiftRightMotor, initialVoltage);
             } else {
-                liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor);
+                liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor, initialVoltage);
             }
         } else {
             liftSubsystem = new LiftSubsystem();
         }
+        if (RobotConstant.CLAW_CONNECTED) {
+            clawSubsystem = new ClawSubsystem(liftSubsystem, hardware.claw, hardware.clawDistance, team);
+        } else {
+            clawSubsystem = new ClawSubsystem();
+        }
         if (RobotConstant.CAMERA_CONNECTED) {
             visionSystem = new VisionSubsystem(hardware.camera, team, whichSide);
         }
+        // Read the voltage
+        initialVoltage = hardware.voltage();
     }
 }
