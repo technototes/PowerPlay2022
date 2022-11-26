@@ -4,6 +4,7 @@ import org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.MecanumDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem2;
 
 import com.acmerobotics.dashboard.config.Config;
 
@@ -18,12 +19,15 @@ public class Robot implements Loggable {
         public static boolean CLAW_ENABLED = false;
         public static boolean ARM_ENABLED = false;
         public static boolean LIFT_ENABLED = false;
+        public static boolean LIFT_MOVE_MOTORS = true;
     }
 
     public ClawSubsystem clawSubsystem;
     public ArmSubsystem armSubsystem;
     public LiftSubsystem liftSubsystem;
     public MecanumDriveSubsystem mecanumDriveSubsystem;
+   // public LiftSubsystem liftSubsystem;
+    public LiftSubsystem2 liftSubsystem2;
 
     public boolean isSwerveDriveConnected = false;
     public boolean isTankDriveConnected = false;
@@ -39,9 +43,10 @@ public class Robot implements Loggable {
         }
 
         if (enableLift) {
-            liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, hardware.liftRightMotor);
+            liftSubsystem2 = new LiftSubsystem2(hardware.liftLeftMotor, 12.5);
+            // liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, null);
         } else {
-            liftSubsystem = new LiftSubsystem(null, null);
+            liftSubsystem2 = new LiftSubsystem2(null, null);
         }
 
         if (enableArm) {

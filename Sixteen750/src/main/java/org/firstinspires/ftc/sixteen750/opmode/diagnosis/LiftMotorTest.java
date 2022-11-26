@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.sixteen750.opmode.diagnosis;
 
 import org.firstinspires.ftc.sixteen750.ControlsDriver;
+import org.firstinspires.ftc.sixteen750.ControlsLift2;
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
 
@@ -12,17 +13,17 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.technototes.library.structure.CommandOpMode;
 
 @TeleOp(group = "Test-Hardware")
-@SuppressWarnings("unused")
+// @SuppressWarnings("unused")
 public class LiftMotorTest extends CommandOpMode {
     public Robot robot;
-    public ControlsDriver controls;
+    public ControlsLift2 controls;
     public Hardware hardware;
 
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap, false, true, false, false);
         robot = new Robot(hardware, false, true, false, false);
-        // controls = new ControlsDriver(driverGamepad, robot); // will cause some weird exception upon init, related to the period()
+        controls = new ControlsLift2(driverGamepad, robot);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
