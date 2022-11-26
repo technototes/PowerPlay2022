@@ -3,16 +3,22 @@ package org.firstinspires.ftc.twenty403;
 import static org.firstinspires.ftc.twenty403.Robot.RobotConstant;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.VoltageUnit;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import com.qualcomm.robotcore.hardware.LynxModuleMeta;
 import com.technototes.library.hardware.motor.EncodedMotor;
+import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.hardware.sensor.IMU;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.vision.hardware.Webcam;
+
+import java.util.List;
 
 public class Hardware {
     @Config
@@ -26,10 +32,13 @@ public class Hardware {
         public static String CAMERA = "Webcam";
 
         public static String CLAW_SERVO = "claw";
-        // public static String CLAW_SENSOR = "claw_sensor";
+        public static String CLAW_SENSOR = "colorS";
+
         public static String LIFT_LEFT_MOTOR = "LLIFT";
         public static String LIFT_RIGHT_MOTOR = "RLIFT";
     }
+
+    public List<LynxModule> hubs;
 
     public EncodedMotor<DcMotorEx> flDriveMotor;
     public EncodedMotor<DcMotorEx> frDriveMotor;
@@ -40,12 +49,12 @@ public class Hardware {
     public EncodedMotor<DcMotorEx> LiftLeftMotor;
     public EncodedMotor<DcMotorEx> LiftRightMotor;
     public Servo claw;
-    public Servo flipper;
-    public DistanceSensor clawDistance;
+    public ColorDistanceSensor clawDistance;
 
     public Webcam camera;
 
     public Hardware(HardwareMap hwmap) {
+        hubs = hwmap.getAll(LynxModule.class);
         if (RobotConstant.DRIVE_CONNECTED) {
             flDriveMotor = new EncodedMotor<>(HardwareConstant.FL_MOTOR);
             frDriveMotor = new EncodedMotor<>(HardwareConstant.FR_MOTOR);
@@ -55,7 +64,7 @@ public class Hardware {
         }
         if (RobotConstant.CLAW_CONNECTED) {
             claw = new Servo(HardwareConstant.CLAW_SERVO);
-            // clawDistance = hwmap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR);
+            clawDistance = hwmap.get(ColorDistanceSensor.class, HardwareConstant.CLAW_SENSOR);
         }
         if (RobotConstant.LIFT_CONNECTED) {
             LiftLeftMotor = new EncodedMotor<>(HardwareConstant.LIFT_LEFT_MOTOR);
@@ -67,4 +76,14 @@ public class Hardware {
             camera = new Webcam(HardwareConstant.CAMERA);
         }
     }
+    public double voltage() {
+        double volt = 0;
+        double count = 0;
+        for (LynxModule lm : hubs) {
+            count += 1;
+            volt += lm.getInputVoltage(VoltageUnit.VOLTS);
+        }
+        return volt / count;
+    }
 }
+

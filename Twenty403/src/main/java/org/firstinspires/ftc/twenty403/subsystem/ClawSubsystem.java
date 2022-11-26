@@ -7,8 +7,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
+import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.subsystem.Subsystem;
+import com.technototes.library.util.Alliance;
 
 @Config
 public class ClawSubsystem implements Subsystem {
@@ -17,12 +19,14 @@ public class ClawSubsystem implements Subsystem {
     public static double CLOSE_SERVO_POSITION = .42;
 
     private Servo clawServo;
-    private DistanceSensor sensor;
+    private ColorDistanceSensor sensor;
     private Boolean isHardware;
+    private Alliance alliance;
 
-    public ClawSubsystem(Servo claw, DistanceSensor s) {
+    public ClawSubsystem(Servo claw, ColorDistanceSensor s, Alliance a) {
         clawServo = claw;
         sensor = s;
+        alliance = a;
         isHardware = true;
     }
 
@@ -59,7 +63,23 @@ public class ClawSubsystem implements Subsystem {
         return false;
     }
 
+    public boolean isAllianceCone() {
+        return (sensor.red() > sensor.blue()) == (alliance == Alliance.RED);
+    }
+
+    public boolean isClawClosed() {
+        double curPos = clawServo.getPosition();
+        return Math.abs(curPos - CLOSE_SERVO_POSITION) < Math.abs(curPos - OPEN_SERVO_POSITION);
+    }
+
     public Servo getServo() {
         return clawServo;
+    }
+
+    @Override
+    public void periodic() {
+        if (!isClawClosed() && isAllianceCone() && isConeClose()) {
+            close();
+        }
     }
 }

@@ -14,10 +14,10 @@ import com.technototes.library.util.Alliance;
 public class Robot implements Loggable {
     @Config
     public static class RobotConstant {
-        public static boolean DRIVE_CONNECTED = true;
+        public static boolean DRIVE_CONNECTED = false;
         public static boolean CLAW_CONNECTED = true;
-        public static boolean LIFT_CONNECTED = true;
-        public static boolean LIFT_MOVE_MOTORS = true;
+        public static boolean LIFT_CONNECTED = false;
+        public static boolean LIFT_MOVE_MOTORS = false;
 
         public static boolean CAMERA_CONNECTED = true;
 
@@ -29,6 +29,7 @@ public class Robot implements Loggable {
     public ClawSubsystem clawSubsystem;
     public LiftSubsystem liftSubsystem;
     public VisionSubsystem visionSystem;
+    public double initialVoltage;
 
     public Robot(Hardware hardware, Alliance team, StartingPosition whichSide) {
         if (RobotConstant.DRIVE_CONNECTED) {
@@ -40,15 +41,15 @@ public class Robot implements Loggable {
                     hardware.imu);
         }
         if (RobotConstant.CLAW_CONNECTED) {
-            clawSubsystem = new ClawSubsystem(hardware.claw, hardware.clawDistance);
+            clawSubsystem = new ClawSubsystem(hardware.claw, hardware.clawDistance, team);
         } else {
             clawSubsystem = new ClawSubsystem();
         }
         if (RobotConstant.LIFT_CONNECTED) {
             if (RobotConstant.DUAL_LIFT_SETUP) {
-                liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor, hardware.LiftRightMotor);
+                liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor, hardware.LiftRightMotor, initialVoltage);
             } else {
-                liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor);
+                liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor, initialVoltage);
             }
         } else {
             liftSubsystem = new LiftSubsystem();
@@ -56,5 +57,7 @@ public class Robot implements Loggable {
         if (RobotConstant.CAMERA_CONNECTED) {
             visionSystem = new VisionSubsystem(hardware.camera, team, whichSide);
         }
+        // Read the voltage
+        initialVoltage = hardware.voltage();
     }
 }
