@@ -5,8 +5,8 @@ import android.util.Log;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 
+import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.subsystem.Subsystem;
 
@@ -17,10 +17,10 @@ public class ClawSubsystem implements Subsystem {
     public static double CLOSE_SERVO_POSITION = .42;
 
     private Servo clawServo;
-    private DistanceSensor sensor;
+    private ColorDistanceSensor sensor;
     private Boolean isHardware;
 
-    public ClawSubsystem(Servo claw, DistanceSensor s) {
+    public ClawSubsystem(Servo claw, ColorDistanceSensor s) {
         clawServo = claw;
         sensor = s;
         isHardware = true;

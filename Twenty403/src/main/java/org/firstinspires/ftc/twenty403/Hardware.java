@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import com.technototes.library.hardware.motor.EncodedMotor;
+import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.hardware.sensor.IMU;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.vision.hardware.Webcam;
@@ -26,7 +27,7 @@ public class Hardware {
         public static String CAMERA = "Webcam";
 
         public static String CLAW_SERVO = "claw";
-        // public static String CLAW_SENSOR = "claw_sensor";
+        public static String CLAW_SENSOR = "colorS";
         public static String LIFT_LEFT_MOTOR = "LLIFT";
         public static String LIFT_RIGHT_MOTOR = "RLIFT";
     }
@@ -41,7 +42,7 @@ public class Hardware {
     public EncodedMotor<DcMotorEx> LiftRightMotor;
     public Servo claw;
     public Servo flipper;
-    public DistanceSensor clawDistance;
+    public ColorDistanceSensor clawDistance;
 
     public Webcam camera;
 
@@ -55,7 +56,7 @@ public class Hardware {
         }
         if (RobotConstant.CLAW_CONNECTED) {
             claw = new Servo(HardwareConstant.CLAW_SERVO);
-            // clawDistance = hwmap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR);
+            clawDistance = hwmap.get(ColorDistanceSensor.class, HardwareConstant.CLAW_SENSOR);
         }
         if (RobotConstant.LIFT_CONNECTED) {
             LiftLeftMotor = new EncodedMotor<>(HardwareConstant.LIFT_LEFT_MOTOR);

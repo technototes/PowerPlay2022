@@ -46,8 +46,8 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     // This is used to hopefully counteract gravity...
     public static double DOWNWARD_SCALE_FACTOR = 0.65;
 
-    public static double MOVE_LEFT = 1.00 * TICKS_INCH;
-    public static double MOVE_RIGHT = 1.00 * TICKS_INCH;
+    public static double MOVE_LEFT = 1.50 * TICKS_INCH;
+    public static double MOVE_RIGHT = 1.50 * TICKS_INCH;
     public static double CONE_HEIGHT_DIFFERENCE = .9 * TICKS_INCH;
 
     public static PIDCoefficients PID =
