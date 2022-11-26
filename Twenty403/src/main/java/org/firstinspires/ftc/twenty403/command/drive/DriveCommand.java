@@ -10,7 +10,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 
 import com.technototes.library.command.Command;
-import com.technototes.library.control.CommandButton;
+import com.technototes.library.control.CommandAxis;
 import com.technototes.library.control.Stick;
 import com.technototes.library.util.MathUtils;
 
@@ -29,7 +29,7 @@ public class DriveCommand implements Command {
         straight = null;
     }
 
-    public DriveCommand(DrivebaseSubsystem sub, Stick stick1, Stick stick2, CommandButton straighten) {
+    public DriveCommand(DrivebaseSubsystem sub, Stick stick1, Stick stick2, CommandAxis straighten) {
         addRequirements(sub);
         subsystem = sub;
         x = stick1.getXSupplier();

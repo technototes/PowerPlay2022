@@ -1,30 +1,5 @@
+/*
 package org.firstinspires.ftc.twenty403;
-
-import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsBlue;
-import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
-import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
-import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
-import org.firstinspires.ftc.twenty403.command.drive.ResetGyroCommand;
-import org.firstinspires.ftc.twenty403.command.drive.SlowCommand;
-import org.firstinspires.ftc.twenty403.command.drive.TurboCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftDownCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftGroundJunctionCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftIntakeCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftLowJunctionCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftMidJunctionCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftMoveDownOverrideCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftMoveUpOverrideCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftSetZeroCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
-import org.firstinspires.ftc.twenty403.helpers.BothButtons;
-
-import com.technototes.library.command.CommandScheduler;
-import com.technototes.library.command.ConditionalCommand;
-import com.technototes.library.control.CommandButton;
-import com.technototes.library.control.CommandGamepad;
-import com.technototes.library.control.Stick;
-import com.technototes.path.command.TrajectorySequenceCommand;
 
 public class DualController {
     public Robot robot;
@@ -40,7 +15,7 @@ public class DualController {
         this.robot = r;
         primaryGamepad = g;
         tileGamePad = h;
-        override = new BothButtons(g.leftTrigger.getAsButton(0.5), g.rightTrigger.getAsButton(0.5));
+        override = new BothButtons(g.leftTrigger.getAsButton(0.5)) //, g.rightTrigger.getAsButton(0.5));
 
         AssignNamedControllerButton();
 
@@ -127,3 +102,4 @@ public class DualController {
                 new LiftHighJunctionCommand(robot.liftSubsystem)));
     }
 }
+*/

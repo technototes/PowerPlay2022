@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.twenty403.opmode;
 
-import org.firstinspires.ftc.twenty403.Controls;
+import org.firstinspires.ftc.twenty403.Controls.Controls;
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.VisionCommand;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsBlue;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
-import org.firstinspires.ftc.twenty403.command.autonomous.blue_away.AutoBlueAwayParkingSelectionPreLoadCommand;
+import org.firstinspires.ftc.twenty403.command.autonomous.blue_home.AutoBlueHomeParkingSelectionJustParkCommand;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -15,8 +15,8 @@ import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
-@Autonomous(name = "Blue Away PreLoad")
-public class BlueAwayPreLoad extends CommandOpMode {
+@Autonomous(name = "BlueHomeJustPark")
+public class RightJustPark extends CommandOpMode {
     public Robot robot;
     public Controls controls;
     public Hardware hardware;
@@ -24,16 +24,13 @@ public class BlueAwayPreLoad extends CommandOpMode {
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
-        robot = new Robot(hardware, Alliance.BLUE, StartingPosition.AWAY);
-        robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Away.START.toPose());
+        robot = new Robot(hardware, Alliance.BLUE, StartingPosition.HOME);
+        robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Home.START.toPose());
         CommandScheduler.getInstance()
                 .scheduleForState(
                         new SequentialCommandGroup(
-                                new AutoBlueAwayParkingSelectionPreLoadCommand(
-                                        robot.drivebaseSubsystem,
-                                        robot.visionSystem,
-                                        robot.liftSubsystem,
-                                        robot.clawSubsystem),
+                                new AutoBlueHomeParkingSelectionJustParkCommand(
+                                        robot.visionSystem, robot.drivebaseSubsystem),
                                 CommandScheduler.getInstance()::terminateOpMode),
                         CommandOpMode.OpModeState.RUN);
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
