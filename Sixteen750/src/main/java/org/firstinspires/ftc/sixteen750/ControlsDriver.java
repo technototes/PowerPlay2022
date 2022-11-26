@@ -14,75 +14,43 @@ import org.firstinspires.ftc.sixteen750.command.lift.LiftLowPoleCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftMidPoleCommand;
 
 import com.technototes.library.command.CommandScheduler;
-import com.technototes.library.control.CommandAxis;
-import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
-import com.technototes.library.control.Stick;
 
 public class ControlsDriver {
     public Robot robot;
     public CommandGamepad gamepad;
 
-    public Stick driveLeftStick, driveRightStick;
-    public CommandButton resetGyroButton, driveStraightenButton, snailSpeedButton;
-    public CommandAxis clawOpenButton, clawCloseButton;
-    public CommandButton liftUpButton, liftDownButton;
-    public CommandButton rumbleTestButton;
-
     public ControlsDriver(CommandGamepad g, Robot r) {
         this.robot = r;
         gamepad = g;
-
-        assignNamedControllerButton();
 
         if (RobotConstant.MECANUM_DRIVE_ENABLED) {
             bindMecanumDriveControls();
         }
         if (RobotConstant.CLAW_ENABLED) {
-            bindClawControls();
+            bindDriverClawControls();
         }
         if (RobotConstant.LIFT_ENABLED) {
-            bindLiftControls();
+            bindDriverLiftControls();
         }
 
         gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand(gamepad));
     }
 
-    private void assignNamedControllerButton() {
-        // TODO: re-assign buttons
-        // resetGyroButton = gamepad.rightStickButton;
-        // driveLeftStick = gamepad.leftStick;
-        // driveRightStick = gamepad.rightStick;
-        // driveStraightenButton = gamepad.square;
-        // TODO: Identify other controls for
-        // rumbleTestButton = gamepad.x;
-        // rumbleTestButton.whenPressed(new RumbleTestCommand(gamepad));
-    }
-
     public void bindMecanumDriveControls() {
-         CommandScheduler.getInstance()
-          .scheduleJoystick(new MecanumDriveCommand(
-              robot.mecanumDriveSubsystem, gamepad.leftStick, gamepad.rightStick, gamepad.square));
-        // TODO: We probably want buttons to reset the Gyro...
-        // resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
+        // Probably not a good idea to bind the drive controls to more than one gamepad
+         CommandScheduler
+                 .getInstance()
+                 .scheduleJoystick(new MecanumDriveCommand(robot.mecanumDriveSubsystem, gamepad.leftStick, gamepad.rightStick, gamepad.square));
         gamepad.rightStickButton.whenPressed(new ResetGyroCommand(robot.mecanumDriveSubsystem, gamepad));
-        // snailSpeedButton.whilePressedOnce(new SetSpeedCommand(robot.drivebaseSubsystem));
     }
 
-    public void bindClawControls() {
-        //        this.clawCloseButton = gamepad.leftTrigger;
-        //        this.clawOpenButton = gamepad.rightTrigger;
-        //        this.clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-        //        this.clawCloseButton.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
+    public void bindDriverClawControls() {
         gamepad.leftTrigger.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
         gamepad.rightTrigger.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
     }
 
-    public void bindLiftControls() {
-        //        this.liftUpButton = gamepad.leftBumper;
-        //        this.liftDownButton = gamepad.rightBumper;
-        //        this.liftUpButton.whenPressed(new LiftIncrementalMoveUpCommand(robot.liftSubsystem));
-        //        this.liftDownButton.whenPressed(new LiftIncrementalMoveDownCommand(robot.liftSubsystem));
+    public void bindDriverLiftControls() {
         gamepad.leftBumper.whenPressed(new LiftIncrementalMoveUpCommand(robot.liftSubsystem));
         gamepad.rightBumper.whenPressed(new LiftIncrementalMoveDownCommand(robot.liftSubsystem));
         gamepad.square.whenPressed(new LiftLowPoleCommand(robot.liftSubsystem));
