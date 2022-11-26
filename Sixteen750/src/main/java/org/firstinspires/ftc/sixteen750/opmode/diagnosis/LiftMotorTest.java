@@ -22,7 +22,7 @@ public class LiftMotorTest extends CommandOpMode {
     public void uponInit() {
         hardware = new Hardware(hardwareMap, false, true, false, false);
         robot = new Robot(hardware, false, true, false, false);
-        controls = new ControlsDriver(driverGamepad, robot);
+//        controls = new ControlsDriver(driverGamepad, robot);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 

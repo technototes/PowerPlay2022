@@ -39,7 +39,7 @@ public class Robot implements Loggable {
         }
 
         if (enableLift) {
-            liftSubsystem = new LiftSubsystem(null, hardware.liftRightMotor);
+            liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, hardware.liftRightMotor);
         } else {
             liftSubsystem = new LiftSubsystem(null, null);
         }
