@@ -38,7 +38,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     // TODO: THESE VALUES ARE PROBABLY WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
     public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH;
-    public static double DEAD_ZONE = .25 * TICKS_INCH;
+    public static double DEAD_ZONE = .9 * TICKS_INCH;
 
     public static double MAX_MOTOR_SPEED = 1;
     public static double MIN_MOTOR_SPEED = -1;
@@ -50,8 +50,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double MOVE_RIGHT = 1.50 * TICKS_INCH;
     public static double CONE_HEIGHT_DIFFERENCE = .9 * TICKS_INCH;
 
-    public static PIDCoefficients PID =
-            new PIDCoefficients(0.0048, 0.0, 0);
+    public static PIDCoefficients PID = new PIDCoefficients(0.0048, 0.0, 0);
 
     private EncodedMotor<DcMotorEx> _leftMotor;
     private EncodedMotor<DcMotorEx> _rightMotor;
@@ -65,52 +64,44 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     // True if we actually have hardware attached
     private boolean isHardware;
 
-    // For the left side, positive is *down*
-    // For the right side, positive is *up*
-    public LiftSubsystem(EncodedMotor<DcMotorEx> lm, EncodedMotor<DcMotorEx> rm) {
-        isHardware = true;
-        singleMotor = false;
+    private double voltage;
 
+    private void init(EncodedMotor<DcMotorEx> lm, EncodedMotor<DcMotorEx> rm, double volts) {
+        voltage = volts;
         _leftMotor = lm;
         _rightMotor = rm;
-
         PIDCoefficients pid = new PIDCoefficients(PID.kP, PID.kI, PID.kD);
-
         rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
         leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
         setNewZero();
     }
+    // For the left side, positive is *down*
+    // For the right side, positive is *up*
+    public LiftSubsystem(EncodedMotor<DcMotorEx> lm, EncodedMotor<DcMotorEx> rm, double volts) {
+        isHardware = true;
+        singleMotor = false;
+        init(lm, rm, volts);
+    }
 
-    public LiftSubsystem(EncodedMotor<DcMotorEx> oneMotor) {
+    public LiftSubsystem(EncodedMotor<DcMotorEx> lm, EncodedMotor<DcMotorEx> rm) {
+        this(lm, rm, 0);
+    }
+
+    public LiftSubsystem(EncodedMotor<DcMotorEx> oneMotor, double volts) {
         isHardware = true;
         singleMotor = true;
+        init(oneMotor, null, volts);
+    }
 
-        _leftMotor = oneMotor;
-        _rightMotor = null;
-
-        leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
-        rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
+    public LiftSubsystem(EncodedMotor<DcMotorEx> oneMotor) {
+        this(oneMotor, 0);
     }
 
     public LiftSubsystem() {
         isHardware = false;
         singleMotor = false;
-
-        _leftMotor = null;
-        _rightMotor = null;
-
-        leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
-        rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
+        init(null, null, 0);
     }
-
-    //    public double delta() {
-    //        return leftPidController.getTargetPosition() - leftMotor.getDevice().getCurrentPosition();
-    //        return rightPidController.getTargetPosition() - rightMotor.getDevice().getCurrentPosition();
-    //    }
-
-    //    public boolean isAtTarget() {
-    //        return Math.abs(delta()) < DEAD_ZONE;
-    //    }
 
     private void setLiftPosition(double lval, double rval) {
         double lpos = Range.clip(lval, MIN_HEIGHT, MAX_HEIGHT);
@@ -142,10 +133,6 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         setLiftPosition_OVERRIDE(leftPidController.getTargetPosition(), rightPidController.getTargetPosition());
     }
 
-    //    public boolean isAtTarget() {
-    //        return Math.abs(delta()) < DEAD_ZONE;
-    //    }
-
     /* Stuff for Logging */
 
     @Log(name = "lEncMotor Pos (Actual)")
@@ -163,8 +150,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     @Override
     public Double get() {
         // Not sure about this one: it's just for displaying things, so this is probably fine:
-        return leftPidController.getTargetPosition();
-        // return rightPidController.getTargetPosition();
+        return getLeftPos();
+    }
+
+    public boolean canAutoClose() {
+        return Math.abs(getLeftPos() - INTAKE_POSITION_LEFT) < DEAD_ZONE;
     }
 
     /* Subsystem command functions */
