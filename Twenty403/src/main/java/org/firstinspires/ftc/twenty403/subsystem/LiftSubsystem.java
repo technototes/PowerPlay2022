@@ -23,8 +23,8 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double INTAKE_POSITION_RIGHT = 0;
     public static double GROUND_JUNCTION_LEFT = 155;
     public static double GROUND_JUNCTION_RIGHT = 155;
-    public static double LOW_JUNCTION_LEFT = 1280;
-    public static double LOW_JUNCTION_RIGHT = 1280;
+    public static double LOW_JUNCTION_LEFT = 1432;
+    public static double LOW_JUNCTION_RIGHT = 1432;
     public static double MEDIUM_JUNCTION_LEFT = 2230;
     public static double MEDIUM_JUNCTION_RIGHT = 2230;
     public static double HIGH_JUNCTION_LEFT = 3200;
