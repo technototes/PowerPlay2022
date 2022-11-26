@@ -3,6 +3,7 @@ package org.firstinspires.ftc.forteaching.TechnoBot;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.CloseClawCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.LiftDownCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.LiftUpCommand;
+import org.firstinspires.ftc.forteaching.TechnoBot.Commands.MecDriveCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.OpenClawCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.Operations;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.TankDriveCommand;
@@ -15,6 +16,7 @@ import com.technototes.library.command.ParallelCommandGroup;
 import com.technototes.library.control.CommandAxis;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
+import com.technototes.library.control.Stick;
 import com.technototes.library.util.Alliance;
 
 public class Controls {
@@ -24,6 +26,10 @@ public class Controls {
 
     public CommandAxis leftTankStick;
     public CommandAxis rightTankStick;
+
+    public Stick leftMecDriveStick;
+    public Stick rightMecDriveStick;
+
     public CommandButton snapToAngle;
     public CommandButton openClaw;
     public CommandButton closeClaw;
@@ -50,6 +56,9 @@ public class Controls {
         // This is where you set up the buttons for what you want them to control:
         leftTankStick = gpad.leftStickY;
         rightTankStick = gpad.rightStickY;
+
+        leftMecDriveStick = gpad.leftStick;
+        rightMecDriveStick = gpad.rightStick;
         snapToAngle = gpad.cross;
 
         servoTestUp = gpad.dpadUp;
@@ -99,7 +108,9 @@ public class Controls {
     private void bindDrivebaseControls() {
         CommandScheduler.getInstance()
                 .scheduleJoystick(
-                        new TankDriveCommand(robot.tankDriveBase, leftTankStick, rightTankStick, snapToAngle));
+//                        new TankDriveCommand(robot.tankDriveBase, leftTankStick, rightTankStick, snapToAngle)
+                        new MecDriveCommand(robot.mecanumDrivebase, leftMecDriveStick, rightMecDriveStick)
+                );
     }
 
     // Silly helpers to make the code more succinct below

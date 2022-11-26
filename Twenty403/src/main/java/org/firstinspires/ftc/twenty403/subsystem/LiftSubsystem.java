@@ -40,16 +40,18 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH;
     public static double DEAD_ZONE = .25 * TICKS_INCH;
 
-    // Values work 11/4/22
     public static double MAX_MOTOR_SPEED = 1;
-    public static double MIN_MOTOR_SPEED = -0.45; // Gravity old:-0.6
+    public static double MIN_MOTOR_SPEED = -1;
+
+    // This is used to hopefully counteract gravity...
+    public static double DOWNWARD_SCALE_FACTOR = 0.65;
 
     public static double MOVE_LEFT = 1.00 * TICKS_INCH;
     public static double MOVE_RIGHT = 1.00 * TICKS_INCH;
     public static double CONE_HEIGHT_DIFFERENCE = .9 * TICKS_INCH;
-    // We may need to adjust this. Make *very* small changes! Values work 11/4/22
+
     public static PIDCoefficients PID =
-            new PIDCoefficients(0.003, 0.0004, 0 /*0.00005*/); // kI old value 0.0005 kP 0.003
+            new PIDCoefficients(0.0048, 0.0, 0);
 
     private EncodedMotor<DcMotorEx> _leftMotor;
     private EncodedMotor<DcMotorEx> _rightMotor;
@@ -79,11 +81,6 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         setNewZero();
     }
 
-    // Before:
-    // 2613, -2654
-    // 1 inch lower
-    // 2875, -2923
-    // 262, 269
     public LiftSubsystem(EncodedMotor<DcMotorEx> oneMotor) {
         isHardware = true;
         singleMotor = true;
@@ -250,6 +247,13 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
      */
 
     private void setMotorPower(double lp, double rp) {
+        // Add scaling if we're driving *downward*
+        if (lp < 0) {
+            lp = lp * DOWNWARD_SCALE_FACTOR;
+        }
+        if (rp < 0) {
+            rp = rp * DOWNWARD_SCALE_FACTOR;
+        }
         if (isHardware && Robot.RobotConstant.LIFT_MOVE_MOTORS) {
             // Invert the speed here
             _leftMotor.setSpeed(-lp);

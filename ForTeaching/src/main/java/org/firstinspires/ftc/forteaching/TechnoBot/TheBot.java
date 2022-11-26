@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.forteaching.TechnoBot;
 
 import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.ClawSubsystem;
+import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.DrivebaseSubsystem;
 import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.LiftSubsystem;
 import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.MotorAsServoSubsystem;
 import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.MovementTestingSubsystem;
@@ -17,16 +18,17 @@ public class TheBot implements Loggable {
     // This can be convenient when working with partially completed, or mid-reconfigured robots:
     // @Config Disable for the dashboard
     public static class Connected {
-        public static boolean DriveTrain = false;
+        public static boolean DriveTrain = true;
         public static boolean Sensors = false;
-        public static boolean Camera = true;
+        public static boolean Camera = false;
         public static boolean MovementTesters = false;
         public static boolean Claw = false;
         public static boolean Slider = false;
     }
 
     // Add all our subsystems in here:
-    public TankDriveSubsystem tankDriveBase;
+    // public TankDriveSubsystem tankDriveBase;
+    public DrivebaseSubsystem mecanumDrivebase;
     // public SensingSubsystem sensing;
     public ClawSubsystem clawSubsystem;
     public LiftSubsystem liftSubsystem;
@@ -39,7 +41,8 @@ public class TheBot implements Loggable {
 
     public TheBot(Hardware hw) {
         if (Connected.DriveTrain) {
-            tankDriveBase = new TankDriveSubsystem(hw.leftDriveMotor, hw.rightDriveMotor, hw.inertialMovementUnit);
+            mecanumDrivebase = new DrivebaseSubsystem(hw.frontLeftDriveMotor, hw.frontRightDriveMotor,
+                    hw.rearLeftDriveMotor, hw.rearRightDriveMotor, hw.inertialMovementUnit);
         }
         if (Connected.Sensors) {
             // sensing = new SensingSubsystem(hw.colorSensor, hw.bumpSensor, hw.distanceSensor);
