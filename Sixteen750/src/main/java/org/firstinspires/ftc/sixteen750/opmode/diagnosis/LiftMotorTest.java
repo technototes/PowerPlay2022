@@ -22,14 +22,14 @@ public class LiftMotorTest extends CommandOpMode {
     public void uponInit() {
         hardware = new Hardware(hardwareMap, false, true, false, false);
         robot = new Robot(hardware, false, true, false, false);
-//        controls = new ControlsDriver(driverGamepad, robot);
+        // controls = new ControlsDriver(driverGamepad, robot); // will cause some weird exception upon init, related to the period()
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
     @Override
     public void runLoop() {
-        telemetry.addData("Lift LeftMotor", robot.liftSubsystem.getLeftPos());
-        telemetry.addData("Lift RightMotor", robot.liftSubsystem.getRightPos());
+        telemetry.addData("Left Lift Motor Encoder", robot.liftSubsystem.getLeftPos());
+        telemetry.addData("Right Lift Motor Encoder", robot.liftSubsystem.getRightPos());
         telemetry.update();
     }
 }
