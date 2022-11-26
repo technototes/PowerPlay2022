@@ -6,7 +6,6 @@ import org.firstinspires.ftc.forteaching.TechnoBot.Commands.LiftUpCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.MecDriveCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.OpenClawCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.Operations;
-import org.firstinspires.ftc.forteaching.TechnoBot.Commands.TankDriveCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.TestEncodedMotorCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.TestMotorCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.TestServoCommand;
@@ -108,9 +107,8 @@ public class Controls {
     private void bindDrivebaseControls() {
         CommandScheduler.getInstance()
                 .scheduleJoystick(
-//                        new TankDriveCommand(robot.tankDriveBase, leftTankStick, rightTankStick, snapToAngle)
-                        new MecDriveCommand(robot.mecanumDrivebase, leftMecDriveStick, rightMecDriveStick)
-                );
+                        // new TankDriveCommand(robot.tankDriveBase, leftTankStick, rightTankStick, snapToAngle)
+                        new MecDriveCommand(robot.mecanumDrivebase, leftMecDriveStick, rightMecDriveStick));
     }
 
     // Silly helpers to make the code more succinct below

@@ -2,23 +2,21 @@ package org.firstinspires.ftc.twenty403;
 
 import static org.firstinspires.ftc.twenty403.Robot.RobotConstant;
 
+import java.util.List;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.VoltageUnit;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import com.qualcomm.robotcore.hardware.LynxModuleMeta;
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.hardware.sensor.IMU;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.vision.hardware.Webcam;
-
-import java.util.List;
 
 public class Hardware {
     @Config
@@ -76,6 +74,7 @@ public class Hardware {
             camera = new Webcam(HardwareConstant.CAMERA);
         }
     }
+
     public double voltage() {
         double volt = 0;
         double count = 0;
@@ -86,4 +85,3 @@ public class Hardware {
         return volt / count;
     }
 }
-

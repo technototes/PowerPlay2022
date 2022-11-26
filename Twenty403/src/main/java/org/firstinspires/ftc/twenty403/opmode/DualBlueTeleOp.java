@@ -1,14 +1,15 @@
 package org.firstinspires.ftc.twenty403.opmode;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.technototes.library.structure.CommandOpMode;
-import com.technototes.library.util.Alliance;
-
 import org.firstinspires.ftc.twenty403.Controls.ControlOperator;
 import org.firstinspires.ftc.twenty403.Controls.ControlsDriver;
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
+
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import com.technototes.library.structure.CommandOpMode;
+import com.technototes.library.util.Alliance;
 
 @TeleOp(name = "Dual Blue TeleOp")
 public class DualBlueTeleOp extends CommandOpMode {

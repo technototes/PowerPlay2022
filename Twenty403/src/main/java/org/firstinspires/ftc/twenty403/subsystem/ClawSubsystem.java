@@ -88,10 +88,7 @@ public class ClawSubsystem implements Subsystem {
     @Override
     public void periodic() {
         if (isHardware && autoClose) {
-            if (liftSubsystem.canAutoClose() &&
-                    !isClawClosed() &&
-                    isAllianceCone() &&
-                    isConeClose()) {
+            if (liftSubsystem.canAutoClose() && !isClawClosed() && isAllianceCone() && isConeClose()) {
                 close();
             }
         }

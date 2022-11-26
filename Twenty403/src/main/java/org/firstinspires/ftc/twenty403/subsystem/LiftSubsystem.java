@@ -50,8 +50,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double MOVE_RIGHT = 1.50 * TICKS_INCH;
     public static double CONE_HEIGHT_DIFFERENCE = .9 * TICKS_INCH;
 
-    public static PIDCoefficients PID =
-            new PIDCoefficients(0.0048, 0.0, 0);
+    public static PIDCoefficients PID = new PIDCoefficients(0.0048, 0.0, 0);
 
     private EncodedMotor<DcMotorEx> _leftMotor;
     private EncodedMotor<DcMotorEx> _rightMotor;
