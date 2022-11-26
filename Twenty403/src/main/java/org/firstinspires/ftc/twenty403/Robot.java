@@ -14,10 +14,10 @@ import com.technototes.library.util.Alliance;
 public class Robot implements Loggable {
     @Config
     public static class RobotConstant {
-        public static boolean DRIVE_CONNECTED = false;
+        public static boolean DRIVE_CONNECTED = true;
         public static boolean CLAW_CONNECTED = true;
-        public static boolean LIFT_CONNECTED = false;
-        public static boolean LIFT_MOVE_MOTORS = false;
+        public static boolean LIFT_CONNECTED = true;
+        public static boolean LIFT_MOVE_MOTORS = true;
 
         public static boolean CAMERA_CONNECTED = true;
 
@@ -40,11 +40,6 @@ public class Robot implements Loggable {
                     hardware.rrDriveMotor,
                     hardware.imu);
         }
-        if (RobotConstant.CLAW_CONNECTED) {
-            clawSubsystem = new ClawSubsystem(hardware.claw, hardware.clawDistance, team);
-        } else {
-            clawSubsystem = new ClawSubsystem();
-        }
         if (RobotConstant.LIFT_CONNECTED) {
             if (RobotConstant.DUAL_LIFT_SETUP) {
                 liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor, hardware.LiftRightMotor, initialVoltage);
@@ -53,6 +48,11 @@ public class Robot implements Loggable {
             }
         } else {
             liftSubsystem = new LiftSubsystem();
+        }
+        if (RobotConstant.CLAW_CONNECTED) {
+            clawSubsystem = new ClawSubsystem(liftSubsystem, hardware.claw, hardware.clawDistance, team);
+        } else {
+            clawSubsystem = new ClawSubsystem();
         }
         if (RobotConstant.CAMERA_CONNECTED) {
             visionSystem = new VisionSubsystem(hardware.camera, team, whichSide);

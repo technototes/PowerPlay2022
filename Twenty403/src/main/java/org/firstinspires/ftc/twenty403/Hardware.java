@@ -64,7 +64,7 @@ public class Hardware {
         }
         if (RobotConstant.CLAW_CONNECTED) {
             claw = new Servo(HardwareConstant.CLAW_SERVO);
-            clawDistance = hwmap.get(ColorDistanceSensor.class, HardwareConstant.CLAW_SENSOR);
+            clawDistance = new ColorDistanceSensor(HardwareConstant.CLAW_SENSOR);
         }
         if (RobotConstant.LIFT_CONNECTED) {
             LiftLeftMotor = new EncodedMotor<>(HardwareConstant.LIFT_LEFT_MOTOR);

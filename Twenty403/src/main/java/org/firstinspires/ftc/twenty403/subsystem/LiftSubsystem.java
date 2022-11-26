@@ -38,7 +38,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     // TODO: THESE VALUES ARE PROBABLY WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
     public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH;
-    public static double DEAD_ZONE = .25 * TICKS_INCH;
+    public static double DEAD_ZONE = .9 * TICKS_INCH;
 
     public static double MAX_MOTOR_SPEED = 1;
     public static double MIN_MOTOR_SPEED = -1;
@@ -151,8 +151,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     @Override
     public Double get() {
         // Not sure about this one: it's just for displaying things, so this is probably fine:
-        return leftPidController.getTargetPosition();
-        // return rightPidController.getTargetPosition();
+        return getLeftPos();
+    }
+
+    public boolean canAutoClose() {
+        return Math.abs(getLeftPos() - INTAKE_POSITION_LEFT) < DEAD_ZONE;
     }
 
     /* Subsystem command functions */

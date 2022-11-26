@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.twenty403.opmode;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.twenty403.Controls.ControlOperator;
 import org.firstinspires.ftc.twenty403.Controls.ControlsDriver;
 import org.firstinspires.ftc.twenty403.Hardware;
@@ -29,11 +30,16 @@ public class DebugTeleOp extends CommandOpMode {
 
     @Override
     public void runLoop() {
+        /*
         telemetry.addData("ExternalHeading", robot.drivebaseSubsystem.getExternalHeading());
         telemetry.addData("ExternalHeadingVelocity", robot.drivebaseSubsystem.getExternalHeadingVelocity());
+        */
         telemetry.addData("Cone Close:", robot.clawSubsystem.isConeClose());
         telemetry.addData("Cone Alliance:", robot.clawSubsystem.isAllianceCone());
         telemetry.addData("isClawClosed:", robot.clawSubsystem.isClawClosed());
+        telemetry.addData("Cone Distance:", hardware.clawDistance.getDistance(DistanceUnit.CM));
+        telemetry.addData("Cone Color:", hardware.clawDistance.argb());
+        telemetry.addData("VOLTAGE:", robot.initialVoltage);
         telemetry.update();
     }
 }
