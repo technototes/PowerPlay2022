@@ -22,9 +22,8 @@ public class AutoBlueHomeFullCycleMiddle extends SequentialCommandGroup {
         super(
                 new ClawCloseCommand(clawSubsystem),
                 new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Home.START_TO_W_JUNCTION)
-                        .alongWith(
-                                new SequentialCommandGroup(new WaitCommand(0.2),
-                                        new LiftHighJunctionCommand(liftSubsystem))),
+                        .alongWith(new SequentialCommandGroup(
+                                new WaitCommand(0.2), new LiftHighJunctionCommand(liftSubsystem))),
                 new ClawOpenCommand(clawSubsystem),
                 new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Home.W_JUNCTION_TO_STACK)
                         .alongWith(new LiftCollectCommand(liftSubsystem)),
