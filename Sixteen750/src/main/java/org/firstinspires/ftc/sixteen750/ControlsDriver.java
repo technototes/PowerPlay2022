@@ -56,6 +56,6 @@ public class ControlsDriver {
         gamepad.square.whenPressed(new LiftLowPoleCommand(robot.liftSubsystem));
         gamepad.triangle.whenPressed(new LiftMidPoleCommand(robot.liftSubsystem));
         gamepad.circle.whenPressed(new LiftHighPoleCommand(robot.liftSubsystem));
-        gamepad.x.whenPressed(new LiftGroundJunctionCommand(robot.liftSubsystem));
+        gamepad.cross.whenPressed(new LiftGroundJunctionCommand(robot.liftSubsystem));
     }
 }

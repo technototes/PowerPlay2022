@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.sixteen750.command.lift;
 
-import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
-
 import com.technototes.library.command.Command;
+
+import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 
 public class LiftCarryCommand implements Command {
     public LiftSubsystem liftSubsystem;
@@ -13,6 +13,6 @@ public class LiftCarryCommand implements Command {
 
     @Override
     public void execute() {
-        liftSubsystem.gotoGroundJunction();
+        liftSubsystem.groundJunction();
     }
 }

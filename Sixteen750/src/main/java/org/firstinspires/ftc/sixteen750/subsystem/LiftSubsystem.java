@@ -1,225 +1,226 @@
 package org.firstinspires.ftc.sixteen750.subsystem;
 
-import java.util.function.Supplier;
-
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.Range;
-
 import com.technototes.library.hardware.motor.EncodedMotor;
+import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 
-@Config
-@SuppressWarnings("unused")
+import org.firstinspires.ftc.sixteen750.Robot;
+
+import java.util.function.Supplier;
+
 public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
-    // Assuming the 0 position for both lift motor might be different
-    // The LiftSubsystem should be able to any of the motor combination
-    // TODO: THESE VALUES ARE ALL WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
-    public static double TICKS_INCH = 750; // WRONG,
-    public static double L_INTAKE;
-    public static double R_INTAKE;
-    public static double L_GROUND_JUNCTION = 0.5 * TICKS_INCH; // WRONG
-    public static double R_GROUND_JUNCTION = 0.5 * TICKS_INCH; // WRONG
-    public static double L_LOW_JUNCTION = 12 * TICKS_INCH; // WRONG
-    public static double R_LOW_JUNCTION = 12 * TICKS_INCH; // WRONG
-    public static double L_MEDIUM_JUNCTION = 24 * TICKS_INCH; // WRONG
-    public static double R_MEDIUM_JUNCTION = 24 * TICKS_INCH; // WRONG
-    public static double L_HIGH_JUNCTION = 36 * TICKS_INCH; // WRONG
-    public static double R_HIGH_JUNCTION = 36 * TICKS_INCH; // WRONG
-    public static double L_ABSOLUTE_MIN_HEIGHT = 10;
-    public static double L_ABSOLUTE_MAX_HEIGHT = 1456;
-    public static double R_ABSOLUTE_MIN_HEIGHT = 10; // from left
-    public static double R_ABSOLUTE_MAX_HEIGHT = 1456; // from left
-    public static double L_MAX_MOTOR_SPEED = 0.8; // Unverified
-    public static double L_MIN_MOTOR_SPEED = -0.4; // Unverified, Gravity
-    public static double R_MAX_MOTOR_SPEED = 0.8; // Unverified
-    public static double R_MIN_MOTOR_SPEED = -0.4; // Unverified, Gravity
-    public static double L_REGULAR_MOVE = 10;
-    public static double R_REGULAR_MOVE = 10;
-    public static double L_TINY_MOVE = 5; // When close to the upper limit
-    public static double R_TINY_MOVE = 5; // When close to the upper limit
-    public static PIDCoefficients L_PID = new PIDCoefficients(0.008, 0, 0.0005); // Unverified
-    public static PIDCoefficients R_PID = new PIDCoefficients(0.008, 0, 0.0005); // Unverified
-    public static double TOLERANCE_ZONE = 2; // Unverified
+    public static double TICKS_INCH = 38;
 
-    private EncodedMotor<DcMotorEx> leftMotor;
-    private PIDFController leftPidController;
-    private final boolean isLeftConnected;
+    public static double INTAKE_POSITION_LIFT = 0;
+    public static double GROUND_JUNCTION_LIFT = 1.75 * TICKS_INCH;
+    public static double LOW_JUNCTION_LIFT = 14.5 * TICKS_INCH;
+    public static double MEDIUM_JUNCTION_LIFT = 25 * TICKS_INCH;
+    public static double HIGH_JUNCTION_LIFT = 36 * TICKS_INCH;
+    public static double MAX_HEIGHT = 38 * TICKS_INCH;
+    public static double MIN_HEIGHT = 0;
 
-    private EncodedMotor<DcMotorEx> rightMotor;
-    private PIDFController rightPidController;
-    private final boolean isRightConnected;
+    // Don't change these: They're used for user-redefining the 'zero' location during gameplay
+    public static double ACTUAL_ZERO_LIFT = 0;
 
-    public LiftSubsystem(EncodedMotor<DcMotorEx> leftM, EncodedMotor<DcMotorEx> rightM) {
-        if (leftM != null) {
-            this.leftMotor = leftM;
-            this.leftPidController = new PIDFController(L_PID, 0, 0, 0, (x, y) -> 0.1);
-            this.isLeftConnected = true;
-        } else {
-            this.isLeftConnected = false;
-        }
+    // TODO: THESE VALUES ARE PROBABLY WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
+    public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH;
+    public static double DEAD_ZONE = .9 * TICKS_INCH;
 
-        if (rightM != null) {
-            this.rightMotor = rightM;
-            this.rightPidController = new PIDFController(R_PID, 0, 0, 0, (x, y) -> 0.1);
-            this.isRightConnected = true;
-        } else {
-            this.isRightConnected = false;
-        }
+    public static double MAX_MOTOR_SPEED = 1;
+    public static double MIN_MOTOR_SPEED = -1;
+
+    // This is used to hopefully counteract gravity...
+    public static double DOWNWARD_SCALE_FACTOR = 0.65;
+
+    public static double MOVE_LIFT = 1.50 * TICKS_INCH;
+    public static double CONE_HEIGHT_DIFFERENCE = .9 * TICKS_INCH;
+
+    public static PIDCoefficients PID =
+            new PIDCoefficients(0.0048, 0.0, 0);
+
+    private EncodedMotor<DcMotorEx> _liftMotor;
+
+    private PIDFController liftPidController;
+    private int coneNumber = 5;
+
+    // True if we actually have hardware attached
+    private boolean isHardware;
+
+    private double voltage;
+
+    private void init(EncodedMotor<DcMotorEx> lm, double volts) {
+        voltage = volts;
+        _liftMotor = lm;
+        PIDCoefficients pid = new PIDCoefficients(PID.kP, PID.kI, PID.kD);
+        liftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
+        setNewZero();
     }
 
-    private void setTargetPosition(double lPos, double rPos) {
-        if (isLeftConnected) {
-            leftPidController.setTargetPosition(Range.clip(lPos, L_ABSOLUTE_MIN_HEIGHT, L_ABSOLUTE_MAX_HEIGHT));
-        }
-        if (isRightConnected) {
-            rightPidController.setTargetPosition(Range.clip(rPos, R_ABSOLUTE_MIN_HEIGHT, R_ABSOLUTE_MAX_HEIGHT));
-        }
+    public LiftSubsystem(EncodedMotor<DcMotorEx> oneMotor, double volts) {
+        isHardware = true;
+        init(oneMotor, volts);
     }
 
-    private void setTargetPositionWithLogging(double lPos, double rPos) {
-        setTargetPosition(lPos, rPos);
-        if (isLeftConnected) {
-            lpAndActual = String.format("%d (%d)", (int) lPos, leftMotor.get().intValue());
-        }
-        if (isRightConnected) {
-            rpAndActual = String.format("%d (%d)", (int) rPos, rightMotor.get().intValue());
-        }
+    public LiftSubsystem(EncodedMotor<DcMotorEx> oneMotor) {
+        this(oneMotor, 0);
+    }
+
+    public LiftSubsystem() {
+        isHardware = false;
+        init(null, 0);
+    }
+
+    private void setLiftPosition(double lval) {
+        double lpos = Range.clip(lval, MIN_HEIGHT, MAX_HEIGHT);
+        setLiftPosition_OVERRIDE(lpos);
+    }
+
+    private void setLiftPosition_OVERRIDE(double lpos) {
+        liftPidController.setTargetPosition(lpos);
+        lpAndActual = String.format("%d (%d)", (int) lpos, (int) getPos());
     }
 
     // This is run for every loop (Feature of the TechnoLib Subsystem!)
     // So you can just call "setTop" in a command and it will get there "as soon as it can"
     @Override
     public void periodic() {
-        if (isLeftConnected) {
-            double leftTargetSpeed = leftPidController.update(getLeftPos());
-            double leftClippedSpeed = Range.clip(leftTargetSpeed, L_MIN_MOTOR_SPEED, L_MAX_MOTOR_SPEED);
-            leftMotor.setSpeed(leftClippedSpeed);
-        }
-        if (isRightConnected) {
-            double rTargetSpeed = rightPidController.update(getRightPos());
-            double rClippedSpeed = Range.clip(rTargetSpeed, L_MIN_MOTOR_SPEED, L_MAX_MOTOR_SPEED);
-            rightMotor.setSpeed(rClippedSpeed);
-        }
+        double ltargetSpeed = liftPidController.update(getPos());
+        double lclippedSpeed = Range.clip(ltargetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
+
+        // double liftError = Math.abs(liftPidController.getTargetPosition() - getPosition());
+        // if (liftError > DEAD_ZONE) {
+        //     return; // Good idea?
+        // }
+        setMotorPower(lclippedSpeed);
+        setLiftPosition_OVERRIDE(liftPidController.getTargetPosition());
     }
 
-    public double leftDelta() {
-        return leftPidController.getTargetPosition() - leftMotor.getDevice().getCurrentPosition();
-    }
+    /* Stuff for Logging */
 
-    public double rightDelta() {
-        return rightPidController.getTargetPosition() - rightMotor.getDevice().getCurrentPosition();
-    }
+    @Log(name = "lift EncMotor Pos (Actual)")
+    public volatile String lpAndActual = "(unknown)";
 
-    public boolean isLeftAtTarget() {
-        return Math.abs(leftDelta()) < TOLERANCE_ZONE;
-    }
-
-    public boolean isRightAtTarget() {
-        return Math.abs(rightDelta()) < TOLERANCE_ZONE;
-    }
-
-    public double getLeftPos() {
-        if (isLeftConnected) {
-            return leftMotor.getEncoder().getPosition();
-        }
-        return 0.0;
-    }
-
-    public double getRightPos() {
-        if (isRightConnected) {
-            // Invert the sign on this one to make it look like it's rotating the same way...
-            return -rightMotor.getEncoder().getPosition();
-        }
-        return 0.0;
-    }
+    @Log(name = "lift Motor Power")
+    public volatile String lMotorPower = "n/a";
 
     @Override
     public Double get() {
-        // Not sure about this one
-        if (isLeftConnected) {
-            return leftPidController.getTargetPosition();
-        } else if (isRightConnected) {
-            return rightPidController.getTargetPosition();
-        } else {
-            return 0.0;
-        }
+        // Not sure about this one: it's just for displaying things, so this is probably fine:
+        return getPos();
     }
 
-    // TODO: enable as needed
-    // @Log(name = "lEncMotor Pos (Actual)")
-    public volatile String lpAndActual = "(unknown)";
+    public boolean canAutoClose() {
+        return Math.abs(getPos() - INTAKE_POSITION_LIFT) < DEAD_ZONE;
+    }
 
-    // TODO: enable as needed
-    // @Log(name = "rEncMotor Pos (Actual)")
-    public volatile String rpAndActual = "(unknown)";
+    /* Subsystem command functions */
 
     public void stop() {
         // By resetting the pidController, it stops the periodic function from making changes
-        if (isLeftConnected) {
-            leftPidController.reset();
-        }
-        if (isRightConnected) {
-            rightPidController.reset();
-        }
+        liftPidController.reset();
     }
 
     public void halt() {
         // Just set the target position to the current position to get the motor to stop, yes?
-        if (isLeftConnected) {
-            leftPidController.setTargetPosition(this.getLeftPos());
-        }
-        if (isRightConnected) {
-            rightPidController.setTargetPosition(this.getRightPos());
-        }
+        liftPidController.setTargetPosition(getPos());
     }
 
-    public void gotoTop() {
-        // null check will be done in setTargetPosition()
-        this.setTargetPosition(L_ABSOLUTE_MAX_HEIGHT, R_ABSOLUTE_MAX_HEIGHT);
+    public double changeCollectHeight() {
+        coneNumber--;
+        return coneNumber * CONE_HEIGHT_DIFFERENCE;
     }
 
-    public void gotoBottom() {
-        // null check will be done in setTargetPosition()
-        this.setTargetPosition(L_ABSOLUTE_MIN_HEIGHT, R_ABSOLUTE_MIN_HEIGHT);
+    public void collect() {
+        double collectHeight = changeCollectHeight();
+        setLiftPosition(collectHeight);
     }
 
-    public void gotoHighPole() {
-        // null check will be done in setTargetPosition()
-        setTargetPositionWithLogging(L_HIGH_JUNCTION, R_HIGH_JUNCTION);
+    public void highPole() {
+        setLiftPosition(HIGH_JUNCTION_LIFT);
     }
 
-    public void gotoMidPole() {
-        // null check will be done in setTargetPosition()
-        setTargetPositionWithLogging(L_MEDIUM_JUNCTION, R_MEDIUM_JUNCTION);
+    public void midPole() {
+        setLiftPosition(MEDIUM_JUNCTION_LIFT);
     }
 
-    public void gotoLowPole() {
-        // null check will be done in setTargetPosition()
-        setTargetPositionWithLogging(L_LOW_JUNCTION, R_LOW_JUNCTION);
+    public void lowPole() {
+        setLiftPosition(LOW_JUNCTION_LIFT);
     }
 
-    public void gotoGroundJunction() {
-        // null check will be done in setTargetPosition()
-        setTargetPositionWithLogging(L_GROUND_JUNCTION, R_GROUND_JUNCTION);
+    public void groundJunction() {
+        setLiftPosition(GROUND_JUNCTION_LIFT);
+    }
+
+    public void intakePos() {
+        setLiftPosition(INTAKE_POSITION_LIFT);
     }
 
     public void moveUp() {
-        if (isLeftConnected) {
-            // maybe getCurrentPosition instead of getTargetPosition
-            double rightTargetPosition = leftPidController.getTargetPosition();
-            setTargetPositionWithLogging(rightTargetPosition + L_REGULAR_MOVE, rightTargetPosition + R_REGULAR_MOVE);
-        }
+        // maybe getCurrentPosition instead of getTargetPosition
+        double lposition = liftPidController.getTargetPosition();
+
+        setLiftPosition(lposition + MOVE_LIFT);
     }
 
     public void moveDown() {
-        if (isRightConnected) {
-            // maybe getCurrentPosition instead of getTargetPosition
-            double leftTargetPosition = leftPidController.getTargetPosition();
-            setTargetPositionWithLogging(leftTargetPosition - L_REGULAR_MOVE, leftTargetPosition - R_REGULAR_MOVE);
+        // maybe getCurrentPosition instead of getTargetPosition
+        double lposition = liftPidController.getTargetPosition();
+
+        setLiftPosition(lposition - MOVE_LIFT);
+    }
+
+    public void moveUp_OVERRIDE() {
+        // maybe getCurrentPosition instead of getTargetPosition
+        double lposition = liftPidController.getTargetPosition();
+        setLiftPosition_OVERRIDE(lposition + MOVE_LIFT);
+    }
+
+    public void moveDown_OVERRIDE() {
+        // maybe getCurrentPosition instead of getTargetPosition
+        double lposition = liftPidController.getTargetPosition();
+        setLiftPosition_OVERRIDE(lposition - MOVE_LIFT);
+    }
+
+    /*
+     * The following functions are the only ones that actually touch hardware.
+     * Since the motors rotate opposite directions, we can deal with that in these
+     * functions, and not have to worry about any other problems.
+     * (See the motor power negating in setMotorPower and the encoder negating in getLeftPos)
+     */
+
+    private void setMotorPower(double lp) {
+        // Add scaling if we're driving *downward*
+        if (lp < 0) {
+            lp = lp * DOWNWARD_SCALE_FACTOR;
         }
+        if (isHardware && Robot.RobotConstant.LIFT_MOVE_MOTORS) {
+            // Invert the speed here
+            _liftMotor.setSpeed(lp);
+        }
+        lMotorPower = String.format("Power assigned: %f", lp);
+    }
+
+    public void setNewZero() {
+        if (!isHardware) {
+            return;
+        }
+        double curLeft = liftPidController.getTargetPosition();
+        ACTUAL_ZERO_LIFT = _liftMotor.get();
+        liftPidController.setTargetPosition(curLeft + ACTUAL_ZERO_LIFT);
+    }
+
+    private double getPos() {
+        if (!isHardware) {
+            return 0;
+        }
+        // Invert the sign on this one to make it look like it's rotating the same way...
+        return (_liftMotor.get() - ACTUAL_ZERO_LIFT);
     }
 }
+
+

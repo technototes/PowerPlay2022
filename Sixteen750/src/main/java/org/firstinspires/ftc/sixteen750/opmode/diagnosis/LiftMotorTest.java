@@ -6,13 +6,12 @@ import org.firstinspires.ftc.sixteen750.Robot;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import com.technototes.library.structure.CommandOpMode;
 
 @TeleOp(group = "Test-Hardware")
-@SuppressWarnings("unused")
+// @SuppressWarnings("unused")
 public class LiftMotorTest extends CommandOpMode {
     public Robot robot;
     public ControlsDriver controls;
@@ -22,14 +21,13 @@ public class LiftMotorTest extends CommandOpMode {
     public void uponInit() {
         hardware = new Hardware(hardwareMap, false, true, false, false);
         robot = new Robot(hardware, false, true, false, false);
-        // controls = new ControlsDriver(driverGamepad, robot); // will cause some weird exception upon init, related to the period()
+        controls = new ControlsDriver(driverGamepad, robot);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
     @Override
     public void runLoop() {
-        telemetry.addData("Left Lift Motor Encoder", robot.liftSubsystem.getLeftPos());
-        telemetry.addData("Right Lift Motor Encoder", robot.liftSubsystem.getRightPos());
-        telemetry.update();
+        // telemetry.addData("Left Lift Motor Encoder", robot.liftSubsystem.get());
+        // telemetry.update();
     }
 }
