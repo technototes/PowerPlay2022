@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.sixteen750.subsystem;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -13,8 +14,9 @@ import org.firstinspires.ftc.sixteen750.Robot;
 
 import java.util.function.Supplier;
 
+@Config
 public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
-    public static double TICKS_INCH = 137;
+    public static double TICKS_INCH = 136;
 
     public static double INTAKE_POSITION_LIFT = 0;
     public static double GROUND_JUNCTION_LIFT = 1.75 * TICKS_INCH;
@@ -58,6 +60,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         _liftMotor = lm;
         PIDCoefficients pid = new PIDCoefficients(PID.kP, PID.kI, PID.kD);
         liftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
+        liftPidController.setTargetPosition(0);
         setNewZero();
     }
 
@@ -209,9 +212,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         if (!isHardware) {
             return;
         }
-        double curLeft = liftPidController.getTargetPosition();
         ACTUAL_ZERO_LIFT = _liftMotor.get();
-        liftPidController.setTargetPosition(curLeft + ACTUAL_ZERO_LIFT);
     }
 
     private double getPos() {
