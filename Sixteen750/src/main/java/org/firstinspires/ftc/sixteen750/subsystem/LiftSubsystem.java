@@ -14,7 +14,7 @@ import org.firstinspires.ftc.sixteen750.Robot;
 import java.util.function.Supplier;
 
 public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
-    public static double TICKS_INCH = 38;
+    public static double TICKS_INCH = 137;
 
     public static double INTAKE_POSITION_LIFT = 0;
     public static double GROUND_JUNCTION_LIFT = 1.75 * TICKS_INCH;
