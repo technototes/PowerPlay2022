@@ -2,6 +2,7 @@ package org.firstinspires.ftc.twenty403.command;
 
 import com.technototes.library.command.Command;
 import java.util.function.BooleanSupplier;
+import java.util.function.BooleanSupplier;
 import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
 
 public class VisionDuringTeleCommand implements Command {

@@ -47,7 +47,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
             RIGHT,
         }
 
-        //Junction color for tele
+        // Junction color for tele
         public static double JUNCTION;
         // Yellow is around 25 (50 degrees)
         public static double YELLOW = 25;
@@ -201,7 +201,8 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                     }
                     // Draw a dot on the image at this point - input was put into img
                     // The color choice makes things stripey, which makes it easier to identif
-                    //if less than 20 for range after not seeing yellow than set both to -1 as not junction ypou are looking for
+                    // if less than 20 for range after not seeing yellow than set both to -1 as not junction ypou are
+                    // looking for
                 } else {
                     if (startX != -1 && (startX - endX < range) || endX == -1) {
                         startX = -1;

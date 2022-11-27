@@ -1,20 +1,19 @@
 package org.firstinspires.ftc.twenty403.command.drive;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
-
-import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
-import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline;
-
 import com.acmerobotics.roadrunner.drive.DriveSignal;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.technototes.library.command.Command;
+import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.Stick;
 import com.technototes.library.util.MathUtils;
 import java.util.function.BooleanSupplier;
+import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
 import java.util.function.DoubleSupplier;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
+import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
+import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline;
 
 public class DriveCommand implements Command {
 
@@ -29,9 +28,10 @@ public class DriveCommand implements Command {
         DrivebaseSubsystem sub,
         Stick stick1,
         Stick stick2,
-        BooleanSupplier straighten
-    ,
-		BooleanSupplier watchAndAlign, VisionPipeline vp) {
+        BooleanSupplier straighten,
+        BooleanSupplier watchAndAlign,
+        VisionPipeline vp
+    ) {
         addRequirements(sub);
         subsystem = sub;
         x = stick1.getXSupplier();
@@ -42,12 +42,17 @@ public class DriveCommand implements Command {
         visionPipeline = vp;
     }
 
-    public DriveCommand(DrivebaseSubsystem sub, Stick stick1, Stick stick2) {
-        this(sub, stick1, stick2, null, null, null);
+    public DriveCommand(
+        DrivebaseSubsystem sub,
+        Stick stick1,
+        Stick stick2,
+        BooleanSupplier straighten
+    ) {
+        this(sub, stick1, stick2, straighten, null, null);
     }
 
-    public DriveCommand(DrivebaseSubsystem sub, Stick stick1, Stick stick2, BooleanSupplier straighten) {
-        this(sub, stick1, stick2, straighten);
+    public DriveCommand(DrivebaseSubsystem sub, Stick stick1, Stick stick2) {
+        this(sub, stick1, stick2, null, null, null);
     }
 
     private double getRotation(double headingInRads) {
@@ -93,6 +98,11 @@ public class DriveCommand implements Command {
         return Math.cbrt(normalized) * 0.3;
     }
 
+    public static double idk = 1.0, max_of_jy = 1.0, max_of_jx = 1.0;
+
+    public static double xEdgeAngle = idk; // angles of the edge points seen by the camera relative to pixel
+    public double yEdgeAngle = idk;
+    public double camHeight = idk;
 
     private void autoAlign45() {
         double curHeading = -subsystem.getExternalHeading();
@@ -106,14 +116,10 @@ public class DriveCommand implements Command {
             if (jx == 0.0 && jy == 0.0) {
                 return;
             }
-
-            const double xEdgeAngle = idk; // angles of the edge points seen by the camera relative to pixel
-            const double yEdgeAngle = idk;
-            const double camHeight = idk;
             double yDistance;
             double xDistance;
-            yDistance = camHeight/Math.tan(jy/(max of jy) * yEdgeAngle);
-            xDistance = yDistance * Math.tan(jx/(max of jx) * xEdgeAngle);
+            yDistance = camHeight / Math.tan(jy / (max_of_jy) * yEdgeAngle);
+            xDistance = yDistance * Math.tan(jx / (max_of_jx) * xEdgeAngle);
             // set the drive power to get us to that location
         }
     }
@@ -126,13 +132,13 @@ public class DriveCommand implements Command {
         } else {
             double curHeading = -subsystem.getExternalHeading();
             Vector2d input = new Vector2d(
-            -y.getAsDouble() * subsystem.speed,
-            -x.getAsDouble() * subsystem.speed
-        )
+                -y.getAsDouble() * subsystem.speed,
+                -x.getAsDouble() * subsystem.speed
+            )
                 .rotated(curHeading);
             subsystem.setWeightedDrivePower(
-            new Pose2d(input.getX(), input.getY(), getRotation(curHeading))
-        );
+                new Pose2d(input.getX(), input.getY(), getRotation(curHeading))
+            );
             subsystem.update();
         }
     }
