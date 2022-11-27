@@ -33,7 +33,7 @@ public class ClawSubsystem implements Subsystem {
         sensor = s;
         alliance = a;
         isHardware = true;
-        autoClose = false;
+        autoClose = true;
     }
 
     // Non-functional subsystem constructor

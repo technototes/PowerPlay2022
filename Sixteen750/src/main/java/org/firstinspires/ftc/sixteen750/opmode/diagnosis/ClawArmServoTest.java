@@ -9,6 +9,7 @@ import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem.FLIPPER_UP
 import org.firstinspires.ftc.sixteen750.ControlsDriver;
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
+import org.firstinspires.ftc.sixteen750.command.autonomous.StartingPosition;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -18,6 +19,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.structure.CommandOpMode;
+import com.technototes.library.util.Alliance;
 
 @Config
 @TeleOp(group = "Test-Hardware")
@@ -37,8 +39,8 @@ public class ClawArmServoTest extends CommandOpMode {
 
     @Override
     public void uponInit() {
-        hardware = new Hardware(hardwareMap, false, false, true, true);
-        robot = new Robot(hardware, false, false, true, true);
+        hardware = new Hardware(hardwareMap, false, false, true, true, false);
+        robot = new Robot(hardware, false, false, true, true, false, Alliance.NONE, StartingPosition.NEUTRAL);
         controls = new ControlsDriver(driverGamepad, robot);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         targetServo = hardware.elbowServo;

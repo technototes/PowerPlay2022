@@ -5,11 +5,13 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.technototes.library.structure.CommandOpMode;
+import com.technototes.library.util.Alliance;
 
 import org.firstinspires.ftc.sixteen750.ControlsDriver;
 import org.firstinspires.ftc.sixteen750.ControlsOperator;
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
+import org.firstinspires.ftc.sixteen750.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.sixteen750.subsystem.MecanumDriveSubsystem;
 
 @Config
@@ -24,7 +26,7 @@ public class RegularMecanumDrive extends CommandOpMode {
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
-        robot = new Robot(hardware);
+        robot = new Robot(hardware, Alliance.NONE, StartingPosition.NEUTRAL);
         driverControls = new ControlsDriver(driverGamepad, robot);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }

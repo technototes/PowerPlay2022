@@ -1,13 +1,16 @@
 package org.firstinspires.ftc.sixteen750;
 
+import org.firstinspires.ftc.sixteen750.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.MecanumDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.VisionSubsystem;
 
 import com.acmerobotics.dashboard.config.Config;
 
 import com.technototes.library.logger.Loggable;
+import com.technototes.library.util.Alliance;
 
 public class Robot implements Loggable {
     @Config
@@ -18,12 +21,14 @@ public class Robot implements Loggable {
         public static boolean CLAW_ENABLED = false;
         public static boolean ARM_ENABLED = false;
         public static boolean LIFT_ENABLED = false;
+        public static boolean CAMERA_ENABLED = true;
     }
 
     public ClawSubsystem clawSubsystem;
     public ArmSubsystem armSubsystem;
     public LiftSubsystem liftSubsystem;
     public MecanumDriveSubsystem mecanumDriveSubsystem;
+    public VisionSubsystem visionSubsystem;
 
     public boolean isSwerveDriveConnected = false;
     public boolean isTankDriveConnected = false;
@@ -31,8 +36,9 @@ public class Robot implements Loggable {
     public boolean isClawConnected = false;
     public boolean isArmConnected = false;
     public boolean isLiftConnected = false;
+    public boolean isCameraConnected = false;
 
-    public Robot(Hardware hardware, boolean enableMecanumDrive, boolean enableLift, boolean enableArm, boolean enableClaw) {
+    public Robot(Hardware hardware, boolean enableMecanumDrive, boolean enableLift, boolean enableArm, boolean enableClaw, boolean enableCamera, Alliance alliance, StartingPosition whichSide) {
         if (enableMecanumDrive) {
             /// Don't forget to check the order of the motors
             mecanumDriveSubsystem = new MecanumDriveSubsystem(hardware.leftFrontMotor, hardware.rightFrontMotor, hardware.leftRearMotor, hardware.rightRearMotor, hardware.imu);
@@ -55,11 +61,19 @@ public class Robot implements Loggable {
         } else {
             clawSubsystem = new ClawSubsystem(null, null);
         }
+        if (enableCamera){
+            visionSubsystem = new VisionSubsystem(hardware.camera, alliance, whichSide);
+        }
     }
 
-    public Robot(Hardware hardware) {
-        this(hardware, RobotConstant.MECANUM_DRIVE_ENABLED, RobotConstant.LIFT_ENABLED, RobotConstant.ARM_ENABLED, RobotConstant.CLAW_ENABLED);
+    public Robot(Hardware hardware, Alliance team, StartingPosition whichSide) {
+        this(hardware, RobotConstant.MECANUM_DRIVE_ENABLED, RobotConstant.LIFT_ENABLED, RobotConstant.ARM_ENABLED, RobotConstant.CLAW_ENABLED, RobotConstant.CAMERA_ENABLED, team, whichSide);
     }
+
+    public Robot(Hardware hardware){
+        this(hardware, Alliance.NONE, StartingPosition.NEUTRAL);
+    }
+
 }
 /*
 Robot is 12 inches

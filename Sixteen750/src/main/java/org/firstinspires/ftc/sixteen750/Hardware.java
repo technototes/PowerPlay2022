@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.sensor.IMU;
 import com.technototes.library.hardware.servo.Servo;
+import com.technototes.vision.hardware.Webcam;
 
 public class Hardware {
     @Config
@@ -38,6 +39,9 @@ public class Hardware {
         public static String CLAW_SENSOR = "clawSensor";
         public static String LEFT_LIFT_MOTOR = "leftLiftMotor";
         public static String RIGHT_LIFT_MOTOR = "rightLiftMotor";
+
+        public static String CAMERA = "Webcam";
+
     }
 
     public EncodedMotor<DcMotorEx> leftFrontMotor;
@@ -54,9 +58,12 @@ public class Hardware {
     public Servo elbowServo;
     public DistanceSensor clawDistance;
 
+    public Webcam camera;
+
+
     public ArrayList<String> hardwareWarnings = new ArrayList<>();
 
-    public Hardware(HardwareMap hwMap, boolean enableMecanum, boolean enableLift, boolean enableArm, boolean enableClaw) {
+    public Hardware(HardwareMap hwMap, boolean enableMecanum, boolean enableLift, boolean enableArm, boolean enableClaw, boolean enableCamera) {
         if (enableMecanum) {
             leftFrontMotor = new EncodedMotor<>(HardwareConstant.LF_MOTOR);
             leftRearMotor = new EncodedMotor<>(HardwareConstant.LR_MOTOR);
@@ -90,9 +97,12 @@ public class Hardware {
             clawServo = new Servo(HardwareConstant.CLAW_SERVO).invert();
             // clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR); // not installed
         }
+        if (enableCamera){
+            camera = new Webcam(HardwareConstant.CAMERA);
+        }
     }
 
     public Hardware(HardwareMap hwMap) {
-        this(hwMap, RobotConstant.MECANUM_DRIVE_ENABLED, RobotConstant.LIFT_ENABLED, RobotConstant.ARM_ENABLED, RobotConstant.CLAW_ENABLED);
+        this(hwMap, RobotConstant.MECANUM_DRIVE_ENABLED, RobotConstant.LIFT_ENABLED, RobotConstant.ARM_ENABLED, RobotConstant.CLAW_ENABLED, RobotConstant.CAMERA_ENABLED);
     }
 }
