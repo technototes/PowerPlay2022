@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.twenty403.Controls;
 
 import org.firstinspires.ftc.twenty403.Robot;
+import org.firstinspires.ftc.twenty403.command.claw.ClawAutoCloseToggleCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftDownCommand;
@@ -16,7 +17,6 @@ import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
 import org.firstinspires.ftc.twenty403.helpers.BothButtons;
 
 import com.technototes.library.command.ConditionalCommand;
-import com.technototes.library.control.CommandAxis;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
@@ -28,9 +28,8 @@ public class ControlOperator {
 
     public Stick driveLeftStick, driveRightStick;
     public CommandButton resetGyroButton, driveStraighten, turboButton;
-    public CommandButton liftDownButton, liftUpButton, clawOpenButton, clawCloseButton, liftOverrideZeroButton;
-    public CommandButton liftGroundOrOverrideDown, liftLowOrOverrideUp, liftMedium, liftHigh, liftIntakePos;
-    public CommandAxis driveStraight;
+    public CommandButton liftDownButton, liftUpButton, clawOpenButton, clawCloseButton, liftHighOrOverrideZero;
+    public CommandButton liftGroundOrOverrideDown, liftLowOrOverrideUp, liftMediumOrToggleAutoClose, liftIntakePos;
     public BothButtons override;
 
     public ControlOperator(CommandGamepad g, Robot r) {
@@ -66,12 +65,10 @@ public class ControlOperator {
         clawOpenButton = gamepad.rightBumper;
         clawCloseButton = gamepad.leftBumper;
 
-        liftMedium = gamepad.circle;
-        liftHigh = gamepad.triangle;
-
+        liftMediumOrToggleAutoClose = gamepad.circle;
+        liftHighOrOverrideZero = gamepad.triangle;
         liftGroundOrOverrideDown = gamepad.cross;
         liftLowOrOverrideUp = gamepad.square;
-        liftOverrideZeroButton = gamepad.triangle;
 
         // TODO: Identify other controls for
     }
@@ -98,9 +95,13 @@ public class ControlOperator {
         liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
         liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
         liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));
-        liftOverrideZeroButton.whenPressed(
-                new ConditionalCommand(override, new LiftSetZeroCommand(robot.liftSubsystem)));
-
+        liftHighOrOverrideZero.whenPressed(
+                new ConditionalCommand(override, new LiftSetZeroCommand(robot.liftSubsystem),
+                        new LiftHighJunctionCommand(robot.liftSubsystem)));
+        liftMediumOrToggleAutoClose.whenPressed(new ConditionalCommand(
+                override,
+                new ClawAutoCloseToggleCommand(robot.clawSubsystem),
+                new LiftMidJunctionCommand(robot.liftSubsystem)));
         liftGroundOrOverrideDown.whenPressed(new ConditionalCommand(
                 override,
                 new LiftMoveDownOverrideCommand(robot.liftSubsystem),
@@ -109,7 +110,5 @@ public class ControlOperator {
                 override,
                 new LiftMoveUpOverrideCommand(robot.liftSubsystem),
                 new LiftLowJunctionCommand(robot.liftSubsystem)));
-        liftMedium.whenPressed(new LiftMidJunctionCommand(robot.liftSubsystem));
-        liftHigh.whenPressed(new LiftHighJunctionCommand(robot.liftSubsystem));
     }
 }
