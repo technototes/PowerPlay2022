@@ -73,7 +73,6 @@ public class Robot implements Loggable {
     public Robot(Hardware hardware){
         this(hardware, Alliance.NONE, StartingPosition.NEUTRAL);
     }
-
 }
 /*
 Robot is 12 inches

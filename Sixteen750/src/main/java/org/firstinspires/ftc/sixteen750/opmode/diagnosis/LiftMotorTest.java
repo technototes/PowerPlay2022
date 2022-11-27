@@ -7,7 +7,6 @@ import org.firstinspires.ftc.sixteen750.command.autonomous.StartingPosition;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import com.technototes.library.structure.CommandOpMode;
@@ -30,8 +29,7 @@ public class LiftMotorTest extends CommandOpMode {
 
     @Override
     public void runLoop() {
-        telemetry.addData("Left Lift Motor Encoder", robot.liftSubsystem.getLeftPos());
-        telemetry.addData("Right Lift Motor Encoder", robot.liftSubsystem.getRightPos());
-        telemetry.update();
+        // telemetry.addData("Left Lift Motor Encoder", robot.liftSubsystem.get());
+        // telemetry.update();
     }
 }

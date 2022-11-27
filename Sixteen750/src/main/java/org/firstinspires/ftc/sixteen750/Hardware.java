@@ -80,12 +80,6 @@ public class Hardware {
                 liftLeftMotor = null;
                 hardwareWarnings.add("Left Lift Motor not found");
             }
-            try {
-                liftRightMotor = new EncodedMotor<>(HardwareConstant.RIGHT_LIFT_MOTOR);
-            } catch (Exception e) {
-                liftRightMotor = null;
-                hardwareWarnings.add("Right Lift Motor not found");
-            }
         }
 
         if (enableArm) {

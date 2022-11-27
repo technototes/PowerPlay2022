@@ -13,6 +13,6 @@ public class LiftMidPoleCommand implements Command {
 
     @Override
     public void execute() {
-        liftSubsystem.gotoMidPole();
+        liftSubsystem.midPole();
     }
 }
