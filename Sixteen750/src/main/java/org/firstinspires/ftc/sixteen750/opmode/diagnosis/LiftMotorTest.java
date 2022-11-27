@@ -1,13 +1,11 @@
 package org.firstinspires.ftc.sixteen750.opmode.diagnosis;
 
 import org.firstinspires.ftc.sixteen750.ControlsDriver;
-import org.firstinspires.ftc.sixteen750.ControlsLift2;
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import com.technototes.library.structure.CommandOpMode;
@@ -16,21 +14,20 @@ import com.technototes.library.structure.CommandOpMode;
 // @SuppressWarnings("unused")
 public class LiftMotorTest extends CommandOpMode {
     public Robot robot;
-    public ControlsLift2 controls;
+    public ControlsDriver controls;
     public Hardware hardware;
 
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap, false, true, false, false);
         robot = new Robot(hardware, false, true, false, false);
-        controls = new ControlsLift2(driverGamepad, robot);
+        controls = new ControlsDriver(driverGamepad, robot);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
     @Override
     public void runLoop() {
-        telemetry.addData("Left Lift Motor Encoder", robot.liftSubsystem.getLeftPos());
-        telemetry.addData("Right Lift Motor Encoder", robot.liftSubsystem.getRightPos());
-        telemetry.update();
+        // telemetry.addData("Left Lift Motor Encoder", robot.liftSubsystem.get());
+        // telemetry.update();
     }
 }

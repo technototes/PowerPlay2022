@@ -13,6 +13,6 @@ public class LiftIntakeCommand implements Command {
 
     @Override
     public void execute() {
-        liftSubsystem.gotoGroundJunction();
+        liftSubsystem.intakePos();
     }
 }

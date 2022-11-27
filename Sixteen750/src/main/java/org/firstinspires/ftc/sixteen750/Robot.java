@@ -2,9 +2,8 @@ package org.firstinspires.ftc.sixteen750;
 
 import org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
-import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.MecanumDriveSubsystem;
-import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem2;
+import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 
 import com.acmerobotics.dashboard.config.Config;
 
@@ -15,10 +14,10 @@ public class Robot implements Loggable {
     public static class RobotConstant {
         public static boolean SWERVE_DRIVE_ENABLED = false;
         public static boolean TANK_DRIVE_ENABLED = false;
-        public static boolean MECANUM_DRIVE_ENABLED = true;
+        public static boolean MECANUM_DRIVE_ENABLED = false;
         public static boolean CLAW_ENABLED = false;
         public static boolean ARM_ENABLED = false;
-        public static boolean LIFT_ENABLED = false;
+        public static boolean LIFT_ENABLED = true;
         public static boolean LIFT_MOVE_MOTORS = true;
     }
 
@@ -26,15 +25,13 @@ public class Robot implements Loggable {
     public ArmSubsystem armSubsystem;
     public LiftSubsystem liftSubsystem;
     public MecanumDriveSubsystem mecanumDriveSubsystem;
-   // public LiftSubsystem liftSubsystem;
-    public LiftSubsystem2 liftSubsystem2;
 
     public boolean isSwerveDriveConnected = false;
     public boolean isTankDriveConnected = false;
     public boolean isMecanumDriveConnected = false;
     public boolean isClawConnected = false;
     public boolean isArmConnected = false;
-    public boolean isLiftConnected = false;
+    public boolean isLiftConnected = true;
 
     public Robot(Hardware hardware, boolean enableMecanumDrive, boolean enableLift, boolean enableArm, boolean enableClaw) {
         if (enableMecanumDrive) {
@@ -43,10 +40,9 @@ public class Robot implements Loggable {
         }
 
         if (enableLift) {
-            liftSubsystem2 = new LiftSubsystem2(hardware.liftMotor);
-            // liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, null);
+            liftSubsystem = new LiftSubsystem(hardware.liftMotor);
         } else {
-            liftSubsystem2 = new LiftSubsystem2(null);
+            liftSubsystem = new LiftSubsystem(null);
         }
 
         if (enableArm) {
