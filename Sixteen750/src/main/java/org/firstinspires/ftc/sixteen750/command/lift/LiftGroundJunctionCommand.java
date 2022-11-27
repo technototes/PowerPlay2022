@@ -13,6 +13,6 @@ public class LiftGroundJunctionCommand implements Command {
 
     @Override
     public void execute() {
-        liftSubsystem.gotoGroundJunction();
+        liftSubsystem.groundJunction();
     }
 }

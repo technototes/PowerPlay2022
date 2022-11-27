@@ -36,8 +36,7 @@ public class Hardware {
         public static String FLIPPER_SERVO = "flipperServo";
         public static String ELBOW_SERVO = "elbowServo";
         public static String CLAW_SENSOR = "clawSensor";
-        public static String LEFT_LIFT_MOTOR = "leftLiftMotor";
-        public static String RIGHT_LIFT_MOTOR = "rightLiftMotor";
+        public static String LIFT_MOTOR = "leftLiftMotor";
     }
 
     public EncodedMotor<DcMotorEx> leftFrontMotor;
@@ -46,8 +45,7 @@ public class Hardware {
     public EncodedMotor<DcMotorEx> rightRearMotor;
     public IMU imu;
 
-    public EncodedMotor<DcMotorEx> liftLeftMotor;
-    public EncodedMotor<DcMotorEx> liftRightMotor;
+    public EncodedMotor<DcMotorEx> liftMotor;
 
     public Servo clawServo;
     public Servo flipperServo;
@@ -68,16 +66,10 @@ public class Hardware {
 
         if (enableLift) {
             try {
-                liftLeftMotor = new EncodedMotor<>(HardwareConstant.LEFT_LIFT_MOTOR);
+                liftMotor = new EncodedMotor<>(HardwareConstant.LIFT_MOTOR);
             } catch (Exception e) {
-                liftLeftMotor = null;
+                liftMotor = null;
                 hardwareWarnings.add("Left Lift Motor not found");
-            }
-            try {
-                liftRightMotor = new EncodedMotor<>(HardwareConstant.RIGHT_LIFT_MOTOR);
-            } catch (Exception e) {
-                liftRightMotor = null;
-                hardwareWarnings.add("Right Lift Motor not found");
             }
         }
 
