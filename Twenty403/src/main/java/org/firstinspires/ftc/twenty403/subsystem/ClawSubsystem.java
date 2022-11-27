@@ -14,7 +14,7 @@ import com.technototes.library.util.Alliance;
 @Config
 public class ClawSubsystem implements Subsystem {
     // Correct numbers, tested
-    public static double OPEN_SERVO_POSITION = .329;
+    public static double OPEN_SERVO_POSITION = 0.3045;
     public static double CLOSE_SERVO_POSITION = .42;
 
     // # of CM distance before we auto-close the claw
@@ -33,7 +33,7 @@ public class ClawSubsystem implements Subsystem {
         sensor = s;
         alliance = a;
         isHardware = true;
-        autoClose = false;
+        autoClose = true;
     }
 
     // Non-functional subsystem constructor
