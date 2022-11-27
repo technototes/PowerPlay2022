@@ -95,9 +95,10 @@ public class ControlOperator {
         liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
         liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
         liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));
-        liftHighOrOverrideZero.whenPressed(
-                new ConditionalCommand(override, new LiftSetZeroCommand(robot.liftSubsystem),
-                        new LiftHighJunctionCommand(robot.liftSubsystem)));
+        liftHighOrOverrideZero.whenPressed(new ConditionalCommand(
+                override,
+                new LiftSetZeroCommand(robot.liftSubsystem),
+                new LiftHighJunctionCommand(robot.liftSubsystem)));
         liftMediumOrToggleAutoClose.whenPressed(new ConditionalCommand(
                 override,
                 new ClawAutoCloseToggleCommand(robot.clawSubsystem),
