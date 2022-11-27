@@ -4,15 +4,15 @@ import com.technototes.library.command.Command;
 
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 
-public class LiftIntakeCommand implements Command {
+public class LiftFloorIntakeCommand implements Command {
     public LiftSubsystem liftSubsystem;
 
-    public LiftIntakeCommand(LiftSubsystem ls) {
+    public LiftFloorIntakeCommand(LiftSubsystem ls) {
         liftSubsystem = ls;
     }
 
     @Override
     public void execute() {
-        liftSubsystem.intakePos();
+        liftSubsystem.gotoFloorIntake();
     }
 }

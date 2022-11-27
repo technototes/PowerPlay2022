@@ -12,8 +12,8 @@ import org.firstinspires.ftc.sixteen750.command.arm.ElbowServoIncrementalUpComma
 import org.firstinspires.ftc.sixteen750.command.arm.FlipperIntakePositionCommand;
 import org.firstinspires.ftc.sixteen750.command.arm.FlipperServoIncrementalDownCommand;
 import org.firstinspires.ftc.sixteen750.command.arm.FlipperServoIncrementalUpCommand;
-import org.firstinspires.ftc.sixteen750.command.lift.LiftIncrementalMoveDownCommand;
-import org.firstinspires.ftc.sixteen750.command.lift.LiftIncrementalMoveUpCommand;
+import org.firstinspires.ftc.sixteen750.command.lift.LiftMoveDownCommand;
+import org.firstinspires.ftc.sixteen750.command.lift.LiftMoveUpCommand;
 
 import com.technototes.library.control.CommandGamepad;
 
@@ -50,7 +50,7 @@ public class ControlsOperator {
     }
 
     public void bindCoDriverLiftControls() {
-        gamepad.leftBumper.whenPressed(new LiftIncrementalMoveUpCommand(robot.liftSubsystem));
-        gamepad.rightBumper.whenPressed(new LiftIncrementalMoveDownCommand(robot.liftSubsystem));
+        gamepad.leftBumper.whenPressed(new LiftMoveUpCommand(robot.liftSubsystem));
+        gamepad.rightBumper.whenPressed(new LiftMoveDownCommand(robot.liftSubsystem));
     }
 }

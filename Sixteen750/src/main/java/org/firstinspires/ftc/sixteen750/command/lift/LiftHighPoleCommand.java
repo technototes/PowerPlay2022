@@ -13,6 +13,6 @@ public class LiftHighPoleCommand implements Command {
 
     @Override
     public void execute() {
-        liftSubsystem.highPole();
+        liftSubsystem.gotoHighPole();
     }
 }
