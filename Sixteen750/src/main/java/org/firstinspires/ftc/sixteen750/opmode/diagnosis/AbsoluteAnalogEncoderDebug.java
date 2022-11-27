@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 
 import com.technototes.library.structure.CommandOpMode;
 
+@Disabled
 @TeleOp(group = "Test-Hardware")
 @SuppressWarnings("unused")
 public class AbsoluteAnalogEncoderDebug extends CommandOpMode {

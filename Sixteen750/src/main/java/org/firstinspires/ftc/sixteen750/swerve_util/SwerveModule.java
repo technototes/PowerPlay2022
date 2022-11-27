@@ -17,7 +17,7 @@ import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem.SwerveDriveConstant;
+import org.firstinspires.ftc.sixteen750.subsystem.SwerveDriveSubsystem.SwerveDriveConstant;
 
 @Config
 public class SwerveModule {

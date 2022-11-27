@@ -2,9 +2,9 @@ package org.firstinspires.ftc.sixteen750.opmode.diagnosis;
 
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.CLAW_CLOSE;
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.CLAW_OPEN;
-import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.ELBOW_INTAKE;
-import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.ELBOW_UPWARD;
-import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.FLIPPER_UPPER_NORMAL;
+import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem.ELBOW_INTAKE;
+import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem.ELBOW_UPWARD;
+import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem.FLIPPER_UPPER_NORMAL;
 
 import org.firstinspires.ftc.sixteen750.ControlsDriver;
 import org.firstinspires.ftc.sixteen750.Hardware;
@@ -19,11 +19,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.structure.CommandOpMode;
 
-@Disabled
 @Config
 @TeleOp(group = "Test-Hardware")
 @SuppressWarnings("unused")
-public class ClawServoTest extends CommandOpMode {
+public class ClawArmServoTest extends CommandOpMode {
     public Robot robot;
     public ControlsDriver controls;
     public Hardware hardware;
@@ -38,8 +37,8 @@ public class ClawServoTest extends CommandOpMode {
 
     @Override
     public void uponInit() {
-        hardware = new Hardware(hardwareMap);
-        robot = new Robot(hardware);
+        hardware = new Hardware(hardwareMap, false, false, true, true);
+        robot = new Robot(hardware, false, false, true, true);
         controls = new ControlsDriver(driverGamepad, robot);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         targetServo = hardware.elbowServo;
@@ -88,8 +87,8 @@ public class ClawServoTest extends CommandOpMode {
         }
 
         telemetry.addData("Claw Servo Position", robot.clawSubsystem.getClawPosition());
-        telemetry.addData("Flipper Servo Position", robot.clawSubsystem.getFlipperPosition());
-        telemetry.addData("Elbow Servo Position", robot.clawSubsystem.getElbowPosition());
+        telemetry.addData("Flipper Servo Position", robot.armSubsystem.getFlipperPosition());
+        telemetry.addData("Elbow Servo Position", robot.armSubsystem.getElbowPosition());
         telemetry.update();
     }
 }

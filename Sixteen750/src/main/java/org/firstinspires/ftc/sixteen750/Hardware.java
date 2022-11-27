@@ -4,11 +4,9 @@ import static org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
 
 import java.util.ArrayList;
 
-import org.firstinspires.ftc.sixteen750.swerve_util.AbsoluteAnalogEncoder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -38,22 +36,14 @@ public class Hardware {
         public static String FLIPPER_SERVO = "flipperServo";
         public static String ELBOW_SERVO = "elbowServo";
         public static String CLAW_SENSOR = "clawSensor";
-        public static String LIFT_LEFT_MOTOR = "leftLiftMotor";
-        public static String LIFT_RIGHT_MOTOR = "rightLiftMotor";
+        public static String LEFT_LIFT_MOTOR = "leftLiftMotor";
+        public static String RIGHT_LIFT_MOTOR = "rightLiftMotor";
     }
 
     public EncodedMotor<DcMotorEx> leftFrontMotor;
     public EncodedMotor<DcMotorEx> leftRearMotor;
     public EncodedMotor<DcMotorEx> rightFrontMotor;
     public EncodedMotor<DcMotorEx> rightRearMotor;
-    public CRServo leftFrontServo;
-    public CRServo leftRearServo;
-    public CRServo rightFrontServo;
-    public CRServo rightRearServo;
-    public AbsoluteAnalogEncoder leftFrontEncoder;
-    public AbsoluteAnalogEncoder leftRearEncoder;
-    public AbsoluteAnalogEncoder rightFrontEncoder;
-    public AbsoluteAnalogEncoder rightRearEncoder;
     public IMU imu;
 
     public EncodedMotor<DcMotorEx> liftLeftMotor;
@@ -66,40 +56,43 @@ public class Hardware {
 
     public ArrayList<String> hardwareWarnings = new ArrayList<>();
 
-    public Hardware(HardwareMap hwMap) {
-        if (RobotConstant.SWERVE_DRIVE_ENABLED) {
+    public Hardware(HardwareMap hwMap, boolean enableMecanum, boolean enableLift, boolean enableArm, boolean enableClaw) {
+        if (enableMecanum) {
             leftFrontMotor = new EncodedMotor<>(HardwareConstant.LF_MOTOR);
             leftRearMotor = new EncodedMotor<>(HardwareConstant.LR_MOTOR);
             rightFrontMotor = new EncodedMotor<>(HardwareConstant.RF_MOTOR);
             rightRearMotor = new EncodedMotor<>(HardwareConstant.RR_MOTOR);
 
-            leftFrontServo = hwMap.crservo.get(HardwareConstant.LF_SERVO);
-            leftRearServo = hwMap.crservo.get(HardwareConstant.LR_SERVO);
-            rightFrontServo = hwMap.crservo.get(HardwareConstant.RF_SERVO);
-            rightRearServo = hwMap.crservo.get(HardwareConstant.RR_SERVO);
-
-            leftFrontEncoder = new AbsoluteAnalogEncoder(hwMap.get(AnalogInput.class, HardwareConstant.LF_ENCODER));
-            leftRearEncoder = new AbsoluteAnalogEncoder(hwMap.get(AnalogInput.class, HardwareConstant.LR_ENCODER));
-            rightFrontEncoder = new AbsoluteAnalogEncoder(hwMap.get(AnalogInput.class, HardwareConstant.RF_ENCODER));
-            rightRearEncoder = new AbsoluteAnalogEncoder(hwMap.get(AnalogInput.class, HardwareConstant.RR_ENCODER));
-
-            //          imu = new IMU(HardwareConstant.IMU).remapAxes(AxesOrder.YXZ, IMU.AxesSigns.NNN); // TODO: figure
-            // the  axes order
-            imu = new IMU(HardwareConstant.IMU);
+            imu = new IMU(HardwareConstant.IMU).remapAxes(AxesOrder.YXZ, IMU.AxesSigns.NNN); // TODO: figure the axes order
         }
-        if (RobotConstant.CLAW_ENABLED) {
-            clawServo = new Servo(HardwareConstant.CLAW_SERVO).invert();
-            flipperServo = new Servo(HardwareConstant.FLIPPER_SERVO);
-            elbowServo = new Servo(HardwareConstant.ELBOW_SERVO).invert();
-            //          clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR); // not installed
-        }
-        if (RobotConstant.LIFT_ENABLED) {
+
+        if (enableLift) {
             try {
-                liftLeftMotor = new EncodedMotor<>(HardwareConstant.LIFT_LEFT_MOTOR);
-                liftRightMotor = new EncodedMotor<>(HardwareConstant.LIFT_RIGHT_MOTOR);
+                liftLeftMotor = new EncodedMotor<>(HardwareConstant.LEFT_LIFT_MOTOR);
             } catch (Exception e) {
-                hardwareWarnings.add("At lease one lift motors not found");
+                liftLeftMotor = null;
+                hardwareWarnings.add("Left Lift Motor not found");
+            }
+            try {
+                liftRightMotor = new EncodedMotor<>(HardwareConstant.RIGHT_LIFT_MOTOR);
+            } catch (Exception e) {
+                liftRightMotor = null;
+                hardwareWarnings.add("Right Lift Motor not found");
             }
         }
+
+        if (enableArm) {
+            flipperServo = new Servo(HardwareConstant.FLIPPER_SERVO);
+            elbowServo = new Servo(HardwareConstant.ELBOW_SERVO).invert();
+        }
+
+        if (enableClaw) {
+            clawServo = new Servo(HardwareConstant.CLAW_SERVO).invert();
+            // clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR); // not installed
+        }
+    }
+
+    public Hardware(HardwareMap hwMap) {
+        this(hwMap, RobotConstant.MECANUM_DRIVE_ENABLED, RobotConstant.LIFT_ENABLED, RobotConstant.ARM_ENABLED, RobotConstant.CLAW_ENABLED);
     }
 }

@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.sixteen750;
 
+import org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.MecanumDriveSubsystem;
 
 import com.acmerobotics.dashboard.config.Config;
 
@@ -11,35 +13,52 @@ public class Robot implements Loggable {
     @Config
     public static class RobotConstant {
         public static boolean SWERVE_DRIVE_ENABLED = false;
-        public static boolean TANK_DRIVE_ENABLED = true;
+        public static boolean TANK_DRIVE_ENABLED = false;
+        public static boolean MECANUM_DRIVE_ENABLED = true;
         public static boolean CLAW_ENABLED = false;
+        public static boolean ARM_ENABLED = false;
         public static boolean LIFT_ENABLED = false;
     }
 
     public ClawSubsystem clawSubsystem;
+    public ArmSubsystem armSubsystem;
     public LiftSubsystem liftSubsystem;
+    public MecanumDriveSubsystem mecanumDriveSubsystem;
 
     public boolean isSwerveDriveConnected = false;
     public boolean isTankDriveConnected = false;
+    public boolean isMecanumDriveConnected = false;
     public boolean isClawConnected = false;
+    public boolean isArmConnected = false;
     public boolean isLiftConnected = false;
 
-    public Robot(Hardware hardware) {
-        if (RobotConstant.SWERVE_DRIVE_ENABLED) {}
-        if (RobotConstant.TANK_DRIVE_ENABLED) {}
-
-        if (RobotConstant.CLAW_ENABLED) {
-            clawSubsystem = new ClawSubsystem(hardware.clawServo, hardware.flipperServo, hardware.elbowServo, null);
-        } else {
-            clawSubsystem = new ClawSubsystem(null, null, null, null);
+    public Robot(Hardware hardware, boolean enableMecanumDrive, boolean enableLift, boolean enableArm, boolean enableClaw) {
+        if (enableMecanumDrive) {
+            /// Don't forget to check the order of the motors
+            mecanumDriveSubsystem = new MecanumDriveSubsystem(hardware.leftFrontMotor, hardware.rightFrontMotor, hardware.leftRearMotor, hardware.rightRearMotor, hardware.imu);
         }
 
-        if (RobotConstant.LIFT_ENABLED) {
+        if (enableLift) {
             liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, hardware.liftRightMotor);
-            // liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, null);
         } else {
             liftSubsystem = new LiftSubsystem(null, null);
         }
+
+        if (enableArm) {
+            armSubsystem = new ArmSubsystem(hardware.flipperServo, hardware.elbowServo);
+        } else {
+            armSubsystem = new ArmSubsystem(null, null);
+        }
+
+        if (enableClaw) {
+            clawSubsystem = new ClawSubsystem(hardware.clawServo,null);
+        } else {
+            clawSubsystem = new ClawSubsystem(null, null);
+        }
+    }
+
+    public Robot(Hardware hardware) {
+        this(hardware, RobotConstant.MECANUM_DRIVE_ENABLED, RobotConstant.LIFT_ENABLED, RobotConstant.ARM_ENABLED, RobotConstant.CLAW_ENABLED);
     }
 }
 /*

@@ -10,17 +10,23 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.structure.CommandOpMode;
 
+import org.firstinspires.ftc.sixteen750.Hardware;
+
 @Config
 @TeleOp(group = "Test-Hardware")
 @SuppressWarnings("unused")
 public class DriveMotorTest extends CommandOpMode {
     ElapsedTime t;
 
-    EncodedMotor<DcMotorEx> leftFrontMotor, leftRearMotor, rightRearMotor, rightFrontMotor;
+    EncodedMotor<DcMotorEx> leftFrontMotor;
+    EncodedMotor<DcMotorEx> leftRearMotor;
+    EncodedMotor<DcMotorEx> rightFrontMotor;
+    EncodedMotor<DcMotorEx> rightRearMotor;
+
     boolean isLeftFrontPressed, isLeftRearPressed, isRightRearPressed, isRightFrontPressed = false;
 
-    public static double motorSpeed =
-            0.3; // 0.1 is too little, the motor trying to move but not enough to move the robot; 0.2 is slightly better
+    // 0.1 is too little, the motor trying to move but not enough to move the robot; 0.2 is slightly better
+    public static double motorSpeed = 0.3;
     public static double motorStopSpeed = 0.0;
 
     boolean isLeftSideConnected = true;
@@ -32,15 +38,15 @@ public class DriveMotorTest extends CommandOpMode {
 
         /// Note: here is using the hardware from TechnoLib
         try {
-            leftFrontMotor = new EncodedMotor<>(hardwareMap.get(DcMotorEx.class, "leftFrontMotor"));
-            leftRearMotor = new EncodedMotor<>(hardwareMap.get(DcMotorEx.class, "leftRearMotor"));
+            leftFrontMotor = new EncodedMotor<>(Hardware.HardwareConstant.LF_MOTOR);
+            leftRearMotor = new EncodedMotor<>(Hardware.HardwareConstant.LR_MOTOR);
         } catch (Exception e) {
             isLeftSideConnected = false;
         }
 
         try {
-            rightRearMotor = new EncodedMotor<>(hardwareMap.get(DcMotorEx.class, "rightRearMotor"));
-            rightFrontMotor = new EncodedMotor<>(hardwareMap.get(DcMotorEx.class, "rightFrontMotor"));
+            rightFrontMotor = new EncodedMotor<>(Hardware.HardwareConstant.RF_MOTOR);
+            rightRearMotor = new EncodedMotor<>(Hardware.HardwareConstant.RR_MOTOR);
         } catch (Exception e) {
             isRightSideConnected = false;
         }
@@ -55,33 +61,61 @@ public class DriveMotorTest extends CommandOpMode {
     public void runLoop() {
         double loopSeconds = t.seconds();
 
-        if (this.gamepad1.dpad_left && isLeftSideConnected) {
-            leftFrontMotor.setSpeed(motorSpeed);
-            isLeftFrontPressed = true;
-        } else {
-            leftFrontMotor.setSpeed(motorStopSpeed);
-            isLeftFrontPressed = false;
+//        if (this.gamepad1.dpad_left && isLeftSideConnected) {
+//            leftFrontMotor.setSpeed(motorSpeed);
+//            isLeftFrontPressed = true;
+//        } else {
+//            isLeftFrontPressed = false;
+//        }
+//        if (this.gamepad1.dpad_down && isLeftSideConnected) {
+//            leftRearMotor.setSpeed(motorSpeed);
+//            isLeftRearPressed = true;
+//        } else {
+//            isLeftRearPressed = false;
+//        }
+//        if (this.gamepad1.dpad_up && isRightSideConnected) {
+//            rightRearMotor.setSpeed(motorSpeed);
+//            isRightRearPressed = true;
+//        } else {
+//            isRightRearPressed = false;
+//        }
+//        if (this.gamepad1.dpad_right && isRightSideConnected) {
+//            rightFrontMotor.setSpeed(motorSpeed);
+//            isRightFrontPressed = true;
+//        } else {
+//            isRightFrontPressed = false;
+//        }
+        if (isLeftSideConnected){
+            if (this.gamepad1.dpad_left) {
+                leftFrontMotor.setSpeed(motorSpeed);
+                isLeftFrontPressed = true;
+            } else {
+                leftFrontMotor.setSpeed(motorStopSpeed);
+                isLeftFrontPressed = false;
+            }
+            if (this.gamepad1.dpad_down) {
+                leftRearMotor.setSpeed(motorSpeed);
+                isLeftRearPressed = true;
+            } else {
+                leftRearMotor.setSpeed(motorStopSpeed);
+                isLeftRearPressed = false;
+            }
         }
-        if (this.gamepad1.dpad_down && isLeftSideConnected) {
-            leftRearMotor.setSpeed(motorSpeed);
-            isLeftRearPressed = true;
-        } else {
-            leftRearMotor.setSpeed(motorStopSpeed);
-            isLeftRearPressed = false;
-        }
-        if (this.gamepad1.dpad_up && isRightSideConnected) {
-            rightRearMotor.setSpeed(motorSpeed);
-            isRightRearPressed = true;
-        } else {
-            rightRearMotor.setSpeed(motorStopSpeed);
-            isRightRearPressed = false;
-        }
-        if (this.gamepad1.dpad_right && isRightSideConnected) {
-            rightFrontMotor.setSpeed(motorSpeed);
-            isRightFrontPressed = true;
-        } else {
-            rightFrontMotor.setSpeed(motorStopSpeed);
-            isRightFrontPressed = false;
+        if (isRightSideConnected){
+            if (this.gamepad1.dpad_up) {
+                rightRearMotor.setSpeed(motorSpeed);
+                isRightRearPressed = true;
+            } else {
+                rightRearMotor.setSpeed(motorStopSpeed);
+                isRightRearPressed = false;
+            }
+            if (this.gamepad1.dpad_right) {
+                rightFrontMotor.setSpeed(motorSpeed);
+                isRightFrontPressed = true;
+            } else {
+                rightFrontMotor.setSpeed(motorStopSpeed);
+                isRightFrontPressed = false;
+            }
         }
 
         telemetry.addLine("Visit 192.168.43.1:8080/dash to see the FTC-Dashboard");
