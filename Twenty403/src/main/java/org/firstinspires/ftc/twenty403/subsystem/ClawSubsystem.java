@@ -81,6 +81,10 @@ public class ClawSubsystem implements Subsystem {
         return Math.abs(curPos - CLOSE_SERVO_POSITION) < Math.abs(curPos - OPEN_SERVO_POSITION);
     }
 
+    public void toggleAutoClose() {
+        autoClose = !autoClose;
+    }
+
     public Servo getServo() {
         return clawServo;
     }
