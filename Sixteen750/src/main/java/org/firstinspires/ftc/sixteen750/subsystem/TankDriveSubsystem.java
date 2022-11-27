@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.sixteen750.subsystem;
 
-import static org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem.TankDriveConstants.MAX_ANG_ACCEL;
-import static org.firstinspires.ftc.sixteen750.subsystem.TankDrivebaseSubsystem.TankDriveConstants.MOTOR_VELO_PID;
+import static org.firstinspires.ftc.sixteen750.subsystem.TankDriveSubsystem.TankDriveConstants.MAX_ANG_ACCEL;
+import static org.firstinspires.ftc.sixteen750.subsystem.TankDriveSubsystem.TankDriveConstants.MOTOR_VELO_PID;
 
 import androidx.annotation.NonNull;
 
@@ -38,7 +38,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 @Config
-public class TankDrivebaseSubsystem extends TankDrive {
+public class TankDriveSubsystem extends TankDrive {
     public static PIDCoefficients AXIAL_PID = new PIDCoefficients(0, 0, 0);
     public static PIDCoefficients CROSS_TRACK_PID = new PIDCoefficients(0, 0, 0);
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(0, 0, 0);
@@ -131,7 +131,7 @@ public class TankDrivebaseSubsystem extends TankDrive {
         }
     }
 
-    public TankDrivebaseSubsystem(
+    public TankDriveSubsystem(
             HardwareMap hardwareMap,
             DcMotorEx leftFrontMotor,
             DcMotorEx leftRearMotor,
@@ -214,7 +214,7 @@ public class TankDrivebaseSubsystem extends TankDrive {
         trajectorySequenceRunner = new TrajectorySequenceRunner(follower, HEADING_PID);
     }
 
-    public TankDrivebaseSubsystem(HardwareMap hardwareMap) {
+    public TankDriveSubsystem(HardwareMap hardwareMap) {
         this(
                 hardwareMap,
                 hardwareMap.get(DcMotorEx.class, "leftFrontMotor"),

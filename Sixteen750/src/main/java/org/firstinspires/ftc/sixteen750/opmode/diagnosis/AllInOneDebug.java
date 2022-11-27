@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.sixteen750.opmode.diagnosis;
 
-import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.SwerveDriveSubsystem;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -17,7 +17,7 @@ import com.technototes.library.structure.CommandOpMode;
 @TeleOp(group = "Test-Hardware")
 @SuppressWarnings("unused")
 public class AllInOneDebug extends CommandOpMode {
-    SwerveDrivebaseSubsystem drive;
+    SwerveDriveSubsystem drive;
 
     ElapsedTime t;
 
@@ -27,7 +27,7 @@ public class AllInOneDebug extends CommandOpMode {
 
     @Override
     public void uponInit() {
-        drive = new SwerveDrivebaseSubsystem(hardwareMap);
+        drive = new SwerveDriveSubsystem(hardwareMap);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         drive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());

@@ -42,7 +42,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-public class SwerveDrivebaseSubsystem extends SwerveDrive {
+public class SwerveDriveSubsystem extends SwerveDrive {
     public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(4, 0, 0);
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(4, 0, 0);
 
@@ -89,7 +89,7 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
     private boolean debugTelemetryEnabled = false;
     private Telemetry telemetry;
     private boolean telemetryCallUpdate = false;
-    public Function<SwerveDrivebaseSubsystem, Integer> updateCallback = null;
+    public Function<SwerveDriveSubsystem, Integer> updateCallback = null;
 
     /*
      * Constants shared between multiple drive types.
@@ -171,7 +171,7 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
         }
     }
 
-    public SwerveDrivebaseSubsystem(
+    public SwerveDriveSubsystem(
             HardwareMap hardwareMap,
             BNO055IMU imu,
             SwerveModule leftFrontSwerveModule,
@@ -263,7 +263,7 @@ public class SwerveDrivebaseSubsystem extends SwerveDrive {
         PhotonCore.experimental.setMaximumParallelCommands(MAX_PARALLEL_COMMANDS);
     }
 
-    public SwerveDrivebaseSubsystem(HardwareMap hardwareMap){
+    public SwerveDriveSubsystem(HardwareMap hardwareMap){
         // For to be compatible with the old code
         this(
                 hardwareMap,

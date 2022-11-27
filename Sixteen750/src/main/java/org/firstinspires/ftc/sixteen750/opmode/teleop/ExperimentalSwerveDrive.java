@@ -10,13 +10,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.technototes.library.structure.CommandOpMode;
 
-import org.firstinspires.ftc.sixteen750.subsystem.SwerveDrivebaseSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.SwerveDriveSubsystem;
 
-@SuppressWarnings("unused")
+@Disabled
 @TeleOp(name = "ExperimentalSwerveDrive", group = "Swerve")
+@SuppressWarnings("unused")
 public class ExperimentalSwerveDrive extends CommandOpMode {
     /// Before waitForStart()
-    SwerveDrivebaseSubsystem drive;
+    SwerveDriveSubsystem drive;
 
     ElapsedTime t;
 
@@ -25,7 +26,7 @@ public class ExperimentalSwerveDrive extends CommandOpMode {
     @Override
     public void uponInit() {
         /// Before waitForStart()
-        drive = new SwerveDrivebaseSubsystem(hardwareMap);
+        drive = new SwerveDriveSubsystem(hardwareMap);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         drive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
