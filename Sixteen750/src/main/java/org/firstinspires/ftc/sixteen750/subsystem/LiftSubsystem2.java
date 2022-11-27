@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.Range;
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.logger.Log;
-import com.acmerobotics.dashboard.config.Config;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 
@@ -17,22 +16,16 @@ import java.util.function.Supplier;
 public class LiftSubsystem2 implements Subsystem, Supplier<Double>, Loggable {
     public static double TICKS_INCH = 89;
 
-    public static double INTAKE_POSITION_LEFT = 0;
-    public static double INTAKE_POSITION_RIGHT = 0;
-    public static double GROUND_JUNCTION_LEFT = 155;
-    public static double GROUND_JUNCTION_RIGHT = 155;
-    public static double LOW_JUNCTION_LEFT = 1280;
-    public static double LOW_JUNCTION_RIGHT = 1280;
-    public static double MEDIUM_JUNCTION_LEFT = 2230;
-    public static double MEDIUM_JUNCTION_RIGHT = 2230;
-    public static double HIGH_JUNCTION_LEFT = 3200;
-    public static double HIGH_JUNCTION_RIGHT = 3200;
+    public static double INTAKE_POSITION_LIFT = 0;
+    public static double GROUND_JUNCTION_LIFT = 155;
+    public static double LOW_JUNCTION_LIFT = 1280;
+    public static double MEDIUM_JUNCTION_LIFT = 2230;
+    public static double HIGH_JUNCTION_LIFT = 3200;
     public static double MAX_HEIGHT = 3400;
     public static double MIN_HEIGHT = 0;
 
     // Don't change these: They're used for user-redefining the 'zero' location during gameplay
-    public static double ACTUAL_ZERO_LEFT = 0;
-    public static double ACTUAL_ZERO_RIGHT = 0;
+    public static double ACTUAL_ZERO_LIFT = 0;
 
     // TODO: THESE VALUES ARE PROBABLY WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
     public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH;
@@ -44,52 +37,33 @@ public class LiftSubsystem2 implements Subsystem, Supplier<Double>, Loggable {
     // This is used to hopefully counteract gravity...
     public static double DOWNWARD_SCALE_FACTOR = 0.65;
 
-    public static double MOVE_LEFT = 1.50 * TICKS_INCH;
-    public static double MOVE_RIGHT = 1.50 * TICKS_INCH;
+    public static double MOVE_LIFT = 1.50 * TICKS_INCH;
     public static double CONE_HEIGHT_DIFFERENCE = .9 * TICKS_INCH;
 
     public static PIDCoefficients PID =
             new PIDCoefficients(0.0048, 0.0, 0);
 
-    private EncodedMotor<DcMotorEx> _leftMotor;
-    private EncodedMotor<DcMotorEx> _rightMotor;
+    private EncodedMotor<DcMotorEx> _liftMotor;
 
-    private PIDFController leftPidController;
-    private PIDFController rightPidController;
+    private PIDFController liftPidController;
     private int coneNumber = 5;
 
-    // True if we only have *one* motor connected
-    private boolean singleMotor;
     // True if we actually have hardware attached
     private boolean isHardware;
 
     private double voltage;
 
-    private void init(EncodedMotor<DcMotorEx> lm, EncodedMotor<DcMotorEx> rm, double volts) {
+    private void init(EncodedMotor<DcMotorEx> lm, double volts) {
         voltage = volts;
-        _leftMotor = lm;
-        _rightMotor = rm;
+        _liftMotor = lm;
         PIDCoefficients pid = new PIDCoefficients(PID.kP, PID.kI, PID.kD);
-        rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
-        leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
+        liftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
         setNewZero();
-    }
-    // For the left side, positive is *down*
-    // For the right side, positive is *up*
-    public LiftSubsystem2(EncodedMotor<DcMotorEx> lm, EncodedMotor<DcMotorEx> rm, double volts) {
-        isHardware = true;
-        singleMotor = false;
-        init(lm, rm, volts);
-    }
-
-    public LiftSubsystem2(EncodedMotor<DcMotorEx> lm, EncodedMotor<DcMotorEx> rm) {
-        this(lm, rm, 0);
     }
 
     public LiftSubsystem2(EncodedMotor<DcMotorEx> oneMotor, double volts) {
         isHardware = true;
-        singleMotor = true;
-        init(oneMotor, null, volts);
+        init(oneMotor, volts);
     }
 
     public LiftSubsystem2(EncodedMotor<DcMotorEx> oneMotor) {
@@ -98,8 +72,7 @@ public class LiftSubsystem2 implements Subsystem, Supplier<Double>, Loggable {
 
     public LiftSubsystem2() {
         isHardware = false;
-        singleMotor = false;
-        init(null, null, 0);
+        init(null, 0);
     }
 
     private void setLiftPosition(double lval) {
@@ -108,63 +81,53 @@ public class LiftSubsystem2 implements Subsystem, Supplier<Double>, Loggable {
     }
 
     private void setLiftPosition_OVERRIDE(double lpos) {
-        leftPidController.setTargetPosition(lpos);
-        lpAndActual = String.format("%d (%d)", (int) lpos, (int) getLeftPos());
+        liftPidController.setTargetPosition(lpos);
+        lpAndActual = String.format("%d (%d)", (int) lpos, (int) getPos());
     }
 
     // This is run for every loop (Feature of the TechnoLib Subsystem!)
     // So you can just call "setTop" in a command and it will get there "as soon as it can"
     @Override
     public void periodic() {
-        double ltargetSpeed = leftPidController.update(getLeftPos());
+        double ltargetSpeed = liftPidController.update(getPos());
         double lclippedSpeed = Range.clip(ltargetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
-        double rtargetSpeed = rightPidController.update(getRightPos());
-        double rclippedSpeed = Range.clip(rtargetSpeed, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED);
 
-        //        double leftError = Math.abs(leftPidController.getTargetPosition() - getLeftPos());
-        //        double rightError = Math.abs(rightPidController.getTargetPosition() - getRightPos());
-        //        if (leftError > DEAD_ZONE || rightError > DEAD_ZONE) {
-        //        }
-        setMotorPower(lclippedSpeed, rclippedSpeed);
-        setLiftPosition_OVERRIDE(leftPidController.getTargetPosition());
+        // double liftError = Math.abs(liftPidController.getTargetPosition() - getPosition());
+        // if (liftError > DEAD_ZONE) {
+        //     return; // Good idea?
+        // }
+        setMotorPower(lclippedSpeed);
+        setLiftPosition_OVERRIDE(liftPidController.getTargetPosition());
     }
 
     /* Stuff for Logging */
 
-    @Log(name = "lEncMotor Pos (Actual)")
+    @Log(name = "lift EncMotor Pos (Actual)")
     public volatile String lpAndActual = "(unknown)";
 
-    @Log(name = "rEncMotor Pos (Actual)")
-    public volatile String rpAndActual = "(unknown)";
-
-    @Log(name = "lMotor Power")
+    @Log(name = "lift Motor Power")
     public volatile String lMotorPower = "n/a";
-
-    @Log(name = "rMotor Power")
-    public volatile String rMotorPower = "n/a";
 
     @Override
     public Double get() {
         // Not sure about this one: it's just for displaying things, so this is probably fine:
-        return getLeftPos();
+        return getPos();
     }
 
     public boolean canAutoClose() {
-        return Math.abs(getLeftPos() - INTAKE_POSITION_LEFT) < DEAD_ZONE;
+        return Math.abs(getPos() - INTAKE_POSITION_LIFT) < DEAD_ZONE;
     }
 
     /* Subsystem command functions */
 
     public void stop() {
         // By resetting the pidController, it stops the periodic function from making changes
-        leftPidController.reset();
-        rightPidController.reset();
+        liftPidController.reset();
     }
 
     public void halt() {
         // Just set the target position to the current position to get the motor to stop, yes?
-        leftPidController.setTargetPosition(getLeftPos());
-        rightPidController.setTargetPosition(getRightPos());
+        liftPidController.setTargetPosition(getPos());
     }
 
     public double changeCollectHeight() {
@@ -178,51 +141,49 @@ public class LiftSubsystem2 implements Subsystem, Supplier<Double>, Loggable {
     }
 
     public void highPole() {
-        setLiftPosition(HIGH_JUNCTION_LEFT);
+        setLiftPosition(HIGH_JUNCTION_LIFT);
     }
 
     public void midPole() {
-        setLiftPosition(MEDIUM_JUNCTION_LEFT);
+        setLiftPosition(MEDIUM_JUNCTION_LIFT);
     }
 
     public void lowPole() {
-        setLiftPosition(LOW_JUNCTION_LEFT);
+        setLiftPosition(LOW_JUNCTION_LIFT);
     }
 
     public void groundJunction() {
-        setLiftPosition(GROUND_JUNCTION_LEFT);
+        setLiftPosition(GROUND_JUNCTION_LIFT);
     }
 
     public void intakePos() {
-        setLiftPosition(INTAKE_POSITION_LEFT);
+        setLiftPosition(INTAKE_POSITION_LIFT);
     }
 
     public void moveUp() {
         // maybe getCurrentPosition instead of getTargetPosition
-        double lposition = leftPidController.getTargetPosition();
+        double lposition = liftPidController.getTargetPosition();
 
-        setLiftPosition(lposition + MOVE_LEFT);
+        setLiftPosition(lposition + MOVE_LIFT);
     }
 
     public void moveDown() {
         // maybe getCurrentPosition instead of getTargetPosition
-        double lposition = leftPidController.getTargetPosition();
+        double lposition = liftPidController.getTargetPosition();
 
-        setLiftPosition(lposition - MOVE_LEFT);
+        setLiftPosition(lposition - MOVE_LIFT);
     }
 
     public void moveUp_OVERRIDE() {
         // maybe getCurrentPosition instead of getTargetPosition
-        double lposition = leftPidController.getTargetPosition();
-        double rposition = rightPidController.getTargetPosition();
-        setLiftPosition_OVERRIDE(lposition + MOVE_LEFT);
+        double lposition = liftPidController.getTargetPosition();
+        setLiftPosition_OVERRIDE(lposition + MOVE_LIFT);
     }
 
     public void moveDown_OVERRIDE() {
         // maybe getCurrentPosition instead of getTargetPosition
-        double lposition = leftPidController.getTargetPosition();
-        double rposition = rightPidController.getTargetPosition();
-        setLiftPosition_OVERRIDE(lposition - MOVE_LEFT);
+        double lposition = liftPidController.getTargetPosition();
+        setLiftPosition_OVERRIDE(lposition - MOVE_LIFT);
     }
 
     /*
@@ -232,53 +193,33 @@ public class LiftSubsystem2 implements Subsystem, Supplier<Double>, Loggable {
      * (See the motor power negating in setMotorPower and the encoder negating in getLeftPos)
      */
 
-    private void setMotorPower(double lp, double rp) {
+    private void setMotorPower(double lp) {
         // Add scaling if we're driving *downward*
         if (lp < 0) {
             lp = lp * DOWNWARD_SCALE_FACTOR;
         }
-        if (rp < 0) {
-            rp = rp * DOWNWARD_SCALE_FACTOR;
-        }
         if (isHardware && Robot.RobotConstant.LIFT_MOVE_MOTORS) {
             // Invert the speed here
-            _leftMotor.setSpeed(-lp);
-            if (!singleMotor) {
-                _rightMotor.setSpeed(rp);
-            }
+            _liftMotor.setSpeed(-lp);
         }
         lMotorPower = String.format("Power assigned: %f", lp);
-        rMotorPower = String.format("Power assigned: %f", rp);
     }
 
     public void setNewZero() {
         if (!isHardware) {
             return;
         }
-        double curLeft = leftPidController.getTargetPosition();
-        ACTUAL_ZERO_LEFT = _leftMotor.get();
-        leftPidController.setTargetPosition(curLeft + ACTUAL_ZERO_LEFT);
-        if (singleMotor) {
-            return;
-        }
-        double curRight = rightPidController.getTargetPosition();
-        ACTUAL_ZERO_RIGHT = _rightMotor.get();
-        rightPidController.setTargetPosition(curRight - ACTUAL_ZERO_RIGHT);
+        double curLeft = liftPidController.getTargetPosition();
+        ACTUAL_ZERO_LIFT = _liftMotor.get();
+        liftPidController.setTargetPosition(curLeft + ACTUAL_ZERO_LIFT);
     }
 
-    private double getLeftPos() {
+    private double getPos() {
         if (!isHardware) {
             return 0;
         }
         // Invert the sign on this one to make it look like it's rotating the same way...
-        return -(_leftMotor.get() - ACTUAL_ZERO_LEFT);
-    }
-
-    private double getRightPos() {
-        if (!isHardware || singleMotor) {
-            return 0;
-        }
-        return _rightMotor.get() - ACTUAL_ZERO_RIGHT;
+        return -(_liftMotor.get() - ACTUAL_ZERO_LIFT);
     }
 }
 
