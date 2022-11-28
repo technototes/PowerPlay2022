@@ -18,9 +18,9 @@ public class Robot implements Loggable {
         public static boolean SWERVE_DRIVE_ENABLED = false;
         public static boolean TANK_DRIVE_ENABLED = false;
         public static boolean MECANUM_DRIVE_ENABLED = true;
-        public static boolean CLAW_ENABLED = false;
-        public static boolean ARM_ENABLED = false;
-        public static boolean LIFT_ENABLED = false;
+        public static boolean CLAW_ENABLED = true;
+        public static boolean ARM_ENABLED = true;
+        public static boolean LIFT_ENABLED = true;
         public static boolean CAMERA_ENABLED = true;
     }
 

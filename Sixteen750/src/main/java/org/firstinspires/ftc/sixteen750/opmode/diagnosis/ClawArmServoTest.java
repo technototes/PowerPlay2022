@@ -5,7 +5,6 @@ import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem._ELBOW_UPW
 import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem._ELBOW_INTAKE;
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.CLAW_CLOSE;
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.CLAW_OPEN;
-import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem.FLIPPER_UPPER_NORMAL;
 
 import org.firstinspires.ftc.sixteen750.ControlsDriver;
 import org.firstinspires.ftc.sixteen750.Hardware;
@@ -79,10 +78,6 @@ public class ClawArmServoTest extends CommandOpMode {
             hardware.flipperServo.setPosition(1);
         } else if (gamepad2.circle) {
             hardware.flipperServo.setPosition(0);
-        } else if (gamepad2.triangle) {
-            hardware.flipperServo.setPosition(FLIPPER_UPPER_NORMAL);
-        } else if (gamepad2.x) {
-
         }
 
         telemetry.addData("Claw Servo Position", robot.clawSubsystem.getClawPosition());

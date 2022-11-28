@@ -1,19 +1,19 @@
 package org.firstinspires.ftc.sixteen750.command.arm;
 
-import org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem;
-
 import com.technototes.library.command.Command;
 
-public class FlipperIntakePositionCommand implements Command {
+import org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem;
+
+public class ElbowScoreCommand implements Command {
     private ArmSubsystem armSubsystem;
 
-    public FlipperIntakePositionCommand(ArmSubsystem s) {
+    public ElbowScoreCommand(ArmSubsystem s) {
         this.armSubsystem = s;
         addRequirements(this.armSubsystem);
     }
 
     @Override
     public void execute() {
-        this.armSubsystem.flipperIntake();
+        this.armSubsystem.elbowScore();
     }
 }

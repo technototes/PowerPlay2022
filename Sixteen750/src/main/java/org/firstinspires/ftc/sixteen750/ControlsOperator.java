@@ -2,14 +2,10 @@ package org.firstinspires.ftc.sixteen750;
 
 import org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
 import org.firstinspires.ftc.sixteen750.command.ResetCommandSchedulerCommand;
-import org.firstinspires.ftc.sixteen750.command.arm.ArmRetractCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
-import org.firstinspires.ftc.sixteen750.command.compound.ClawArmReadyToIntakeGroundCommandGroup;
-import org.firstinspires.ftc.sixteen750.command.compound.ArmScoreMidJunctionCommandGroup;
 import org.firstinspires.ftc.sixteen750.command.arm.ElbowServoIncrementalDownCommand;
 import org.firstinspires.ftc.sixteen750.command.arm.ElbowServoIncrementalUpCommand;
-import org.firstinspires.ftc.sixteen750.command.arm.FlipperIntakePositionCommand;
 import org.firstinspires.ftc.sixteen750.command.arm.FlipperServoIncrementalDownCommand;
 import org.firstinspires.ftc.sixteen750.command.arm.FlipperServoIncrementalUpCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftMoveDownCommand;
@@ -38,10 +34,6 @@ public class ControlsOperator {
     public void bindCoDriverClawControls() {
         gamepad.rightTrigger.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
         gamepad.leftTrigger.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
-        gamepad.triangle.whenPressed(new ArmRetractCommand(robot.armSubsystem));
-        gamepad.square.whenPressed(new ClawArmReadyToIntakeGroundCommandGroup(robot.armSubsystem, robot.clawSubsystem));
-        gamepad.circle.whenPressed(new ArmScoreMidJunctionCommandGroup(robot.armSubsystem));
-        gamepad.x.whenPressed(new FlipperIntakePositionCommand(robot.armSubsystem));
 
         gamepad.dpadLeft.whenPressed(new FlipperServoIncrementalDownCommand(robot.armSubsystem));
         gamepad.dpadRight.whenPressed(new FlipperServoIncrementalUpCommand(robot.armSubsystem));
