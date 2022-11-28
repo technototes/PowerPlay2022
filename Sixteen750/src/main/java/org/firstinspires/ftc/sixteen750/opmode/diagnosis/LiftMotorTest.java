@@ -21,7 +21,7 @@ public class LiftMotorTest extends CommandOpMode {
 
     @Override
     public void uponInit() {
-        hardware = new Hardware(hardwareMap, false, true, false, false, false);
+        hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.LIFT_ONLY);
         robot = new Robot(hardware, Robot.SubsystemCombo.LIFT_ONLY, Alliance.NONE, StartingPosition.NEUTRAL);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }

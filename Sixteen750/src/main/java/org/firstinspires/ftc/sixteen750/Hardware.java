@@ -96,7 +96,13 @@ public class Hardware {
         }
     }
 
-    public Hardware(HardwareMap hwMap) {
-        this(hwMap, RobotConstant.MECANUM_DRIVE_ENABLED, RobotConstant.LIFT_ENABLED, RobotConstant.ARM_ENABLED, RobotConstant.CLAW_ENABLED, RobotConstant.CAMERA_ENABLED);
+    public Hardware(HardwareMap hwMap, Robot.SubsystemCombo type) {
+        this(hwMap,
+                type == Robot.SubsystemCombo.DEFAULT ? RobotConstant.MECANUM_DRIVE_ENABLED : type == Robot.SubsystemCombo.DRIVE_ONLY || type == Robot.SubsystemCombo.VISION_DRIVE,
+                type == Robot.SubsystemCombo.DEFAULT ? RobotConstant.LIFT_ENABLED : type == Robot.SubsystemCombo.LIFT_ONLY,
+                type == Robot.SubsystemCombo.DEFAULT ? RobotConstant.ARM_ENABLED : type == Robot.SubsystemCombo.ARM_CLAW_ONLY,
+                type == Robot.SubsystemCombo.DEFAULT ? RobotConstant.CLAW_ENABLED : type == Robot.SubsystemCombo.ARM_CLAW_ONLY,
+                type == Robot.SubsystemCombo.DEFAULT ? RobotConstant.CAMERA_ENABLED : type == Robot.SubsystemCombo.VISION_ONLY || type == Robot.SubsystemCombo.VISION_DRIVE
+        );
     }
 }

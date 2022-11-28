@@ -25,8 +25,8 @@ public class RegularMecanumDrive extends CommandOpMode {
 
     @Override
     public void uponInit() {
-        hardware = new Hardware(hardwareMap);
-        robot = new Robot(hardware, Alliance.NONE, StartingPosition.NEUTRAL);
+        hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DEFAULT);
+        robot = new Robot(hardware, Robot.SubsystemCombo.DEFAULT, Alliance.NONE, StartingPosition.NEUTRAL);
         driverControls = new ControlsDriver(driverGamepad, robot);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }

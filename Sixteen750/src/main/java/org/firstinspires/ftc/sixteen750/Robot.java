@@ -31,7 +31,6 @@ public class Robot implements Loggable {
     public MecanumDriveSubsystem mecanumDriveSubsystem;
     public VisionSubsystem visionSubsystem;
 
-    // T
     public Robot(Hardware hardware, boolean enableMecanumDrive, boolean enableLift, boolean enableArm, boolean enableClaw, boolean enableCamera, Alliance alliance, StartingPosition whichSide) {
         if (enableMecanumDrive) {
             /// Don't forget to check the order of the motors
@@ -60,28 +59,22 @@ public class Robot implements Loggable {
         }
     }
 
-    public Robot(Hardware hardware, Alliance team, StartingPosition whichSide) {
-        this(hardware, RobotConstant.MECANUM_DRIVE_ENABLED, RobotConstant.LIFT_ENABLED, RobotConstant.ARM_ENABLED, RobotConstant.CLAW_ENABLED, RobotConstant.CAMERA_ENABLED, team, whichSide);
-    }
-
-    public Robot(Hardware hardware){
-        this(hardware, Alliance.NONE, StartingPosition.NEUTRAL);
-    }
-
     public enum SubsystemCombo {
+        DEFAULT,
         DRIVE_ONLY,
         LIFT_ONLY,
         ARM_CLAW_ONLY,
         VISION_ONLY,
+        VISION_DRIVE,
     }
 
     public Robot(Hardware hardware, SubsystemCombo type, Alliance team, StartingPosition whichSide){
         this(hardware,
-                type == SubsystemCombo.DRIVE_ONLY,
-                type == SubsystemCombo.LIFT_ONLY,
-                type == SubsystemCombo.ARM_CLAW_ONLY,
-                type == SubsystemCombo.ARM_CLAW_ONLY,
-                type == SubsystemCombo.VISION_ONLY,
+                type == SubsystemCombo.DEFAULT ? RobotConstant.MECANUM_DRIVE_ENABLED : type == SubsystemCombo.DRIVE_ONLY || type == SubsystemCombo.VISION_DRIVE,
+                type == SubsystemCombo.DEFAULT ? RobotConstant.LIFT_ENABLED : type == SubsystemCombo.LIFT_ONLY,
+                type == SubsystemCombo.DEFAULT ? RobotConstant.ARM_ENABLED : type == SubsystemCombo.ARM_CLAW_ONLY,
+                type == SubsystemCombo.DEFAULT ? RobotConstant.CLAW_ENABLED : type == SubsystemCombo.ARM_CLAW_ONLY,
+                type == SubsystemCombo.DEFAULT ? RobotConstant.CAMERA_ENABLED : type == SubsystemCombo.VISION_ONLY || type == SubsystemCombo.VISION_DRIVE,
                 team,
                 whichSide
         );

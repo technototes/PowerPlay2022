@@ -20,8 +20,8 @@ public class RightJustPark extends CommandOpMode {
 
     @Override
     public void uponInit() {
-        hardware = new Hardware(hardwareMap);
-        robot = new Robot(hardware, Alliance.BLUE, StartingPosition.HOME);
+        hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.VISION_DRIVE);
+        robot = new Robot(hardware, Robot.SubsystemCombo.VISION_DRIVE, Alliance.BLUE, StartingPosition.HOME);
         robot.mecanumDriveSubsystem.setPoseEstimate(AutoConstantsBlue.Home.START.toPose());
         CommandScheduler.getInstance()
                 .scheduleForState(
