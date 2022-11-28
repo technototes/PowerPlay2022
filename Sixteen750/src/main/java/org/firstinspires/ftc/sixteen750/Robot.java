@@ -67,6 +67,25 @@ public class Robot implements Loggable {
     public Robot(Hardware hardware){
         this(hardware, Alliance.NONE, StartingPosition.NEUTRAL);
     }
+
+    public enum SubsystemCombo {
+        DRIVE_ONLY,
+        LIFT_ONLY,
+        ARM_CLAW_ONLY,
+        VISION_ONLY,
+    }
+
+    public Robot(Hardware hardware, SubsystemCombo type, Alliance team, StartingPosition whichSide){
+        this(hardware,
+                type == SubsystemCombo.DRIVE_ONLY,
+                type == SubsystemCombo.LIFT_ONLY,
+                type == SubsystemCombo.ARM_CLAW_ONLY,
+                type == SubsystemCombo.ARM_CLAW_ONLY,
+                type == SubsystemCombo.VISION_ONLY,
+                team,
+                whichSide
+        );
+    }
 }
 /*
 Robot is 12 inches

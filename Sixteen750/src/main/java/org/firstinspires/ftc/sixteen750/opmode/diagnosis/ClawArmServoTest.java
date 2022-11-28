@@ -42,7 +42,7 @@ public class ClawArmServoTest extends CommandOpMode {
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap, false, false, true, true, false);
-        robot = new Robot(hardware, false, false, true, true, false, Alliance.NONE, StartingPosition.NEUTRAL);
+        robot = new Robot(hardware, Robot.SubsystemCombo.ARM_CLAW_ONLY, Alliance.NONE, StartingPosition.NEUTRAL);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         targetServo = hardware.flipperServo;
     }
