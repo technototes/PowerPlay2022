@@ -50,8 +50,8 @@ public class Hardware {
     public EncodedMotor<DcMotorEx> rightRearMotor;
     public IMU imu;
 
-    public EncodedMotor<DcMotorEx> liftLeftMotor;
-    public EncodedMotor<DcMotorEx> liftRightMotor;
+    public EncodedMotor<DcMotorEx> leftLiftMotor;
+    public EncodedMotor<DcMotorEx> rightLiftMotor;
 
     public Servo clawServo;
     public Servo flipperServo;
@@ -75,9 +75,9 @@ public class Hardware {
 
         if (enableLift) {
             try {
-                liftLeftMotor = new EncodedMotor<>(HardwareConstant.LEFT_LIFT_MOTOR);
+                leftLiftMotor = new EncodedMotor<>(HardwareConstant.LEFT_LIFT_MOTOR);
             } catch (Exception e) {
-                liftLeftMotor = null;
+                leftLiftMotor = null;
                 hardwareWarnings.add("Left Lift Motor not found");
             }
         }

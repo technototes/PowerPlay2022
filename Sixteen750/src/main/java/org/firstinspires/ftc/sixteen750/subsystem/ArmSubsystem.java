@@ -27,7 +27,12 @@ public class ArmSubsystem implements Subsystem {
     public static double ELBOW_RANGE_MAX = 0.9;
     public static double ELBOW_UPWARD = 0.9; // Verified
     public static double ELBOW_INTAKE = 0.2; // Verified
-    public static double ELBOW_SCORE_MID = 0.9; // Verifie
+    public static double ELBOW_SCORE_MID = 0.9; // Verified
+
+    // new value
+    public static double _ELBOW_INTAKE = 0.875;
+    public static double _ELBOW_UPWARD = 0.6;
+    public static double _ELBOW_SCORE = 0.1;
 
 
     public ArmSubsystem(Servo flipperServo, Servo elbowServo){

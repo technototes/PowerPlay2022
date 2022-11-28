@@ -17,17 +17,16 @@ import com.technototes.library.subsystem.Subsystem;
 public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     // Assuming the 0 position for both lift motor might be different
     // The LiftSubsystem should be able to any of the motor combination
-    // TODO: THESE VALUES ARE ALL WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
-    public static double TICKS_INCH = 750; // WRONG,
+    public static double TICKS_PER_INCH = 136;
     public static double L_INTAKE_FLOOR;
     public static double R_INTAKE_FLOOR;
-    public static double L_GROUND_JUNCTION = 0.5 * TICKS_INCH; // WRONG
+    public static double L_GROUND_JUNCTION = 1.75 * TICKS_PER_INCH;
     public static double R_GROUND_JUNCTION;
-    public static double L_LOW_JUNCTION = 12 * TICKS_INCH; // WRONG
+    public static double L_LOW_JUNCTION = 12 * TICKS_PER_INCH;
     public static double R_LOW_JUNCTION;
-    public static double L_MEDIUM_JUNCTION = 24 * TICKS_INCH; // WRONG
+    public static double L_MEDIUM_JUNCTION = 25 * TICKS_PER_INCH;
     public static double R_MEDIUM_JUNCTION;
-    public static double L_HIGH_JUNCTION = 36 * TICKS_INCH; // WRONG
+    public static double L_HIGH_JUNCTION = 38 * TICKS_PER_INCH;
     public static double R_HIGH_JUNCTION;
     public static double L_ABSOLUTE_MIN_HEIGHT = 10;
     public static double L_ABSOLUTE_MAX_HEIGHT = 1456;
@@ -41,9 +40,17 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double R_REGULAR_MOVE;
     public static double L_TINY_MOVE = 5; // When close to the upper limit
     public static double R_TINY_MOVE;
-    public static PIDCoefficients L_PID = new PIDCoefficients(0.008, 0, 0.0005); // Unverified
-    public static PIDCoefficients R_PID = new PIDCoefficients(0.008, 0, 0.0005); // Unverified
-    public static double TOLERANCE_ZONE = 2; // Unverified
+
+    // Don't change these: They're used for user-redefining the 'zero' location during gameplay
+    public static double L_ACTUAL_ZERO = 0;
+    public static double R_ACTUAL_ZERO;
+
+    public static PIDCoefficients L_PID = new PIDCoefficients(0.0048, 0, 0);
+    public static PIDCoefficients R_PID = new PIDCoefficients(0.0048, 0, 0);
+    public static double TOLERANCE_ZONE = 0.9 * TICKS_PER_INCH;
+
+    public static double CONE_HEIGHT_DIFFERENCE = .9 * TICKS_PER_INCH;
+    private int currentConeNumber = 5;
 
     private EncodedMotor<DcMotorEx> leftMotor;
     private PIDFController leftPidController;
@@ -53,7 +60,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     private PIDFController rightPidController;
     private final boolean isRightConnected;
 
-    public LiftSubsystem(EncodedMotor<DcMotorEx> leftM, EncodedMotor<DcMotorEx> rightM) {
+    public LiftSubsystem(EncodedMotor<DcMotorEx> leftM, EncodedMotor<DcMotorEx> rightM, Supplier<Double> voltageGetter) {
         if (leftM != null) {
             this.leftMotor = leftM;
             this.leftPidController = new PIDFController(L_PID, 0, 0, 0, (x, y) -> 0.1);
@@ -69,6 +76,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         } else {
             this.isRightConnected = false;
         }
+    }
+
+    public LiftSubsystem(EncodedMotor<DcMotorEx> leftM, EncodedMotor<DcMotorEx> rightM) {
+        this(leftM, rightM, () -> 12.0);
     }
 
     private void setTargetPosition(double lPos, double rPos) {
@@ -174,6 +185,15 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
         if (isRightConnected) {
             rightPidController.setTargetPosition(this.getRightPos());
+        }
+    }
+
+    private void setNewZero(){
+        if (isLeftConnected) {
+            L_ACTUAL_ZERO = leftMotor.get();
+        }
+        if (isRightConnected) {
+            R_ACTUAL_ZERO = rightMotor.get();
         }
     }
 

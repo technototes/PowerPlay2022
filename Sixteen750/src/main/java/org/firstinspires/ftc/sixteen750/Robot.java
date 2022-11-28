@@ -30,14 +30,7 @@ public class Robot implements Loggable {
     public MecanumDriveSubsystem mecanumDriveSubsystem;
     public VisionSubsystem visionSubsystem;
 
-    public boolean isSwerveDriveConnected = false;
-    public boolean isTankDriveConnected = false;
-    public boolean isMecanumDriveConnected = false;
-    public boolean isClawConnected = false;
-    public boolean isArmConnected = false;
-    public boolean isLiftConnected = false;
-    public boolean isCameraConnected = false;
-
+    // T
     public Robot(Hardware hardware, boolean enableMecanumDrive, boolean enableLift, boolean enableArm, boolean enableClaw, boolean enableCamera, Alliance alliance, StartingPosition whichSide) {
         if (enableMecanumDrive) {
             /// Don't forget to check the order of the motors
@@ -45,7 +38,7 @@ public class Robot implements Loggable {
         }
 
         if (enableLift) {
-            liftSubsystem = new LiftSubsystem(hardware.liftLeftMotor, hardware.liftRightMotor);
+            liftSubsystem = new LiftSubsystem(hardware.leftLiftMotor, hardware.rightLiftMotor);
         } else {
             liftSubsystem = new LiftSubsystem(null, null);
         }
