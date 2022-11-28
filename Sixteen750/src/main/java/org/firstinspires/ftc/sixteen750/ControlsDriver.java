@@ -4,6 +4,9 @@ import org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
 import org.firstinspires.ftc.sixteen750.command.ResetCommandSchedulerCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
+import org.firstinspires.ftc.sixteen750.command.compound.ArmIntakeCommand;
+import org.firstinspires.ftc.sixteen750.command.compound.ArmScoreCommand;
+import org.firstinspires.ftc.sixteen750.command.compound.ArmUpwardCommand;
 import org.firstinspires.ftc.sixteen750.command.drive.MecanumDriveCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftGroundJunctionCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftHighPoleCommand;
@@ -27,11 +30,14 @@ public class ControlsDriver {
         if (RobotConstant.MECANUM_DRIVE_ENABLED) {
             bindMecanumDriveControls();
         }
-        if (RobotConstant.CLAW_ENABLED) {
-            bindDriverClawControls();
-        }
         if (RobotConstant.LIFT_ENABLED) {
             bindDriverLiftControls();
+        }
+        if (RobotConstant.ARM_ENABLED) {
+            bindDriverArmControls();
+        }
+        if (RobotConstant.CLAW_ENABLED) {
+            bindDriverClawControls();
         }
 
         gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand(gamepad));
@@ -48,6 +54,12 @@ public class ControlsDriver {
     public void bindDriverClawControls() {
         gamepad.leftTrigger.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
         gamepad.rightTrigger.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
+    }
+
+    public void bindDriverArmControls() {
+        gamepad.square.whenPressed(new ArmScoreCommand(robot.armSubsystem));
+        gamepad.triangle.whenPressed(new ArmUpwardCommand(robot.armSubsystem));
+        gamepad.circle.whenPressed(new ArmIntakeCommand(robot.armSubsystem));
     }
 
     public void bindDriverLiftControls() {
