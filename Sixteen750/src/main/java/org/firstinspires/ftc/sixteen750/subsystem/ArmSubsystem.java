@@ -34,6 +34,11 @@ public class ArmSubsystem implements Subsystem {
     public static double _ELBOW_UPWARD = 0.6;
     public static double _ELBOW_SCORE = 0.1;
 
+    public static double _ELBOW_INTAKE_FLIPPER = 0.55;
+    public static double _ELBOW_UPWARD_FLIPPER = 0.6;
+    public static double _ELBOW_SCORE_FLIPPER = 1;
+
+
 
     public ArmSubsystem(Servo flipperServo, Servo elbowServo){
         this.flipperServo = flipperServo;
