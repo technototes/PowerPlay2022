@@ -23,23 +23,23 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     private static double R_INTAKE_FLOOR;
     public static double L_GROUND_JUNCTION = 1.75 * TICKS_PER_INCH;
     private static double R_GROUND_JUNCTION;
-    public static double L_LOW_JUNCTION = 12 * TICKS_PER_INCH;
+    public static double L_LOW_JUNCTION = 14.5 * TICKS_PER_INCH;
     private static double R_LOW_JUNCTION;
     public static double L_MEDIUM_JUNCTION = 25 * TICKS_PER_INCH;
     private static double R_MEDIUM_JUNCTION;
-    public static double L_HIGH_JUNCTION = 38 * TICKS_PER_INCH;
+    public static double L_HIGH_JUNCTION = 36 * TICKS_PER_INCH;
     private static double R_HIGH_JUNCTION;
-    public static double L_ABSOLUTE_MIN_HEIGHT = 10;
-    public static double L_ABSOLUTE_MAX_HEIGHT = 1456;
+    public static double L_ABSOLUTE_MIN_HEIGHT = 0;
+    public static double L_ABSOLUTE_MAX_HEIGHT = 38 * TICKS_PER_INCH;
     private static double R_ABSOLUTE_MIN_HEIGHT;
     private static double R_ABSOLUTE_MAX_HEIGHT;
     public static double L_MAX_MOTOR_SPEED = 0.8; // Unverified
     public static double L_MIN_MOTOR_SPEED = -0.4; // Unverified, Gravity
     private static double R_MAX_MOTOR_SPEED; // Unverified
     private static double R_MIN_MOTOR_SPEED; // Unverified, Gravity
-    public static double L_REGULAR_MOVE = 10;
+    public static double L_REGULAR_MOVE = 1.5 * TICKS_PER_INCH;
     private static double R_REGULAR_MOVE;
-    public static double L_TINY_MOVE = 5; // When close to the upper limit
+    public static double L_TINY_MOVE = 0.5 * TICKS_PER_INCH; // When close to the upper limit
     private static double R_TINY_MOVE;
 
     // Don't change these: They're used for user-redefining the 'zero' location during gameplay
@@ -161,6 +161,20 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         return 0.0;
     }
 
+    public double getLeftTargetPos(){
+        if (isLeftConnected) {
+            return leftPidController.getTargetPosition();
+        }
+        return 0.0;
+    }
+
+    public double getRightTargetPos(){
+        if (isRightConnected) {
+            return rightPidController.getTargetPosition();
+        }
+        return 0.0;
+    }
+
     @Override
     public Double get() {
         // Not sure about this one
@@ -210,6 +224,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
     }
 
+    public double getNewConeStackIntakeHeight() {
+        return currentConeNumber-- * CONE_HEIGHT_DIFFERENCE;
+    }
+
     public void gotoTop() {
         // null check will be done in setTargetPosition()
         this.setTargetPosition(L_ABSOLUTE_MAX_HEIGHT, R_ABSOLUTE_MAX_HEIGHT);
@@ -245,19 +263,16 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         setTargetPositionWithLogging(L_INTAKE_FLOOR, R_INTAKE_FLOOR);
     }
 
+    public void gotoConeStackIntake() {
+        // null check will be done in setTargetPosition()
+        setTargetPositionWithLogging(getNewConeStackIntakeHeight(), getNewConeStackIntakeHeight());
+    }
+
     public void moveUp() {
-        if (isLeftConnected) {
-            // maybe getCurrentPosition instead of getTargetPosition
-            double rightTargetPosition = leftPidController.getTargetPosition();
-            setTargetPositionWithLogging(rightTargetPosition + L_REGULAR_MOVE, rightTargetPosition + R_REGULAR_MOVE);
-        }
+        setTargetPositionWithLogging(getLeftTargetPos() + L_REGULAR_MOVE, getLeftTargetPos() + R_REGULAR_MOVE);
     }
 
     public void moveDown() {
-        if (isRightConnected) {
-            // maybe getCurrentPosition instead of getTargetPosition
-            double leftTargetPosition = leftPidController.getTargetPosition();
-            setTargetPositionWithLogging(leftTargetPosition - L_REGULAR_MOVE, leftTargetPosition - R_REGULAR_MOVE);
-        }
+        setTargetPositionWithLogging(getLeftTargetPos() - L_REGULAR_MOVE, getLeftTargetPos() - R_REGULAR_MOVE);
     }
 }
