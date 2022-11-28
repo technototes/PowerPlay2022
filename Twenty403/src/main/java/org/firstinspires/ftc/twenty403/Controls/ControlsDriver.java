@@ -9,7 +9,6 @@ import org.firstinspires.ftc.twenty403.command.drive.TurboCommand;
 import org.firstinspires.ftc.twenty403.helpers.BothButtons;
 
 import com.technototes.library.command.CommandScheduler;
-import com.technototes.library.control.CommandAxis;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
@@ -33,9 +32,9 @@ public class ControlsDriver {
         if (Robot.RobotConstant.DRIVE_CONNECTED) {
             bindDriveControls();
         }
-         if (Robot.RobotConstant.CLAW_CONNECTED) {
-             bindClawControls();
-         }
+        if (Robot.RobotConstant.CLAW_CONNECTED) {
+            bindClawControls();
+        }
         // if (Robot.RobotConstant.LIFT_CONNECTED) {
         //     bindLiftControls();
         // }
@@ -78,9 +77,9 @@ public class ControlsDriver {
         resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
     }
 
-     public void bindClawControls() {
-         clawToggleAutoCloseButton.whenPressed(new ClawAutoCloseToggleCommand(robot.clawSubsystem));
-     }
+    public void bindClawControls() {
+        clawToggleAutoCloseButton.whenPressed(new ClawAutoCloseToggleCommand(robot.clawSubsystem));
+    }
     //
     // public void bindLiftControls() {
     //     // TODO: Name & Bind lift controls
