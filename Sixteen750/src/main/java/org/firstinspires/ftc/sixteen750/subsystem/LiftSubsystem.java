@@ -17,39 +17,44 @@ import com.technototes.library.subsystem.Subsystem;
 public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     // Assuming the 0 position for both lift motor might be different
     // The LiftSubsystem should be able to any of the motor combination
+    // Make everything right related private so don't take up space in FTC-Dashboard
     public static double TICKS_PER_INCH = 136;
     public static double L_INTAKE_FLOOR;
-    public static double R_INTAKE_FLOOR;
+    private static double R_INTAKE_FLOOR;
     public static double L_GROUND_JUNCTION = 1.75 * TICKS_PER_INCH;
-    public static double R_GROUND_JUNCTION;
+    private static double R_GROUND_JUNCTION;
     public static double L_LOW_JUNCTION = 12 * TICKS_PER_INCH;
-    public static double R_LOW_JUNCTION;
+    private static double R_LOW_JUNCTION;
     public static double L_MEDIUM_JUNCTION = 25 * TICKS_PER_INCH;
-    public static double R_MEDIUM_JUNCTION;
+    private static double R_MEDIUM_JUNCTION;
     public static double L_HIGH_JUNCTION = 38 * TICKS_PER_INCH;
-    public static double R_HIGH_JUNCTION;
+    private static double R_HIGH_JUNCTION;
     public static double L_ABSOLUTE_MIN_HEIGHT = 10;
     public static double L_ABSOLUTE_MAX_HEIGHT = 1456;
-    public static double R_ABSOLUTE_MIN_HEIGHT;
-    public static double R_ABSOLUTE_MAX_HEIGHT;
+    private static double R_ABSOLUTE_MIN_HEIGHT;
+    private static double R_ABSOLUTE_MAX_HEIGHT;
     public static double L_MAX_MOTOR_SPEED = 0.8; // Unverified
     public static double L_MIN_MOTOR_SPEED = -0.4; // Unverified, Gravity
-    public static double R_MAX_MOTOR_SPEED; // Unverified
-    public static double R_MIN_MOTOR_SPEED; // Unverified, Gravity
+    private static double R_MAX_MOTOR_SPEED; // Unverified
+    private static double R_MIN_MOTOR_SPEED; // Unverified, Gravity
     public static double L_REGULAR_MOVE = 10;
-    public static double R_REGULAR_MOVE;
+    private static double R_REGULAR_MOVE;
     public static double L_TINY_MOVE = 5; // When close to the upper limit
-    public static double R_TINY_MOVE;
+    private static double R_TINY_MOVE;
 
     // Don't change these: They're used for user-redefining the 'zero' location during gameplay
     public static double L_ACTUAL_ZERO = 0;
-    public static double R_ACTUAL_ZERO;
+    private static double R_ACTUAL_ZERO;
 
     public static PIDCoefficients L_PID = new PIDCoefficients(0.0048, 0, 0);
-    public static PIDCoefficients R_PID = new PIDCoefficients(0.0048, 0, 0);
+    private static PIDCoefficients R_PID = new PIDCoefficients(0.0048, 0, 0);
+
     public static double TOLERANCE_ZONE = 0.9 * TICKS_PER_INCH;
 
-    public static double CONE_HEIGHT_DIFFERENCE = .9 * TICKS_PER_INCH;
+    // This is used to hopefully counteract gravity...
+    public static double DOWNWARD_SCALE_FACTOR = 0.65;
+
+    public static double CONE_HEIGHT_DIFFERENCE = 0.9 * TICKS_PER_INCH;
     private int currentConeNumber = 5;
 
     private EncodedMotor<DcMotorEx> leftMotor;
@@ -101,6 +106,14 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
     }
 
+    private void setMotorSpeed(EncodedMotor<DcMotorEx> motor, double power) {
+        // Compensate gravity effect
+        if (power < 0) {
+            power = power * DOWNWARD_SCALE_FACTOR;
+        }
+        motor.setSpeed(power);
+    }
+
     // This is run for every loop (Feature of the TechnoLib Subsystem!)
     // So you can just call "setTop" in a command and it will get there "as soon as it can"
     @Override
@@ -108,12 +121,12 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         if (isLeftConnected) {
             double leftTargetSpeed = leftPidController.update(getLeftPos());
             double leftClippedSpeed = Range.clip(leftTargetSpeed, L_MIN_MOTOR_SPEED, L_MAX_MOTOR_SPEED);
-            leftMotor.setSpeed(leftClippedSpeed);
+            this.setMotorSpeed(leftMotor, leftClippedSpeed);
         }
         if (isRightConnected) {
             double rTargetSpeed = rightPidController.update(getRightPos());
             double rClippedSpeed = Range.clip(rTargetSpeed, L_MIN_MOTOR_SPEED, L_MAX_MOTOR_SPEED);
-            rightMotor.setSpeed(rClippedSpeed);
+            this.setMotorSpeed(rightMotor, rClippedSpeed);
         }
     }
 
