@@ -15,12 +15,13 @@ import com.technototes.library.util.Alliance;
 public class Robot implements Loggable {
     @Config
     public static class RobotConstant {
-        public static boolean SWERVE_DRIVE_ENABLED = false;
-        public static boolean TANK_DRIVE_ENABLED = false;
+        // The only purpose of RobotConstant is to enable/disable subsystem(s) in FTC-Dashboard for non-testing OpMode
+        private static boolean SWERVE_DRIVE_ENABLED = false;
+        private static boolean TANK_DRIVE_ENABLED = false;
         public static boolean MECANUM_DRIVE_ENABLED = true;
-        public static boolean CLAW_ENABLED = true;
-        public static boolean ARM_ENABLED = true;
         public static boolean LIFT_ENABLED = true;
+        public static boolean ARM_ENABLED = true;
+        public static boolean CLAW_ENABLED = true;
         public static boolean CAMERA_ENABLED = true;
     }
 
@@ -50,7 +51,7 @@ public class Robot implements Loggable {
         }
 
         if (enableClaw) {
-            clawSubsystem = new ClawSubsystem(hardware.clawServo,null);
+            clawSubsystem = new ClawSubsystem(hardware.clawServo, null);
         } else {
             clawSubsystem = new ClawSubsystem(null, null);
         }
