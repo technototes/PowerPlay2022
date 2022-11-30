@@ -8,14 +8,15 @@ public class ArmSubsystem implements Subsystem {
     private Servo flipperServo;
     private Servo elbowServo;
 
-    // new value
-    public static double _ELBOW_INTAKE = 0.875;
-    public static double _ELBOW_UPWARD = 0.6;
+    public static double ELBOW_INTAKE = 0.875;
+    public static double ELBOW_UPWARD = 0.6;
     public static double _ELBOW_SCORE = 0.1;
 
-    public static double _ELBOW_INTAKE_FLIPPER = 0.55;
-    public static double _ELBOW_UPWARD_FLIPPER = 0.6;
-    public static double _ELBOW_SCORE_FLIPPER = 1;
+    public static double FLIPPER_WHEN_ELBOW_INTAKE = 0.55;
+    public static double FLIPPER_WHEN_ELBOW_UPWARD = 0.6;
+    public static double FLIPPER_WHEN_ELBOW_SCORE = 1;
+
+    public static double TOLERANCE = 0.05;
 
     public ArmSubsystem(Servo flipperServo, Servo elbowServo){
         this.flipperServo = flipperServo;
@@ -59,26 +60,38 @@ public class ArmSubsystem implements Subsystem {
     }
 
     public void flipperIntake() {
-        setFlipperServoPosition(_ELBOW_INTAKE_FLIPPER);
+        setFlipperServoPosition(FLIPPER_WHEN_ELBOW_INTAKE);
     }
 
     public void flipperUpward() {
-        setFlipperServoPosition(_ELBOW_UPWARD_FLIPPER);
+        setFlipperServoPosition(FLIPPER_WHEN_ELBOW_UPWARD);
     }
 
     public void flipperScore() {
-        setFlipperServoPosition(_ELBOW_SCORE_FLIPPER);
+        setFlipperServoPosition(FLIPPER_WHEN_ELBOW_SCORE);
     }
 
     public void elbowIntake() {
-        setElbowServoPosition(_ELBOW_INTAKE);
+        setElbowServoPosition(ELBOW_INTAKE);
     }
 
     public void elbowUpward() {
-        setElbowServoPosition(_ELBOW_UPWARD);
+        setElbowServoPosition(ELBOW_UPWARD);
     }
 
     public void elbowScore() {
         setElbowServoPosition(_ELBOW_SCORE);
+    }
+
+    public boolean isArmAtIntakePosition() {
+        return Math.abs(getElbowPosition() - ELBOW_INTAKE) < TOLERANCE && Math.abs(getFlipperPosition() - FLIPPER_WHEN_ELBOW_INTAKE) < TOLERANCE;
+    }
+
+    public boolean isArmAtUpwardPosition() {
+        return Math.abs(getElbowPosition() - ELBOW_UPWARD) < TOLERANCE && Math.abs(getFlipperPosition() - FLIPPER_WHEN_ELBOW_UPWARD) < TOLERANCE;
+    }
+
+    public boolean isArmAtScorePosition() {
+        return Math.abs(getElbowPosition() - _ELBOW_SCORE) < TOLERANCE && Math.abs(getFlipperPosition() - FLIPPER_WHEN_ELBOW_SCORE) < TOLERANCE;
     }
 }
