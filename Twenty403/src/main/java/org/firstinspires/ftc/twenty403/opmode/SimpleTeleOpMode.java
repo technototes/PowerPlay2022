@@ -15,6 +15,7 @@ import com.technototes.library.util.Alliance;
 
 @Disabled
 @Autonomous(name = "Encoder/IMU Testing")
+@SuppressWarnings("unused")
 public class SimpleTeleOpMode extends LinearOpMode {
     public Robot robot;
     public Hardware hardware;

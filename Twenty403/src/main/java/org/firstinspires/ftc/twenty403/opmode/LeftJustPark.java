@@ -16,6 +16,7 @@ import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
 @Autonomous(name = "Left Just Park")
+@SuppressWarnings("unused")
 public class LeftJustPark extends CommandOpMode {
     public Robot robot;
     public Controls controls;
@@ -24,7 +25,7 @@ public class LeftJustPark extends CommandOpMode {
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
-        robot = new Robot(hardware, Alliance.BLUE, StartingPosition.AWAY);
+        robot = new Robot(hardware, Alliance.NONE, StartingPosition.AWAY);
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Away.START.toPose());
         CommandScheduler.getInstance()
                 .scheduleForState(

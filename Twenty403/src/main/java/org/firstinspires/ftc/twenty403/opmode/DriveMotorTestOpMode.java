@@ -15,6 +15,7 @@ import com.technototes.library.util.Alliance;
 
 @Disabled
 @Autonomous(name = "Drive Motor Test")
+@SuppressWarnings("unused")
 public class DriveMotorTestOpMode extends LinearOpMode {
     public Robot robot;
     public Hardware hardware;

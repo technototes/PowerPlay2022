@@ -16,7 +16,8 @@ import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
 @Disabled
-@Autonomous(name = "Simple Drivebase Test")
+@Autonomous(name = "Drivebase Test Auto")
+@SuppressWarnings("unused")
 public class DrivebaseTestAutoOpMode extends CommandOpMode {
     public Robot robot;
     public Controls controls;

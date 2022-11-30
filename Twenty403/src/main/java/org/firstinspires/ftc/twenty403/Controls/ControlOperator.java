@@ -39,9 +39,6 @@ public class ControlOperator {
 
         AssignNamedControllerButton();
 
-        // if (Robot.RobotConstant.DRIVE_CONNECTED) {
-        //     bindDriveControls();
-        // }
         if (Robot.RobotConstant.CLAW_CONNECTED) {
             bindClawControls();
         }
@@ -51,14 +48,7 @@ public class ControlOperator {
     }
 
     private void AssignNamedControllerButton() {
-        // resetGyroButton = gamepad.rightStickButton;
-        // driveLeftStick = gamepad.leftStick;
-        // driveRightStick = gamepad.rightStick;
-        // turboButton = gamepad.leftStickButton;
-        // driveStraight = gamepad.rightTrigger;
-
         liftUpButton = gamepad.dpadRight;
-
         liftDownButton = gamepad.dpadDown;
         liftIntakePos = gamepad.dpadLeft;
 
@@ -69,29 +59,14 @@ public class ControlOperator {
         liftHighOrOverrideZero = gamepad.triangle;
         liftGroundOrOverrideDown = gamepad.cross;
         liftLowOrOverrideUp = gamepad.square;
-
-        // TODO: Identify other controls for
     }
 
-    // public void bindDriveControls() {
-    //     CommandScheduler.getInstance()
-    //         .scheduleJoystick(
-    //             new DriveCommand(robot.drivebaseSubsystem, driveLeftStick, driveRightStick,
-    //                              driveStraight));
-    //     turboButton.whenPressed(new TurboCommand(robot.drivebaseSubsystem));
-    //     turboButton.whenReleased(new SlowCommand(robot.drivebaseSubsystem));
-    //     // TODO: We probably want buttons to reset the Gyro...
-    //     resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
-    // }
-
     public void bindClawControls() {
-        // TODO: Name & Bind claw controls
         clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
         clawCloseButton.whenReleased(new ClawCloseCommand(robot.clawSubsystem));
     }
 
     public void bindLiftControls() {
-        // TODO: Name & Bind lift controls
         liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
         liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
         liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));

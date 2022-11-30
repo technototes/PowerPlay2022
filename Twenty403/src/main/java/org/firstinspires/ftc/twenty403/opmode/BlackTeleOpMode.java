@@ -13,6 +13,7 @@ import com.technototes.library.util.Alliance;
 
 @Disabled
 @TeleOp(name = "BlackTeleOp")
+@SuppressWarnings("unused")
 public class BlackTeleOpMode extends CommandOpMode {
     public Robot robot;
     public Controls controls;

@@ -35,9 +35,6 @@ public class ControlsDriver {
         if (Robot.RobotConstant.CLAW_CONNECTED) {
             bindClawControls();
         }
-        // if (Robot.RobotConstant.LIFT_CONNECTED) {
-        //     bindLiftControls();
-        // }
     }
 
     private void AssignNamedControllerButton() {
@@ -49,23 +46,6 @@ public class ControlsDriver {
 
         driveStraight = gamepad.rightTrigger.getAsButton(0.5);
         clawToggleAutoCloseButton = gamepad.circle;
-
-        // liftUpButton = gamepad.dpadRight;
-        //
-        // liftDownButton = gamepad.dpadDown;
-        // liftIntakePos = gamepad.dpadLeft;
-        //
-        // clawOpenButton = gamepad.rightBumper;
-        // clawCloseButton = gamepad.leftBumper;
-        //
-        // liftMedium = gamepad.circle;
-        // liftHigh = gamepad.triangle;
-        //
-        // liftGroundOrOverrideDown = gamepad.cross;
-        // liftLowOrOverrideUp = gamepad.square;
-        // liftOverrideZeroButton = gamepad.triangle;
-
-        // TODO: Identify other controls for
     }
 
     public void bindDriveControls() {
@@ -80,24 +60,4 @@ public class ControlsDriver {
     public void bindClawControls() {
         clawToggleAutoCloseButton.whenPressed(new ClawAutoCloseToggleCommand(robot.clawSubsystem));
     }
-    //
-    // public void bindLiftControls() {
-    //     // TODO: Name & Bind lift controls
-    //     liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
-    //     liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
-    //     liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));
-    //     liftOverrideZeroButton.whenPressed(
-    //             new ConditionalCommand(override, new LiftSetZeroCommand(robot.liftSubsystem)));
-    //
-    //     liftGroundOrOverrideDown.whenPressed(new ConditionalCommand(
-    //             override,
-    //             new LiftMoveDownOverrideCommand(robot.liftSubsystem),
-    //             new LiftGroundJunctionCommand(robot.liftSubsystem)));
-    //     liftLowOrOverrideUp.whenPressed(new ConditionalCommand(
-    //             override,
-    //             new LiftMoveUpOverrideCommand(robot.liftSubsystem),
-    //             new LiftLowJunctionCommand(robot.liftSubsystem)));
-    //     liftMedium.whenPressed(new LiftMidJunctionCommand(robot.liftSubsystem));
-    //     liftHigh.whenPressed(new LiftHighJunctionCommand(robot.liftSubsystem));
-    // }
 }
