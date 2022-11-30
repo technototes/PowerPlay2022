@@ -14,12 +14,12 @@ import com.technototes.library.util.Alliance;
 public class Robot implements Loggable {
     @Config
     public static class RobotConstant {
-        public static boolean DRIVE_CONNECTED = true;
+        public static boolean DRIVE_CONNECTED = false;
         public static boolean CLAW_CONNECTED = true;
-        public static boolean LIFT_CONNECTED = true;
-        public static boolean LIFT_MOVE_MOTORS = true;
+        public static boolean LIFT_CONNECTED = false;
+        public static boolean LIFT_MOVE_MOTORS = false;
 
-        public static boolean CAMERA_CONNECTED = true;
+        public static boolean CAMERA_CONNECTED = false;
 
         // Are we using 1 or 2 motors?
         public static boolean DUAL_LIFT_SETUP = true;
@@ -56,6 +56,8 @@ public class Robot implements Loggable {
         }
         if (RobotConstant.CAMERA_CONNECTED) {
             visionSystem = new VisionSubsystem(hardware.camera, team, whichSide);
+        } else {
+            visionSystem = new VisionSubsystem(team, whichSide);
         }
         // Read the voltage
         initialVoltage = hardware.voltage();
