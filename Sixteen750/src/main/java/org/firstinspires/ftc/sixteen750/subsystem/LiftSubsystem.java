@@ -13,13 +13,11 @@ import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 
 @Config
-@SuppressWarnings("unused")
 public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
-    // Assuming the 0 position for both lift motor might be different
+    // Assuming the 0 position for both lift motor might be different?
     // The LiftSubsystem should be able to any of the motor combination
-    // Make everything right related private so don't take up space in FTC-Dashboard
     public static double TICKS_PER_INCH = 136;
-    public static double L_INTAKE_FLOOR;
+    public static double L_INTAKE_FLOOR = 0.1 * TICKS_PER_INCH; // wrong
     public static double L_GROUND_JUNCTION = 1.75 * TICKS_PER_INCH;
     public static double L_LOW_JUNCTION = 14.5 * TICKS_PER_INCH;
     public static double L_MEDIUM_JUNCTION = 25 * TICKS_PER_INCH;
@@ -51,11 +49,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     private double currentVoltage = 0;
     private Supplier<Double> voltageGetter;
 
-    public LiftSubsystem(EncodedMotor<DcMotorEx> leftM, Supplier<Double> voltageGetter) {
+    public LiftSubsystem(EncodedMotor<DcMotorEx> leftMotor, Supplier<Double> voltageGetter) {
         this.voltageGetter = voltageGetter;
         this.currentVoltage = (this.voltageGetter == null) ? 0 : this.voltageGetter.get();
-        if (leftM != null) {
-            this.leftMotor = leftM;
+        if (leftMotor != null) {
+            this.leftMotor = leftMotor;
             this.leftPidController = new PIDFController(L_PID, 0, 0, 0, (x, y) -> 0.1);
             this.isLeftConnected = true;
         } else {
@@ -63,13 +61,13 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
     }
 
-    public LiftSubsystem(EncodedMotor<DcMotorEx> leftM) {
-        this(leftM, () -> 12.0);
+    public LiftSubsystem(EncodedMotor<DcMotorEx> leftMotor) {
+        this(leftMotor, () -> 12.0);
     }
 
-    private void setTargetPosition(double lPos) {
+    private void setTargetPosition(double leftTargetPos) {
         if (isLeftConnected) {
-            leftPidController.setTargetPosition(Range.clip(lPos, L_ABSOLUTE_MIN_HEIGHT, L_ABSOLUTE_MAX_HEIGHT));
+            leftPidController.setTargetPosition(Range.clip(leftTargetPos, L_ABSOLUTE_MIN_HEIGHT, L_ABSOLUTE_MAX_HEIGHT));
         }
     }
 
@@ -77,10 +75,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         leftPidController.setTargetPosition(lpos);
     }
 
-    private void setTargetPositionWithLogging(double lPos) {
-        setTargetPosition(lPos);
+    private void setTargetPositionWithLogging(double leftTargetPos) {
+        setTargetPosition(leftTargetPos);
         if (isLeftConnected) {
-            lpAndActual = String.format("%d (%d)", (int) lPos, leftMotor.get().intValue());
+            lpAndActual = String.format("%d (%d)", (int) leftTargetPos, leftMotor.get().intValue());
         }
     }
 
@@ -164,42 +162,34 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     }
 
     public void gotoTop() {
-        // null check will be done in setTargetPosition()
         this.setTargetPosition(L_ABSOLUTE_MAX_HEIGHT);
     }
 
     public void gotoBottom() {
-        // null check will be done in setTargetPosition()
         this.setTargetPosition(L_ABSOLUTE_MIN_HEIGHT);
     }
 
     public void gotoHighPole() {
-        // null check will be done in setTargetPosition()
         setTargetPositionWithLogging(L_HIGH_JUNCTION);
     }
 
     public void gotoMidPole() {
-        // null check will be done in setTargetPosition()
         setTargetPositionWithLogging(L_MEDIUM_JUNCTION);
     }
 
     public void gotoLowPole() {
-        // null check will be done in setTargetPosition()
         setTargetPositionWithLogging(L_LOW_JUNCTION);
     }
 
     public void gotoGroundJunction() {
-        // null check will be done in setTargetPosition()
         setTargetPositionWithLogging(L_GROUND_JUNCTION);
     }
 
     public void gotoFloorIntake() {
-        // null check will be done in setTargetPosition()
         setTargetPositionWithLogging(L_INTAKE_FLOOR);
     }
 
     public void gotoConeStackIntake() {
-        // null check will be done in setTargetPosition()
         setTargetPositionWithLogging(getNewConeStackIntakeHeight());
     }
 

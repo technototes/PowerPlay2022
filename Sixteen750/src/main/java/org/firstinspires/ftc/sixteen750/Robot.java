@@ -42,7 +42,7 @@ public class Robot implements Loggable {
         if (enableLift) {
             liftSubsystem = new LiftSubsystem(hardware.leftLiftMotor, hardware::getVoltage);
         } else {
-            liftSubsystem = new LiftSubsystem(null, null);
+            liftSubsystem = new LiftSubsystem(null);
         }
 
         if (enableArm) {

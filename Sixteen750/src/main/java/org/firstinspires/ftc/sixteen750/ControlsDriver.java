@@ -67,9 +67,9 @@ public class ControlsDriver {
     public void bindDriverLiftControls() {
         gamepad.leftBumper.whenPressed(new LiftMoveUpOverrideCommand(robot.liftSubsystem));
         gamepad.rightBumper.whenPressed(new LiftMoveDownOverrideCommand(robot.liftSubsystem));
-        gamepad.square.whenPressed(new LiftLowPoleCommand(robot.liftSubsystem));
-        gamepad.triangle.whenPressed(new LiftMidPoleCommand(robot.liftSubsystem));
-        gamepad.circle.whenPressed(new LiftHighPoleCommand(robot.liftSubsystem));
-        gamepad.cross.whenPressed(new LiftGroundJunctionCommand(robot.liftSubsystem));
+        gamepad.dpadLeft.whenPressed(new LiftLowPoleCommand(robot.liftSubsystem));
+        gamepad.dpadRight.whenPressed(new LiftMidPoleCommand(robot.liftSubsystem));
+        gamepad.dpadUp.whenPressed(new LiftHighPoleCommand(robot.liftSubsystem));
+        gamepad.dpadDown.whenPressed(new LiftGroundJunctionCommand(robot.liftSubsystem));
     }
 }
