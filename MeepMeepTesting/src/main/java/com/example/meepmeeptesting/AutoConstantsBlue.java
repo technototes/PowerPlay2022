@@ -68,11 +68,11 @@ public class AutoConstantsBlue {
         public static Function<Pose2d, TrajectoryBuilder> function = pose -> new TrajectoryBuilder(pose, MIN_VEL, PROF_ACCEL);
         public static Supplier<Trajectory>
                 START_TO_LEFT_PARK =
-                () -> function.apply(START)
-                        //.lineToLinearHeading(TERMINAL.toPose())
-                        .lineToLinearHeading(BETWEEN_START_LEFT)
-                        .lineToLinearHeading(LEFT_MOVE)
-                        .build(),
+                        () -> function.apply(START)
+                                //.lineToLinearHeading(TERMINAL.toPose())
+                                .lineToLinearHeading(BETWEEN_START_LEFT)
+                                .lineToLinearHeading(LEFT_MOVE)
+                                .build(),
                 START_TO_MIDDLE_PARK =
                         () -> function.apply(START)
                                 //.lineToLinearHeading(TERMINAL.toPose())
