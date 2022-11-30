@@ -4,6 +4,7 @@ import org.firstinspires.ftc.sixteen750.ControlsDriver;
 import org.firstinspires.ftc.sixteen750.ControlsOperator;
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
+import org.firstinspires.ftc.sixteen750.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.sixteen750.subsystem.TankDriveSubsystem;
 
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -14,6 +15,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
 import com.technototes.library.structure.CommandOpMode;
+import com.technototes.library.util.Alliance;
 
 @Config
 @TeleOp(group = "Tank")
@@ -29,8 +31,8 @@ public class RegularTankDrive extends CommandOpMode {
 
     @Override
     public void uponInit() {
-        hardware = new Hardware(hardwareMap);
-        robot = new Robot(hardware);
+        hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DEFAULT);
+        robot = new Robot(hardware, Robot.SubsystemCombo.DEFAULT, Alliance.NONE, StartingPosition.NEUTRAL);
         driverControls = new ControlsDriver(driverGamepad, robot);
         operatorControls = new ControlsOperator(codriverGamepad, robot);
 

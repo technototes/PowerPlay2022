@@ -60,31 +60,6 @@ public class DriveMotorTest extends CommandOpMode {
     @Override
     public void runLoop() {
         double loopSeconds = t.seconds();
-
-//        if (this.gamepad1.dpad_left && isLeftSideConnected) {
-//            leftFrontMotor.setSpeed(motorSpeed);
-//            isLeftFrontPressed = true;
-//        } else {
-//            isLeftFrontPressed = false;
-//        }
-//        if (this.gamepad1.dpad_down && isLeftSideConnected) {
-//            leftRearMotor.setSpeed(motorSpeed);
-//            isLeftRearPressed = true;
-//        } else {
-//            isLeftRearPressed = false;
-//        }
-//        if (this.gamepad1.dpad_up && isRightSideConnected) {
-//            rightRearMotor.setSpeed(motorSpeed);
-//            isRightRearPressed = true;
-//        } else {
-//            isRightRearPressed = false;
-//        }
-//        if (this.gamepad1.dpad_right && isRightSideConnected) {
-//            rightFrontMotor.setSpeed(motorSpeed);
-//            isRightFrontPressed = true;
-//        } else {
-//            isRightFrontPressed = false;
-//        }
         if (isLeftSideConnected){
             if (this.gamepad1.dpad_left) {
                 leftFrontMotor.setSpeed(motorSpeed);

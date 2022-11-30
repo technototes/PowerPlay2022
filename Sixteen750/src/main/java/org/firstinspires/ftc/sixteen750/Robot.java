@@ -1,48 +1,46 @@
 package org.firstinspires.ftc.sixteen750;
 
+import org.firstinspires.ftc.sixteen750.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
-import org.firstinspires.ftc.sixteen750.subsystem.MecanumDriveSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.MecanumDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.VisionSubsystem;
 
 import com.acmerobotics.dashboard.config.Config;
 
 import com.technototes.library.logger.Loggable;
+import com.technototes.library.util.Alliance;
 
 public class Robot implements Loggable {
     @Config
     public static class RobotConstant {
-        public static boolean SWERVE_DRIVE_ENABLED = false;
-        public static boolean TANK_DRIVE_ENABLED = false;
-        public static boolean MECANUM_DRIVE_ENABLED = false;
-        public static boolean CLAW_ENABLED = false;
-        public static boolean ARM_ENABLED = false;
+        // The only purpose of RobotConstant is to enable/disable subsystem(s) in FTC-Dashboard for non-testing OpMode
+        private static boolean SWERVE_DRIVE_ENABLED = false;
+        private static boolean TANK_DRIVE_ENABLED = false;
+        public static boolean MECANUM_DRIVE_ENABLED = true;
         public static boolean LIFT_ENABLED = true;
-        public static boolean LIFT_MOVE_MOTORS = true;
+        public static boolean ARM_ENABLED = true;
+        public static boolean CLAW_ENABLED = true;
+        public static boolean CAMERA_ENABLED = true;
     }
 
     public ClawSubsystem clawSubsystem;
     public ArmSubsystem armSubsystem;
     public LiftSubsystem liftSubsystem;
     public MecanumDriveSubsystem mecanumDriveSubsystem;
+    public VisionSubsystem visionSubsystem;
 
-    public boolean isSwerveDriveConnected = false;
-    public boolean isTankDriveConnected = false;
-    public boolean isMecanumDriveConnected = false;
-    public boolean isClawConnected = false;
-    public boolean isArmConnected = false;
-    public boolean isLiftConnected = true;
-
-    public Robot(Hardware hardware, boolean enableMecanumDrive, boolean enableLift, boolean enableArm, boolean enableClaw) {
+    public Robot(Hardware hardware, boolean enableMecanumDrive, boolean enableLift, boolean enableArm, boolean enableClaw, boolean enableCamera, Alliance alliance, StartingPosition whichSide) {
         if (enableMecanumDrive) {
             /// Don't forget to check the order of the motors
             mecanumDriveSubsystem = new MecanumDriveSubsystem(hardware.leftFrontMotor, hardware.rightFrontMotor, hardware.leftRearMotor, hardware.rightRearMotor, hardware.imu);
         }
 
         if (enableLift) {
-            liftSubsystem = new LiftSubsystem(hardware.liftMotor);
+            liftSubsystem = new LiftSubsystem(hardware.leftLiftMotor, hardware::getVoltage);
         } else {
-            liftSubsystem = new LiftSubsystem(null);
+            liftSubsystem = new LiftSubsystem(null, null);
         }
 
         if (enableArm) {
@@ -52,14 +50,34 @@ public class Robot implements Loggable {
         }
 
         if (enableClaw) {
-            clawSubsystem = new ClawSubsystem(hardware.clawServo,null);
+            clawSubsystem = new ClawSubsystem(hardware.clawServo, null);
         } else {
             clawSubsystem = new ClawSubsystem(null, null);
         }
+        if (enableCamera){
+            visionSubsystem = new VisionSubsystem(hardware.camera, alliance, whichSide);
+        }
     }
 
-    public Robot(Hardware hardware) {
-        this(hardware, RobotConstant.MECANUM_DRIVE_ENABLED, RobotConstant.LIFT_ENABLED, RobotConstant.ARM_ENABLED, RobotConstant.CLAW_ENABLED);
+    public enum SubsystemCombo {
+        DEFAULT,
+        DRIVE_ONLY,
+        LIFT_ONLY,
+        ARM_CLAW_ONLY,
+        VISION_ONLY,
+        VISION_DRIVE,
+    }
+
+    public Robot(Hardware hardware, SubsystemCombo type, Alliance team, StartingPosition whichSide){
+        this(hardware,
+                type == SubsystemCombo.DEFAULT ? RobotConstant.MECANUM_DRIVE_ENABLED : type == SubsystemCombo.DRIVE_ONLY || type == SubsystemCombo.VISION_DRIVE,
+                type == SubsystemCombo.DEFAULT ? RobotConstant.LIFT_ENABLED : type == SubsystemCombo.LIFT_ONLY,
+                type == SubsystemCombo.DEFAULT ? RobotConstant.ARM_ENABLED : type == SubsystemCombo.ARM_CLAW_ONLY,
+                type == SubsystemCombo.DEFAULT ? RobotConstant.CLAW_ENABLED : type == SubsystemCombo.ARM_CLAW_ONLY,
+                type == SubsystemCombo.DEFAULT ? RobotConstant.CAMERA_ENABLED : type == SubsystemCombo.VISION_ONLY || type == SubsystemCombo.VISION_DRIVE,
+                team,
+                whichSide
+        );
     }
 }
 /*
