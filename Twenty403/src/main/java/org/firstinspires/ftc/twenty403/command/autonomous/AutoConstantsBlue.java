@@ -111,14 +111,15 @@ public class AutoConstantsBlue {
     @Config
     public static class Away {
         public static ConfigurablePose START = new ConfigurablePose(-36, -66, toRadians(90));
-        public static ConfigurablePose E_JUNCTION = new ConfigurablePose(-30, -8, 0.63);
+        public static ConfigurablePose E_JUNCTION = new ConfigurablePose(-27, -10, 0.63);
+        public static ConfigurablePose E_JUNCTION_2 = new ConfigurablePose(-29,-11, 0.63);
         public static ConfigurablePose STACK = new ConfigurablePose(-60, -17, toRadians(180));
         public static ConfigurablePose LEFT = new ConfigurablePose(-58, -22, toRadians(90));
-        public static ConfigurablePose MIDDLE = new ConfigurablePose(-37, -16, toRadians(90));
+        public static ConfigurablePose MIDDLE = new ConfigurablePose(-34, -16, toRadians(90));
         public static ConfigurablePose RIGHT = new ConfigurablePose(-14, -15, toRadians(90));
-        public static ConfigurablePose BETWEEN_START_E_JUNCTION = new ConfigurablePose(-36, -15, toRadians(45));
-        public static ConfigurablePose BETWEEN_E_JUNCTION_STACK = new ConfigurablePose(-38, -17, toRadians(180));
-        public static ConfigurablePose BETWEEN_STACK_E_JUNCTION = new ConfigurablePose(-36, -14, toRadians(75));
+        public static ConfigurablePose BETWEEN_START_E_JUNCTION = new ConfigurablePose(-36, -15, 6.19592);
+        public static ConfigurablePose BETWEEN_E_JUNCTION_STACK = new ConfigurablePose(-38, -17, 3.14159);
+        public static ConfigurablePose BETWEEN_STACK_E_JUNCTION = new ConfigurablePose(-38, -20, 1.3089969389957472);
         public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(-58, -60, toRadians(90));
         public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(-14, -60, toRadians(90));
         public static ConfigurablePose TERMINAL = new ConfigurablePose(-61, -64, toRadians(180));
@@ -138,6 +139,11 @@ public class AutoConstantsBlue {
                         b -> b.apply(STACK.toPose())
                                 .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
                                 .lineToLinearHeading(E_JUNCTION.toPose())
+                                .build(),
+                STACK_TO_E_JUNCTION_2 =
+                        b -> b.apply(STACK.toPose())
+                                .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
+                                .lineToLinearHeading(E_JUNCTION_2.toPose())
                                 .build(),
                 E_JUNCTION_TO_LEFT_PARK =
                         b -> b.apply(E_JUNCTION.toPose())

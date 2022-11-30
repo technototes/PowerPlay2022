@@ -29,16 +29,16 @@ public class AutoBlueAwayFullCycleMiddle extends SequentialCommandGroup {
                 new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.E_JUNCTION_TO_STACK)
                         .alongWith(new LiftCollectCommand(liftSubsystem)),
                 new ClawCloseCommand(clawSubsystem),
-                new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.STACK_TO_E_JUNCTION)
+                new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.STACK_TO_E_JUNCTION_2)
                         .alongWith(new LiftHighJunctionCommand(liftSubsystem)),
                 new ClawOpenCommand(clawSubsystem),
-                new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.E_JUNCTION_TO_STACK)
-                        .alongWith(new LiftCollectCommand(liftSubsystem)),
-                new ClawCloseCommand(clawSubsystem),
-                new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.STACK_TO_E_JUNCTION)
-                        .alongWith(new LiftHighJunctionCommand(liftSubsystem)),
-                new ClawOpenCommand(clawSubsystem),
-                new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.E_JUNCTION_TO_LEFT_PARK)
+                // new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.E_JUNCTION_TO_STACK)
+                //         .alongWith(new LiftCollectCommand(liftSubsystem)),
+                // new ClawCloseCommand(clawSubsystem),
+                // new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.STACK_TO_E_JUNCTION_2)
+                //         .alongWith(new LiftHighJunctionCommand(liftSubsystem)),
+                // new ClawOpenCommand(clawSubsystem),
+                new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.E_JUNCTION_TO_MIDDLE_PARK)
                         .alongWith(new LiftCollectCommand(liftSubsystem)));
     }
 }
