@@ -10,7 +10,7 @@ public class ArmSubsystem implements Subsystem {
 
     public static double ELBOW_INTAKE = 0.875;
     public static double ELBOW_UPWARD = 0.6;
-    public static double _ELBOW_SCORE = 0.1;
+    public static double ELBOW_SCORE = 0.1;
 
     public static double FLIPPER_WHEN_ELBOW_INTAKE = 0.55;
     public static double FLIPPER_WHEN_ELBOW_UPWARD = 0.6;
@@ -80,7 +80,7 @@ public class ArmSubsystem implements Subsystem {
     }
 
     public void elbowScore() {
-        setElbowServoPosition(_ELBOW_SCORE);
+        setElbowServoPosition(ELBOW_SCORE);
     }
 
     public boolean isArmAtIntakePosition() {
@@ -92,6 +92,6 @@ public class ArmSubsystem implements Subsystem {
     }
 
     public boolean isArmAtScorePosition() {
-        return Math.abs(getElbowPosition() - _ELBOW_SCORE) < TOLERANCE && Math.abs(getFlipperPosition() - FLIPPER_WHEN_ELBOW_SCORE) < TOLERANCE;
+        return Math.abs(getElbowPosition() - ELBOW_SCORE) < TOLERANCE && Math.abs(getFlipperPosition() - FLIPPER_WHEN_ELBOW_SCORE) < TOLERANCE;
     }
 }
