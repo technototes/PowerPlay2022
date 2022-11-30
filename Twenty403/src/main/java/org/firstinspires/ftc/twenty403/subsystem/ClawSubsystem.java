@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
+import android.util.Log;
+
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 
@@ -7,9 +9,6 @@ import com.acmerobotics.dashboard.config.Config;
 
 import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.hardware.servo.Servo;
-import com.technototes.library.logger.Log;
-import com.technototes.library.logger.LogConfig;
-import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.library.util.Alliance;
 
@@ -46,8 +45,8 @@ public class ClawSubsystem implements Subsystem, Loggable {
 
     public ClawSubsystem(LiftSubsystem lift, Servo claw, ColorDistanceSensor s, Alliance a) {
         liftSubsystem = lift;
-        _clawServo = claw;
-        _sensor = s;
+        clawServo = claw;
+        sensor = s;
         alliance = a;
         isHardware = true;
         autoClose = true;
@@ -57,23 +56,33 @@ public class ClawSubsystem implements Subsystem, Loggable {
     // Non-functional subsystem constructor
     public ClawSubsystem() {
         liftSubsystem = null;
-        _clawServo = null;
-        _sensor = null;
+        clawServo = null;
+        sensor = null;
         alliance = Alliance.NONE;
         isHardware = false;
         autoClose = false;
     }
 
     public void open() {
-        setServo(OPEN_SERVO_POSITION);
+        log("Open");
+        if (isHardware) {
+            clawServo.setPosition(OPEN_SERVO_POSITION);
+        }
     }
 
     public void close() {
-        setServo(CLOSE_SERVO_POSITION);
+        log("Close");
+        if (isHardware) {
+            clawServo.setPosition(CLOSE_SERVO_POSITION);
+        }
     }
 
     public boolean isConeClose() {
-        return readSensor() <= CONE_IS_CLOSE_ENOUGH;
+        log("isConeClose");
+        if (isHardware && sensor.getDistance(DistanceUnit.CM) <= CONE_IS_CLOSE_ENOUGH) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isAllianceCone() {
@@ -104,11 +113,14 @@ public class ClawSubsystem implements Subsystem, Loggable {
         autoClose = !autoClose;
     }
 
+    public Servo getServo() {
+        return clawServo;
+    }
+
     @Override
     public void periodic() {
-        if (autoClose) {
+        if (isHardware && autoClose) {
             if (liftSubsystem.canAutoClose() && !isClawClosed() && isAllianceCone() && isConeClose()) {
-                CLOSE_SERVO_POSITION = .55;
                 close();
             }
         }

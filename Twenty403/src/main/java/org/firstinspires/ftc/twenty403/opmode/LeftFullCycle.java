@@ -16,7 +16,7 @@ import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
-@Autonomous(name = "Left FullCycle")
+@Autonomous(name = "LeftFullCycle")
 @SuppressWarnings("unused")
 public class LeftFullCycle extends CommandOpMode {
     public Robot robot;
