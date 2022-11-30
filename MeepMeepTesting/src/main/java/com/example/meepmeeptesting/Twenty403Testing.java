@@ -12,11 +12,13 @@ public class Twenty403Testing {
                 //Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 9.5)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(AutoConstantsBlue.Away.START)
-                                .addTrajectory(AutoConstantsBlue.Away.START_TO_LEFT_PARK.get())
-
-                                .build()
-
+                                drive
+                                        .trajectorySequenceBuilder(AutoConstantsRed.Away.START)
+                                        .addTrajectory(AutoConstantsRed.Away.START_TO_LEFT_LOW.get())
+                                        //.addTrajectory(AutoConstantsRed.Away.START_TO_RIGHT_LOW.get())
+                                        .addTrajectory(AutoConstantsRed.Away.LEFT_LOW_TO_BETWEEN_LEFT.get())
+                                        .addTrajectory(AutoConstantsRed.Away.BETWEEN_TO_PARK_LEFT.get())
+                                        .build()
                 );
 
 
