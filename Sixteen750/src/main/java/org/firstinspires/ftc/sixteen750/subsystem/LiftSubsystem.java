@@ -49,9 +49,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     private final boolean isLeftConnected;
 
     private double currentVoltage = 0;
+    private Supplier<Double> voltageGetter;
 
     public LiftSubsystem(EncodedMotor<DcMotorEx> leftM, Supplier<Double> voltageGetter) {
-        this.currentVoltage = voltageGetter.get();
+        this.voltageGetter = voltageGetter;
+        this.currentVoltage = this.voltageGetter.get();
         if (leftM != null) {
             this.leftMotor = leftM;
             this.leftPidController = new PIDFController(L_PID, 0, 0, 0, (x, y) -> 0.1);
@@ -203,5 +205,13 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     public void moveDown() {
         setTargetPositionWithLogging(getLeftTargetPos() - L_REGULAR_MOVE);
+    }
+
+    public void setVoltage(double voltage) {
+        this.currentVoltage = voltage;
+    }
+
+    public void updateVoltage() {
+        this.setVoltage(this.voltageGetter.get());
     }
 }
