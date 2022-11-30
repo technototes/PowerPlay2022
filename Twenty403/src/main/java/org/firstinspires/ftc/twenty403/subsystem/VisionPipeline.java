@@ -74,6 +74,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
     @LogConfig.Run(duringInit = true, duringRun = false)
     @Log
     public String position = "";
+
     private void showPos() {
         if (leftDetected) {
             position = "left";

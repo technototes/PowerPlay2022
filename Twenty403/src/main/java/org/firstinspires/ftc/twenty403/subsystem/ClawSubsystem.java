@@ -4,6 +4,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 
 import com.acmerobotics.dashboard.config.Config;
+
 import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.logger.Log;
@@ -11,8 +12,6 @@ import com.technototes.library.logger.LogConfig;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.library.util.Alliance;
-
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Config
 public class ClawSubsystem implements Subsystem, Loggable {
@@ -30,8 +29,8 @@ public class ClawSubsystem implements Subsystem, Loggable {
 
     // This is both written to, and read from when using the subsystem without hardware
     @LogConfig.Run(duringInit = true, duringRun = true)
-    @Log.Number
-    public double CLAW_SERVO_POS = 0.35;
+    @Log(name = "Claw Servo Pos")
+    public static double CLAW_SERVO_POS = 0.0;
 
     private Servo _clawServo;
     private ColorDistanceSensor _sensor;

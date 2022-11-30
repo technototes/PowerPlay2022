@@ -6,7 +6,6 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import com.acmerobotics.dashboard.config.Config;
 
-import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.library.util.Alliance;
 import com.technototes.vision.hardware.Webcam;
