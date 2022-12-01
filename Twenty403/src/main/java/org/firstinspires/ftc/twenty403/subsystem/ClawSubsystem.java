@@ -1,6 +1,10 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.twenty403.helpers.ConvertColor;
+
 import com.acmerobotics.dashboard.config.Config;
+
 import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.logger.Log;
@@ -8,8 +12,6 @@ import com.technototes.library.logger.LogConfig;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.library.util.Alliance;
-
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Config
 public class ClawSubsystem implements Subsystem, Loggable {
@@ -20,14 +22,20 @@ public class ClawSubsystem implements Subsystem, Loggable {
     // # of CM distance before we auto-close the claw
     public static double CONE_IS_CLOSE_ENOUGH = 6.0;
 
-    // Values to use if you don't have the robot connected
-    public static int FAKE_RED_VALUE = 255;
-    public static int FAKE_BLUE_VALUE = 0;
+    // The 'range' to allow the color to be in to detect the cone
+    public static int COLOR_RANGE = 20;
+    public static int SAT_MIN = 30; // Less saturation is white
+    public static int VAL_MIN = 30; // less value is black
+
+    // This is a kind of red color (h 0, s 128, v 128)
+    // used if the claw subsystem isn't connected:
+    public static int FAKE_HSV_VALUE = 0x008080;
+    // This should trigger a close
     public static double FAKE_DISTANCE = 3.0;
 
     // This is *written to* when using the subsystem without hardware
     @LogConfig.Run(duringInit = true, duringRun = true)
-    @Log(name="Claw Servo Pos")
+    @Log(name = "Claw Servo Pos")
     public static double CLAW_SERVO_POS = 0.39;
 
     private Servo _clawServo;
@@ -79,13 +87,14 @@ public class ClawSubsystem implements Subsystem, Loggable {
     public boolean isAllianceCone() {
         switch (alliance) {
             case NONE:
+                // For no alliance, it's always an alliance cone :)
                 return true;
             case RED:
-                // Hurray for RGB... (should convert to HSV)
-                return readRed() > readBlue() * 2;
+                // Red is 'around' 0 degrees
+                return ConvertColor.isColor(readHsv(), 0, COLOR_RANGE, SAT_MIN, VAL_MIN);
             case BLUE:
-                // Hurray for RGB... (should convert to HSV)
-                return readBlue() > readRed() * 2;
+                // Blue is 'around' 240 degrees, but hue isn't 0-360, it's 0-180 so cut it in half
+                return ConvertColor.isColor(readHsv(), 120, COLOR_RANGE, SAT_MIN, VAL_MIN);
             default:
                 return false;
         }
@@ -96,8 +105,7 @@ public class ClawSubsystem implements Subsystem, Loggable {
         // This is going to say the claw is closed, just because we squeeze the jaws together
         // manually, so we need to check to see if the servo has had it's position explicitly set
         // instead of just checking the servo's position...
-        return servoSet &&
-                Math.abs(curPos - CLOSE_SERVO_POSITION) < Math.abs(curPos - OPEN_SERVO_POSITION);
+        return servoSet && Math.abs(curPos - CLOSE_SERVO_POSITION) < Math.abs(curPos - OPEN_SERVO_POSITION);
     }
 
     public void toggleAutoClose() {
@@ -140,19 +148,11 @@ public class ClawSubsystem implements Subsystem, Loggable {
         return FAKE_DISTANCE;
     }
 
-    private int readRed() {
+    private int readHsv() {
         if (isHardware) {
-            return _sensor.red();
+            return ConvertColor.rgbToHsv(_sensor.argb());
         } else {
-            return FAKE_RED_VALUE;
-        }
-    }
-
-    private int readBlue() {
-        if (isHardware) {
-            return _sensor.blue();
-        } else {
-            return FAKE_BLUE_VALUE;
+            return FAKE_HSV_VALUE;
         }
     }
 }
