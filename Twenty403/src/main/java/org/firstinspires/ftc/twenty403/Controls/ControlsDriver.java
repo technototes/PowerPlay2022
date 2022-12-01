@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.twenty403.Controls;
 
+import java.util.function.BooleanSupplier;
+
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.claw.ClawAutoCloseToggleCommand;
 import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
 import org.firstinspires.ftc.twenty403.command.drive.ResetGyroCommand;
 import org.firstinspires.ftc.twenty403.command.drive.SlowCommand;
 import org.firstinspires.ftc.twenty403.command.drive.TurboCommand;
-import org.firstinspires.ftc.twenty403.helpers.BothButtons;
 
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.control.CommandButton;
@@ -20,12 +21,12 @@ public class ControlsDriver {
     public Stick driveLeftStick, driveRightStick;
     public CommandButton resetGyroButton, driveStraight, turboButton;
     public CommandButton clawToggleAutoCloseButton;
-    public BothButtons override;
+    public CommandButton override;
 
     public ControlsDriver(CommandGamepad g, Robot r) {
         this.robot = r;
         gamepad = g;
-        override = new BothButtons(g.leftTrigger.getAsButton(0.5));
+        override = g.leftTrigger.getAsButton(0.5);
 
         AssignNamedControllerButton();
 

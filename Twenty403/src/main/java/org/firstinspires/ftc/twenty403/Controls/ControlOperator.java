@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.twenty403.Controls;
 
+import java.util.function.BooleanSupplier;
+
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.claw.ClawAutoCloseToggleCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
@@ -14,7 +16,6 @@ import org.firstinspires.ftc.twenty403.command.lift.LiftMoveDownOverrideCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftMoveUpOverrideCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftSetZeroCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
-import org.firstinspires.ftc.twenty403.helpers.BothButtons;
 
 import com.technototes.library.command.ConditionalCommand;
 import com.technototes.library.control.CommandButton;
@@ -30,12 +31,12 @@ public class ControlOperator {
     public CommandButton resetGyroButton, driveStraighten, turboButton;
     public CommandButton liftDownButton, liftUpButton, clawOpenButton, clawCloseButton, liftHighOrOverrideZero;
     public CommandButton liftGroundOrOverrideDown, liftLowOrOverrideUp, liftMediumOrToggleAutoClose, liftIntakePos;
-    public BothButtons override;
+    public CommandButton override;
 
     public ControlOperator(CommandGamepad g, Robot r) {
         this.robot = r;
         gamepad = g;
-        override = new BothButtons(g.leftTrigger.getAsButton(0.5));
+        override = g.leftTrigger.getAsButton(0.5);
 
         AssignNamedControllerButton();
 
