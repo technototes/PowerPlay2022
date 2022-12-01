@@ -1,21 +1,18 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.twenty403.helpers.ConvertColor;
+import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 
 import com.acmerobotics.dashboard.config.Config;
 
 import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.hardware.servo.Servo;
-import com.technototes.library.logger.Log;
-import com.technototes.library.logger.LogConfig;
-import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.library.util.Alliance;
 
 @Config
-public class ClawSubsystem implements Subsystem, Loggable {
-    // Correct numbers, tested
+public class ClawSubsystem implements Subsystem {
+    // Correct numbers, tested 11/27/22
     public static double OPEN_SERVO_POSITION = .3045;
     public static double CLOSE_SERVO_POSITION = .42;
 
@@ -23,7 +20,7 @@ public class ClawSubsystem implements Subsystem, Loggable {
     public static double CONE_IS_CLOSE_ENOUGH = 6.0;
 
     // The 'range' to allow the color to be in to detect the cone
-    public static int COLOR_RANGE = 20;
+    public static int COLOR_RANGE = 30;
     public static int SAT_MIN = 30; // Less saturation is white
     public static int VAL_MIN = 30; // less value is black
 
@@ -33,17 +30,15 @@ public class ClawSubsystem implements Subsystem, Loggable {
     // This should trigger a close
     public static double FAKE_DISTANCE = 3.0;
 
-    // This is *written to* when using the subsystem without hardware
-    @LogConfig.Run(duringInit = true, duringRun = true)
-    @Log(name = "Claw Servo Pos")
-    public static double CLAW_SERVO_POS = 0.39;
+    // This is both written to, and read from when using the subsystem without hardware
+    private double CLAW_SERVO_POS = 0.39;
 
     private Servo _clawServo;
     private ColorDistanceSensor _sensor;
-    private LiftSubsystem liftSubsystem;
-
     private boolean isHardware;
     private Alliance alliance;
+    private LiftSubsystem liftSubsystem;
+
     // This indicates that we've actually explicitly closed the claw at some point
     // which means the servo motor is engaged...
     private boolean servoSet;
@@ -58,7 +53,6 @@ public class ClawSubsystem implements Subsystem, Loggable {
         isHardware = true;
         autoClose = true;
         servoSet = false;
-        CLAW_SERVO_POS = CLOSE_SERVO_POSITION - .01;
     }
 
     // Non-functional subsystem constructor
@@ -69,7 +63,6 @@ public class ClawSubsystem implements Subsystem, Loggable {
         alliance = Alliance.NONE;
         isHardware = false;
         autoClose = false;
-        CLAW_SERVO_POS = OPEN_SERVO_POSITION;
     }
 
     public void open() {
@@ -90,11 +83,11 @@ public class ClawSubsystem implements Subsystem, Loggable {
                 // For no alliance, it's always an alliance cone :)
                 return true;
             case RED:
-                // Red is 'around' 0 degrees
-                return ConvertColor.isColor(readHsv(), 0, COLOR_RANGE, SAT_MIN, VAL_MIN);
+                // Red is 'around' 0 degrees in HSV world
+                return ColorHelper.isColor(readHsv(), 0, COLOR_RANGE, SAT_MIN, VAL_MIN);
             case BLUE:
-                // Blue is 'around' 240 degrees, but hue isn't 0-360, it's 0-180 so cut it in half
-                return ConvertColor.isColor(readHsv(), 120, COLOR_RANGE, SAT_MIN, VAL_MIN);
+                // Blue is 'around' 240 degrees in HSV world
+                return ColorHelper.isColor(readHsv(), 240, COLOR_RANGE, SAT_MIN, VAL_MIN);
             default:
                 return false;
         }
@@ -112,10 +105,9 @@ public class ClawSubsystem implements Subsystem, Loggable {
         autoClose = !autoClose;
     }
 
-    // This is run each iteration of the control system
     @Override
     public void periodic() {
-        if (autoClose) {
+        if (isHardware && autoClose) {
             if (liftSubsystem.canAutoClose() && !isClawClosed() && isAllianceCone() && isConeClose()) {
                 close();
             }
@@ -128,8 +120,9 @@ public class ClawSubsystem implements Subsystem, Loggable {
         servoSet = true;
         if (isHardware) {
             _clawServo.setPosition(pos);
+        } else {
+            CLAW_SERVO_POS = pos;
         }
-        CLAW_SERVO_POS = pos;
     }
 
     private double readServo() {
@@ -137,20 +130,22 @@ public class ClawSubsystem implements Subsystem, Loggable {
             double pos = _clawServo.getPosition();
             CLAW_SERVO_POS = pos;
             return pos;
+        } else {
+            return CLAW_SERVO_POS;
         }
-        return CLAW_SERVO_POS;
     }
 
     private double readSensor() {
         if (isHardware) {
             return _sensor.getDistance(DistanceUnit.CM);
+        } else {
+            return FAKE_DISTANCE;
         }
-        return FAKE_DISTANCE;
     }
 
     private int readHsv() {
         if (isHardware) {
-            return ConvertColor.rgbToHsv(_sensor.argb());
+            return _sensor.hsv();
         } else {
             return FAKE_HSV_VALUE;
         }
