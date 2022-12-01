@@ -14,9 +14,12 @@ import com.technototes.library.hardware2.HardwareBuilder;
 import com.technototes.library.util.Alliance;
 
 @Disabled
-@Autonomous(name = "Encoder/IMU Testing")
+@Autonomous(name = "Simple [Encoder/IMU]")
 @SuppressWarnings("unused")
 public class SimpleTeleOpMode extends LinearOpMode {
+    /*
+     * This is for doing testing without any requiring the TechnoLib command scheduler
+     */
     public Robot robot;
     public Hardware hardware;
 
