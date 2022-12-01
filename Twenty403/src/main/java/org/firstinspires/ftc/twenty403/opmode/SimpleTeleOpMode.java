@@ -18,7 +18,7 @@ import com.technototes.library.util.Alliance;
 @SuppressWarnings("unused")
 public class SimpleTeleOpMode extends LinearOpMode {
     /*
-     * This is for doing testing without any requiring the TechnoLib command scheduler
+     * This is for doing testing without requiring the TechnoLib command scheduler
      */
     public Robot robot;
     public Hardware hardware;

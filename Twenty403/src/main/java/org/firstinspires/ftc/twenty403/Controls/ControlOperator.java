@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.twenty403.Controls;
 
-import java.util.function.BooleanSupplier;
-
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.claw.ClawAutoCloseToggleCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;

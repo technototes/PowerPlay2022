@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.twenty403.Controls;
 
-import java.util.function.BooleanSupplier;
-
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
@@ -22,7 +20,6 @@ import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
 
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.ConditionalCommand;
-import com.technototes.library.control.CommandAxis;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;

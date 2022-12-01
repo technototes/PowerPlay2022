@@ -6,7 +6,8 @@ import java.util.function.BooleanSupplier;
 // You can also use it for true if *either* button is pressed.
 public class TwoButtons implements BooleanSupplier {
     public enum Combination {
-        AND, OR
+        AND,
+        OR
     };
 
     private BooleanSupplier a;
