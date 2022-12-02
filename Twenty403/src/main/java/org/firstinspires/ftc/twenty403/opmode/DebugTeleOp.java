@@ -7,12 +7,15 @@ import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
+@Disabled
 @TeleOp(name = "Debugging [dual controls]")
+@SuppressWarnings("unused")
 public class DebugTeleOp extends CommandOpMode {
     public Robot robot;
     public Hardware hardware;

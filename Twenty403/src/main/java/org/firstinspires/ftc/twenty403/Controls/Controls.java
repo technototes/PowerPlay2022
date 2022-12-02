@@ -17,11 +17,9 @@ import org.firstinspires.ftc.twenty403.command.lift.LiftMoveDownOverrideCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftMoveUpOverrideCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftSetZeroCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
-import org.firstinspires.ftc.twenty403.helpers.BothButtons;
 
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.ConditionalCommand;
-import com.technototes.library.control.CommandAxis;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
@@ -32,16 +30,15 @@ public class Controls {
     public CommandGamepad gamepad;
 
     public Stick driveLeftStick, driveRightStick;
-    public CommandButton resetGyroButton, driveStraighten, turboButton;
+    public CommandButton resetGyroButton, driveStraight, turboButton;
     public CommandButton liftDownButton, liftUpButton, clawOpenButton, clawCloseButton, liftOverrideZeroButton;
     public CommandButton liftGroundOrOverrideDown, liftLowOrOverrideUp, liftMedium, liftHigh, liftIntakePos;
-    public CommandAxis driveStraight;
-    public BothButtons override;
+    public CommandButton override;
 
     public Controls(CommandGamepad g, Robot r) {
         this.robot = r;
         gamepad = g;
-        override = new BothButtons(g.leftTrigger.getAsButton(0.5));
+        override = g.leftTrigger.getAsButton(0.5);
 
         AssignNamedControllerButton();
 
@@ -61,7 +58,7 @@ public class Controls {
         driveLeftStick = gamepad.leftStick;
         driveRightStick = gamepad.rightStick;
         turboButton = gamepad.leftStickButton;
-        driveStraight = gamepad.rightTrigger;
+        driveStraight = gamepad.rightTrigger.getAsButton(0.5);
 
         liftUpButton = gamepad.dpadRight;
 

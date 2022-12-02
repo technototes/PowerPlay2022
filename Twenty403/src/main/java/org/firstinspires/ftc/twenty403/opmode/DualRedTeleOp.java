@@ -12,6 +12,7 @@ import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
 @TeleOp(name = "Dual Red TeleOp")
+@SuppressWarnings("unused")
 public class DualRedTeleOp extends CommandOpMode {
     public Robot robot;
     public ControlsDriver controlsDriver;
