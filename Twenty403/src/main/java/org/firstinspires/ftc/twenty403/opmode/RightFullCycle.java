@@ -7,6 +7,7 @@ import org.firstinspires.ftc.twenty403.command.VisionCommand;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsBlue;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.twenty403.command.autonomous.blue_home.AutoBlueHomeParkingSelectionFullCycleCommand;
+import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -37,7 +38,9 @@ public class RightFullCycle extends CommandOpMode {
                                 CommandScheduler.getInstance()::terminateOpMode),
                         CommandOpMode.OpModeState.RUN);
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
-            CommandScheduler.getInstance().scheduleInit(new VisionCommand(robot.visionSystem));
+            CommandScheduler.getInstance()
+                    .scheduleInit(
+                            new VisionCommand(robot.visionSystem).alongWith(new ClawCloseCommand(robot.clawSubsystem)));
         }
     }
 }
