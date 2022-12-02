@@ -27,7 +27,7 @@ public class AutoConstantsBlue {
         public static ConfigurablePose W_JUNCTION = new ConfigurablePose(31, -10, 2);
 
         //public static ConfigurablePose BETWEEN_START_W_jUNCTION_ONE = new ConfigurablePose(40, -48, toRadians(180));
-        public static ConfigurablePose BETWEEN_START_W_JUNCTION_TWO = new ConfigurablePose(42, -12, 3.9);
+        public static ConfigurablePose BETWEEN_START_W_JUNCTION_TWO = new ConfigurablePose(42, -12, 3.8);
         public static ConfigurablePose BETWEEN_W_JUNCTION_STACK = new ConfigurablePose(43, -23, 1.6);
         public static ConfigurablePose BETWEEN_STACK_W_JUNCTION = new ConfigurablePose(40, -14, 2.4);
         public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(15, -60, toRadians(90));
