@@ -31,7 +31,9 @@ public class Robot implements Loggable {
     public MecanumDriveSubsystem mecanumDriveSubsystem;
     public VisionSubsystem visionSubsystem;
 
-    public Robot(Hardware hardware, boolean enableMecanumDrive, boolean enableLift, boolean enableArm, boolean enableClaw, boolean enableCamera, Alliance alliance, StartingPosition whichSide) {
+    public Robot(Hardware hardware, boolean enableMecanumDrive, boolean
+
+            enableLift, boolean enableArm, boolean enableClaw, boolean enableCamera, Alliance alliance, StartingPosition whichSide) {
         if (enableMecanumDrive) {
             /// Don't forget to check the order of the motors
             mecanumDriveSubsystem = new MecanumDriveSubsystem(hardware.leftFrontMotor, hardware.rightFrontMotor, hardware.leftRearMotor, hardware.rightRearMotor, hardware.imu);
@@ -54,7 +56,7 @@ public class Robot implements Loggable {
         } else {
             clawSubsystem = new ClawSubsystem(null, null);
         }
-        if (enableCamera){
+        if (enableCamera) {
             visionSubsystem = new VisionSubsystem(hardware.camera, alliance, whichSide);
         }
     }
@@ -68,7 +70,7 @@ public class Robot implements Loggable {
         VISION_DRIVE,
     }
 
-    public Robot(Hardware hardware, SubsystemCombo type, Alliance team, StartingPosition whichSide){
+    public Robot(Hardware hardware, SubsystemCombo type, Alliance team, StartingPosition whichSide) {
         this(hardware,
                 type == SubsystemCombo.DEFAULT ? RobotConstant.MECANUM_DRIVE_ENABLED : type == SubsystemCombo.DRIVE_ONLY || type == SubsystemCombo.VISION_DRIVE,
                 type == SubsystemCombo.DEFAULT ? RobotConstant.LIFT_ENABLED : type == SubsystemCombo.LIFT_ONLY,

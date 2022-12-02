@@ -31,7 +31,7 @@ public class MecanumDriveSubsystem extends MecanumDrivebaseSubsystem implements 
         public static double WHEEL_RADIUS = 1.88976; // in
 
         @GearRatio
-        public static double GEAR_RATIO = 1 / 19.2 ; // 5203 Series Yellow Jacket Planetary Gear Motor (19.2:1 Ratio)
+        public static double GEAR_RATIO = 1; // 5203 Series Yellow Jacket Planetary Gear Motor (19.2:1 Ratio)
 
         @TrackWidth
         public static double TRACK_WIDTH = 12.283; // in, Strafer Chassis Kit V5
@@ -69,7 +69,7 @@ public class MecanumDriveSubsystem extends MecanumDrivebaseSubsystem implements 
         public static PIDCoefficients HEADING_PID = new PIDCoefficients(8, 0, 0);
 
         @LateralMult
-        public static double LATERAL_MULTIPLIER = 1.14; // Lateral position is off by 14%
+        public static double LATERAL_MULTIPLIER = 1; // Lateral position is off by 14%
 
         @VXWeight
         public static double VX_WEIGHT = 1;
