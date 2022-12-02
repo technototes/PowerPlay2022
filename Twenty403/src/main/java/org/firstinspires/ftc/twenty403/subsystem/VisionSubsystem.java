@@ -6,12 +6,11 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import com.acmerobotics.dashboard.config.Config;
 
-import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.library.util.Alliance;
 import com.technototes.vision.hardware.Webcam;
 
-public class VisionSubsystem implements Subsystem, Loggable {
+public class VisionSubsystem implements Subsystem {
     @Config
     public static class VisionSubsystemConstants {
         // This is a super-low res image. I don't think we need higher resolution...
@@ -33,20 +32,31 @@ public class VisionSubsystem implements Subsystem, Loggable {
         visionPipeline = new VisionPipeline(alliance, side);
     }
 
+    public VisionSubsystem(Alliance alliance, StartingPosition side) {
+        camera = null;
+        visionPipeline = new VisionPipeline(alliance, side);
+    }
+
     public void startStreaming() {
-        camera.startStreaming(
-                VisionSubsystemConstants.WIDTH, VisionSubsystemConstants.HEIGHT, VisionSubsystemConstants.ROTATION);
+        if (camera != null) {
+            camera.startStreaming(
+                    VisionSubsystemConstants.WIDTH, VisionSubsystemConstants.HEIGHT, VisionSubsystemConstants.ROTATION);
+        }
     }
 
     public void startVisionPipeline() {
-        camera.setPipeline(visionPipeline);
-        camera.openCameraDeviceAsync(this::startStreaming, i -> startVisionPipeline());
+        if (camera != null) {
+            camera.setPipeline(visionPipeline);
+            camera.openCameraDeviceAsync(this::startStreaming, i -> startVisionPipeline());
+        }
     }
 
     public void stopVisionPipeline() {
-        camera.setPipeline(null);
-        camera.closeCameraDeviceAsync(() -> {
-            /* Do we need to do anything to stop the vision pipeline? */
-        });
+        if (camera != null) {
+            camera.setPipeline(null);
+            camera.closeCameraDeviceAsync(() -> {
+                /* Do we need to do anything to stop the vision pipeline? */
+            });
+        }
     }
 }

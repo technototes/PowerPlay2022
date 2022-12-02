@@ -7,6 +7,7 @@ import org.firstinspires.ftc.twenty403.command.VisionCommand;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsBlue;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.twenty403.command.autonomous.blue_home.AutoBlueHomeParkingSelectionFullCycleCommand;
+import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -15,7 +16,8 @@ import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
-@Autonomous(name = "RightFullCycle")
+@Autonomous(name = "Right Full Cycle")
+@SuppressWarnings("unused")
 public class RightFullCycle extends CommandOpMode {
     public Robot robot;
     public Controls controls;
@@ -24,7 +26,7 @@ public class RightFullCycle extends CommandOpMode {
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
-        robot = new Robot(hardware, Alliance.BLUE, StartingPosition.HOME);
+        robot = new Robot(hardware, Alliance.NONE, StartingPosition.HOME);
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Home.START.toPose());
         CommandScheduler.getInstance()
                 .scheduleForState(
@@ -37,7 +39,9 @@ public class RightFullCycle extends CommandOpMode {
                                 CommandScheduler.getInstance()::terminateOpMode),
                         CommandOpMode.OpModeState.RUN);
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
-            CommandScheduler.getInstance().scheduleInit(new VisionCommand(robot.visionSystem));
+            CommandScheduler.getInstance()
+                    .scheduleInit(
+                            new VisionCommand(robot.visionSystem).alongWith(new ClawCloseCommand(robot.clawSubsystem)));
         }
     }
 }

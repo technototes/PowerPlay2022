@@ -1,92 +1,107 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
-import android.util.Log;
-
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 
 import com.acmerobotics.dashboard.config.Config;
 
 import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.hardware.servo.Servo;
+import com.technototes.library.logger.Log;
+import com.technototes.library.logger.LogConfig;
+import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.library.util.Alliance;
 
 @Config
-public class ClawSubsystem implements Subsystem {
-    // Correct numbers, tested
+public class ClawSubsystem implements Subsystem, Loggable {
+    // Correct numbers, tested 11/27/22
     public static double OPEN_SERVO_POSITION = .3045;
     public static double CLOSE_SERVO_POSITION = .42;
 
     // # of CM distance before we auto-close the claw
     public static double CONE_IS_CLOSE_ENOUGH = 6.0;
 
-    private Servo clawServo;
-    private ColorDistanceSensor sensor;
-    private Boolean isHardware;
+    // used if the claw subsystem isn't connectedn (mid-blue)
+    public static int FAKE_RGB_VALUE = 0x008000;
+    // This should trigger a close
+    public static double FAKE_DISTANCE = 3.0;
+
+    // This is both written to, and read from when using the subsystem without hardware
+    @LogConfig.Run(duringInit = true, duringRun = true)
+    @Log.Number
+    public double CLAW_SERVO_POS = 0.35;
+
+    private Servo _clawServo;
+    private ColorDistanceSensor _sensor;
+    private boolean isHardware;
     private Alliance alliance;
     private LiftSubsystem liftSubsystem;
+
+    // This indicates that we've actually explicitly closed the claw at some point
+    // which means the servo motor is engaged...
+    private boolean servoSet;
+    // Should we automatically close the claw if we detect a cone?
     private boolean autoClose;
 
     public ClawSubsystem(LiftSubsystem lift, Servo claw, ColorDistanceSensor s, Alliance a) {
         liftSubsystem = lift;
-        clawServo = claw;
-        sensor = s;
+        _clawServo = claw;
+        _sensor = s;
         alliance = a;
         isHardware = true;
         autoClose = true;
+        servoSet = false;
     }
 
     // Non-functional subsystem constructor
     public ClawSubsystem() {
         liftSubsystem = null;
-        clawServo = null;
-        sensor = null;
+        _clawServo = null;
+        _sensor = null;
         alliance = Alliance.NONE;
         isHardware = false;
         autoClose = false;
     }
 
-    private static void log(String s) {
-        Log.d("Claw", s);
-    }
-
     public void open() {
-        log("Open");
-        if (isHardware) {
-            clawServo.setPosition(OPEN_SERVO_POSITION);
-        }
+        setServo(OPEN_SERVO_POSITION);
     }
 
     public void close() {
-        log("Close");
-        if (isHardware) {
-            clawServo.setPosition(CLOSE_SERVO_POSITION);
-        }
+        setServo(CLOSE_SERVO_POSITION);
     }
 
     public boolean isConeClose() {
-        log("isConeClose");
-        if (isHardware && sensor.getDistance(DistanceUnit.CM) <= CONE_IS_CLOSE_ENOUGH) {
-            return true;
-        }
-        return false;
+        return readSensor() <= CONE_IS_CLOSE_ENOUGH;
     }
 
     public boolean isAllianceCone() {
-        return (sensor.red() > sensor.blue()) == (alliance == Alliance.RED);
+        switch (alliance) {
+            case NONE:
+                // For no alliance, it's always an alliance cone :)
+                return true;
+            case RED:
+                int rgb = readRgb();
+                return ColorHelper.red(rgb) > ColorHelper.blue(rgb);
+            case BLUE:
+                int rgb2 = readRgb();
+                return ColorHelper.blue(rgb2) > ColorHelper.red(rgb2);
+            default:
+                return false;
+        }
     }
 
     public boolean isClawClosed() {
-        double curPos = clawServo.getPosition();
-        return Math.abs(curPos - CLOSE_SERVO_POSITION) < Math.abs(curPos - OPEN_SERVO_POSITION);
+        double curPos = readServo();
+        // This is going to say the claw is closed, just because we squeeze the jaws together
+        // manually, so we need to check to see if the servo has had it's position explicitly set
+        // instead of just checking the servo's position...
+        return servoSet && Math.abs(curPos - CLOSE_SERVO_POSITION) < Math.abs(curPos - OPEN_SERVO_POSITION);
     }
 
     public void toggleAutoClose() {
         autoClose = !autoClose;
-    }
-
-    public Servo getServo() {
-        return clawServo;
     }
 
     @Override
@@ -95,6 +110,42 @@ public class ClawSubsystem implements Subsystem {
             if (liftSubsystem.canAutoClose() && !isClawClosed() && isAllianceCone() && isConeClose()) {
                 close();
             }
+        }
+    }
+
+    // All hardware access should be down here:
+    private void setServo(double pos) {
+        // Remember that we've actually set the servo's position
+        servoSet = true;
+        if (isHardware) {
+            _clawServo.setPosition(pos);
+        }
+        CLAW_SERVO_POS = pos;
+    }
+
+    private double readServo() {
+        if (isHardware) {
+            double pos = _clawServo.getPosition();
+            CLAW_SERVO_POS = pos;
+            return pos;
+        } else {
+            return CLAW_SERVO_POS;
+        }
+    }
+
+    private double readSensor() {
+        if (isHardware) {
+            return _sensor.getDistance(DistanceUnit.CM);
+        } else {
+            return FAKE_DISTANCE;
+        }
+    }
+
+    private int readRgb() {
+        if (isHardware) {
+            return _sensor.rgb();
+        } else {
+            return FAKE_RGB_VALUE;
         }
     }
 }

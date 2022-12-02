@@ -17,6 +17,7 @@ import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
 @Autonomous(name = "LeftFullCycle")
+@SuppressWarnings("unused")
 public class LeftFullCycle extends CommandOpMode {
     public Robot robot;
     public Controls controls;
@@ -25,7 +26,7 @@ public class LeftFullCycle extends CommandOpMode {
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
-        robot = new Robot(hardware, Alliance.BLUE, StartingPosition.AWAY);
+        robot = new Robot(hardware, Alliance.NONE, StartingPosition.AWAY);
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Away.START.toPose());
         CommandScheduler.getInstance()
                 .scheduleForState(
