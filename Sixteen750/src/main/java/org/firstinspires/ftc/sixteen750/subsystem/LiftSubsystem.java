@@ -73,6 +73,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
     }
 
+    private void setTargetPostion_OVERRIDE(double lpos) {
+        leftPidController.setTargetPosition(lpos);
+    }
+
     private void setTargetPositionWithLogging(double lPos) {
         setTargetPosition(lPos);
         if (isLeftConnected) {
@@ -114,7 +118,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         return 0.0;
     }
 
-    public double getLeftTargetPos(){
+    public double getLeftTargetPos() {
         if (isLeftConnected) {
             return leftPidController.getTargetPosition();
         }
@@ -149,7 +153,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
     }
 
-    private void setNewZero(){
+    private void setNewZero() {
         if (isLeftConnected) {
             L_ACTUAL_ZERO = leftMotor.get();
         }
@@ -201,6 +205,14 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     public void moveUp() {
         setTargetPositionWithLogging(getLeftTargetPos() + L_REGULAR_MOVE);
+    }
+
+    public void moveUpOVERRIDE() {
+        setTargetPostion_OVERRIDE(getLeftTargetPos() + L_REGULAR_MOVE);
+    }
+
+    public void moveDownOVERRIDE() {
+        setTargetPostion_OVERRIDE(getLeftTargetPos() - L_REGULAR_MOVE);
     }
 
     public void moveDown() {
