@@ -10,6 +10,7 @@ import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 
 import com.technototes.library.command.SequentialCommandGroup;
+import com.technototes.library.command.WaitCommand;
 import com.technototes.path.command.TrajectorySequenceCommand;
 
 public class AutoBlueAwayFullCycleRight extends SequentialCommandGroup {
@@ -18,7 +19,8 @@ public class AutoBlueAwayFullCycleRight extends SequentialCommandGroup {
         super(
                 new ClawCloseCommand(clawSubsystem),
                 new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.START_TO_E_JUNCTION)
-                        .alongWith(new LiftHighJunctionCommand(liftSubsystem)),
+                        .alongWith(new SequentialCommandGroup(
+                                new WaitCommand(0.2), new LiftHighJunctionCommand(liftSubsystem))),
                 new ClawOpenCommand(clawSubsystem),
                 new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.E_JUNCTION_TO_STACK)
                         .alongWith(new LiftCollectCommand(liftSubsystem)),

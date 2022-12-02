@@ -53,7 +53,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     public LiftSubsystem(EncodedMotor<DcMotorEx> leftM, Supplier<Double> voltageGetter) {
         this.voltageGetter = voltageGetter;
-        this.currentVoltage = this.voltageGetter.get();
+        this.currentVoltage = (this.voltageGetter == null) ? 0 : this.voltageGetter.get();
         if (leftM != null) {
             this.leftMotor = leftM;
             this.leftPidController = new PIDFController(L_PID, 0, 0, 0, (x, y) -> 0.1);
@@ -71,6 +71,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         if (isLeftConnected) {
             leftPidController.setTargetPosition(Range.clip(lPos, L_ABSOLUTE_MIN_HEIGHT, L_ABSOLUTE_MAX_HEIGHT));
         }
+    }
+
+    private void setTargetPostion_OVERRIDE(double lpos) {
+        leftPidController.setTargetPosition(lpos);
     }
 
     private void setTargetPositionWithLogging(double lPos) {
@@ -114,7 +118,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         return 0.0;
     }
 
-    public double getLeftTargetPos(){
+    public double getLeftTargetPos() {
         if (isLeftConnected) {
             return leftPidController.getTargetPosition();
         }
@@ -149,7 +153,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
     }
 
-    private void setNewZero(){
+    private void setNewZero() {
         if (isLeftConnected) {
             L_ACTUAL_ZERO = leftMotor.get();
         }
@@ -201,6 +205,14 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     public void moveUp() {
         setTargetPositionWithLogging(getLeftTargetPos() + L_REGULAR_MOVE);
+    }
+
+    public void moveUpOVERRIDE() {
+        setTargetPostion_OVERRIDE(getLeftTargetPos() + L_REGULAR_MOVE);
+    }
+
+    public void moveDownOVERRIDE() {
+        setTargetPostion_OVERRIDE(getLeftTargetPos() - L_REGULAR_MOVE);
     }
 
     public void moveDown() {

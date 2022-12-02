@@ -12,9 +12,11 @@ import org.firstinspires.ftc.sixteen750.command.lift.LiftGroundJunctionCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftHighPoleCommand;
 import org.firstinspires.ftc.sixteen750.command.drive.ResetGyroCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftMoveDownCommand;
+import org.firstinspires.ftc.sixteen750.command.lift.LiftMoveDownOverrideCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftMoveUpCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftLowPoleCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftMidPoleCommand;
+import org.firstinspires.ftc.sixteen750.command.lift.LiftMoveUpOverrideCommand;
 
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.control.CommandGamepad;
@@ -45,9 +47,9 @@ public class ControlsDriver {
 
     public void bindMecanumDriveControls() {
         // Probably not a good idea to bind the drive controls to more than one gamepad
-         CommandScheduler
-                 .getInstance()
-                 .scheduleJoystick(new MecanumDriveCommand(robot.mecanumDriveSubsystem, gamepad.leftStick, gamepad.rightStick, gamepad.square));
+        CommandScheduler
+                .getInstance()
+                .scheduleJoystick(new MecanumDriveCommand(robot.mecanumDriveSubsystem, gamepad.leftStick, gamepad.rightStick, gamepad.square));
         gamepad.rightStickButton.whenPressed(new ResetGyroCommand(robot.mecanumDriveSubsystem, gamepad));
     }
 
@@ -63,8 +65,8 @@ public class ControlsDriver {
     }
 
     public void bindDriverLiftControls() {
-        gamepad.leftBumper.whenPressed(new LiftMoveUpCommand(robot.liftSubsystem));
-        gamepad.rightBumper.whenPressed(new LiftMoveDownCommand(robot.liftSubsystem));
+        gamepad.leftBumper.whenPressed(new LiftMoveUpOverrideCommand(robot.liftSubsystem));
+        gamepad.rightBumper.whenPressed(new LiftMoveDownOverrideCommand(robot.liftSubsystem));
         gamepad.square.whenPressed(new LiftLowPoleCommand(robot.liftSubsystem));
         gamepad.triangle.whenPressed(new LiftMidPoleCommand(robot.liftSubsystem));
         gamepad.circle.whenPressed(new LiftHighPoleCommand(robot.liftSubsystem));

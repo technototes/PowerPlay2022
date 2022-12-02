@@ -9,7 +9,7 @@ import com.technototes.library.subsystem.Subsystem;
 
 public class ClawSubsystem implements Subsystem {
     public static double CLAW_OPEN = 0.6; // Verified
-    public static double CLAW_CLOSE = 0.45; // Verified
+    public static double CLAW_CLOSE = 0.50; // Verified
 
     private Servo clawServo;
     private DistanceSensor distanceSensor; // not on the bot currently

@@ -11,7 +11,7 @@ import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
 
 public class AutoConstantsBlue {
     public static class Home {
-        public static ConfigurablePose START = new ConfigurablePose(-36, 66, toRadians(-90));
+        public static ConfigurablePose START = new ConfigurablePose(-36, 66, toRadians(90));
         public static ConfigurablePose STACK = new ConfigurablePose(-60, 12, toRadians(180));
         public static ConfigurablePose BETWEEN = new ConfigurablePose(-40, 12, toRadians(180));
         public static ConfigurablePose BETWEEN_2 = new ConfigurablePose(-36, 6, toRadians(90));
@@ -99,23 +99,23 @@ public class AutoConstantsBlue {
                                 .splineTo(RIGHT.toVec(), LEFT.getHeading())
                                 .build(),
                 START_TO_LEFT_PARK =
-                b -> b.apply(START.toPose())
-                        //.lineToLinearHeading(TERMINAL.toPose())
-                        .lineToLinearHeading(BETWEEN_START_LEFT.toPose())
-                        .lineToLinearHeading(LEFT.toPose())
-                        .build(),
+                        b -> b.apply(START.toPose())
+                                //.lineToLinearHeading(TERMINAL.toPose())
+                                .lineToLinearHeading(BETWEEN_START_LEFT.toPose())
+                                .lineToLinearHeading(LEFT.toPose())
+                                .build(),
                 START_TO_MIDDLE_PARK =
-                b -> b.apply(START.toPose())
-                        //.lineToLinearHeading(TERMINAL.toPose())
-                        //.lineToLinearHeading(START.toPose())
-                        .lineToLinearHeading(MIDDLE.toPose())
-                        .build(),
+                        b -> b.apply(START.toPose())
+                                //.lineToLinearHeading(TERMINAL.toPose())
+                                //.lineToLinearHeading(START.toPose())
+                                .lineToLinearHeading(MIDDLE.toPose())
+                                .build(),
                 START_TO_RIGHT_PARK =
-                b -> b.apply(START.toPose())
-                        //.lineToLinearHeading(TERMINAL.toPose())
-                        .lineToLinearHeading(BETWEEN_START_RIGHT.toPose())
-                        .lineToLinearHeading(RIGHT.toPose())
-                        .build();
+                        b -> b.apply(START.toPose())
+                                //.lineToLinearHeading(TERMINAL.toPose())
+                                .lineToLinearHeading(BETWEEN_START_RIGHT.toPose())
+                                .lineToLinearHeading(RIGHT.toPose())
+                                .build();
 
 
     }
@@ -124,16 +124,16 @@ public class AutoConstantsBlue {
         public static ConfigurablePose START = new ConfigurablePose(-36, -66, toRadians(90));
         public static ConfigurablePose JUNCTION = new ConfigurablePose(-28, -4, toRadians(180));
         public static ConfigurablePose STACK = new ConfigurablePose(-62, -12, toRadians(180));
-        public static ConfigurablePose PARK_LEFT = new ConfigurablePose(-60, -36, toRadians(0));
+        public static ConfigurablePose PARK_LEFT = new ConfigurablePose(-60, -36, toRadians(90));
         public static ConfigurablePose PARK_MIDDLE = new ConfigurablePose(-36, -36, toRadians(-90));
         public static ConfigurablePose PARK_RIGHT = new ConfigurablePose(-12, -36, toRadians(-90));
-        public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(-58, -60, toRadians(90));
+        public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(-58, -66, toRadians(90));
         public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(-14, -60, toRadians(90));
         public static ConfigurablePose LEFT = new ConfigurablePose(-58, -22, toRadians(90));
         public static ConfigurablePose MIDDLE = new ConfigurablePose(-37, -16, toRadians(90));
         public static ConfigurablePose RIGHT = new ConfigurablePose(-14, -15, toRadians(90));
 
-public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
+        public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
                 START_TO_JUNCTION =
                 b -> b.apply(START.toPose())
                         .splineTo(JUNCTION.toVec(), JUNCTION.getHeading())
@@ -158,18 +158,18 @@ public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, Trajec
                         b -> b.apply(STACK.toPose())
                                 .lineToLinearHeading(JUNCTION.toPose())
                                 .build(),
-        START_TO_LEFT_PARK =
-                b -> b.apply(START.toPose())
-                        //.lineToLinearHeading(TERMINAL.toPose())
-                        .lineToLinearHeading(BETWEEN_START_LEFT.toPose())
-                        .lineToLinearHeading(LEFT.toPose())
-                        .build(),
-        START_TO_MIDDLE_PARK =
-                b -> b.apply(START.toPose())
-                        //.lineToLinearHeading(TERMINAL.toPose())
-                        //.lineToLinearHeading(START.toPose())
-                        .lineToLinearHeading(MIDDLE.toPose())
-                        .build(),
+                START_TO_LEFT_PARK =
+                        b -> b.apply(START.toPose())
+                                //.lineToLinearHeading(TERMINAL.toPose())
+                                .lineToLinearHeading(BETWEEN_START_LEFT.toPose())
+                                .lineToLinearHeading(LEFT.toPose())
+                                .build(),
+                START_TO_MIDDLE_PARK =
+                        b -> b.apply(START.toPose())
+                                //.lineToLinearHeading(TERMINAL.toPose())
+                                //.lineToLinearHeading(START.toPose())
+                                .lineToLinearHeading(MIDDLE.toPose())
+                                .build(),
 
         START_TO_RIGHT_PARK =
                 b -> b.apply(START.toPose())
