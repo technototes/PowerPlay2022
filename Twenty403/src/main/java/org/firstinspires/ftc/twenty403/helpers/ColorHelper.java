@@ -7,6 +7,14 @@ public class ColorHelper {
         return hsv >> 16;
     }
 
+    public static int red(int rgb) {
+        return (rgb >> 16) & 0xFF;
+    }
+
+    public static int blue(int rgb) {
+        return rgb & 0xFF;
+    }
+
     public static int sat(int hsv) {
         // Get the 'middle' 8 bits for the saturation
         return (hsv >> 8) & 0xFF;

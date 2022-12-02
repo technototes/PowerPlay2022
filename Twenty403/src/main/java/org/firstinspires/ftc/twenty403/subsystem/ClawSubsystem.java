@@ -7,11 +7,14 @@ import com.acmerobotics.dashboard.config.Config;
 
 import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.hardware.servo.Servo;
+import com.technototes.library.logger.Log;
+import com.technototes.library.logger.LogConfig;
+import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.library.util.Alliance;
 
 @Config
-public class ClawSubsystem implements Subsystem {
+public class ClawSubsystem implements Subsystem, Loggable {
     // Correct numbers, tested 11/27/22
     public static double OPEN_SERVO_POSITION = .3045;
     public static double CLOSE_SERVO_POSITION = .42;
@@ -19,19 +22,15 @@ public class ClawSubsystem implements Subsystem {
     // # of CM distance before we auto-close the claw
     public static double CONE_IS_CLOSE_ENOUGH = 6.0;
 
-    // The 'range' to allow the color to be in to detect the cone
-    public static int COLOR_RANGE = 30;
-    public static int SAT_MIN = 30; // Less saturation is white
-    public static int VAL_MIN = 30; // less value is black
-
-    // This is a kind of red color (h 0, s 128, v 128)
-    // used if the claw subsystem isn't connected:
-    public static int FAKE_HSV_VALUE = 0x008080;
+    // used if the claw subsystem isn't connectedn (mid-blue)
+    public static int FAKE_RGB_VALUE = 0x008000;
     // This should trigger a close
     public static double FAKE_DISTANCE = 3.0;
 
     // This is both written to, and read from when using the subsystem without hardware
-    private double CLAW_SERVO_POS = 0.39;
+    @LogConfig.Run(duringInit = true, duringRun = true)
+    @Log.Number
+    public double CLAW_SERVO_POS = 0.35;
 
     private Servo _clawServo;
     private ColorDistanceSensor _sensor;
@@ -83,11 +82,11 @@ public class ClawSubsystem implements Subsystem {
                 // For no alliance, it's always an alliance cone :)
                 return true;
             case RED:
-                // Red is 'around' 0 degrees in HSV world
-                return ColorHelper.isColor(readHsv(), 0, COLOR_RANGE, SAT_MIN, VAL_MIN);
+                int rgb = readRgb();
+                return ColorHelper.red(rgb) > ColorHelper.blue(rgb);
             case BLUE:
-                // Blue is 'around' 240 degrees in HSV world
-                return ColorHelper.isColor(readHsv(), 240, COLOR_RANGE, SAT_MIN, VAL_MIN);
+                int rgb2 = readRgb();
+                return ColorHelper.blue(rgb2) > ColorHelper.red(rgb2);
             default:
                 return false;
         }
@@ -120,9 +119,8 @@ public class ClawSubsystem implements Subsystem {
         servoSet = true;
         if (isHardware) {
             _clawServo.setPosition(pos);
-        } else {
-            CLAW_SERVO_POS = pos;
         }
+        CLAW_SERVO_POS = pos;
     }
 
     private double readServo() {
@@ -143,11 +141,11 @@ public class ClawSubsystem implements Subsystem {
         }
     }
 
-    private int readHsv() {
+    private int readRgb() {
         if (isHardware) {
-            return _sensor.hsv();
+            return _sensor.rgb();
         } else {
-            return FAKE_HSV_VALUE;
+            return FAKE_RGB_VALUE;
         }
     }
 }
