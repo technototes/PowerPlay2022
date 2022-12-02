@@ -53,7 +53,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     public LiftSubsystem(EncodedMotor<DcMotorEx> leftM, Supplier<Double> voltageGetter) {
         this.voltageGetter = voltageGetter;
-        this.currentVoltage = this.voltageGetter.get();
+        this.currentVoltage = (this.voltageGetter == null) ? 0 : this.voltageGetter.get();
         if (leftM != null) {
             this.leftMotor = leftM;
             this.leftPidController = new PIDFController(L_PID, 0, 0, 0, (x, y) -> 0.1);
