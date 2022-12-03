@@ -2,14 +2,14 @@ package org.firstinspires.ftc.sixteen750.command.autonomous.left;
 
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.path.command.TrajectorySequenceCommand;
-import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
 import org.firstinspires.ftc.sixteen750.command.autonomous.AutoConstantsBlue;
+import org.firstinspires.ftc.sixteen750.subsystem.MecanumDriveSubsystem;
 
 public class LeftJustParkMiddle extends SequentialCommandGroup {
-    public LeftJustParkMiddle(MecanumDrivebaseSubsystem drivebaseSubsystem) {
+    public LeftJustParkMiddle(MecanumDriveSubsystem driveSubsystem) {
         super(
-                new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.START_TO_MIDDLE_PARK)
+                new TrajectorySequenceCommand(driveSubsystem, AutoConstantsBlue.Away.START_TO_MIDDLE_PARK)
         );
     }
 }
