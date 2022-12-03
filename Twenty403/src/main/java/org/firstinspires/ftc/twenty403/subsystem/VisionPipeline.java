@@ -71,24 +71,16 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         public static Scalar HIGHLIGHT = new Scalar(255, 0, 255);
     }
 
-    @LogConfig.Run(duringInit = true, duringRun = false)
-    @Log
-    public String position = "<uninit>";
-
-    private void showPos() {
-        if (leftDetected) {
-            position = "left";
-        } else if (rightDetected) {
-            position = "right";
-        } else if (middleDetected) {
-            position = "middle";
-        } else {
-            position = "!!!UNKNOWN!!!";
-        }
-    }
-
+    @LogConfig.Run(duringRun = false, duringInit = true)
+    @Log.Boolean(name = "left")
     public volatile boolean leftDetected = false;
+
+    @LogConfig.Run(duringRun = false, duringInit = true)
+    @Log.Boolean(name = "middle")
     public volatile boolean middleDetected = true;
+
+    @LogConfig.Run(duringRun = false, duringInit = true)
+    @Log.Boolean(name = "right")
     public volatile boolean rightDetected = false;
 
     @LogConfig.Run(duringRun = false, duringInit = true)
@@ -147,7 +139,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         middleDetected = countA >= countY && countA >= countP;
         rightDetected = countP >= countA && countP >= countY;
         leftDetected = !rightDetected && !middleDetected;
-        showPos();
+
         // Draw a rectangle around the area we're looking at, for debugging
         int x = Range.clip(VisionConstants.X - 1, 0, input.width() - 1);
         int y = Range.clip(VisionConstants.Y - 1, 0, input.height() - 1);
