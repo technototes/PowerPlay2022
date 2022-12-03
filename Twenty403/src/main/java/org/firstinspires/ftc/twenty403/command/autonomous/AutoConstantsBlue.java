@@ -13,6 +13,7 @@ import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
 public class AutoConstantsBlue {
     @Config
     public static class Home {
+        public static double finalCycleStartTime = 20;
         public static ConfigurablePose START = new ConfigurablePose(36, -66, toRadians(90));
         public static ConfigurablePose TELESTART = new ConfigurablePose(0, 0, toRadians(90));
         public static ConfigurablePose FORWARD_MOVE = new ConfigurablePose(0, 24, toRadians(90));

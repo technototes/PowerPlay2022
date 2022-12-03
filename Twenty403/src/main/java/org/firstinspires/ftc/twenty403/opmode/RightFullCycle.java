@@ -36,7 +36,7 @@ public class RightFullCycle extends CommandOpMode {
         CommandScheduler.getInstance()
                 .scheduleForState(
                         new SequentialCommandGroup(
-                                new AutoBlueHomeParkingSelectionFullCycleCommand(robot),
+                                new AutoBlueHomeParkingSelectionFullCycleCommand(robot, () -> this.getOpModeRuntime()),
                                 CommandScheduler.getInstance()::terminateOpMode),
                         CommandOpMode.OpModeState.RUN);
         if (Robot.RobotConstant.CAMERA_CONNECTED) {

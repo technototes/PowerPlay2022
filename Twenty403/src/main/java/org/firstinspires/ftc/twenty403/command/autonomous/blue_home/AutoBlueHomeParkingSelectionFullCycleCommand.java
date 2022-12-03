@@ -12,19 +12,21 @@ import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
 
 import com.technototes.library.command.ChoiceCommand;
 
+import java.util.function.DoubleSupplier;
+
 public class AutoBlueHomeParkingSelectionFullCycleCommand extends ChoiceCommand {
     public AutoBlueHomeParkingSelectionFullCycleCommand(
-            Robot robot
+            Robot robot, DoubleSupplier currOpModeRunTime
     ) {
         super(
                 new Pair<>(
                         robot.visionSystem.visionPipeline::left,
-                        new AutoBlueHomeFullCycle(robot, AutoConstantsBlue.Home.W_JUNCTION_TO_LEFT_PARK)),
+                        new AutoBlueHomeFullCycle(robot, AutoConstantsBlue.Home.W_JUNCTION_TO_LEFT_PARK, currOpModeRunTime)),
                 new Pair<>(
                         robot.visionSystem.visionPipeline::middle,
-                        new AutoBlueHomeFullCycle(robot, AutoConstantsBlue.Home.W_JUNCTION_TO_MIDDLE_PARK)),
+                        new AutoBlueHomeFullCycle(robot, AutoConstantsBlue.Home.W_JUNCTION_TO_MIDDLE_PARK, currOpModeRunTime)),
                 new Pair<>(
                         robot.visionSystem.visionPipeline::right,
-                        new AutoBlueHomeFullCycle(robot, AutoConstantsBlue.Home.W_JUNCTION_TO_RIGHT_PARK)));
+                        new AutoBlueHomeFullCycle(robot, AutoConstantsBlue.Home.W_JUNCTION_TO_RIGHT_PARK, currOpModeRunTime)));
     }
 }
