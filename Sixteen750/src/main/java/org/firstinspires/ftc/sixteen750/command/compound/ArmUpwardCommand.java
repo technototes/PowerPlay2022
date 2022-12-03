@@ -8,6 +8,6 @@ import org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem;
 
 public class ArmUpwardCommand extends SequentialCommandGroup {
     public ArmUpwardCommand(ArmSubsystem armSubsystem) {
-        addCommands(new ElbowUpwardCommand(armSubsystem), new FlipperUpwardCommand(armSubsystem));
+        super(new ElbowUpwardCommand(armSubsystem), new FlipperUpwardCommand(armSubsystem));
     }
 }
