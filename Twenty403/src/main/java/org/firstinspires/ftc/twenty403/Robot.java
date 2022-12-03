@@ -56,8 +56,6 @@ public class Robot implements Loggable {
         }
         if (RobotConstant.CAMERA_CONNECTED) {
             visionSystem = new VisionSubsystem(hardware.camera, team, whichSide);
-        } else {
-            visionSystem = new VisionSubsystem(team, whichSide);
         }
         // Read the voltage
         initialVoltage = hardware.voltage();

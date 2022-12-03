@@ -6,6 +6,8 @@ import java.util.function.Function;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.profile.AccelerationConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAccelerationConstraint;
 import com.technototes.path.geometry.ConfigurablePose;
 import com.technototes.path.trajectorysequence.TrajectorySequence;
 import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
@@ -13,22 +15,25 @@ import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
 public class AutoConstantsBlue {
     @Config
     public static class Home {
+        public static double finalCycleStartTime = 5;
         public static ConfigurablePose START = new ConfigurablePose(36, -66, toRadians(90));
+        public static ConfigurablePose STRAIGHT = new ConfigurablePose(36, -18, toRadians(90));
+        public static ConfigurablePose LEFTSIDE = new ConfigurablePose(-12,-66, toRadians(90));
         public static ConfigurablePose TELESTART = new ConfigurablePose(0, 0, toRadians(90));
         public static ConfigurablePose FORWARD_MOVE = new ConfigurablePose(0, 24, toRadians(90));
         public static ConfigurablePose BACKWARD_MOVE = new ConfigurablePose(0, 24, toRadians(90));
         public static ConfigurablePose LEFT_MOVE = new ConfigurablePose(-24, 0, toRadians(90));
         public static ConfigurablePose RIGHT_MOVE = new ConfigurablePose(24, 0, toRadians(90));
 
-        public static ConfigurablePose STACK = new ConfigurablePose(71, -17, toRadians(0));
+        public static ConfigurablePose STACK = new ConfigurablePose(71, -19, toRadians(0));
         public static ConfigurablePose LEFT = new ConfigurablePose(18, -18, toRadians(90));
         public static ConfigurablePose MIDDLE = new ConfigurablePose(36, -16, toRadians(90));
         public static ConfigurablePose RIGHT = new ConfigurablePose(60, -17, toRadians(90));
-        public static ConfigurablePose W_JUNCTION = new ConfigurablePose(31, -11, 2);
+        public static ConfigurablePose W_JUNCTION = new ConfigurablePose(32, -11, 2);
 
         //public static ConfigurablePose BETWEEN_START_W_jUNCTION_ONE = new ConfigurablePose(40, -48, toRadians(180));
         public static ConfigurablePose BETWEEN_START_W_JUNCTION_TWO = new ConfigurablePose(42, -12, 3.8);
-        public static ConfigurablePose BETWEEN_W_JUNCTION_STACK = new ConfigurablePose(43, -20, 1.5);
+        public static ConfigurablePose BETWEEN_W_JUNCTION_STACK = new ConfigurablePose(43, -23, 1.5);
         public static ConfigurablePose BETWEEN_STACK_W_JUNCTION = new ConfigurablePose(40, -14, 2.4);
         public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(15, -60, toRadians(90));
         public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(60, -60, toRadians(90));
@@ -52,6 +57,23 @@ public class AutoConstantsBlue {
                         b -> b.apply(TELESTART.toPose())
                                 .lineToLinearHeading(RIGHT_MOVE.toPose())
                                 .build(),
+        //Testing Straights
+        START_TO_STRAIGHT =
+                b -> b.apply(START.toPose())
+                        .lineTo(STRAIGHT.toPose().vec())
+                        .build(),
+        STRAIGHT_TO_START =
+                b -> b.apply(STRAIGHT.toPose())
+                        .lineTo(START.toPose().vec())
+                        .build(),
+        START_TO_LEFTSIDE =
+                b -> b.apply(START.toPose())
+                        .lineTo(LEFTSIDE.toPose().vec())
+                        .build(),
+        LEFTSIDE_TO_START =
+                b -> b.apply(LEFTSIDE.toPose())
+                        .lineTo(START.toPose().vec())
+                        .build(),
 
         START_TO_W_JUNCTION =
                 b -> b.apply(START.toPose())
