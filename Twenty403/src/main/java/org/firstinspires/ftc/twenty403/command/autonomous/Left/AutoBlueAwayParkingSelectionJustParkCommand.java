@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.twenty403.command.autonomous.blue_away;
+package org.firstinspires.ftc.twenty403.command.autonomous.Left;
 
 import android.util.Pair;
 

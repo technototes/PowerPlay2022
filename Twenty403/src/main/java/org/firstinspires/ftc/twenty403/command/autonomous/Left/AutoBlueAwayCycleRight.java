@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.twenty403.command.autonomous.blue_away;
+package org.firstinspires.ftc.twenty403.command.autonomous.Left;
 
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsBlue;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
@@ -12,8 +12,8 @@ import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.path.command.TrajectorySequenceCommand;
 
-public class AutoBlueAwayCycleMiddle extends SequentialCommandGroup {
-    public AutoBlueAwayCycleMiddle(
+public class AutoBlueAwayCycleRight extends SequentialCommandGroup {
+    public AutoBlueAwayCycleRight(
             DrivebaseSubsystem drivebaseSubsystem, ClawSubsystem clawSubsystem, LiftSubsystem liftSubsystem) {
         super(new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Away.START_TO_E_JUNCTION)
                 .alongWith(
@@ -26,7 +26,7 @@ public class AutoBlueAwayCycleMiddle extends SequentialCommandGroup {
                                 .alongWith(new LiftHighJunctionCommand(liftSubsystem)),
                         new ClawOpenCommand(clawSubsystem),
                         new TrajectorySequenceCommand(
-                                        drivebaseSubsystem, AutoConstantsBlue.Away.E_JUNCTION_TO_MIDDLE_PARK)
+                                        drivebaseSubsystem, AutoConstantsBlue.Away.E_JUNCTION_TO_RIGHT_PARK)
                                 .alongWith(new LiftCollectCommand(liftSubsystem))));
     }
 }

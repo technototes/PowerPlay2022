@@ -42,8 +42,7 @@ public class RightFullCycle extends CommandOpMode {
                         CommandOpMode.OpModeState.RUN);
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
             CommandScheduler.getInstance()
-                    .scheduleInit(
-                            new VisionCommand(robot.visionSystem).alongWith(new ClawCloseCommand(robot.clawSubsystem)));
+                    .scheduleInit(new ClawCloseCommand(robot.clawSubsystem).andThen(new VisionCommand(robot.visionSystem)));
         }
     }
 }
