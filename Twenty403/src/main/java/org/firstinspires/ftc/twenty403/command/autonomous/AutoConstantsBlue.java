@@ -6,6 +6,8 @@ import java.util.function.Function;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.profile.AccelerationConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAccelerationConstraint;
 import com.technototes.path.geometry.ConfigurablePose;
 import com.technototes.path.trajectorysequence.TrajectorySequence;
 import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
@@ -14,6 +16,7 @@ public class AutoConstantsBlue {
     @Config
     public static class Home {
         public static ConfigurablePose START = new ConfigurablePose(36, -66, toRadians(90));
+        public static ConfigurablePose STRAIGHT = new ConfigurablePose(36, -18, toRadians(90));
         public static ConfigurablePose TELESTART = new ConfigurablePose(0, 0, toRadians(90));
         public static ConfigurablePose FORWARD_MOVE = new ConfigurablePose(0, 24, toRadians(90));
         public static ConfigurablePose BACKWARD_MOVE = new ConfigurablePose(0, 24, toRadians(90));
@@ -52,7 +55,10 @@ public class AutoConstantsBlue {
                         b -> b.apply(TELESTART.toPose())
                                 .lineToLinearHeading(RIGHT_MOVE.toPose())
                                 .build(),
-
+        START_TO_STRAIGHT =
+                b -> b.apply(START.toPose())
+                        .lineTo(STRAIGHT.toPose().vec())
+                        .build(),
         START_TO_W_JUNCTION =
                 b -> b.apply(START.toPose())
                         //.lineToLinearHeading(BETWEEN_START_W_jUNCTION_ONE.toPose())
