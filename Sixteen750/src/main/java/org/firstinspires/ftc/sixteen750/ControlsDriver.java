@@ -25,24 +25,35 @@ public class ControlsDriver {
     public Robot robot;
     public CommandGamepad gamepad;
 
-    public ControlsDriver(CommandGamepad g, Robot r) {
+    public ControlsDriver(CommandGamepad g, Robot r, boolean enableMecanumDrive, boolean enableLift, boolean enableArm, boolean enableClaw) {
         this.robot = r;
         gamepad = g;
 
-        if (RobotConstant.MECANUM_DRIVE_ENABLED) {
+        if (enableMecanumDrive) {
             bindMecanumDriveControls();
         }
-        if (RobotConstant.LIFT_ENABLED) {
+        if (enableLift) {
             bindDriverLiftControls();
         }
-        if (RobotConstant.ARM_ENABLED) {
+        if (enableArm) {
             bindDriverArmControls();
         }
-        if (RobotConstant.CLAW_ENABLED) {
+        if (enableClaw) {
             bindDriverClawControls();
         }
 
         gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand(gamepad));
+    }
+
+    public ControlsDriver(CommandGamepad g, Robot r, Robot.SubsystemCombo combo) {
+        this(
+                g,
+                r,
+                combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.MECANUM_DRIVE_ENABLED : combo == Robot.SubsystemCombo.DRIVE_ONLY || combo == Robot.SubsystemCombo.VISION_DRIVE,
+                combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.LIFT_ENABLED : combo == Robot.SubsystemCombo.LIFT_ONLY,
+                combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.ARM_ENABLED : combo == Robot.SubsystemCombo.ARM_CLAW_ONLY,
+                combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.CLAW_ENABLED : combo == Robot.SubsystemCombo.ARM_CLAW_ONLY
+        );
     }
 
     public void bindMecanumDriveControls() {

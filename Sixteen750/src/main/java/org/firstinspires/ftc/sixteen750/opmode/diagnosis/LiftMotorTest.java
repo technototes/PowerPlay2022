@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.sixteen750.opmode.diagnosis;
 
 import org.firstinspires.ftc.sixteen750.ControlsDriver;
+import org.firstinspires.ftc.sixteen750.ControlsOperator;
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
 import org.firstinspires.ftc.sixteen750.command.autonomous.StartingPosition;
@@ -16,19 +17,20 @@ import com.technototes.library.util.Alliance;
 @SuppressWarnings("unused")
 public class LiftMotorTest extends CommandOpMode {
     public Robot robot;
-    public ControlsDriver controls;
+    public ControlsOperator controls;
     public Hardware hardware;
 
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.LIFT_ONLY);
         robot = new Robot(hardware, Robot.SubsystemCombo.LIFT_ONLY, Alliance.NONE, StartingPosition.NEUTRAL);
+        controls = new ControlsOperator(codriverGamepad, robot, Robot.SubsystemCombo.LIFT_ONLY);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
     @Override
     public void runLoop() {
-        // telemetry.addData("Left Lift Motor Encoder", robot.liftSubsystem.get());
-        // telemetry.update();
+         telemetry.addData("Left Lift Motor Encoder", robot.liftSubsystem.get());
+         telemetry.update();
     }
 }

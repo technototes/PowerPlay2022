@@ -20,21 +20,31 @@ public class ControlsOperator {
     public Robot robot;
     public CommandGamepad gamepad;
 
-    public ControlsOperator(CommandGamepad g, Robot r) {
+    public ControlsOperator(CommandGamepad g, Robot r, boolean enableLift, boolean enableArm, boolean enableClaw) {
         this.robot = r;
         this.gamepad = g;
 
-        if (RobotConstant.LIFT_ENABLED) {
+        if (enableLift) {
             bindCoDriverLiftControls();
         }
-        if (RobotConstant.ARM_ENABLED) {
+        if (enableArm) {
             bindCoDriverArmControls();
         }
-        if (RobotConstant.CLAW_ENABLED) {
+        if (enableClaw) {
             bindCoDriverClawControls();
         }
 
         gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand(gamepad));
+    }
+
+    public ControlsOperator(CommandGamepad g, Robot r, Robot.SubsystemCombo combo){
+        this(
+                g,
+                r,
+                combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.LIFT_ENABLED : combo == Robot.SubsystemCombo.LIFT_ONLY,
+                combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.ARM_ENABLED : combo == Robot.SubsystemCombo.ARM_CLAW_ONLY,
+                combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.CLAW_ENABLED : combo == Robot.SubsystemCombo.ARM_CLAW_ONLY
+        );
     }
 
     public void bindCoDriverClawControls() {
