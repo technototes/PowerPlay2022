@@ -56,8 +56,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
             this.leftMotor = leftMotor;
             this.leftPidController = new PIDFController(L_PID, 0, 0, 0, (x, y) -> 0.1);
             this.isLeftConnected = true;
+            System.out.println("Left Lift Motor Connected");
         } else {
             this.isLeftConnected = false;
+            System.out.println("Left motor is not connected!");
         }
     }
 

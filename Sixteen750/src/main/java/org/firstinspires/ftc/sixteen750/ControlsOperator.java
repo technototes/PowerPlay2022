@@ -48,8 +48,8 @@ public class ControlsOperator {
     }
 
     public void bindCoDriverClawControls() {
-        gamepad.rightTrigger.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-        gamepad.leftTrigger.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
+        gamepad.leftBumper.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
+        gamepad.rightBumper.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
     }
 
     public void bindCoDriverArmControls() {
@@ -64,7 +64,7 @@ public class ControlsOperator {
     }
 
     public void bindCoDriverLiftControls() {
-        gamepad.leftBumper.whenPressed(new LiftMoveUpCommand(robot.liftSubsystem));
-        gamepad.rightBumper.whenPressed(new LiftMoveDownCommand(robot.liftSubsystem));
+        gamepad.leftTrigger.whenPressed(new LiftMoveUpCommand(robot.liftSubsystem));
+        gamepad.rightTrigger.whenPressed(new LiftMoveDownCommand(robot.liftSubsystem));
     }
 }
