@@ -72,4 +72,46 @@ public class SimpleMecanumDriveSubsystem {
         rightFrontMotor.setSpeed(power);
         rightRearMotor.setSpeed(-power);
     }
+
+    public void turnAroundClockwise(double power) {
+        leftFrontMotor.setSpeed(power);
+        leftRearMotor.setSpeed(power);
+        rightFrontMotor.setSpeed(power);
+        rightRearMotor.setSpeed(power);
+    }
+
+    public void turnAroundCounterClockwise(double power) {
+        leftFrontMotor.setSpeed(-power);
+        leftRearMotor.setSpeed(-power);
+        rightFrontMotor.setSpeed(-power);
+        rightRearMotor.setSpeed(-power);
+    }
+
+    public void goDiagonal45(double power) {
+        leftFrontMotor.setSpeed(0);
+        leftRearMotor.setSpeed(power);
+        rightFrontMotor.setSpeed(-power);
+        rightRearMotor.setSpeed(0);
+    }
+
+    public void goDiagonal135(double power) {
+        leftFrontMotor.setSpeed(-power);
+        leftRearMotor.setSpeed(0);
+        rightFrontMotor.setSpeed(0);
+        rightRearMotor.setSpeed(-power);
+    }
+
+    public void goDiagonal225(double power) {
+        leftFrontMotor.setSpeed(0);
+        leftRearMotor.setSpeed(-power);
+        rightFrontMotor.setSpeed(power);
+        rightRearMotor.setSpeed(0);
+    }
+
+    public void goDiagonal315(double power) {
+        leftFrontMotor.setSpeed(power);
+        leftRearMotor.setSpeed(0);
+        rightFrontMotor.setSpeed(0);
+        rightRearMotor.setSpeed(power);
+    }
 }

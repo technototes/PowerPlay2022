@@ -11,7 +11,10 @@ import org.firstinspires.ftc.sixteen750.subsystem.SimpleMecanumDriveSubsystem;
 
 @Autonomous(name = "JustParkMiddle")
 public class JustParkMiddle extends LinearOpMode {
-    public static double DEFAULT_POWER = 0.4;
+    public static double DEFAULT_POWER = 0.3;
+    public static int goForwardTime = 1200;
+    public static int goLeftTime = 400;
+    public static int goRightTime = 400;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -25,29 +28,24 @@ public class JustParkMiddle extends LinearOpMode {
 
         ElapsedTime time = new ElapsedTime();
 
-        while (!isStopRequested() && opModeIsActive() && time.milliseconds() < 600) {
+        while (!isStopRequested() && opModeIsActive() && time.milliseconds() < goForwardTime) {
             drive.goStraightForward(DEFAULT_POWER);
         }
 
         drive.stop();
-
         System.out.println("Forward Auto Finished");
 
-        while (!isStopRequested() && opModeIsActive()) {
-            if (gamepad1.dpad_up){
-                drive.goStraightForward(DEFAULT_POWER);
-            } else if (gamepad1.dpad_down){
-                drive.goStraightBackward(DEFAULT_POWER);
-            } else if (gamepad1.dpad_left){
-                drive.goLeft(DEFAULT_POWER);
-            } else if (gamepad1.dpad_right){
-                drive.goRight(DEFAULT_POWER);
-            } else {
-                drive.stop();
-            }
+        time.reset();
+
+        while (!isStopRequested() && opModeIsActive() && time.milliseconds() < goLeftTime && false) {
+            drive.goLeft(DEFAULT_POWER);
         }
 
+        while (!isStopRequested() && opModeIsActive() && time.milliseconds() < goRightTime && false) {
+            drive.goRight(DEFAULT_POWER);
+        }
 
         drive.stop();
+        System.out.println("Left/Right Auto Finished");
     }
 }
