@@ -22,6 +22,7 @@ public class LiftEncoderTest extends CommandOpMode {
     @Override
     public void runLoop() {
         telemetry.addData("Left Lift Motor Encoder", hardware.leftLiftMotor.getEncoder().getPosition()); // for just read encoder without the PID Controller running
+        telemetry.addData("Left lift motor position", hardware.leftLiftMotor.getDevice().getCurrentPosition());
         telemetry.update();
     }
 }

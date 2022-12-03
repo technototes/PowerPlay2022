@@ -30,7 +30,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double L_TINY_MOVE = 0.5 * TICKS_PER_INCH; // When close to the upper limit
 
     // Don't change these: They're used for user-redefining the 'zero' location during gameplay
-    public static double L_ACTUAL_ZERO = 0;
+    public static double L_ACTUAL_ZERO = 10;
 
     public static PIDCoefficients L_PID = new PIDCoefficients(0.0048, 0, 0);
 
@@ -69,7 +69,12 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     private void setTargetPosition(double leftTargetPos) {
         if (isLeftConnected) {
-            leftPidController.setTargetPosition(Range.clip(leftTargetPos, L_ABSOLUTE_MIN_HEIGHT, L_ABSOLUTE_MAX_HEIGHT));
+            leftPidController.setTargetPosition(
+                    Range.clip(
+                            leftTargetPos + L_ACTUAL_ZERO,
+                            L_ABSOLUTE_MIN_HEIGHT,
+                            L_ABSOLUTE_MAX_HEIGHT)
+            );
         }
     }
 
