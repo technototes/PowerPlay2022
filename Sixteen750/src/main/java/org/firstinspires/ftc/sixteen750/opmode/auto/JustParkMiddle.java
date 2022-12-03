@@ -1,40 +1,53 @@
 package org.firstinspires.ftc.sixteen750.opmode.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.technototes.library.command.CommandScheduler;
-import com.technototes.library.command.SequentialCommandGroup;
-import com.technototes.library.structure.CommandOpMode;
-import com.technototes.library.util.Alliance;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.technototes.library.hardware2.HardwareBuilder;
 
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
-import org.firstinspires.ftc.sixteen750.command.autonomous.AutoConstantsBlue;
-import org.firstinspires.ftc.sixteen750.command.autonomous.StartingPosition;
-import org.firstinspires.ftc.sixteen750.command.autonomous.StraightParking;
+import org.firstinspires.ftc.sixteen750.subsystem.SimpleMecanumDriveSubsystem;
 
 @Autonomous(name = "JustParkMiddle")
-public class JustParkMiddle extends CommandOpMode {
-    public Robot robot;
-    public Hardware hardware;
+public class JustParkMiddle extends LinearOpMode {
+    public static double DEFAULT_POWER = 0.4;
 
     @Override
-    public void uponInit() {
-        hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DRIVE_ONLY);
-        robot = new Robot(hardware, Robot.SubsystemCombo.DRIVE_ONLY, Alliance.BLUE, StartingPosition.AWAY);
-        robot.mecanumDriveSubsystem.setPoseEstimate(AutoConstantsBlue.Away.START.toPose());
-        CommandScheduler.getInstance()
-                .scheduleForState(
-                        new SequentialCommandGroup(
-                                new StraightParking(robot.mecanumDriveSubsystem),
-                                CommandScheduler.getInstance()::terminateOpMode),
-                        CommandOpMode.OpModeState.RUN);
-        telemetry.addData("PoseEstimate", robot.mecanumDriveSubsystem.getPoseEstimate());
-        telemetry.update();
-    }
+    public void runOpMode() throws InterruptedException {
+        HardwareBuilder.initMap(hardwareMap);
+        Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DEFAULT);
+        SimpleMecanumDriveSubsystem drive = new SimpleMecanumDriveSubsystem(hardware);
 
-    @Override
-    public void runLoop() {
-        telemetry.addData("PoseEstimate", robot.mecanumDriveSubsystem.getPoseEstimate());
-        telemetry.update();
+        waitForStart();
+
+        if (isStopRequested()) return;
+
+        ElapsedTime time = new ElapsedTime();
+
+        while (!isStopRequested() && opModeIsActive() && time.milliseconds() < 600) {
+            drive.goStraightForward(DEFAULT_POWER);
+        }
+
+        drive.stop();
+
+        System.out.println("Forward Auto Finished");
+
+        while (!isStopRequested() && opModeIsActive()) {
+            if (gamepad1.dpad_up){
+                drive.goStraightForward(DEFAULT_POWER);
+            } else if (gamepad1.dpad_down){
+                drive.goStraightBackward(DEFAULT_POWER);
+            } else if (gamepad1.dpad_left){
+                drive.goLeft(DEFAULT_POWER);
+            } else if (gamepad1.dpad_right){
+                drive.goRight(DEFAULT_POWER);
+            } else {
+                drive.stop();
+            }
+        }
+
+
+        drive.stop();
     }
 }
