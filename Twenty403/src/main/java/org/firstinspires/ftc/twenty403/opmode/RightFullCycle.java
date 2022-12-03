@@ -10,6 +10,8 @@ import org.firstinspires.ftc.twenty403.command.autonomous.blue_home.AutoBlueHome
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.helpers.ElapsedTimeHelper;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import com.technototes.library.command.CommandScheduler;
@@ -26,15 +28,15 @@ public class RightFullCycle extends CommandOpMode {
 
     @Override
     public void uponInit() {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware, Alliance.NONE, StartingPosition.HOME);
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Home.START.toPose());
-        ElapsedTimeHelper timeout = new ElapsedTimeHelper(() -> this.getOpModeRuntime(), 25);
+        // ElapsedTimeHelper timeout = new ElapsedTimeHelper(() -> this.getOpModeRuntime(), 25);
         CommandScheduler.getInstance()
                 .scheduleForState(
                         new SequentialCommandGroup(
-                                new AutoBlueHomeParkingSelectionFullCycleCommand(
-                                        robot),
+                                new AutoBlueHomeParkingSelectionFullCycleCommand(robot),
                                 CommandScheduler.getInstance()::terminateOpMode),
                         CommandOpMode.OpModeState.RUN);
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
