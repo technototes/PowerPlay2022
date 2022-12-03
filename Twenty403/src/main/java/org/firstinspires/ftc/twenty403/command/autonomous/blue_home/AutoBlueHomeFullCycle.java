@@ -37,14 +37,8 @@ public class AutoBlueHomeFullCycle extends SequentialCommandGroup {
                         .alongWith(new SequentialCommandGroup(
                                 new WaitCommand(0.2), new LiftHighJunctionCommand(r.liftSubsystem))),
                 new ClawOpenCommand(r.clawSubsystem),
-                new ConditionalCommand(() -> currOpModeRunTime.getAsDouble() < AutoConstantsBlue.Home.finalCycleStartTime,
-                    new AutoRightSingleCycle(r.drivebaseSubsystem, r.liftSubsystem, r.clawSubsystem)),
-                new ConditionalCommand(() -> currOpModeRunTime.getAsDouble() < AutoConstantsBlue.Home.finalCycleStartTime,
-                        new AutoRightSingleCycle(r.drivebaseSubsystem, r.liftSubsystem, r.clawSubsystem)),
-                new ConditionalCommand(() -> currOpModeRunTime.getAsDouble() < AutoConstantsBlue.Home.finalCycleStartTime,
-                        new AutoRightSingleCycle(r.drivebaseSubsystem, r.liftSubsystem, r.clawSubsystem)),
-                new ConditionalCommand(() -> currOpModeRunTime.getAsDouble() < AutoConstantsBlue.Home.finalCycleStartTime,
-                        new AutoRightSingleCycle(r.drivebaseSubsystem, r.liftSubsystem, r.clawSubsystem)),
+                new AutoRightSingleCycle(r.drivebaseSubsystem, r.liftSubsystem, r.clawSubsystem),
+                new AutoRightSingleCycle(r.drivebaseSubsystem, r.liftSubsystem, r.clawSubsystem),
                 new TrajectorySequenceCommand(r.drivebaseSubsystem, parkingDestination)
                         .alongWith(new LiftCollectCommand(r.liftSubsystem)));
 
