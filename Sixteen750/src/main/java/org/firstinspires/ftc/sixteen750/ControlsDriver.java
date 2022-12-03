@@ -31,15 +31,19 @@ public class ControlsDriver {
 
         if (enableMecanumDrive) {
             bindMecanumDriveControls();
+            System.out.println("Binding Mecanum Drive Controls");
         }
         if (enableLift) {
             bindDriverLiftControls();
+            System.out.println("Binding Lift Controls");
         }
         if (enableArm) {
             bindDriverArmControls();
+            System.out.println("Binding Arm Controls");
         }
         if (enableClaw) {
             bindDriverClawControls();
+            System.out.println("Binding Claw Controls");
         }
 
         gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand(gamepad));
@@ -66,7 +70,7 @@ public class ControlsDriver {
 
     public void bindDriverClawControls() {
         gamepad.leftBumper.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-        gamepad.leftBumper.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
+        gamepad.rightBumper.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
     }
 
     public void bindDriverArmControls() {

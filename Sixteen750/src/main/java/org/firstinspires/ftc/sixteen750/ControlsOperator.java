@@ -26,12 +26,15 @@ public class ControlsOperator {
 
         if (enableLift) {
             bindCoDriverLiftControls();
+            System.out.println("Binding Lift Controls");
         }
         if (enableArm) {
             bindCoDriverArmControls();
+            System.out.println("Binding Arm Controls");
         }
         if (enableClaw) {
             bindCoDriverClawControls();
+            System.out.println("Binding Claw Controls");
         }
 
         gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand(gamepad));
