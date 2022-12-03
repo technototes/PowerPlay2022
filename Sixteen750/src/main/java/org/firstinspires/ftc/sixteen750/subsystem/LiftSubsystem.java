@@ -68,18 +68,14 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     }
 
     private void setTargetPosition(double leftTargetPos) {
-        if (isLeftConnected) {
-            leftPidController.setTargetPosition(
-                    Range.clip(
-                            leftTargetPos + L_ACTUAL_ZERO,
-                            L_ABSOLUTE_MIN_HEIGHT,
-                            L_ABSOLUTE_MAX_HEIGHT)
-            );
-        }
+        setTargetPositionOverride(Range.clip(leftTargetPos + L_ACTUAL_ZERO, L_ABSOLUTE_MIN_HEIGHT, L_ABSOLUTE_MAX_HEIGHT));
     }
 
-    private void setTargetPostion_OVERRIDE(double lpos) {
-        leftPidController.setTargetPosition(lpos);
+    private void setTargetPositionOverride(double leftTargetPos) {
+        if (isLeftConnected) {
+            leftPidController.setTargetPosition(leftTargetPos);
+        }
+
     }
 
     private void setTargetPositionWithLogging(double leftTargetPos) {
@@ -132,7 +128,6 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     @Override
     public Double get() {
-        // Not sure about this one
         if (isLeftConnected) {
             return leftPidController.getTargetPosition();
         } else {
@@ -204,16 +199,16 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         setTargetPositionWithLogging(getLeftTargetPos() + L_REGULAR_MOVE);
     }
 
-    public void moveUpOVERRIDE() {
-        setTargetPostion_OVERRIDE(getLeftTargetPos() + L_REGULAR_MOVE);
-    }
-
-    public void moveDownOVERRIDE() {
-        setTargetPostion_OVERRIDE(getLeftTargetPos() - L_REGULAR_MOVE);
+    public void moveUpOverride() {
+        setTargetPositionOverride(getLeftTargetPos() + L_REGULAR_MOVE);
     }
 
     public void moveDown() {
         setTargetPositionWithLogging(getLeftTargetPos() - L_REGULAR_MOVE);
+    }
+
+    public void moveDownOverride() {
+        setTargetPositionOverride(getLeftTargetPos() - L_REGULAR_MOVE);
     }
 
     public void setVoltage(double voltage) {
