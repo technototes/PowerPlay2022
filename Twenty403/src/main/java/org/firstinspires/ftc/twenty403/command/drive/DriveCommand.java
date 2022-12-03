@@ -10,7 +10,6 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 
 import com.technototes.library.command.Command;
-import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.Stick;
 import com.technototes.library.util.MathUtils;
 
@@ -29,7 +28,7 @@ public class DriveCommand implements Command {
         straight = null;
     }
 
-    public DriveCommand(DrivebaseSubsystem sub, Stick stick1, Stick stick2, CommandButton straighten) {
+    public DriveCommand(DrivebaseSubsystem sub, Stick stick1, Stick stick2, BooleanSupplier straighten) {
         addRequirements(sub);
         subsystem = sub;
         x = stick1.getXSupplier();
@@ -48,11 +47,11 @@ public class DriveCommand implements Command {
             // headingInRads is [0-2pi]
             double heading = -Math.toDegrees(headingInRads);
             // Snap to the closest 90 or 270 degree angle (for going through the depot)
-            double close = MathUtils.closestTo(heading, 90, 270);
+            double close = MathUtils.closestTo(heading, 0, 90, 180, 270, 360);
             double offBy = close - heading;
             // Normalize the error to -1 to 1
             double normalized = Math.max(Math.min(offBy / 45, 1.), -1.);
-            // Dead zone of 5 degrees
+            // Dead zone of 5 degreesLiftHighJunctionCommand(liftSubsystem)
             if (Math.abs(normalized) < STRAIGHTEN_DEAD_ZONE) {
                 return 0.0;
             }

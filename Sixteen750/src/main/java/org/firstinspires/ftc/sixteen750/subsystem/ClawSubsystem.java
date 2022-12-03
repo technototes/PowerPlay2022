@@ -8,46 +8,49 @@ import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.subsystem.Subsystem;
 
 public class ClawSubsystem implements Subsystem {
-    public static double OPEN_SERVO_POSITION = .8;
-    public static double CLOSE_SERVO_POSITION = .5;
-    public static double CARRY_SERVO_POSITION = .4;
-    public static double RELEASE_SERVO_POSITION = .0;
+    public static double CLAW_OPEN = 0.6; // Verified
+    public static double CLAW_CLOSE = 0.50; // Verified
+
     private Servo clawServo;
-    private Servo flipperServo;
-    private DistanceSensor sensor;
+    private DistanceSensor distanceSensor; // not on the bot currently
 
-    public ClawSubsystem(Servo claw, Servo flipper, DistanceSensor s) {
-        clawServo = claw;
-        flipperServo = flipper;
-        sensor = s;
+    public ClawSubsystem(Servo clawServo, DistanceSensor distanceSensor) {
+        this.clawServo = clawServo;
+        this.distanceSensor = distanceSensor;
     }
 
-    public void open() {
-        clawServo.setPosition(OPEN_SERVO_POSITION);
+    public double getClawPosition() {
+        return (this.clawServo != null) ? this.clawServo.getPosition() : 0;
     }
 
-    public void close() {
-        clawServo.setPosition(CLOSE_SERVO_POSITION);
+    private void setClawServoPosition(double pos) {
+        if (this.clawServo != null) {
+            this.clawServo.setPosition(pos);
+        }
     }
 
+    public void clawOpen() {
+        setClawServoPosition(CLAW_OPEN);
+    }
+
+    public void clawClose() {
+        setClawServoPosition(CLAW_CLOSE);
+    }
+
+    @Deprecated
     public void carry() {
-        close();
-        flipperServo.setPosition(CARRY_SERVO_POSITION);
+        clawClose();
     }
 
+    @Deprecated
     public void release() {
-        flipperServo.setPosition(RELEASE_SERVO_POSITION);
-        open();
+        clawOpen();
     }
 
     public boolean isConeClose() {
-        if (sensor.getDistance(DistanceUnit.CM) <= 4.0) {
+        if (distanceSensor.getDistance(DistanceUnit.CM) <= 4.0) {
             return true;
         }
         return false;
-    }
-
-    public Servo getServo() {
-        return clawServo;
     }
 }

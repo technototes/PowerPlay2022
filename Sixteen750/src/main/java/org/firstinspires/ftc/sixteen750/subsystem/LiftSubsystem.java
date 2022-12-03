@@ -1,99 +1,229 @@
 package org.firstinspires.ftc.sixteen750.subsystem;
 
-import androidx.core.math.MathUtils;
+import java.util.function.Supplier;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.control.PIDCoefficients;
+import com.acmerobotics.roadrunner.control.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.util.Range;
 
+import com.technototes.library.hardware.motor.EncodedMotor;
+import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 
 @Config
-public class LiftSubsystem implements Subsystem {
-    // TODO: THESE VALUES ARE ALL WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
-    public static double TICKS_INCH = 750;
-    public static double LOW_JUNCTION = .5 * TICKS_INCH;
-    public static double MEDIUM_JUNCTION = 12 * TICKS_INCH;
-    public static double HIGH_JUNCTION = 24 * TICKS_INCH;
-    public static double MAX_HEIGHT = 27 * TICKS_INCH;
-    public static double MIN_HEIGHT = 0;
-    public static double MAX_DISTANCE_FOR_FULLPOWER = 8 * TICKS_INCH;
-    public static double DEAD_ZONE = .25 * TICKS_INCH;
+@SuppressWarnings("unused")
+public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
+    // Assuming the 0 position for both lift motor might be different
+    // The LiftSubsystem should be able to any of the motor combination
+    // Make everything right related private so don't take up space in FTC-Dashboard
+    public static double TICKS_PER_INCH = 136;
+    public static double L_INTAKE_FLOOR;
+    public static double L_GROUND_JUNCTION = 1.75 * TICKS_PER_INCH;
+    public static double L_LOW_JUNCTION = 14.5 * TICKS_PER_INCH;
+    public static double L_MEDIUM_JUNCTION = 25 * TICKS_PER_INCH;
+    public static double L_HIGH_JUNCTION = 36 * TICKS_PER_INCH;
+    public static double L_ABSOLUTE_MIN_HEIGHT = 0;
+    public static double L_ABSOLUTE_MAX_HEIGHT = 38 * TICKS_PER_INCH;
+    public static double L_MAX_MOTOR_SPEED = 0.8; // Unverified
+    public static double L_MIN_MOTOR_SPEED = -0.4; // Unverified, Gravity
+    public static double L_REGULAR_MOVE = 1.5 * TICKS_PER_INCH;
+    public static double L_TINY_MOVE = 0.5 * TICKS_PER_INCH; // When close to the upper limit
 
-    private DcMotorEx liftMotor;
+    // Don't change these: They're used for user-redefining the 'zero' location during gameplay
+    public static double L_ACTUAL_ZERO = 0;
 
-    private boolean closeEnough(double currentPostion, double targetPostion) {
-        double error = currentPostion - targetPostion;
-        if (error <= DEAD_ZONE && error >= -DEAD_ZONE) {
-            return true;
+    public static PIDCoefficients L_PID = new PIDCoefficients(0.0048, 0, 0);
+
+    public static double TOLERANCE_ZONE = 0.9 * TICKS_PER_INCH;
+
+    // This is used to hopefully counteract gravity...
+    public static double DOWNWARD_SCALE_FACTOR = 0.65;
+
+    public static double CONE_HEIGHT_DIFFERENCE = 0.9 * TICKS_PER_INCH;
+    private int currentConeNumber = 5;
+
+    private EncodedMotor<DcMotorEx> leftMotor;
+    private PIDFController leftPidController;
+    private final boolean isLeftConnected;
+
+    private double currentVoltage = 0;
+    private Supplier<Double> voltageGetter;
+
+    public LiftSubsystem(EncodedMotor<DcMotorEx> leftM, Supplier<Double> voltageGetter) {
+        this.voltageGetter = voltageGetter;
+        this.currentVoltage = (this.voltageGetter == null) ? 0 : this.voltageGetter.get();
+        if (leftM != null) {
+            this.leftMotor = leftM;
+            this.leftPidController = new PIDFController(L_PID, 0, 0, 0, (x, y) -> 0.1);
+            this.isLeftConnected = true;
         } else {
-            return false;
+            this.isLeftConnected = false;
         }
     }
 
-    private void powerMotorForError(double error) {
-        // If we're error distance away from position,
-        // set motor power to something that can reach position
-        double power = error / MAX_DISTANCE_FOR_FULLPOWER;
-        power = MathUtils.clamp(power, -1, 1);
-        power = Math.cbrt(power);
-        liftMotor.setPower(power);
+    public LiftSubsystem(EncodedMotor<DcMotorEx> leftM) {
+        this(leftM, () -> 12.0);
     }
 
-    public LiftSubsystem(DcMotorEx motor) {
-        liftMotor = motor;
-    }
-
-    public void highPole() {
-        double position = liftMotor.getCurrentPosition();
-        if (closeEnough(position, HIGH_JUNCTION)) {
-            return;
+    private void setTargetPosition(double lPos) {
+        if (isLeftConnected) {
+            leftPidController.setTargetPosition(Range.clip(lPos, L_ABSOLUTE_MIN_HEIGHT, L_ABSOLUTE_MAX_HEIGHT));
         }
-        double error = position - HIGH_JUNCTION;
-        powerMotorForError(error);
     }
 
-    public void midPole() {
-        double position = liftMotor.getCurrentPosition();
-        if (closeEnough(position, MEDIUM_JUNCTION)) {
-            return;
-        }
-        double error = position - MEDIUM_JUNCTION;
-        powerMotorForError(error);
+    private void setTargetPostion_OVERRIDE(double lpos) {
+        leftPidController.setTargetPosition(lpos);
     }
 
-    public void lowPole() {
-        double position = liftMotor.getCurrentPosition();
-        if (closeEnough(position, LOW_JUNCTION)) {
-            return;
+    private void setTargetPositionWithLogging(double lPos) {
+        setTargetPosition(lPos);
+        if (isLeftConnected) {
+            lpAndActual = String.format("%d (%d)", (int) lPos, leftMotor.get().intValue());
         }
-        double error = position - LOW_JUNCTION;
-        powerMotorForError(error);
+    }
+
+    private void setMotorSpeed(EncodedMotor<DcMotorEx> motor, double power) {
+        // Compensate gravity effect
+        if (power < 0) {
+            power = power * DOWNWARD_SCALE_FACTOR;
+        }
+        motor.setSpeed(power);
+    }
+
+    // This is run for every loop (Feature of the TechnoLib Subsystem!)
+    // So you can just call "setTop" in a command and it will get there "as soon as it can"
+    @Override
+    public void periodic() {
+        if (isLeftConnected) {
+            double leftTargetSpeed = leftPidController.update(getLeftPos());
+            double leftClippedSpeed = Range.clip(leftTargetSpeed, L_MIN_MOTOR_SPEED, L_MAX_MOTOR_SPEED);
+            this.setMotorSpeed(leftMotor, leftClippedSpeed);
+        }
+    }
+
+    public double leftDelta() {
+        return leftPidController.getTargetPosition() - leftMotor.getDevice().getCurrentPosition();
+    }
+
+    public boolean isLeftAtTarget() {
+        return Math.abs(leftDelta()) < TOLERANCE_ZONE;
+    }
+
+    public double getLeftPos() {
+        if (isLeftConnected) {
+            return leftMotor.getEncoder().getPosition();
+        }
+        return 0.0;
+    }
+
+    public double getLeftTargetPos() {
+        if (isLeftConnected) {
+            return leftPidController.getTargetPosition();
+        }
+        return 0.0;
+    }
+
+    @Override
+    public Double get() {
+        // Not sure about this one
+        if (isLeftConnected) {
+            return leftPidController.getTargetPosition();
+        } else {
+            return 0.0;
+        }
+    }
+
+    // TODO: enable as needed
+    // @Log(name = "lEncMotor Pos (Actual)")
+    public volatile String lpAndActual = "(unknown)";
+
+    public void stop() {
+        // By resetting the pidController, it stops the periodic function from making changes
+        if (isLeftConnected) {
+            leftPidController.reset();
+        }
+    }
+
+    public void halt() {
+        // Just set the target position to the current position to get the motor to stop, yes?
+        if (isLeftConnected) {
+            leftPidController.setTargetPosition(this.getLeftPos());
+        }
+    }
+
+    private void setNewZero() {
+        if (isLeftConnected) {
+            L_ACTUAL_ZERO = leftMotor.get();
+        }
+    }
+
+    public double getNewConeStackIntakeHeight() {
+        return currentConeNumber-- * CONE_HEIGHT_DIFFERENCE;
+    }
+
+    public void gotoTop() {
+        // null check will be done in setTargetPosition()
+        this.setTargetPosition(L_ABSOLUTE_MAX_HEIGHT);
+    }
+
+    public void gotoBottom() {
+        // null check will be done in setTargetPosition()
+        this.setTargetPosition(L_ABSOLUTE_MIN_HEIGHT);
+    }
+
+    public void gotoHighPole() {
+        // null check will be done in setTargetPosition()
+        setTargetPositionWithLogging(L_HIGH_JUNCTION);
+    }
+
+    public void gotoMidPole() {
+        // null check will be done in setTargetPosition()
+        setTargetPositionWithLogging(L_MEDIUM_JUNCTION);
+    }
+
+    public void gotoLowPole() {
+        // null check will be done in setTargetPosition()
+        setTargetPositionWithLogging(L_LOW_JUNCTION);
+    }
+
+    public void gotoGroundJunction() {
+        // null check will be done in setTargetPosition()
+        setTargetPositionWithLogging(L_GROUND_JUNCTION);
+    }
+
+    public void gotoFloorIntake() {
+        // null check will be done in setTargetPosition()
+        setTargetPositionWithLogging(L_INTAKE_FLOOR);
+    }
+
+    public void gotoConeStackIntake() {
+        // null check will be done in setTargetPosition()
+        setTargetPositionWithLogging(getNewConeStackIntakeHeight());
     }
 
     public void moveUp() {
-        double position = liftMotor.getCurrentPosition();
-        if (position >= MAX_HEIGHT) {
-            return;
-        }
-        double error = position - MAX_HEIGHT;
-        powerMotorForError(error);
+        setTargetPositionWithLogging(getLeftTargetPos() + L_REGULAR_MOVE);
+    }
+
+    public void moveUpOVERRIDE() {
+        setTargetPostion_OVERRIDE(getLeftTargetPos() + L_REGULAR_MOVE);
+    }
+
+    public void moveDownOVERRIDE() {
+        setTargetPostion_OVERRIDE(getLeftTargetPos() - L_REGULAR_MOVE);
     }
 
     public void moveDown() {
-
-        double position = liftMotor.getCurrentPosition();
-        if (position <= MIN_HEIGHT) {
-            return;
-        }
-        double error = position - MIN_HEIGHT;
-        powerMotorForError(error);
+        setTargetPositionWithLogging(getLeftTargetPos() - L_REGULAR_MOVE);
     }
 
-    public void intake() {
-        // TODO:
+    public void setVoltage(double voltage) {
+        this.currentVoltage = voltage;
     }
 
-    public void carry() {
-        // TODO:
+    public void updateVoltage() {
+        this.setVoltage(this.voltageGetter.get());
     }
 }

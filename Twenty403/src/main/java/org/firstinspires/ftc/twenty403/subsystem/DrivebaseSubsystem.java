@@ -17,14 +17,20 @@ import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
 public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Supplier<Pose2d>, Loggable {
 
+    // Notes from Kevin:
+    // The 5203 motors when direct driven
+    // move about 63 inches forward and is measured as roughly 3000 ticks on the encoders
+
     @Config
-    public static class DriveConstants implements MecanumConstants {
+    public abstract static class DriveConstants implements MecanumConstants {
+        public static double SLOW_MOTOR_SPEED = 0.6;
+        public static double FAST_MOTOR_SPEED = 1.0;
 
         @TicksPerRev
-        public static final double TICKS_PER_REV = 28;
+        public static final double TICKS_PER_REV = 537.6; // 2021: 28;
 
         @MaxRPM
-        public static final double MAX_RPM = 6000;
+        public static final double MAX_RPM = 312; // 2021: 6000;
 
         @UseDriveEncoder
         public static final boolean RUN_USING_ENCODER = true;
@@ -33,15 +39,14 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
         public static PIDFCoefficients MOTOR_VELO_PID =
                 new PIDFCoefficients(20, 0, 3, MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
 
-        // TODO: change these when got the actual robot
         @WheelRadius
         public static double WHEEL_RADIUS = 1.88976; // in
 
         @GearRatio
-        public static double GEAR_RATIO = 1 / 19.2; // output (wheel) speed / input (motor) speed
+        public static double GEAR_RATIO = 1; // 2021: / 19.2; // output (wheel) speed / input (motor) speed
 
         @TrackWidth
-        public static double TRACK_WIDTH = 10; // in
+        public static double TRACK_WIDTH = 9.1875; // 2021: 10; // in
 
         @WheelBase
         public static double WHEEL_BASE = 8.5; // in
@@ -55,17 +60,21 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
         @KStatic
         public static double kStatic = 0;
 
+        // This was 60, which was too fast. Things slid around a lot.
         @MaxVelo
-        public static double MAX_VEL = 60;
+        public static double MAX_VEL = 10; // TODO: change this back to 30
 
+        // This was 35, which also felt a bit too fast. The bot controls more smoothly now
         @MaxAccel
-        public static double MAX_ACCEL = 35;
+        public static double MAX_ACCEL = 10;
 
+        // This was 180 degrees
         @MaxAngleVelo
-        public static double MAX_ANG_VEL = Math.toRadians(180);
+        public static double MAX_ANG_VEL = Math.toRadians(135);
 
+        // This was 90 degrees
         @MaxAngleAccel
-        public static double MAX_ANG_ACCEL = Math.toRadians(90);
+        public static double MAX_ANG_ACCEL = Math.toRadians(45);
 
         @TransPID
         public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(8, 0, 0);
@@ -87,11 +96,6 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
 
         @PoseLimit
         public static int POSE_HISTORY_LIMIT = 100;
-
-        @Override
-        public Class getConstant() {
-            return DriveConstants.class;
-        }
     }
 
     private static final boolean ENABLE_POSE_DIAGNOSTICS = true;
@@ -99,13 +103,13 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
     @Log(name = "Pose2d: ")
     public String poseDisplay = ENABLE_POSE_DIAGNOSTICS ? "" : null;
 
-    //    @Log.Number (name = "FL")
+    // @Log.Number(name = "FL")
     public EncodedMotor<DcMotorEx> fl2;
-    //    @Log.Number (name = "FR")
+    // @Log.Number(name = "FR")
     public EncodedMotor<DcMotorEx> fr2;
-    //    @Log.Number (name = "RL")
+    // @Log.Number(name = "RL")
     public EncodedMotor<DcMotorEx> rl2;
-    //    @Log.Number (name = "RR")
+    // @Log.Number(name = "RR")
     public EncodedMotor<DcMotorEx> rr2;
 
     public DrivebaseSubsystem(
@@ -114,11 +118,20 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
             EncodedMotor<DcMotorEx> rl,
             EncodedMotor<DcMotorEx> rr,
             IMU i) {
-        super(fl, fr, rl, rr, i, new DriveConstants());
+        super(fl, fr, rl, rr, i, () -> DriveConstants.class);
         fl2 = fl;
         fr2 = fr;
         rl2 = rl;
         rr2 = rr;
+        speed = DriveConstants.SLOW_MOTOR_SPEED;
+    }
+
+    public void fast() {
+        speed = DriveConstants.FAST_MOTOR_SPEED;
+    }
+
+    public void slow() {
+        speed = DriveConstants.SLOW_MOTOR_SPEED;
     }
 
     @Override

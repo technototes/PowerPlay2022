@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.*;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Disabled
+// @Disabled
 @TeleOp(name = "BasicServoDemo", group = "Demo")
 public class BasicServoDemo extends OpMode {
     private BasicServoCode servoCode;
@@ -40,5 +40,7 @@ public class BasicServoDemo extends OpMode {
         } else if (this.gamepad.dpad_up) {
             this.servoCode.toMiddle();
         }
+        telemetry.addData("Servo Position", this.servoCode.get());
+        telemetry.update();
     }
 }

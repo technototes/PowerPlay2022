@@ -6,121 +6,148 @@ import java.util.function.Function;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 
+import com.technototes.path.geometry.ConfigurablePose;
 import com.technototes.path.trajectorysequence.TrajectorySequence;
 import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
 
-public class AutoConstantsRed {
+public class
+AutoConstantsRed {
     // "Home" locations: (The side with the Red terminal)
     public static class Home {
-        public static Pose2d START = new Pose2d(36, -66, toRadians(-90));
-        public static Pose2d STACK = new Pose2d(62, 12, toRadians(0));
-        public static Pose2d LEFT = new Pose2d(60, 36, toRadians(180));
-        public static Pose2d MIDDLE = new Pose2d(36, 36, toRadians(90));
-        public static Pose2d RIGHT = new Pose2d(12, 36, toRadians(90));
-        // These have "home/away" modifiers, because we want to stay on "our side" during auto
-        // 12 O'Clock is on the Blue side: Probably stay away
-        public static Pose2d N_JUNCTION = new Pose2d(18, -3, toRadians(-135));
-        // 3 O'Clock is on the Away side, so only use if we know our alliance partner won't be
-        // in the way
-        public static Pose2d E_JUNCTION = new Pose2d(-28, 4, toRadians(-45));
-        public static Pose2d S_JUNCTION = new Pose2d(-10, 30, toRadians(-135));
-        public static Pose2d W_JUNCTION = new Pose2d(28, 4, toRadians(-135));
+        public static ConfigurablePose START = new ConfigurablePose(-36, -66, toRadians(90));
+        public static ConfigurablePose E_JUNCTION = new ConfigurablePose(-30, -8, -0.63);
+        public static ConfigurablePose STACK = new ConfigurablePose(-60, -17, toRadians(180));
+        public static ConfigurablePose LEFT = new ConfigurablePose(-58, -23, toRadians(90));
+        public static ConfigurablePose MIDDLE = new ConfigurablePose(-37, -18, toRadians(90));
+        public static ConfigurablePose RIGHT = new ConfigurablePose(-14, -17, toRadians(90));
+        public static ConfigurablePose BETWEEN_START_E_JUNCTION = new ConfigurablePose(-36, -21, toRadians(75));
+        public static ConfigurablePose BETWEEN_E_JUNCTION_STACK = new ConfigurablePose(-36, -14, toRadians(180));
+        public static ConfigurablePose BETWEEN_STACK_E_JUNCTION = new ConfigurablePose(-36, -14, toRadians(75));
+        public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(-58, -60, toRadians(90));
+        public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(-14, -60, toRadians(90));
+        public static ConfigurablePose VISION_BETWEEN_RIGHT = new ConfigurablePose(-12,-55, toRadians(90));
+        public static ConfigurablePose VISION_BETWEEN_LEFT = new ConfigurablePose(-55,-55, toRadians(90));
 
-        // These are 'trajectory pieces' which should be named like this:
-        // {STARTING_POSITION}_TO_{ENDING_POSITION}
-        public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
-                START_TO_W_JUNCTION =
-                        b -> b.apply(START)
-                                .splineTo(W_JUNCTION.vec(), W_JUNCTION.getHeading())
-                                .build(),
-                START_TO_S_JUNCTION =
-                        b -> b.apply(START)
-                                .splineTo(S_JUNCTION.vec(), S_JUNCTION.getHeading())
-                                .build(),
-                W_JUNCTION_TO_STACK =
-                        b -> b.apply(W_JUNCTION)
-                                .lineToLinearHeading(STACK)
-                                .build(),
-                S_JUNCTION_TO_STACK =
-                        b -> b.apply(S_JUNCTION)
-                                .lineToLinearHeading(STACK)
-                                .build(),
-                STACK_TO_W_JUNCTION =
-                        b -> b.apply(STACK)
-                                .lineToLinearHeading(W_JUNCTION)
-                                .build(),
-                STACK_TO_S_JUNCTION =
-                        b -> b.apply(STACK)
-                                .lineToLinearHeading(S_JUNCTION)
-                                .build(),
-                W_JUNCTION_TO_LEFT =
-                        b -> b.apply(W_JUNCTION)
-                                .splineTo(LEFT.vec(), LEFT.getHeading())
-                                .build(),
-                W_JUNCTION_TO_MIDDLE =
-                        b -> b.apply(W_JUNCTION)
-                                .splineTo(MIDDLE.vec(), MIDDLE.getHeading())
-                                .build(),
-                W_JUNCTION_TO_RIGHT =
-                        b -> b.apply(W_JUNCTION)
-                                .splineTo(RIGHT.vec(), RIGHT.getHeading())
-                                .build(),
-                S_JUNCTION_TO_LEFT =
-                        b -> b.apply(S_JUNCTION)
-                                .splineTo(LEFT.vec(), LEFT.getHeading())
-                                .build(),
-                S_JUNCTION_TO_MIDDLE =
-                        b -> b.apply(S_JUNCTION)
-                                .splineTo(MIDDLE.vec(), MIDDLE.getHeading())
-                                .build(),
-                S_JUNCTION_TO_RIGHT =
-                        b -> b.apply(S_JUNCTION)
-                                .splineTo(RIGHT.vec(), RIGHT.getHeading())
-                                .build();
-    }
-
-    // Away locations:
-    public static class Away {
-        public static Pose2d START = new Pose2d(-36, 66, toRadians(-90));
-        public static Pose2d STACK = new Pose2d(-62, 12, toRadians(180));
-        public static Pose2d LEFT = new Pose2d(-12, 36, toRadians(90));
-        public static Pose2d MIDDLE = new Pose2d(-36, 36, toRadians(90));
-        public static Pose2d RIGHT = new Pose2d(-60, 36, toRadians(0));
-        // These have "home/away" modifiers, because we want to stay on "our side" during auto
-        public static Pose2d N_JUNCTION = new Pose2d(18, -3, toRadians(-135));
-        public static Pose2d E_JUNCTION = new Pose2d(-28, 4, toRadians(-45));
-        public static Pose2d S_JUNCTION = new Pose2d(-10, 30, toRadians(-135));
-        public static Pose2d W_JUNCTION = new Pose2d(28, 4, toRadians(-135));
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
                 START_TO_E_JUNCTION =
-                        b -> b.apply(START)
-                                .splineTo(E_JUNCTION.vec(), E_JUNCTION.getHeading())
-                                .build(),
-                START_TO_S_JUNCTION =
-                        b -> b.apply(START)
-                                .splineTo(S_JUNCTION.vec(), S_JUNCTION.getHeading())
-                                .build(),
+                b -> b.apply(START.toPose())
+                        //.splineTo(E_JUNCTION.toPose().vec(), -0.63)
+                        .lineToLinearHeading(BETWEEN_START_E_JUNCTION.toPose())
+                        .lineToLinearHeading(E_JUNCTION.toPose())
+                        .build(),
                 E_JUNCTION_TO_STACK =
-                        b -> b.apply(E_JUNCTION)
-                                .lineToLinearHeading(STACK)
-                                .build(),
-                S_JUNCTION_TO_STACK =
-                        b -> b.apply(S_JUNCTION)
-                                .lineToLinearHeading(STACK)
+                        b -> b.apply(E_JUNCTION.toPose())
+                                .lineToLinearHeading(BETWEEN_E_JUNCTION_STACK.toPose())
+                                .lineToLinearHeading(STACK.toPose())
                                 .build(),
                 STACK_TO_E_JUNCTION =
-                        b -> b.apply(STACK)
-                                .lineToLinearHeading(E_JUNCTION)
+                        b -> b.apply(STACK.toPose())
+                                .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
+                                .lineToLinearHeading(E_JUNCTION.toPose())
                                 .build(),
-                STACK_TO_S_JUNCTION =
-                        b -> b.apply(STACK)
-                                .lineToLinearHeading(S_JUNCTION)
+                E_JUNCTION_TO_LEFT_PARK =
+                        b -> b.apply(E_JUNCTION.toPose())
+                                .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
+                                .lineToLinearHeading(LEFT.toPose())
                                 .build(),
-                E_JUNCTION_LEFT =
-                        b -> b.apply(E_JUNCTION)
-                                .splineTo(LEFT.vec(), LEFT.getHeading())
+                E_JUNCTION_TO_MIDDLE_PARK =
+                        b -> b.apply(E_JUNCTION.toPose())
+                                .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
+                                .lineToLinearHeading(MIDDLE.toPose())
+                                .build(),
+                E_JUNCTION_TO_RIGHT_PARK =
+                        b -> b.apply(E_JUNCTION.toPose())
+                                .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
+                                .lineToLinearHeading(RIGHT.toPose())
+                                .build(),
+                START_TO_LEFT_PARK =
+                        b -> b.apply(START.toPose())
+                                .lineToLinearHeading(BETWEEN_START_LEFT.toPose())
+                                .lineToLinearHeading(LEFT.toPose())
+                                .build(),
+                START_TO_RIGHT_PARK =
+                        b -> b.apply(START.toPose())
+                                .lineToLinearHeading(BETWEEN_START_RIGHT.toPose())
+                                .lineToLinearHeading(RIGHT.toPose())
+                                .build(),
+                START_TO_MIDDLE_PARK =
+                        b -> b.apply(START.toPose())
+                                .lineToLinearHeading(MIDDLE.toPose())
+                                .build(),
+                START_TO_LEFTPARK =
+                        b -> b.apply(START.toPose())
+                                .lineToLinearHeading(VISION_BETWEEN_LEFT.toPose())
+                                .lineToLinearHeading(LEFT.toPose())
                                 .build();
+
+    }
+
+    public static class Away {
+        public static ConfigurablePose START = new ConfigurablePose(36, -66, toRadians(90));
+        public static ConfigurablePose STACK = new ConfigurablePose(60, -12, toRadians(0));
+        public static ConfigurablePose LEFT = new ConfigurablePose(15, -16, toRadians(90));
+        public static ConfigurablePose MIDDLE = new ConfigurablePose(36, -16, toRadians(90));
+        public static ConfigurablePose RIGHT = new ConfigurablePose(60, -17, toRadians(90));
+        public static ConfigurablePose W_JUNCTION = new ConfigurablePose(26, -9, 2.2);
+        public static ConfigurablePose BETWEEN_START_W_JUNCTION = new ConfigurablePose(36, -21, 2);
+        public static ConfigurablePose BETWEEN_W_JUNCTION_STACK = new ConfigurablePose(36, -14, .4);
+        public static ConfigurablePose LOW_JUNCTION_LEFT = new ConfigurablePose(24,-48, toRadians(120));
+        public static ConfigurablePose LOW_JUNCTION_RIGHT = new ConfigurablePose(48,-24, toRadians(60));
+        public static ConfigurablePose BETWEEN_STACK_W_JUNCTION = new ConfigurablePose(36, -14, 3);
+        public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(15, -60, toRadians(90));
+        public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(60, -60, toRadians(90));
+
+
+        // These are 'trajectory pieces' which should be named like this:
+        // {STARTING_POSITION}_TO_{ENDING_POSITION}
+        public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
+
+                START_TO_W_JUNCTION =
+                b -> b.apply(START.toPose())
+                        .lineToLinearHeading(BETWEEN_START_W_JUNCTION.toPose())
+                        .lineToLinearHeading(W_JUNCTION.toPose())
+                        .build(),
+                W_JUNCTION_TO_STACK =
+                        b -> b.apply(W_JUNCTION.toPose())
+                                .lineToLinearHeading(BETWEEN_W_JUNCTION_STACK.toPose())
+                                .lineToLinearHeading(STACK.toPose())
+                                .build(),
+                STACK_TO_W_JUNCTION =
+                        b -> b.apply(STACK.toPose())
+                                .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
+                                .lineToLinearHeading(W_JUNCTION.toPose())
+                                .build(),
+                W_JUNCTION_TO_LEFT_PARK =
+                        b -> b.apply(W_JUNCTION.toPose())
+                                .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
+                                .lineToLinearHeading(LEFT.toPose())
+                                .build(),
+                W_JUNCTION_TO_MIDDLE_PARK =
+                        b -> b.apply(W_JUNCTION.toPose())
+                                .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
+                                .lineToLinearHeading(MIDDLE.toPose())
+                                .build(),
+                W_JUNCTION_TO_RIGHT_PARK =
+                        b -> b.apply(W_JUNCTION.toPose())
+                                .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
+                                .lineToLinearHeading(RIGHT.toPose())
+                                .build(),
+                START_TO_LEFT_PARK =
+                        b -> b.apply(START.toPose())
+                                .lineToLinearHeading(BETWEEN_START_LEFT.toPose())
+                                .lineToLinearHeading(LEFT.toPose())
+                                .build(),
+                START_TO_RIGHT_PARK =
+                        b -> b.apply(START.toPose())
+                                .lineToLinearHeading(BETWEEN_START_RIGHT.toPose())
+                                .lineToLinearHeading(RIGHT.toPose())
+                                .build(),
+                START_TO_MIDDLE_PARK =
+                        b -> b.apply(START.toPose())
+                                .lineToLinearHeading(MIDDLE.toPose())
+                                .build();
+
     }
 }

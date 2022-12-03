@@ -3,7 +3,6 @@ package org.firstinspires.ftc.forteaching.TechnoBot;
 // This is a sample hardware class that keeps a reference to all the
 // pieces of hardware on the robot
 
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -18,10 +17,12 @@ import com.technototes.vision.hardware.Webcam;
 
 public class Hardware {
     // Put all the names of the devices in here:
-    @Config
+    // @Config Disable for the dashboard
     public static class DeviceNames {
-        public static String LEFT_MOTOR = "motorL";
-        public static String RIGHT_MOTOR = "motorR";
+        public static String FLEFT_MOTOR = "flMotor";
+        public static String FRIGHT_MOTOR = "frMotor";
+        public static String RLEFT_MOTOR = "rlMotor";
+        public static String RRIGHT_MOTOR = "rrMotor";
         public static String IMU = "imu";
 
         public static String REV2M_DIST = "distance";
@@ -39,8 +40,11 @@ public class Hardware {
     }
 
     // We make this public so subsystems & whatnot can get them
-    public Motor<DcMotorEx> leftDriveMotor;
-    public Motor<DcMotorEx> rightDriveMotor;
+    public EncodedMotor<DcMotorEx> frontLeftDriveMotor;
+    public EncodedMotor<DcMotorEx> frontRightDriveMotor;
+    public EncodedMotor<DcMotorEx> rearLeftDriveMotor;
+    public EncodedMotor<DcMotorEx> rearRightDriveMotor;
+
     public IMU inertialMovementUnit;
 
     public Rev2MDistanceSensor distanceSensor;
@@ -59,8 +63,10 @@ public class Hardware {
 
     public Hardware(HardwareMap hwmap) {
         if (TheBot.Connected.DriveTrain) {
-            leftDriveMotor = new Motor<DcMotorEx>(DeviceNames.LEFT_MOTOR);
-            rightDriveMotor = new Motor<DcMotorEx>(DeviceNames.RIGHT_MOTOR);
+            frontLeftDriveMotor = new EncodedMotor<DcMotorEx>(DeviceNames.FLEFT_MOTOR);
+            frontRightDriveMotor = new EncodedMotor<DcMotorEx>(DeviceNames.FRIGHT_MOTOR);
+            rearLeftDriveMotor = new EncodedMotor<DcMotorEx>(DeviceNames.RLEFT_MOTOR);
+            rearRightDriveMotor = new EncodedMotor<DcMotorEx>(DeviceNames.RRIGHT_MOTOR);
             inertialMovementUnit = new IMU(DeviceNames.IMU);
         }
         if (TheBot.Connected.Sensors) {
