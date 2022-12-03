@@ -29,7 +29,7 @@ public class AutoConstantsBlue {
         public static ConfigurablePose LEFT = new ConfigurablePose(18, -18, toRadians(90));
         public static ConfigurablePose MIDDLE = new ConfigurablePose(36, -16, toRadians(90));
         public static ConfigurablePose RIGHT = new ConfigurablePose(60, -17, toRadians(90));
-        public static ConfigurablePose W_JUNCTION = new ConfigurablePose(30, -11, 2);
+        public static ConfigurablePose W_JUNCTION = new ConfigurablePose(31, -11, 1.9);
 
         //public static ConfigurablePose BETWEEN_START_W_jUNCTION_ONE = new ConfigurablePose(40, -48, toRadians(180));
         public static ConfigurablePose BETWEEN_START_W_JUNCTION_TWO = new ConfigurablePose(42, -12, 3.8);
@@ -88,7 +88,7 @@ public class AutoConstantsBlue {
                                 .build(),
                 STACK_TO_W_JUNCTION =
                         b -> b.apply(STACK.toPose())
-                                //.lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
+                                .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
                                 .lineToLinearHeading(W_JUNCTION.toPose())
                                 .build(),
                 W_JUNCTION_TO_LEFT_PARK =
