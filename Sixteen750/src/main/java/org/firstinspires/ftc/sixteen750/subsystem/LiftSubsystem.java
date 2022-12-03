@@ -32,12 +32,12 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     // Don't change these: They're used for user-redefining the 'zero' location during gameplay
     public static double L_ACTUAL_ZERO = 10;
 
-    public static PIDCoefficients L_PID = new PIDCoefficients(0.0048, 0, 0);
+    public static PIDCoefficients L_PID = new PIDCoefficients(0.006, 0, 0);
 
     public static double TOLERANCE_ZONE = 0.9 * TICKS_PER_INCH;
 
     // This is used to hopefully counteract gravity...
-    public static double DOWNWARD_SCALE_FACTOR = 0.65;
+    public static double DOWNWARD_SCALE_FACTOR = 1;
 
     public static double CONE_HEIGHT_DIFFERENCE = 0.9 * TICKS_PER_INCH;
     private int currentConeNumber = 5;
