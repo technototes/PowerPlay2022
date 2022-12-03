@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.twenty403.command.autonomous.blue_away;
+package org.firstinspires.ftc.twenty403.command.autonomous.Left;
 
 import android.util.Pair;
 
@@ -9,8 +9,8 @@ import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
 
 import com.technototes.library.command.ChoiceCommand;
 
-public class AutoBlueAwayParkingSelectionCycleCommand extends ChoiceCommand {
-    public AutoBlueAwayParkingSelectionCycleCommand(
+public class AutoBlueAwayParkingSelectionPreLoadCommand extends ChoiceCommand {
+    public AutoBlueAwayParkingSelectionPreLoadCommand(
             DrivebaseSubsystem drivebaseSubsystem,
             VisionSubsystem visionSubsystem,
             LiftSubsystem liftSubsystem,
@@ -18,12 +18,12 @@ public class AutoBlueAwayParkingSelectionCycleCommand extends ChoiceCommand {
         super(
                 new Pair<>(
                         visionSubsystem.visionPipeline::left,
-                        new AutoBlueAwayCycleLeft(drivebaseSubsystem, clawSubsystem, liftSubsystem)),
+                        new AutoBlueAwayPreLoadLeft(drivebaseSubsystem, clawSubsystem, liftSubsystem)),
                 new Pair<>(
                         visionSubsystem.visionPipeline::middle,
-                        new AutoBlueAwayCycleMiddle(drivebaseSubsystem, clawSubsystem, liftSubsystem)),
+                        new AutoBlueAwayPreLoadMiddle(drivebaseSubsystem, clawSubsystem, liftSubsystem)),
                 new Pair<>(
                         visionSubsystem.visionPipeline::right,
-                        new AutoBlueAwayCycleRight(drivebaseSubsystem, clawSubsystem, liftSubsystem)));
+                        new AutoBlueAwayPreLoadRight(drivebaseSubsystem, clawSubsystem, liftSubsystem)));
     }
 }

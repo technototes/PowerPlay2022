@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
-@Disabled
+
 @TeleOp(name = "Manual Testing")
 @SuppressWarnings("unused")
 public class ManualTestingOpMode extends CommandOpMode {

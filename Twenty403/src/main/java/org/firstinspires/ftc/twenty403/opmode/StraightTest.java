@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.twenty403.opmode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.SequentialCommandGroup;
@@ -24,13 +26,17 @@ public class StraightTest extends CommandOpMode {
 
     @Override
     public void uponInit() {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware, Alliance.NONE, StartingPosition.HOME);
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Home.START.toPose());
         CommandScheduler.getInstance()
                 .scheduleForState(
                         new SequentialCommandGroup(
-                                new TrajectorySequenceCommand(robot.drivebaseSubsystem, AutoConstantsBlue.Home.START_TO_STRAIGHT)),
+//                                new TrajectorySequenceCommand(robot.drivebaseSubsystem, AutoConstantsBlue.Home.START_TO_STRAIGHT),
+//                                new TrajectorySequenceCommand(robot.drivebaseSubsystem, AutoConstantsBlue.Home.STRAIGHT_TO_START)),
+                        new TrajectorySequenceCommand(robot.drivebaseSubsystem, AutoConstantsBlue.Home.START_TO_LEFTSIDE),
+                        new TrajectorySequenceCommand(robot.drivebaseSubsystem, AutoConstantsBlue.Home.LEFTSIDE_TO_START)),
                         CommandOpMode.OpModeState.RUN);
     }
 
@@ -43,4 +49,5 @@ public class StraightTest extends CommandOpMode {
         telemetry.addData("Wheel positions", robot.drivebaseSubsystem.getWheelPositions());
         telemetry.update();
     }
+
 }

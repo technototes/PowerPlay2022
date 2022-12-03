@@ -6,7 +6,7 @@ import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.VisionCommand;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsBlue;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
-import org.firstinspires.ftc.twenty403.command.autonomous.blue_away.AutoBlueAwayParkingSelectionPreLoadCommand;
+import org.firstinspires.ftc.twenty403.command.autonomous.Left.AutoBlueAwayParkingSelectionPreLoadCommand;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 

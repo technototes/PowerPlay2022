@@ -62,11 +62,11 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
 
         // This was 60, which was too fast. Things slid around a lot.
         @MaxVelo
-        public static double MAX_VEL = 10; // TODO: change this back to 30
+        public static double MAX_VEL = 30; // TODO: change this back to 30
 
         // This was 35, which also felt a bit too fast. The bot controls more smoothly now
         @MaxAccel
-        public static double MAX_ACCEL = 10;
+        public static double MAX_ACCEL = 20;
 
         // This was 180 degrees
         @MaxAngleVelo
@@ -96,6 +96,16 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
 
         @PoseLimit
         public static int POSE_HISTORY_LIMIT = 100;
+//FL - 0.82
+//FR - 0.8
+//RL - 0.1
+//RR - 0.74
+        public static double AFR_SCALE = 0.8;
+        public static double AFL_SCALE = 0.82;
+        public static double ARR_SCALE = 0.74;
+        public static double ARL_SCALE = 1;
+
+
     }
 
     private static final boolean ENABLE_POSE_DIAGNOSTICS = true;
@@ -148,5 +158,12 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
             poseDisplay = pose.toString() + " : " + (poseVelocity != null ? poseVelocity.toString() : "<null>");
             System.out.println("Pose: " + poseDisplay);
         }
+    }
+    @Override
+    public void setMotorPowers(double v, double v1, double v2, double v3) {
+        leftFront.setPower(v* DriveConstants.AFL_SCALE);
+        leftRear.setPower(v1* DriveConstants.ARL_SCALE);
+        rightRear.setPower(v2* DriveConstants.ARR_SCALE);
+        rightFront.setPower(v3* DriveConstants.AFR_SCALE);
     }
 }
