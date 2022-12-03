@@ -27,7 +27,8 @@ public class MecanumInfinityStraightTest extends LinearOpMode {
         Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DRIVE_ONLY);
         Robot robot = new Robot(hardware, Robot.SubsystemCombo.DRIVE_ONLY, Alliance.NONE, StartingPosition.NEUTRAL);
 
-        TrajectorySequence backandFourthTrajectory = robot.mecanumDriveSubsystem.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
+        TrajectorySequence backandFourthTrajectory = robot.mecanumDriveSubsystem
+                .trajectorySequenceBuilder(new Pose2d(0, 0, 0))
                 .forward(DISTANCE)
                 .back(DISTANCE)
                 .build();
@@ -39,7 +40,7 @@ public class MecanumInfinityStraightTest extends LinearOpMode {
         while (!isStopRequested() && opModeIsActive()) {
             robot.mecanumDriveSubsystem.followTrajectorySequence(backandFourthTrajectory);
             lastPoseEstimate = robot.mecanumDriveSubsystem.getPoseEstimate();
-            telemetry.addData("Loop Count", 0);
+            telemetry.addData("Loop Count", loopCount);
             telemetry.addData("Last Pose Estimate", lastPoseEstimate);
             telemetry.update();
             loopCount++;
