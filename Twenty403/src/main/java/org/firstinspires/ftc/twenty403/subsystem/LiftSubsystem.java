@@ -259,15 +259,15 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         if (!isHardware) {
             return;
         }
-        double curLeft = leftPidController.getTargetPosition();
         ACTUAL_ZERO_LEFT = _leftMotor.get();
-        leftPidController.setTargetPosition(curLeft + ACTUAL_ZERO_LEFT);
+        leftPidController.setTargetPosition(0);
+        leftPidController.reset();
         if (singleMotor) {
             return;
         }
-        double curRight = rightPidController.getTargetPosition();
         ACTUAL_ZERO_RIGHT = _rightMotor.get();
-        rightPidController.setTargetPosition(curRight - ACTUAL_ZERO_RIGHT);
+        rightPidController.setTargetPosition(0);
+        rightPidController.reset();
     }
 
     private double getLeftPos() {
