@@ -66,15 +66,15 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
 
         // This was 35, which also felt a bit too fast. The bot controls more smoothly now
         @MaxAccel
-        public static double MAX_ACCEL = 20;
+        public static double MAX_ACCEL = 30;
 
         // This was 180 degrees
         @MaxAngleVelo
-        public static double MAX_ANG_VEL = Math.toRadians(135);
+        public static double MAX_ANG_VEL = Math.toRadians(180);
 
         // This was 90 degrees
         @MaxAngleAccel
-        public static double MAX_ANG_ACCEL = Math.toRadians(45);
+        public static double MAX_ANG_ACCEL = Math.toRadians(90);
 
         @TransPID
         public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(8, 0, 0);
@@ -96,7 +96,7 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
 
         @PoseLimit
         public static int POSE_HISTORY_LIMIT = 100;
-//FL - 0.82
+        //FL - 0.82
 //FR - 0.8
 //RL - 0.1
 //RR - 0.74
@@ -159,11 +159,12 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
             System.out.println("Pose: " + poseDisplay);
         }
     }
+
     @Override
     public void setMotorPowers(double v, double v1, double v2, double v3) {
-        leftFront.setPower(v* DriveConstants.AFL_SCALE);
-        leftRear.setPower(v1* DriveConstants.ARL_SCALE);
-        rightRear.setPower(v2* DriveConstants.ARR_SCALE);
-        rightFront.setPower(v3* DriveConstants.AFR_SCALE);
+        leftFront.setPower(v * DriveConstants.AFL_SCALE);
+        leftRear.setPower(v1 * DriveConstants.ARL_SCALE);
+        rightRear.setPower(v2 * DriveConstants.ARR_SCALE);
+        rightFront.setPower(v3 * DriveConstants.AFR_SCALE);
     }
 }

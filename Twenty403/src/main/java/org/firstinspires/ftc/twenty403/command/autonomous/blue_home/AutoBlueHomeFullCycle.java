@@ -6,6 +6,7 @@ import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftCollectCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
+import org.firstinspires.ftc.twenty403.command.lift.LiftIntakeCommand;
 import org.firstinspires.ftc.twenty403.helpers.ElapsedTimeHelper;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
@@ -40,7 +41,7 @@ public class AutoBlueHomeFullCycle extends SequentialCommandGroup {
                 new AutoRightSingleCycle(r.drivebaseSubsystem, r.liftSubsystem, r.clawSubsystem),
                 new AutoRightSingleCycle(r.drivebaseSubsystem, r.liftSubsystem, r.clawSubsystem),
                 new TrajectorySequenceCommand(r.drivebaseSubsystem, parkingDestination)
-                        .alongWith(new LiftCollectCommand(r.liftSubsystem)));
+                        .alongWith(new LiftIntakeCommand(r.liftSubsystem)));
 
 
 //                new AutoRightSingleCycle(drivebaseSubsystem, liftSubsystem, clawSubsystem),
