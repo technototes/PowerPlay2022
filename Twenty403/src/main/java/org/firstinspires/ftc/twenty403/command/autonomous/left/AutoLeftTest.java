@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.twenty403.command.autonomous;
+package org.firstinspires.ftc.twenty403.command.autonomous.left;
 
+import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;

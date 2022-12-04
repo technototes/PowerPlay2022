@@ -5,7 +5,7 @@ import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.VisionCommand;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
-import org.firstinspires.ftc.twenty403.command.autonomous.AutoLeftTest;
+import org.firstinspires.ftc.twenty403.command.autonomous.left.AutoLeftTest;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
