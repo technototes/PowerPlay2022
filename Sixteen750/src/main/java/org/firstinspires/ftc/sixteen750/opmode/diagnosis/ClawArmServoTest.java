@@ -44,7 +44,7 @@ public class ClawArmServoTest extends CommandOpMode {
         hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.ARM_CLAW_ONLY);
         robot = new Robot(hardware, Robot.SubsystemCombo.ARM_CLAW_ONLY, Alliance.NONE, StartingPosition.NEUTRAL);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        targetServo = hardware.flipperServo;
+        targetServo = hardware.elbowServo;
     }
 
     @Override
@@ -70,6 +70,8 @@ public class ClawArmServoTest extends CommandOpMode {
         } else if (gamepad1.circle) {
             hardware.elbowServo.setPosition(ELBOW_INTAKE);
             hardware.flipperServo.setPosition(FLIPPER_WHEN_ELBOW_INTAKE);
+        } else if (gamepad1.left_trigger > 0.5){
+
         }
 
         if (gamepad2.dpad_up) {
@@ -80,10 +82,6 @@ public class ClawArmServoTest extends CommandOpMode {
             hardware.flipperServo.setPosition(downBtnServoPosition);
         } else if (gamepad2.dpad_left) {
             hardware.flipperServo.setPosition(leftBtnServoPosition);
-        } else if (gamepad1.right_bumper) {
-            hardware.clawServo.setPosition(CLAW_CLOSE);
-        } else if (gamepad1.left_bumper) {
-            hardware.clawServo.setPosition(CLAW_OPEN);
         } else if (gamepad2.square) {
             hardware.elbowServo.setPosition(ELBOW_SCORE);
             hardware.flipperServo.setPosition(FLIPPER_WHEN_ELBOW_SCORE);
@@ -93,6 +91,17 @@ public class ClawArmServoTest extends CommandOpMode {
         } else if (gamepad2.circle) {
             hardware.elbowServo.setPosition(ELBOW_INTAKE);
             hardware.flipperServo.setPosition(FLIPPER_WHEN_ELBOW_INTAKE);
+        }
+
+        if (gamepad1.right_bumper) {
+            hardware.clawServo.setPosition(CLAW_CLOSE);
+        } else if (gamepad1.left_bumper) {
+            hardware.clawServo.setPosition(CLAW_OPEN);
+        }
+        if (gamepad2.right_bumper) {
+            hardware.clawServo.setPosition(CLAW_CLOSE);
+        } else if (gamepad2.left_bumper) {
+            hardware.clawServo.setPosition(CLAW_OPEN);
         }
 
         telemetry.addData("Claw Servo Position", robot.clawSubsystem.getClawPosition());

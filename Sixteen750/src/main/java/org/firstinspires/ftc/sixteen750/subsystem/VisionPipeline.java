@@ -183,7 +183,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
     }
 
     // Helper to send the bitmap to the FTC Dashboard
-    private void sendBitmap() {
+    public void sendBitmap() {
         FtcDashboard db = FtcDashboard.getInstance();
         if (db != null) {
             Bitmap bitmap = Bitmap.createBitmap(img.cols(), img.rows(), Bitmap.Config.RGB_565);
