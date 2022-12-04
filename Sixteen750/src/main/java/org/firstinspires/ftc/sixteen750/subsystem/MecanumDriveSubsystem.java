@@ -52,7 +52,7 @@ public class MecanumDriveSubsystem extends MecanumDrivebaseSubsystem implements 
         public static double MAX_VEL = 30;
 
         @MaxAccel
-        public static double MAX_ACCEL = 20;
+        public static double MAX_ACCEL = 10;
 
         // This was 180 degrees
         @MaxAngleVelo

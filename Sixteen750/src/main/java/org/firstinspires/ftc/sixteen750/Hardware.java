@@ -90,7 +90,7 @@ public class Hardware {
 
         if (enableArm) {
             flipperServo = new Servo(HardwareConstant.FLIPPER_SERVO);
-            elbowServo = new Servo(HardwareConstant.ELBOW_SERVO).invert();
+            elbowServo = new Servo(HardwareConstant.ELBOW_SERVO);
         }
 
         if (enableClaw) {

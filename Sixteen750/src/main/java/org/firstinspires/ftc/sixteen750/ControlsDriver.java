@@ -64,7 +64,7 @@ public class ControlsDriver {
         // Probably not a good idea to bind the drive controls to more than one gamepad
         CommandScheduler
                 .getInstance()
-                .scheduleJoystick(new MecanumDriveCommand(robot.mecanumDriveSubsystem, gamepad.leftStick, gamepad.rightStick, gamepad.square));
+                .scheduleJoystick(new MecanumDriveCommand(robot.mecanumDriveSubsystem, gamepad.leftStick, gamepad.rightStick));
         gamepad.rightStickButton.whenPressed(new ResetGyroCommand(robot.mecanumDriveSubsystem, gamepad));
     }
 

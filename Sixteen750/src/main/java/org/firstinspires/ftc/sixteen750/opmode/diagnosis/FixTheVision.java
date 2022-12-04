@@ -18,12 +18,10 @@ public class FixTheVision extends LinearOpMode {
         Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.VISION_ONLY);
         VisionSubsystem vision = new VisionSubsystem(hardware.camera, Alliance.BLUE, StartingPosition.AWAY);
         vision.startVisionPipeline();
-        vision.visionPipeline.sendBitmap();
 
         waitForStart();
 
         while (!isStopRequested() && opModeIsActive()){
-            vision.visionPipeline.sendBitmap();
         }
 
         vision.stopVisionPipeline();

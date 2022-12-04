@@ -10,7 +10,7 @@ public class ArmSubsystem implements Subsystem {
 
     public static double ELBOW_INTAKE = 0.875;
     public static double ELBOW_UPWARD = 0.6;
-    public static double ELBOW_SCORE = 0.1;
+    public static double ELBOW_SCORE = 0.2;
 
     public static double FLIPPER_WHEN_ELBOW_INTAKE = 0.55;
     public static double FLIPPER_WHEN_ELBOW_UPWARD = 0.6;

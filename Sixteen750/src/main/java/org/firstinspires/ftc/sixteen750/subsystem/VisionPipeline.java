@@ -60,9 +60,9 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         public static double highV = 255;
 
         // In the 160x120 bitmap, where are we looking?
-        public static int X = 55;
-        public static int Y = 36;
-        public static int WIDTH = 60;
+        public static int X = 120;
+        public static int Y = 65;
+        public static int WIDTH = 45;
         public static int HEIGHT = 60;
 
         // What color should we draw the outlining rectangle?
@@ -183,7 +183,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
     }
 
     // Helper to send the bitmap to the FTC Dashboard
-    public void sendBitmap() {
+    private void sendBitmap() {
         FtcDashboard db = FtcDashboard.getInstance();
         if (db != null) {
             Bitmap bitmap = Bitmap.createBitmap(img.cols(), img.rows(), Bitmap.Config.RGB_565);
