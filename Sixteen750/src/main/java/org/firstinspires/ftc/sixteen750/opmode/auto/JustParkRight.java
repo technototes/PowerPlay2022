@@ -11,10 +11,12 @@ import org.firstinspires.ftc.sixteen750.Robot;
 import org.firstinspires.ftc.sixteen750.subsystem.SimpleMecanumDriveSubsystem;
 
 @Config
-@Autonomous(name = "JustParkMiddle")
-public class JustParkMiddle extends LinearOpMode {
+@Autonomous(name = "JustParkRight")
+public class JustParkRight extends LinearOpMode {
     public static double DEFAULT_POWER = 0.3;
+    public static int brakeTime = 1500;
     public static int goForwardTime = 3000;
+    public static int goRightTime = 2500; // Mecanum wheels having resistance when going side way
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -34,5 +36,20 @@ public class JustParkMiddle extends LinearOpMode {
 
         drive.stop();
         System.out.println("Forward Auto Finished");
+
+        try {
+            Thread.sleep(brakeTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        time.reset();
+
+        while (!isStopRequested() && opModeIsActive() && time.milliseconds() < goRightTime) {
+            drive.goRight(DEFAULT_POWER);
+        }
+
+        drive.stop();
+        System.out.println("Right Auto Finished");
     }
 }

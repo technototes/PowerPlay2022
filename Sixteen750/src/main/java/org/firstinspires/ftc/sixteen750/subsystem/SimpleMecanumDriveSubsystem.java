@@ -6,6 +6,8 @@ import com.technototes.library.hardware.motor.EncodedMotor;
 import org.firstinspires.ftc.sixteen750.Hardware;
 
 public class SimpleMecanumDriveSubsystem {
+    public static int brakeTime = 1500;
+
     public EncodedMotor<DcMotorEx> leftFrontMotor;
     public EncodedMotor<DcMotorEx> leftRearMotor;
     public EncodedMotor<DcMotorEx> rightFrontMotor;
@@ -43,6 +45,15 @@ public class SimpleMecanumDriveSubsystem {
         leftRearMotor.setSpeed(0);
         rightFrontMotor.setSpeed(0);
         rightRearMotor.setSpeed(0);
+    }
+
+    public void stopAndWait() {
+        stop();
+        try {
+            Thread.sleep(brakeTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void goStraightForward(double power) {
