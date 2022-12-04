@@ -3,12 +3,10 @@ package org.firstinspires.ftc.sixteen750.opmode.diagnosis;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
-import org.firstinspires.ftc.sixteen750.command.autonomous.StartingPosition;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -18,10 +16,11 @@ import com.technototes.library.hardware2.HardwareBuilder;
 import com.technototes.library.util.Alliance;
 
 
+@Disabled
 @Config
-@TeleOp(name = "Simple [Motors]")
+@TeleOp()
 @SuppressWarnings("unused")
-public class SimpleTeleOpMode extends LinearOpMode {
+public class IMUDebug extends LinearOpMode {
     public Robot robot;
     public Hardware hardware;
 

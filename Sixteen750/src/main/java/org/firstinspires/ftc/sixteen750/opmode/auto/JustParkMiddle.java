@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.sixteen750.opmode.auto;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -9,10 +10,11 @@ import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
 import org.firstinspires.ftc.sixteen750.subsystem.SimpleMecanumDriveSubsystem;
 
+@Config
 @Autonomous(name = "JustParkMiddle")
 public class JustParkMiddle extends LinearOpMode {
     public static double DEFAULT_POWER = 0.3;
-    public static int goForwardTime = 1200;
+    public static int goForwardTime = 3000;
     public static int goLeftTime = 400;
     public static int goRightTime = 400;
 
