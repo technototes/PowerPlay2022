@@ -31,22 +31,22 @@ public class ControlsDriver {
 
         if (enableMecanumDrive) {
             bindMecanumDriveControls();
-            System.out.println("Binding Mecanum Drive Controls");
+            System.out.println("Binding Mecanum Drive Controls for Driver");
         }
         if (enableLift) {
             bindDriverLiftControls();
-            System.out.println("Binding Lift Controls");
+            System.out.println("Binding Lift Controls for Driver");
         }
         if (enableArm) {
             bindDriverArmControls();
-            System.out.println("Binding Arm Controls");
+            System.out.println("Binding Arm Controls for Driver");
         }
         if (enableClaw) {
             bindDriverClawControls();
-            System.out.println("Binding Claw Controls");
+            System.out.println("Binding Claw Controls for Driver");
         }
 
-        gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand(gamepad));
+//        gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand(gamepad));
     }
 
     public ControlsDriver(CommandGamepad g, Robot r, Robot.SubsystemCombo combo) {

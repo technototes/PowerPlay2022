@@ -26,18 +26,18 @@ public class ControlsOperator {
 
         if (enableLift) {
             bindCoDriverLiftControls();
-            System.out.println("Binding Lift Controls");
+            System.out.println("Binding Lift Controls for Operator");
         }
         if (enableArm) {
             bindCoDriverArmControls();
-            System.out.println("Binding Arm Controls");
+            System.out.println("Binding Arm Controls for Operator");
         }
         if (enableClaw) {
             bindCoDriverClawControls();
-            System.out.println("Binding Claw Controls");
+            System.out.println("Binding Claw Controls for Operator");
         }
 
-        gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand(gamepad));
+//        gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand(gamepad));
     }
 
     public ControlsOperator(CommandGamepad g, Robot r, Robot.SubsystemCombo combo){
