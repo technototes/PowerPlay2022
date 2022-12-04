@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name = "Move Forward")
 public class DangerousTankAuto extends LinearOpMode {
-    public static int DURATION_MS = 300;
+    public static int DURATION_MS = 3000;
 
     @Override
     public void runOpMode() throws InterruptedException {

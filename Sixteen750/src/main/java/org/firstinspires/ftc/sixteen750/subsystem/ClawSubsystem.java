@@ -37,16 +37,6 @@ public class ClawSubsystem implements Subsystem {
         setClawServoPosition(CLAW_CLOSE);
     }
 
-    @Deprecated
-    public void carry() {
-        clawClose();
-    }
-
-    @Deprecated
-    public void release() {
-        clawOpen();
-    }
-
     public boolean isConeClose() {
         if (distanceSensor.getDistance(DistanceUnit.CM) <= 4.0) {
             return true;

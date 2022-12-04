@@ -20,26 +20,39 @@ public class ControlsOperator {
     public Robot robot;
     public CommandGamepad gamepad;
 
-    public ControlsOperator(CommandGamepad g, Robot r) {
+    public ControlsOperator(CommandGamepad g, Robot r, boolean enableLift, boolean enableArm, boolean enableClaw) {
         this.robot = r;
         this.gamepad = g;
 
-        if (RobotConstant.LIFT_ENABLED) {
+        if (enableLift) {
             bindCoDriverLiftControls();
+            System.out.println("Binding Lift Controls");
         }
-        if (RobotConstant.ARM_ENABLED) {
+        if (enableArm) {
             bindCoDriverArmControls();
+            System.out.println("Binding Arm Controls");
         }
-        if (RobotConstant.CLAW_ENABLED) {
+        if (enableClaw) {
             bindCoDriverClawControls();
+            System.out.println("Binding Claw Controls");
         }
 
         gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand(gamepad));
     }
 
+    public ControlsOperator(CommandGamepad g, Robot r, Robot.SubsystemCombo combo){
+        this(
+                g,
+                r,
+                combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.LIFT_ENABLED : combo == Robot.SubsystemCombo.LIFT_ONLY,
+                combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.ARM_ENABLED : combo == Robot.SubsystemCombo.ARM_CLAW_ONLY,
+                combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.CLAW_ENABLED : combo == Robot.SubsystemCombo.ARM_CLAW_ONLY
+        );
+    }
+
     public void bindCoDriverClawControls() {
-        gamepad.rightTrigger.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-        gamepad.leftTrigger.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
+        gamepad.leftBumper.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
+        gamepad.rightBumper.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
     }
 
     public void bindCoDriverArmControls() {
@@ -54,7 +67,7 @@ public class ControlsOperator {
     }
 
     public void bindCoDriverLiftControls() {
-        gamepad.leftBumper.whenPressed(new LiftMoveUpCommand(robot.liftSubsystem));
-        gamepad.rightBumper.whenPressed(new LiftMoveDownCommand(robot.liftSubsystem));
+        gamepad.leftTrigger.whenPressed(new LiftMoveUpCommand(robot.liftSubsystem));
+        gamepad.rightTrigger.whenPressed(new LiftMoveDownCommand(robot.liftSubsystem));
     }
 }

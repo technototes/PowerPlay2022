@@ -28,8 +28,8 @@ public class RegularMecanumDrive extends CommandOpMode {
     public void uponInit() {
         hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DEFAULT);
         robot = new Robot(hardware, Robot.SubsystemCombo.DEFAULT, Alliance.NONE, StartingPosition.NEUTRAL);
-        driverControls = new ControlsDriver(driverGamepad, robot);
-        operatorControls = new ControlsOperator(codriverGamepad, robot);
+        driverControls = new ControlsDriver(driverGamepad, robot, Robot.SubsystemCombo.DEFAULT);
+        operatorControls = new ControlsOperator(codriverGamepad, robot, Robot.SubsystemCombo.DEFAULT);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
@@ -45,5 +45,6 @@ public class RegularMecanumDrive extends CommandOpMode {
         telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
         telemetry.addData("Right Stick X", gamepad1.right_stick_x);
         telemetry.addData("Right Stick Y", gamepad1.right_stick_y);
+        telemetry.addData("PoseEstimate", robot.mecanumDriveSubsystem.getPoseEstimate());
     }
 }

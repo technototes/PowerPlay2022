@@ -15,5 +15,6 @@ public class LiftMoveUpCommand implements Command {
     @Override
     public void execute() {
         liftSubsystem.moveUp();
+        System.out.println("Lift moving up");
     }
 }

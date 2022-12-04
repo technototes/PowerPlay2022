@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.sixteen750.opmode.diagnosis;
 
-import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem._ELBOW_INTAKE_FLIPPER;
-import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem._ELBOW_SCORE;
-import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem._ELBOW_SCORE_FLIPPER;
-import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem._ELBOW_UPWARD;
-import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem._ELBOW_INTAKE;
-import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem._ELBOW_UPWARD_FLIPPER;
+import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem.FLIPPER_WHEN_ELBOW_INTAKE;
+import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem.ELBOW_SCORE;
+import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem.FLIPPER_WHEN_ELBOW_SCORE;
+import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem.ELBOW_UPWARD;
+import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem.ELBOW_INTAKE;
+import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem.FLIPPER_WHEN_ELBOW_UPWARD;
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.CLAW_CLOSE;
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.CLAW_OPEN;
 
@@ -62,14 +62,14 @@ public class ClawArmServoTest extends CommandOpMode {
         } else if (gamepad1.left_bumper) {
             hardware.clawServo.setPosition(CLAW_OPEN);
         } else if (gamepad1.square) {
-            hardware.elbowServo.setPosition(_ELBOW_SCORE);
-            hardware.flipperServo.setPosition(_ELBOW_SCORE_FLIPPER);
+            hardware.elbowServo.setPosition(ELBOW_SCORE);
+            hardware.flipperServo.setPosition(FLIPPER_WHEN_ELBOW_SCORE);
         } else if (gamepad1.triangle) {
-            hardware.elbowServo.setPosition(_ELBOW_UPWARD);
-            hardware.flipperServo.setPosition(_ELBOW_UPWARD_FLIPPER);
+            hardware.elbowServo.setPosition(ELBOW_UPWARD);
+            hardware.flipperServo.setPosition(FLIPPER_WHEN_ELBOW_UPWARD);
         } else if (gamepad1.circle) {
-            hardware.elbowServo.setPosition(_ELBOW_INTAKE);
-            hardware.flipperServo.setPosition(_ELBOW_INTAKE_FLIPPER);
+            hardware.elbowServo.setPosition(ELBOW_INTAKE);
+            hardware.flipperServo.setPosition(FLIPPER_WHEN_ELBOW_INTAKE);
         }
 
         if (gamepad2.dpad_up) {
@@ -85,14 +85,14 @@ public class ClawArmServoTest extends CommandOpMode {
         } else if (gamepad1.left_bumper) {
             hardware.clawServo.setPosition(CLAW_OPEN);
         } else if (gamepad2.square) {
-            hardware.elbowServo.setPosition(_ELBOW_SCORE);
-            hardware.flipperServo.setPosition(_ELBOW_SCORE_FLIPPER);
+            hardware.elbowServo.setPosition(ELBOW_SCORE);
+            hardware.flipperServo.setPosition(FLIPPER_WHEN_ELBOW_SCORE);
         } else if (gamepad2.triangle) {
-            hardware.elbowServo.setPosition(_ELBOW_UPWARD);
-            hardware.flipperServo.setPosition(_ELBOW_UPWARD_FLIPPER);
+            hardware.elbowServo.setPosition(ELBOW_UPWARD);
+            hardware.flipperServo.setPosition(FLIPPER_WHEN_ELBOW_UPWARD);
         } else if (gamepad2.circle) {
-            hardware.elbowServo.setPosition(_ELBOW_INTAKE);
-            hardware.flipperServo.setPosition(_ELBOW_INTAKE_FLIPPER);
+            hardware.elbowServo.setPosition(ELBOW_INTAKE);
+            hardware.flipperServo.setPosition(FLIPPER_WHEN_ELBOW_INTAKE);
         }
 
         telemetry.addData("Claw Servo Position", robot.clawSubsystem.getClawPosition());
