@@ -7,6 +7,9 @@ import org.firstinspires.ftc.sixteen750.Hardware;
 
 public class SimpleMecanumDriveSubsystem {
     public static int brakeTime = 1500;
+    public static int autoGoForwardTicks = 2100;
+    public static int autoGoLeftTicks = 1100;
+    public static int autoGoRightTicks = 1100;
 
     public EncodedMotor<DcMotorEx> leftFrontMotor;
     public EncodedMotor<DcMotorEx> leftRearMotor;

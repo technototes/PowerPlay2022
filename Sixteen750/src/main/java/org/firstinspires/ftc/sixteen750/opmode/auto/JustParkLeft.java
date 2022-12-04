@@ -13,8 +13,6 @@ import org.firstinspires.ftc.sixteen750.subsystem.SimpleMecanumDriveSubsystem;
 @Autonomous(name = "JustParkLeft")
 public class JustParkLeft extends LinearOpMode {
     public static double DEFAULT_POWER = 0.3;
-    public static int goForwardTicks = 3000;
-    public static int goLeftTicks = 1100; // Left Front
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -27,7 +25,7 @@ public class JustParkLeft extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-        while (!isStopRequested() && opModeIsActive() && drive.getAdjustedEncoderValues()[0] < goForwardTicks) {
+        while (!isStopRequested() && opModeIsActive() && Math.abs(drive.getAdjustedEncoderValues()[0]) < SimpleMecanumDriveSubsystem.autoGoForwardTicks) {
             drive.goStraightForward(DEFAULT_POWER);
 
             telemetry.addData("Left Front Encoder", drive.getAdjustedEncoderValues()[0]);
@@ -41,8 +39,9 @@ public class JustParkLeft extends LinearOpMode {
         drive.stopAndWait();
         System.out.println("Forward Auto Finished");
 
+        drive.setEncoderZero();
 
-        while (!isStopRequested() && opModeIsActive() && drive.getAdjustedEncoderValues()[0] < goLeftTicks) {
+        while (!isStopRequested() && opModeIsActive() && Math.abs(drive.getAdjustedEncoderValues()[0]) < SimpleMecanumDriveSubsystem.autoGoLeftTicks) {
             drive.goLeft(DEFAULT_POWER);
 
             telemetry.addData("Left Front Encoder - Real", drive.getEncoderValues()[0]);
