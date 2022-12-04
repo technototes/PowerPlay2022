@@ -4,9 +4,9 @@ import org.firstinspires.ftc.twenty403.Controls.Controls;
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.VisionCommand;
-import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsBlue;
+import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
-import org.firstinspires.ftc.twenty403.command.autonomous.blue_home.AutoBlueHomeParkingSelectionPreLoadCommand;
+import org.firstinspires.ftc.twenty403.command.autonomous.right.AutoRightParkingSelectionPreLoadCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -26,13 +26,13 @@ public class RightPreLoad extends CommandOpMode {
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
-        robot = new Robot(hardware, Alliance.NONE, StartingPosition.HOME);
-        robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Home.START.toPose());
+        robot = new Robot(hardware, Alliance.NONE, StartingPosition.RIGHT);
+        robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Right.START.toPose());
         CommandScheduler.getInstance()
                 .scheduleForState(
                         new SequentialCommandGroup(
                                 new ClawCloseCommand(robot.clawSubsystem),
-                                new AutoBlueHomeParkingSelectionPreLoadCommand(
+                                new AutoRightParkingSelectionPreLoadCommand(
                                         robot.visionSystem,
                                         robot.drivebaseSubsystem,
                                         robot.clawSubsystem,

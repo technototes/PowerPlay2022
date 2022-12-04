@@ -16,9 +16,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.technototes.library.hardware2.HardwareBuilder;
 import com.technototes.library.util.Alliance;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Config
 @Disabled
 @Autonomous(name = "Simple [Motors]")
@@ -29,6 +26,7 @@ public class SimpleTeleOpMode extends LinearOpMode {
      */
     public Robot robot;
     public Hardware hardware;
+
     @Config
     public static class MotorScales {
         public static double FL = 0.41;
@@ -37,6 +35,7 @@ public class SimpleTeleOpMode extends LinearOpMode {
         public static double RR = 0.39;
         public static double SPEED = 2.0;
     }
+
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());

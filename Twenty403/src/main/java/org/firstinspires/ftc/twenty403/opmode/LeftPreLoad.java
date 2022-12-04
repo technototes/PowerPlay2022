@@ -4,9 +4,9 @@ import org.firstinspires.ftc.twenty403.Controls.Controls;
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.VisionCommand;
-import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsBlue;
+import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
-import org.firstinspires.ftc.twenty403.command.autonomous.Left.AutoBlueAwayParkingSelectionPreLoadCommand;
+import org.firstinspires.ftc.twenty403.command.autonomous.left.AutoLeftParkingSelectionPreLoadCommand;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -25,12 +25,12 @@ public class LeftPreLoad extends CommandOpMode {
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
-        robot = new Robot(hardware, Alliance.NONE, StartingPosition.AWAY);
-        robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Away.START.toPose());
+        robot = new Robot(hardware, Alliance.NONE, StartingPosition.LEFT);
+        robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Left.START.toPose());
         CommandScheduler.getInstance()
                 .scheduleForState(
                         new SequentialCommandGroup(
-                                new AutoBlueAwayParkingSelectionPreLoadCommand(
+                                new AutoLeftParkingSelectionPreLoadCommand(
                                         robot.drivebaseSubsystem,
                                         robot.visionSystem,
                                         robot.liftSubsystem,

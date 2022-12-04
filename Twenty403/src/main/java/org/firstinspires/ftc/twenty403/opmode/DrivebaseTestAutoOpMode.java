@@ -4,8 +4,8 @@ import org.firstinspires.ftc.twenty403.Controls.Controls;
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.VisionCommand;
-import org.firstinspires.ftc.twenty403.command.autonomous.AutoBlueAwayTest;
-import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsBlue;
+import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
+import org.firstinspires.ftc.twenty403.command.autonomous.AutoLeftTest;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -26,11 +26,11 @@ public class DrivebaseTestAutoOpMode extends CommandOpMode {
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
-        robot = new Robot(hardware, Alliance.BLUE, StartingPosition.HOME);
-        robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Home.START.toPose());
+        robot = new Robot(hardware, Alliance.BLUE, StartingPosition.RIGHT);
+        robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Right.START.toPose());
         CommandScheduler.getInstance()
                 .scheduleForState(
-                        new AutoBlueAwayTest(robot.drivebaseSubsystem, robot.clawSubsystem, robot.liftSubsystem),
+                        new AutoLeftTest(robot.drivebaseSubsystem, robot.clawSubsystem, robot.liftSubsystem),
                         CommandOpMode.OpModeState.RUN);
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
             CommandScheduler.getInstance().scheduleInit(new VisionCommand(robot.visionSystem));
