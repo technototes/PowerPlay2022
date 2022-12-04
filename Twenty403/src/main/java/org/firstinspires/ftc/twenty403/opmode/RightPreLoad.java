@@ -32,11 +32,7 @@ public class RightPreLoad extends CommandOpMode {
                 .scheduleForState(
                         new SequentialCommandGroup(
                                 new ClawCloseCommand(robot.clawSubsystem),
-                                new AutoRightParkingSelectionPreLoadCommand(
-                                        robot.visionSystem,
-                                        robot.drivebaseSubsystem,
-                                        robot.clawSubsystem,
-                                        robot.liftSubsystem),
+                                new AutoRightParkingSelectionPreLoadCommand(robot),
                                 CommandScheduler.getInstance()::terminateOpMode),
                         CommandOpMode.OpModeState.RUN);
         if (Robot.RobotConstant.CAMERA_CONNECTED) {

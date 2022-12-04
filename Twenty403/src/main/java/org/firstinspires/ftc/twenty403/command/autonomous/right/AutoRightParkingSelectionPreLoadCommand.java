@@ -2,28 +2,15 @@ package org.firstinspires.ftc.twenty403.command.autonomous.right;
 
 import android.util.Pair;
 
-import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
-import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
-import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
-import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
+import org.firstinspires.ftc.twenty403.Robot;
 
 import com.technototes.library.command.ChoiceCommand;
 
 public class AutoRightParkingSelectionPreLoadCommand extends ChoiceCommand {
-    public AutoRightParkingSelectionPreLoadCommand(
-            VisionSubsystem visionSubsystem,
-            DrivebaseSubsystem drivebaseSubsystem,
-            ClawSubsystem clawSubsystem,
-            LiftSubsystem liftSubsystem) {
+    public AutoRightParkingSelectionPreLoadCommand(Robot r) {
         super(
-                new Pair<>(
-                        visionSubsystem.visionPipeline::left,
-                        new AutoRightPreLoadLeft(drivebaseSubsystem, clawSubsystem, liftSubsystem)),
-                new Pair<>(
-                        visionSubsystem.visionPipeline::middle,
-                        new AutoRightPreLoadMiddle(drivebaseSubsystem, clawSubsystem, liftSubsystem)),
-                new Pair<>(
-                        visionSubsystem.visionPipeline::right,
-                        new AutoRightPreLoadRight(drivebaseSubsystem, clawSubsystem, liftSubsystem)));
+                new Pair<>(r.visionSystem.visionPipeline::left, new AutoRightPreLoadLeft(r)),
+                new Pair<>(r.visionSystem.visionPipeline::middle, new AutoRightPreLoadMiddle(r)),
+                new Pair<>(r.visionSystem.visionPipeline::right, new AutoRightPreLoadRight(r)));
     }
 }

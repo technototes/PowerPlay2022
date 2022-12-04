@@ -30,8 +30,7 @@ public class RightJustPark extends CommandOpMode {
         CommandScheduler.getInstance()
                 .scheduleForState(
                         new SequentialCommandGroup(
-                                new AutoRightParkingSelectionJustParkCommand(
-                                        robot.visionSystem, robot.drivebaseSubsystem),
+                                new AutoRightParkingSelectionJustParkCommand(robot),
                                 CommandScheduler.getInstance()::terminateOpMode),
                         CommandOpMode.OpModeState.RUN);
         if (Robot.RobotConstant.CAMERA_CONNECTED) {

@@ -18,8 +18,8 @@ public class AutoLeftFullCycleMiddle extends SequentialCommandGroup {
                         .alongWith(new SequentialCommandGroup(
                                 new WaitCommand(0.2), new LiftHighJunctionCommand(robot.liftSubsystem))),
                 new ClawOpenCommand(robot.clawSubsystem),
-                new LeftJunctionStackCycle(robot),
-                new LeftJunctionStackCycle(robot),
+                new AutoLeftJunctionStackCycle(robot),
+                new AutoLeftJunctionStackCycle(robot),
                 // new LeftJunctionStackCycle(robot),
                 new TrajectorySequenceCommand(robot.drivebaseSubsystem, AutoConstants.Left.E_JUNCTION_TO_MIDDLE_PARK)
                         .alongWith(new LiftCollectCommand(robot.liftSubsystem)));

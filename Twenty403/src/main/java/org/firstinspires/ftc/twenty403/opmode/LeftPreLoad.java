@@ -30,11 +30,7 @@ public class LeftPreLoad extends CommandOpMode {
         CommandScheduler.getInstance()
                 .scheduleForState(
                         new SequentialCommandGroup(
-                                new AutoLeftParkingSelectionPreLoadCommand(
-                                        robot.drivebaseSubsystem,
-                                        robot.visionSystem,
-                                        robot.liftSubsystem,
-                                        robot.clawSubsystem),
+                                new AutoLeftParkingSelectionPreLoadCommand(robot),
                                 CommandScheduler.getInstance()::terminateOpMode),
                         CommandOpMode.OpModeState.RUN);
         if (Robot.RobotConstant.CAMERA_CONNECTED) {

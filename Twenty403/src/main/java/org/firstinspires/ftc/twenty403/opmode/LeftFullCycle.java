@@ -32,7 +32,7 @@ public class LeftFullCycle extends CommandOpMode {
                 .scheduleForState(
                         new SequentialCommandGroup(
                                 new ClawCloseCommand(robot.clawSubsystem),
-                                new AutoLeftParkingSelectionFullCycleCommand(robot.visionSystem, robot),
+                                new AutoLeftParkingSelectionFullCycleCommand(robot),
                                 CommandScheduler.getInstance()::terminateOpMode),
                         CommandOpMode.OpModeState.RUN);
         // Claw close on Init doesn't work yet

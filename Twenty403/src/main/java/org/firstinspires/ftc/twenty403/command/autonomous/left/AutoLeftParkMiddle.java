@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.twenty403.command.autonomous.left;
 
+import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
-import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.SequentialCommandGroup;
@@ -17,10 +17,10 @@ public class AutoRightLeft extends SequentialCommandGroup {
     }
 }
 */
-public class AutoLeftMiddle extends SequentialCommandGroup {
-    public AutoLeftMiddle(DrivebaseSubsystem drivebaseSubsystem) {
+public class AutoLeftParkMiddle extends SequentialCommandGroup {
+    public AutoLeftParkMiddle(Robot r) {
         super(
-                new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstants.Left.START_TO_MIDDLE_PARK),
+                new TrajectorySequenceCommand(r.drivebaseSubsystem, AutoConstants.Left.START_TO_MIDDLE_PARK),
                 CommandScheduler.getInstance()::terminateOpMode);
     }
 }

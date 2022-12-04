@@ -2,17 +2,15 @@ package org.firstinspires.ftc.twenty403.command.autonomous.left;
 
 import android.util.Pair;
 
-import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
-import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
+import org.firstinspires.ftc.twenty403.Robot;
 
 import com.technototes.library.command.ChoiceCommand;
 
 public class AutoLeftParkingSelectionJustParkCommand extends ChoiceCommand {
-    public AutoLeftParkingSelectionJustParkCommand(
-            DrivebaseSubsystem drivebaseSubsystem, VisionSubsystem visionSubsystem) {
+    public AutoLeftParkingSelectionJustParkCommand(Robot r) {
         super(
-                new Pair<>(visionSubsystem.visionPipeline::left, new AutoLeftLeft(drivebaseSubsystem)),
-                new Pair<>(visionSubsystem.visionPipeline::middle, new AutoLeftMiddle(drivebaseSubsystem)),
-                new Pair<>(visionSubsystem.visionPipeline::right, new AutoLeftRight(drivebaseSubsystem)));
+                new Pair<>(r.visionSystem.visionPipeline::left, new AutoLeftParkLeft(r)),
+                new Pair<>(r.visionSystem.visionPipeline::middle, new AutoLeftParkMiddle(r)),
+                new Pair<>(r.visionSystem.visionPipeline::right, new AutoLeftParkRight(r)));
     }
 }

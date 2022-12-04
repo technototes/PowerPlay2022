@@ -10,8 +10,8 @@ import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.path.command.TrajectorySequenceCommand;
 
-public class LeftJunctionStackCycle extends SequentialCommandGroup {
-    public LeftJunctionStackCycle(Robot robot) {
+public class AutoLeftJunctionStackCycle extends SequentialCommandGroup {
+    public AutoLeftJunctionStackCycle(Robot robot) {
         super(
                 new TrajectorySequenceCommand(robot.drivebaseSubsystem, AutoConstants.Left.E_JUNCTION_TO_STACK)
                         .alongWith(new LiftCollectCommand(robot.liftSubsystem)),
