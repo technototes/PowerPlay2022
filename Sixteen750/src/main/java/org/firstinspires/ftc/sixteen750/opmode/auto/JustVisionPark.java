@@ -19,8 +19,8 @@ public class JustVisionPark extends LinearOpMode {
     public static double DEFAULT_POWER = 0.3;
     public static int brakeTime = 1500;
     public static int goForwardTicks = 2100;
-    public static int goLeftTicks = 1100; // Left Front
-    public static int goRightTicks = 1100; // Left Rear
+    public static int goLeftTicks = 1100;
+    public static int goRightTicks = 1100;
 
 
     @Override
@@ -81,7 +81,7 @@ public class JustVisionPark extends LinearOpMode {
         }
         else if (parkRight) {
             System.out.println("Parking Right");
-            while (!isStopRequested() && opModeIsActive() && drive.getAdjustedEncoderValues()[1] < goRightTicks) {
+            while (!isStopRequested() && opModeIsActive() && Math.abs(drive.getAdjustedEncoderValues()[0]) < goRightTicks) {
                 drive.goRight(DEFAULT_POWER);
 
                 telemetry.addData("Left Front Encoder - Real", drive.getEncoderValues()[0]);

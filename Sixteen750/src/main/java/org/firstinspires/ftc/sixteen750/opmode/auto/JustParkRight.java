@@ -16,7 +16,7 @@ public class JustParkRight extends LinearOpMode {
     public static double DEFAULT_POWER = 0.3;
     public static int brakeTime = 1500;
     public static int goForwardTicks = 2100;
-    public static int goRightTicks = 1100; // Left Rear
+    public static int goRightTicks = 1200;
 
     @Override
     public void runOpMode() throws InterruptedException {
