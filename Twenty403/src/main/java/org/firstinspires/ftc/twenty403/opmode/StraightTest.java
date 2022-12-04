@@ -32,12 +32,6 @@ public class StraightTest extends CommandOpMode {
         CommandScheduler.getInstance()
                 .scheduleForState(
                         new SequentialCommandGroup(
-                                //                                new
-                                // TrajectorySequenceCommand(robot.drivebaseSubsystem,
-                                // AutoConstantsBlue.Home.START_TO_STRAIGHT),
-                                //                                new
-                                // TrajectorySequenceCommand(robot.drivebaseSubsystem,
-                                // AutoConstantsBlue.Home.STRAIGHT_TO_START)),
                                 new TrajectorySequenceCommand(
                                         robot.drivebaseSubsystem, AutoConstants.Right.START_TO_LEFTSIDE),
                                 new TrajectorySequenceCommand(

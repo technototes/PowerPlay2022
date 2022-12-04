@@ -12,7 +12,7 @@ original code:
 public class AutoRightLeft extends SequentialCommandGroup {
     public AutoRightLeft(DrivebaseSubsystem drivebaseSubsystem) {
         super(
-                new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstantsBlue.Home.START_TO_LEFT_PARK)
+                new TrajectorySequenceCommand(drivebaseSubsystem, AutoConstants.Left.START_TO_LEFT_PARK)
         );
     }
 }

@@ -18,7 +18,7 @@ import com.technototes.path.command.TrajectorySequenceCommand;
 import com.technototes.path.trajectorysequence.TrajectorySequence;
 import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
 
-// autonomous for blue home and red away
+// autonomous for right
 // parks in left position
 // scores preload & 2 more cones from stack
 public class AutoRightFullCycle extends SequentialCommandGroup {

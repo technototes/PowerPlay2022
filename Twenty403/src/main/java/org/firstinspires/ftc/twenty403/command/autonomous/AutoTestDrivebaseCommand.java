@@ -23,7 +23,7 @@ public class AutoTestDrivebaseCommand extends SequentialCommandGroup {
                 //                new AutoRightConeStackCommand(drive, lift, claw)
                 /*new TrajectorySequenceCommand(
                         drive,
-                        Robot.Trajectories.BLUE_PARK_LOCATION_Home)/*
+                        Robot.Trajectories.PARK_LOCATION_RIGHT)/*
                 /*Placeholder for what we're doing for parking*/
                 );
     }

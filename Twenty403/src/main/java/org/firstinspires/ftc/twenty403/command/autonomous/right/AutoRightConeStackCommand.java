@@ -11,10 +11,10 @@ import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 public class AutoRightConeStackCommand extends SequentialCommandGroup {
     public AutoRightConeStackCommand(MecanumDrivebaseSubsystem drive, LiftSubsystem lift, ClawSubsystem claw) {
         super(
-                /*new TrajectorySequenceCommand(drive, Robot.Trajectories.BLUE_HOME_STACK)
+                /*new TrajectorySequenceCommand(drive, Robot.Trajectories.RIGHT_STACK)
                 .alongWith(new ConeReadyToIntakeCommand(cone)),*/
                 new ClawCloseCommand(claw),
-                /*new TrajectorySequenceCommand(drive, Robot.Trajectories.BLUE_HIGH_JUNCTION_HOME)
+                /*new TrajectorySequenceCommand(drive, Robot.Trajectories.HIGH_JUNCTION_RIGHT)
                 .alongWith(new ConeReadyToScoreCommand(cone)),*/
                 new ClawOpenCommand(claw));
     }
