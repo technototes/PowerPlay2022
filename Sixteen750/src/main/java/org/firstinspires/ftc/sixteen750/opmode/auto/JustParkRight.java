@@ -16,7 +16,7 @@ public class JustParkRight extends LinearOpMode {
     public static double DEFAULT_POWER = 0.3;
     public static int brakeTime = 1500;
     public static int goForwardTicks = 2100;
-    public static int goRightTicks = 1100; // Left Rear
+    public static int goRightTicks = 900; // Left Rear
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -51,7 +51,7 @@ public class JustParkRight extends LinearOpMode {
 
         drive.setEncoderZero();
 
-        while (!isStopRequested() && opModeIsActive() && drive.getEncoderValues()[1] < goRightTicks) {
+        while (!isStopRequested() && opModeIsActive() && Math.abs(drive.getAdjustedEncoderValues()[0]) < goRightTicks) {
             drive.goRight(DEFAULT_POWER);
 
             telemetry.addData("Left Front Encoder - Real", drive.getEncoderValues()[0]);
@@ -67,6 +67,8 @@ public class JustParkRight extends LinearOpMode {
             telemetry.update();
         }
 
+        drive.stop();
+
         while (!isStopRequested() && opModeIsActive()) {
             telemetry.addData("Left Front Encoder - Real", drive.getEncoderValues()[0]);
             telemetry.addData("Left Rear Encoder - Real", drive.getEncoderValues()[1]);
@@ -81,7 +83,6 @@ public class JustParkRight extends LinearOpMode {
             telemetry.update();
         }
 
-        drive.stop();
         System.out.println("Right Auto Finished");
     }
 }

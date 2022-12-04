@@ -101,6 +101,8 @@ public class JustVisionPark extends LinearOpMode {
             System.out.println("Staying in the middle");
         }
 
+        drive.stop();
+
         while (!isStopRequested() && opModeIsActive()) {
             telemetry.addData("Left Front Encoder - Real", drive.getEncoderValues()[0]);
             telemetry.addData("Left Rear Encoder - Real", drive.getEncoderValues()[1]);
@@ -115,7 +117,6 @@ public class JustVisionPark extends LinearOpMode {
             telemetry.update();
         }
 
-        drive.stop();
         vision.stopVisionPipeline();
         System.out.println("Auto Finished");
     }
