@@ -1,15 +1,18 @@
 package org.firstinspires.ftc.sixteen750.subsystem;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.technototes.library.hardware.motor.EncodedMotor;
 
 import org.firstinspires.ftc.sixteen750.Hardware;
 
+@Config
 public class SimpleMecanumDriveSubsystem {
     public static int brakeTime = 1500;
     public static int autoGoForwardTicks = 2100;
-    public static int autoGoLeftTicks = 1100;
-    public static int autoGoRightTicks = 1100;
+    // should be fine to hitting the wall
+    public static int autoGoLeftTicks = 1200;
+    public static int autoGoRightTicks = 1200;
 
     public EncodedMotor<DcMotorEx> leftFrontMotor;
     public EncodedMotor<DcMotorEx> leftRearMotor;
