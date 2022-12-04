@@ -21,7 +21,7 @@ public class JustParkRight extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         HardwareBuilder.initMap(hardwareMap);
-        Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DEFAULT);
+        Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DRIVE_ONLY);
         SimpleMecanumDriveSubsystem drive = new SimpleMecanumDriveSubsystem(hardware);
 
         waitForStart();

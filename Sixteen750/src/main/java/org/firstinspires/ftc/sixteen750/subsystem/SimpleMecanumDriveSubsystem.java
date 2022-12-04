@@ -13,6 +13,11 @@ public class SimpleMecanumDriveSubsystem {
     public EncodedMotor<DcMotorEx> rightFrontMotor;
     public EncodedMotor<DcMotorEx> rightRearMotor;
 
+    double leftFrontZero = 0;
+    double leftRearZero = 0;
+    double rightFrontZero = 0;
+    double rightRearZero = 0;
+
     public SimpleMecanumDriveSubsystem(Hardware hardware) {
         if (hardware.leftFrontMotor != null){
             this.leftFrontMotor = hardware.leftFrontMotor;
@@ -38,6 +43,31 @@ public class SimpleMecanumDriveSubsystem {
         else {
             throw new NullPointerException("rightRearMotor is null");
         }
+    }
+
+    public double[] getEncoderValues() {
+        return new double[] {
+                leftFrontMotor.getEncoder().getPosition(),
+                leftRearMotor.getEncoder().getPosition(),
+                rightFrontMotor.getEncoder().getPosition(),
+                rightRearMotor.getEncoder().getPosition(),
+        };
+    }
+
+    public void setEncoderZero() {
+        leftFrontZero = leftFrontMotor.getEncoder().getPosition();
+        leftRearZero = leftRearMotor.getEncoder().getPosition();
+        rightFrontZero = rightFrontMotor.getEncoder().getPosition();
+        rightRearZero = rightRearMotor.getEncoder().getPosition();
+    }
+
+    public double[] getAdjustedEncoderValues() {
+        return new double[] {
+                leftFrontMotor.getEncoder().getPosition() - leftFrontZero,
+                leftRearMotor.getEncoder().getPosition() - leftRearZero,
+                rightFrontMotor.getEncoder().getPosition() - rightFrontZero,
+                rightRearMotor.getEncoder().getPosition() - rightRearZero,
+        };
     }
 
     public void stop() {

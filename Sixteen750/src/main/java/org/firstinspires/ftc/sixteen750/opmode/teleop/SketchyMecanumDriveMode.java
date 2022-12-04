@@ -15,8 +15,9 @@ public class SketchyMecanumDriveMode extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         HardwareBuilder.initMap(hardwareMap);
-        Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DEFAULT);
+        Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DRIVE_ONLY);
         SimpleMecanumDriveSubsystem drive = new SimpleMecanumDriveSubsystem(hardware);
+        drive.setEncoderZero();
 
         waitForStart();
 
@@ -46,6 +47,18 @@ public class SketchyMecanumDriveMode extends LinearOpMode {
             } else {
                 drive.stop();
             }
+
+            telemetry.addData("Left Front Encoder - Real", drive.getEncoderValues()[0]);
+            telemetry.addData("Left Rear Encoder - Real", drive.getEncoderValues()[1]);
+            telemetry.addData("Right Front Encoder - Real", drive.getEncoderValues()[2]);
+            telemetry.addData("Right Rear Encoder - Real", drive.getEncoderValues()[3]);
+
+            telemetry.addData("Left Front Encoder", drive.getAdjustedEncoderValues()[0]);
+            telemetry.addData("Left Rear Encoder", drive.getAdjustedEncoderValues()[1]);
+            telemetry.addData("Right Front Encoder", drive.getAdjustedEncoderValues()[2]);
+            telemetry.addData("Right Rear Encoder", drive.getAdjustedEncoderValues()[3]);
+
+            telemetry.update();
         }
 
         drive.stop();
