@@ -91,6 +91,7 @@ public class MecanumDriveSubsystem extends MecanumDrivebaseSubsystem implements 
                                  IMU i
     ) {
         super(fl, fr, rl, rr, i, () -> MecanumDriveConstants.class);
+        speed = 0.6; // snail mode by default?
     }
 
     @Override
