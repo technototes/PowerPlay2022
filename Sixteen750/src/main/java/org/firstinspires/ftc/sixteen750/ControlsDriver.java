@@ -7,6 +7,7 @@ import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.compound.ArmIntakeCommand;
 import org.firstinspires.ftc.sixteen750.command.compound.ArmScoreCommand;
 import org.firstinspires.ftc.sixteen750.command.compound.ArmUpwardCommand;
+import org.firstinspires.ftc.sixteen750.command.drive.ApplyTurboModeCommand;
 import org.firstinspires.ftc.sixteen750.command.drive.MecanumDriveCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftGroundJunctionCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftHighPoleCommand;
@@ -31,22 +32,22 @@ public class ControlsDriver {
 
         if (enableMecanumDrive) {
             bindMecanumDriveControls();
-            System.out.println("Binding Mecanum Drive Controls");
+            System.out.println("Binding Mecanum Drive Controls for Driver");
         }
         if (enableLift) {
             bindDriverLiftControls();
-            System.out.println("Binding Lift Controls");
+            System.out.println("Binding Lift Controls for Driver");
         }
         if (enableArm) {
             bindDriverArmControls();
-            System.out.println("Binding Arm Controls");
+            System.out.println("Binding Arm Controls for Driver");
         }
         if (enableClaw) {
             bindDriverClawControls();
-            System.out.println("Binding Claw Controls");
+            System.out.println("Binding Claw Controls for Driver");
         }
 
-        gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand(gamepad));
+//        gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand(gamepad));
     }
 
     public ControlsDriver(CommandGamepad g, Robot r, Robot.SubsystemCombo combo) {
@@ -64,8 +65,10 @@ public class ControlsDriver {
         // Probably not a good idea to bind the drive controls to more than one gamepad
         CommandScheduler
                 .getInstance()
-                .scheduleJoystick(new MecanumDriveCommand(robot.mecanumDriveSubsystem, gamepad.leftStick, gamepad.rightStick, gamepad.square));
-        gamepad.rightStickButton.whenPressed(new ResetGyroCommand(robot.mecanumDriveSubsystem, gamepad));
+                .scheduleJoystick(new MecanumDriveCommand(robot.mecanumDriveSubsystem, gamepad.leftStick, gamepad.rightStick));
+        gamepad.leftStickButton.whenPressed(new ApplyTurboModeCommand(robot.mecanumDriveSubsystem));
+        gamepad.rightStickButton.whenPressed(new ApplyTurboModeCommand(robot.mecanumDriveSubsystem));
+        gamepad.x.whenPressed(new ResetGyroCommand(robot.mecanumDriveSubsystem, gamepad));
     }
 
     public void bindDriverClawControls() {

@@ -15,5 +15,6 @@ public class FlipperServoIncrementalUpCommand implements Command {
     @Override
     public void execute() {
         armSubsystem.flipperServoIncrementalUp();
+        System.out.println("armSubsystem.flipperServoIncrementalUp()");
     }
 }

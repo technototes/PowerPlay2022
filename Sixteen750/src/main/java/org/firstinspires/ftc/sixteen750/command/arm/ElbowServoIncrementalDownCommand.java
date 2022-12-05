@@ -15,5 +15,6 @@ public class ElbowServoIncrementalDownCommand implements Command {
     @Override
     public void execute() {
         armSubsystem.elbowServoIncrementalDown();
+        System.out.println("armSubsystem.elbowServoIncrementalDown()");
     }
 }

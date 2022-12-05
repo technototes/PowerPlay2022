@@ -28,16 +28,30 @@ public class JustVisionPark extends LinearOpMode {
         VisionSubsystem vision = new VisionSubsystem(hardware.camera, Alliance.BLUE, StartingPosition.AWAY);
         vision.startVisionPipeline();
 
-        boolean parkLeft = vision.visionPipeline.left();
-        boolean parkRight = vision.visionPipeline.right();
 
-        waitForStart();
+        boolean parkLeft = true;
+        boolean parkRight = true;
+        boolean parkMiddle = true;
+
+        while (!isStarted()){
+            parkLeft = vision.visionPipeline.left();
+            parkRight = vision.visionPipeline.right();
+            parkMiddle = vision.visionPipeline.middle();
+
+            telemetry.addData("Park Left", parkLeft);
+            telemetry.addData("Park Right", parkRight);
+            telemetry.addData("Park Middle", parkMiddle);
+            telemetry.update();
+        }
 
         if (isStopRequested()) return;
 
         while (!isStopRequested() && opModeIsActive() && Math.abs(drive.getAdjustedEncoderValues()[0]) < SimpleMecanumDriveSubsystem.autoGoForwardTicks) {
             drive.goStraightForward(DEFAULT_POWER);
 
+            telemetry.addData("Park Left", parkLeft);
+            telemetry.addData("Park Right", parkRight);
+            telemetry.addData("Park Middle", parkMiddle);
             telemetry.addData("Left Front Encoder", drive.getAdjustedEncoderValues()[0]);
             telemetry.addData("Left Rear Encoder", drive.getAdjustedEncoderValues()[1]);
             telemetry.addData("Right Front Encoder", drive.getAdjustedEncoderValues()[2]);
@@ -56,10 +70,7 @@ public class JustVisionPark extends LinearOpMode {
             while (!isStopRequested() && opModeIsActive() && Math.abs(drive.getAdjustedEncoderValues()[0]) < SimpleMecanumDriveSubsystem.autoGoLeftTicks) {
                 drive.goLeft(DEFAULT_POWER);
 
-                telemetry.addData("Left Front Encoder - Real", drive.getEncoderValues()[0]);
-                telemetry.addData("Left Rear Encoder - Real", drive.getEncoderValues()[1]);
-                telemetry.addData("Right Front Encoder - Real", drive.getEncoderValues()[2]);
-                telemetry.addData("Right Rear Encoder - Real", drive.getEncoderValues()[3]);
+                telemetry.addLine("Parking Left");
 
                 telemetry.addData("Left Front Encoder", drive.getAdjustedEncoderValues()[0]);
                 telemetry.addData("Left Rear Encoder", drive.getAdjustedEncoderValues()[1]);
@@ -74,10 +85,7 @@ public class JustVisionPark extends LinearOpMode {
             while (!isStopRequested() && opModeIsActive() && Math.abs(drive.getAdjustedEncoderValues()[0]) < SimpleMecanumDriveSubsystem.autoGoRightTicks) {
                 drive.goRight(DEFAULT_POWER);
 
-                telemetry.addData("Left Front Encoder - Real", drive.getEncoderValues()[0]);
-                telemetry.addData("Left Rear Encoder - Real", drive.getEncoderValues()[1]);
-                telemetry.addData("Right Front Encoder - Real", drive.getEncoderValues()[2]);
-                telemetry.addData("Right Rear Encoder - Real", drive.getEncoderValues()[3]);
+                telemetry.addLine("Parking Right");
 
                 telemetry.addData("Left Front Encoder", drive.getAdjustedEncoderValues()[0]);
                 telemetry.addData("Left Rear Encoder", drive.getAdjustedEncoderValues()[1]);
@@ -94,10 +102,9 @@ public class JustVisionPark extends LinearOpMode {
         drive.stop();
 
         while (!isStopRequested() && opModeIsActive()) {
-            telemetry.addData("Left Front Encoder - Real", drive.getEncoderValues()[0]);
-            telemetry.addData("Left Rear Encoder - Real", drive.getEncoderValues()[1]);
-            telemetry.addData("Right Front Encoder - Real", drive.getEncoderValues()[2]);
-            telemetry.addData("Right Rear Encoder - Real", drive.getEncoderValues()[3]);
+            telemetry.addData("Park Left", parkLeft);
+            telemetry.addData("Park Right", parkRight);
+            telemetry.addData("Park Middle", parkMiddle);
 
             telemetry.addData("Left Front Encoder", drive.getAdjustedEncoderValues()[0]);
             telemetry.addData("Left Rear Encoder", drive.getAdjustedEncoderValues()[1]);
