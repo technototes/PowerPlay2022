@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.twenty403.opmode;
+package org.firstinspires.ftc.twenty403.opmode.testing;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.twenty403.Hardware;
@@ -18,9 +18,9 @@ import com.technototes.library.util.Alliance;
 
 @Config
 @Disabled
-@Autonomous(name = "Simple [Motors]")
+@Autonomous(name = "Drive Motor Test")
 @SuppressWarnings("unused")
-public class SimpleTeleOpMode extends LinearOpMode {
+public class DriveMotorTest extends LinearOpMode {
     /*
      * This is for doing testing without requiring the TechnoLib command scheduler
      */

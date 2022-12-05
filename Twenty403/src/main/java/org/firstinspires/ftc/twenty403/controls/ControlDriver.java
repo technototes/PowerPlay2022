@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.twenty403.Controls;
+package org.firstinspires.ftc.twenty403.controls;
 
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.claw.ClawAutoCloseToggleCommand;
@@ -12,7 +12,7 @@ import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
 
-public class ControlsDriver {
+public class ControlDriver {
     public Robot robot;
     public CommandGamepad gamepad;
 
@@ -21,7 +21,7 @@ public class ControlsDriver {
     public CommandButton clawToggleAutoCloseButton;
     public CommandButton override;
 
-    public ControlsDriver(CommandGamepad g, Robot r) {
+    public ControlDriver(CommandGamepad g, Robot r) {
         this.robot = r;
         gamepad = g;
         override = g.leftTrigger.getAsButton(0.5);

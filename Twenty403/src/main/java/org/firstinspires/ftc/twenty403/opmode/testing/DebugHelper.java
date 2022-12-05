@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.twenty403.opmode;
+package org.firstinspires.ftc.twenty403.opmode.testing;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.twenty403.Controls.ControlOperator;
-import org.firstinspires.ftc.twenty403.Controls.ControlsDriver;
+import org.firstinspires.ftc.twenty403.controls.ControlDriver;
+import org.firstinspires.ftc.twenty403.controls.ControlOperator;
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
@@ -14,20 +14,20 @@ import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
 @Disabled
-@TeleOp(name = "Debugging [dual controls]")
+@TeleOp(name = "Debug Helper: Dual Controls")
 @SuppressWarnings("unused")
-public class DebugTeleOp extends CommandOpMode {
+public class DebugHelper extends CommandOpMode {
     public Robot robot;
     public Hardware hardware;
     public ControlOperator oper;
-    public ControlsDriver drv;
+    public ControlDriver drv;
 
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware, Alliance.RED, StartingPosition.NEUTRAL);
         oper = new ControlOperator(codriverGamepad, robot);
-        drv = new ControlsDriver(driverGamepad, robot);
+        drv = new ControlDriver(driverGamepad, robot);
     }
 
     @Override
@@ -42,6 +42,6 @@ public class DebugTeleOp extends CommandOpMode {
         telemetry.addData("Cone Distance:", hardware.clawDistance.getDistance(DistanceUnit.CM));
         telemetry.addData("Cone Color:", hardware.clawDistance.argb());
         telemetry.addData("VOLTAGE:", robot.initialVoltage);
-        telemetry.update();
+        // telemetry.update();
     }
 }

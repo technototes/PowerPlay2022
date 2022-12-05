@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.twenty403.opmode;
 
-import org.firstinspires.ftc.twenty403.Controls.Controls;
+import org.firstinspires.ftc.twenty403.controls.ControlSingle;
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.VisionCommand;
@@ -19,7 +19,7 @@ import com.technototes.library.util.Alliance;
 @SuppressWarnings("unused")
 public class LeftJustPark extends CommandOpMode {
     public Robot robot;
-    public Controls controls;
+    public ControlSingle controls;
     public Hardware hardware;
 
     @Override
