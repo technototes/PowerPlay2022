@@ -1,9 +1,0 @@
-**/generated/**
-# Frequently used
-## Sorry: this one is not reasonable, IMO
-# **/AutoConst*.java
-# This is some older code:
-**/ExperimentalSwerveDrive.java
-**/swerve_util/**
-**/SwerveDrivebaseSubsystem.java
-**/*.xml

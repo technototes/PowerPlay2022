@@ -19,6 +19,15 @@ public class DriveCommand implements Command {
     public DoubleSupplier x, y, r;
     public BooleanSupplier straight;
 
+    public DriveCommand(DrivebaseSubsystem sub, Stick stick1, Stick stick2) {
+        addRequirements(sub);
+        subsystem = sub;
+        x = stick1.getXSupplier();
+        y = stick1.getYSupplier();
+        r = stick2.getXSupplier();
+        straight = null;
+    }
+
     public DriveCommand(DrivebaseSubsystem sub, Stick stick1, Stick stick2, BooleanSupplier straighten) {
         addRequirements(sub);
         subsystem = sub;
@@ -26,10 +35,6 @@ public class DriveCommand implements Command {
         y = stick1.getYSupplier();
         r = stick2.getXSupplier();
         straight = straighten;
-    }
-
-    public DriveCommand(DrivebaseSubsystem sub, Stick stick1, Stick stick2) {
-        this(sub, stick1, stick2, null);
     }
 
     private double getRotation(double headingInRads) {

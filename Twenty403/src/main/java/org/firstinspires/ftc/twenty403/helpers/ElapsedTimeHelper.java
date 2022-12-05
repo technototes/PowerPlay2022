@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.twenty403.helpers;
 
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
@@ -16,5 +18,6 @@ public class ElapsedTimeHelper implements BooleanSupplier {
     @Override
     public boolean getAsBoolean() {
         return timer.getAsDouble() < timeout;
+
     }
 }

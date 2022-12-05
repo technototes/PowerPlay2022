@@ -11,19 +11,19 @@ public class AutoTestDrivebaseCommand extends SequentialCommandGroup {
 
     public AutoTestDrivebaseCommand(MecanumDrivebaseSubsystem drive) {
         super(
-                new TrajectorySequenceCommand(drive, AutoConstants.Right.START_TO_W_JUNCTION),
-                new TrajectorySequenceCommand(drive, AutoConstants.Right.W_JUNCTION_TO_STACK),
-                new TrajectorySequenceCommand(drive, AutoConstants.Right.STACK_TO_W_JUNCTION),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Home.START_TO_E_JUNCTION),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Home.E_JUNCTION_TO_STACK),
+                new TrajectorySequenceCommand(drive, AutoConstantsRed.Home.STACK_TO_E_JUNCTION),
                 CommandScheduler.getInstance()::terminateOpMode
                 //                .alongWith(new ConeReadyToScoreCommand(cone)),
                 // new ClawOpenCommand(claw),
-                //                new AutoRightConeStackCommand(drive, lift, claw),
-                //                new AutoRightConeStackCommand(drive, lift, claw),
-                //                new AutoRightConeStackCommand(drive, lift, claw),
-                //                new AutoRightConeStackCommand(drive, lift, claw)
+                //                new AutoBlueHomeConeStackCommand(drive, lift, claw),
+                //                new AutoBlueHomeConeStackCommand(drive, lift, claw),
+                //                new AutoBlueHomeConeStackCommand(drive, lift, claw),
+                //                new AutoBlueHomeConeStackCommand(drive, lift, claw)
                 /*new TrajectorySequenceCommand(
                         drive,
-                        Robot.Trajectories.PARK_LOCATION_RIGHT)/*
+                        Robot.Trajectories.BLUE_PARK_LOCATION_Home)/*
                 /*Placeholder for what we're doing for parking*/
                 );
     }
