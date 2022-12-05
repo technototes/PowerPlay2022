@@ -6,3 +6,4 @@
 **/ExperimentalSwerveDrive.java
 **/swerve_util/**
 **/SwerveDrivebaseSubsystem.java
+**/*.xml

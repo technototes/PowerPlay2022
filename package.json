@@ -6,12 +6,13 @@
     "build": "run-script-os",
     "build:win32": ".\\gradlew build",
     "build:default": "./gradlew build",
-		"TODO": "Create the merge script in Node (and make it MUCH better)",
+    "TODO": "Create the merge script in Node (and make it MUCH better)",
     "format": "prettier --write Sixteen750/src/** Twenty403/src/** MeepMeepTesting/src/** ForTeaching/src/** *.json .prettierrc *.md"
   },
   "devDependencies": {
     "prettier": "^2.7.1",
     "prettier-plugin-java": "^2.0.0",
-    "run-script-os": "^1.1.6"
+    "run-script-os": "^1.1.6",
+    "simple-git": "^3.15.1"
   }
 }
