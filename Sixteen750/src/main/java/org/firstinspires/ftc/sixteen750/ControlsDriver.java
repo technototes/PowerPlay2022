@@ -7,6 +7,7 @@ import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.compound.ArmIntakeCommand;
 import org.firstinspires.ftc.sixteen750.command.compound.ArmScoreCommand;
 import org.firstinspires.ftc.sixteen750.command.compound.ArmUpwardCommand;
+import org.firstinspires.ftc.sixteen750.command.drive.ApplyTurboModeCommand;
 import org.firstinspires.ftc.sixteen750.command.drive.MecanumDriveCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftGroundJunctionCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftHighPoleCommand;
@@ -65,7 +66,9 @@ public class ControlsDriver {
         CommandScheduler
                 .getInstance()
                 .scheduleJoystick(new MecanumDriveCommand(robot.mecanumDriveSubsystem, gamepad.leftStick, gamepad.rightStick));
-        gamepad.rightStickButton.whenPressed(new ResetGyroCommand(robot.mecanumDriveSubsystem, gamepad));
+        gamepad.leftStickButton.whenPressed(new ApplyTurboModeCommand(robot.mecanumDriveSubsystem));
+        gamepad.rightStickButton.whenPressed(new ApplyTurboModeCommand(robot.mecanumDriveSubsystem));
+        gamepad.x.whenPressed(new ResetGyroCommand(robot.mecanumDriveSubsystem, gamepad));
     }
 
     public void bindDriverClawControls() {

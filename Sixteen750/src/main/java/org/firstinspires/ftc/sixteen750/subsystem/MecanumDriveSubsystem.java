@@ -91,11 +91,19 @@ public class MecanumDriveSubsystem extends MecanumDrivebaseSubsystem implements 
                                  IMU i
     ) {
         super(fl, fr, rl, rr, i, () -> MecanumDriveConstants.class);
-        speed = 0.6; // snail mode by default?
+        applySnailMode();
     }
 
     @Override
     public Pose2d get() {
         return getPoseEstimate();
+    }
+
+    public void applySnailMode(){
+        this.speed = 0.6;
+    }
+
+    public void applyTurboMode(){
+        this.speed = 1.0;
     }
 }
