@@ -93,3 +93,4 @@ lint/tmp/
 **/.settings
 **/.classpath
 branches.txt
+scripts/branch-list.txt
