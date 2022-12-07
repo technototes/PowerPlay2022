@@ -25,26 +25,26 @@ public class SimpleMecanumDriveSubsystem {
     double rightRearZero = 0;
 
     public SimpleMecanumDriveSubsystem(Hardware hardware) {
-        if (hardware.leftFrontMotor != null){
-            this.leftFrontMotor = hardware.leftFrontMotor;
+        if (hardware.leftFrontMotorT != null){
+            this.leftFrontMotor = hardware.leftFrontMotorT;
         }
         else {
             throw new NullPointerException("leftFrontMotor is null");
         }
-        if (hardware.leftRearMotor != null){
-            this.leftRearMotor = hardware.leftRearMotor;
+        if (hardware.leftRearMotorT != null){
+            this.leftRearMotor = hardware.leftRearMotorT;
         }
         else {
             throw new NullPointerException("leftRearMotor is null");
         }
-        if (hardware.rightFrontMotor != null){
-            this.rightFrontMotor = hardware.rightFrontMotor;
+        if (hardware.rightFrontMotorT != null){
+            this.rightFrontMotor = hardware.rightFrontMotorT;
         }
         else {
             throw new NullPointerException("rightFrontMotor is null");
         }
-        if (hardware.rightRearMotor != null){
-            this.rightRearMotor = hardware.rightRearMotor;
+        if (hardware.rightRearMotorT != null){
+            this.rightRearMotor = hardware.rightRearMotorT;
         }
         else {
             throw new NullPointerException("rightRearMotor is null");
