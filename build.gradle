@@ -14,10 +14,6 @@ buildscript {
     }
 }
 
-plugins {
-    id "com.diffplug.spotless" version "6.11.0"
-}
-
 // This is now required because aapt2 has to be downloaded from the
 // google() repository beginning with version 3.2 of the Android Gradle Plugin
 allprojects {
@@ -31,22 +27,6 @@ repositories {
     mavenCentral()
     // For Vuforia only, not really necessary: commented out to stop the warning from gradle
     // flatDir { dirs rootProject.file('libs') }
-}
-
-spotless {
-    java {
-        // target('Twenty403/**/*.java', 'Sixteen750/**/*.java', 'ForTeaching/**/*.java')
-        target project.fileTree(project.rootDir) {
-            include 'Twenty403/**/*.java', 'Sixteen750/**/*.java', 'ForTeaching/**/*.java'
-            exclude '**/generated/**'
-            exclude '**/AutoConst*.java' // Frequently used
-            exclude '**/ExperimentalSwerveDrive.java', '**/swerve_util/**', '**/SwerveDrivebaseSubsystem.java' // Mostly old code
-        }
-        removeUnusedImports()
-        palantirJavaFormat("2.27.0")
-        importOrder('android', 'java', 'org.firstinspires', 'org', 'com', 'com.technototes')
-        formatAnnotations()
-    }
 }
 
 task justAssembleDebug(type: GradleBuild) {
