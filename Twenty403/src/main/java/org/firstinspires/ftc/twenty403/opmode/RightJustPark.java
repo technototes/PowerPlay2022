@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.twenty403.opmode;
 
-import org.firstinspires.ftc.twenty403.Controls.Controls;
+import org.firstinspires.ftc.twenty403.controls.ControlSingle;
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.VisionCommand;
-import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstantsBlue;
+import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
-import org.firstinspires.ftc.twenty403.command.autonomous.blue_home.AutoBlueHomeParkingSelectionJustParkCommand;
+import org.firstinspires.ftc.twenty403.command.autonomous.right.AutoRightParkingSelectionJustParkCommand;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -19,19 +19,18 @@ import com.technototes.library.util.Alliance;
 @SuppressWarnings("unused")
 public class RightJustPark extends CommandOpMode {
     public Robot robot;
-    public Controls controls;
+    public ControlSingle controls;
     public Hardware hardware;
 
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap);
-        robot = new Robot(hardware, Alliance.NONE, StartingPosition.HOME);
-        robot.drivebaseSubsystem.setPoseEstimate(AutoConstantsBlue.Home.START.toPose());
+        robot = new Robot(hardware, Alliance.NONE, StartingPosition.RIGHT);
+        robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Right.START.toPose());
         CommandScheduler.getInstance()
                 .scheduleForState(
                         new SequentialCommandGroup(
-                                new AutoBlueHomeParkingSelectionJustParkCommand(
-                                        robot.visionSystem, robot.drivebaseSubsystem),
+                                new AutoRightParkingSelectionJustParkCommand(robot),
                                 CommandScheduler.getInstance()::terminateOpMode),
                         CommandOpMode.OpModeState.RUN);
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
