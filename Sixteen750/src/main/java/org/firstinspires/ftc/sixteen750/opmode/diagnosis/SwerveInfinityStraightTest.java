@@ -12,7 +12,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Disabled
 @Config
 @Autonomous(group = "Test-Path")
 @SuppressWarnings("unused")

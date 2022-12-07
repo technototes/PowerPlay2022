@@ -50,12 +50,12 @@ public class Hardware {
 
     }
 
-    // T stands for TechnoLib
+    // T stands for TechnoLib's wrapped EncodedMotor<>
     public EncodedMotor<DcMotorEx> leftFrontMotorT;
     public EncodedMotor<DcMotorEx> leftRearMotorT;
     public EncodedMotor<DcMotorEx> rightFrontMotorT;
     public EncodedMotor<DcMotorEx> rightRearMotorT;
-    // Q stands for Qualcomm
+    // Q stands for Qualcomm's original DcMotorEx
     public DcMotorEx leftFrontMotorQ;
     public DcMotorEx leftRearMotorQ;
     public DcMotorEx rightFrontMotorQ;
