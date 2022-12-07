@@ -13,7 +13,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import com.technototes.library.structure.CommandOpMode;
 
-@Disabled
 @Config
 @TeleOp(group = "Test-Hardware")
 @SuppressWarnings("unused")
