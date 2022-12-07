@@ -26,6 +26,7 @@ public class DrivebaseSubsystem
 
         public static double SLOW_MOTOR_SPEED = 0.6;
         public static double FAST_MOTOR_SPEED = 1.0;
+        public static double AUTO_MOTOR_SPEED = 0.7;
 
         @TicksPerRev
         public static final double TICKS_PER_REV = 537.6; // 2021: 28;
@@ -148,6 +149,10 @@ public class DrivebaseSubsystem
 
     public void slow() {
         speed = DriveConstants.SLOW_MOTOR_SPEED;
+    }
+
+    public void auto() {
+        speed = DriveConstants.AUTO_MOTOR_SPEED;
     }
 
     @Override
