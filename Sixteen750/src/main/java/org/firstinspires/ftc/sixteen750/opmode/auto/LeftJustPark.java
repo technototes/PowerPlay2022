@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.sixteen750.opmode.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.structure.CommandOpMode;
@@ -12,8 +13,8 @@ import org.firstinspires.ftc.sixteen750.command.VisionCommand;
 import org.firstinspires.ftc.sixteen750.command.autonomous.AutoConstantsBlue;
 import org.firstinspires.ftc.sixteen750.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.sixteen750.command.autonomous.left.LeftParkingSelectionCommandJustPark;
-import org.firstinspires.ftc.sixteen750.command.autonomous.right.RightParkingSelectionCommandJustPark;
 
+@Disabled
 @Autonomous(name = "LeftJustPark")
 public class LeftJustPark extends CommandOpMode {
     public Robot robot;

@@ -14,6 +14,6 @@ public class LiftMoveUpOverrideCommand implements Command {
 
     @Override
     public void execute() {
-        liftSubsystem.moveUpOVERRIDE();
+        liftSubsystem.moveUpOverride();
     }
 }

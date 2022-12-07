@@ -64,10 +64,18 @@ public class MecanumDriveCommand implements Command {
 
     @Override
     public void execute() {
-//        double curHeading = -subsystem.getExternalHeading();
         double curHeading = -subsystem.getExternalHeading();
-        Vector2d input = new Vector2d(-y.getAsDouble() * subsystem.speed, x.getAsDouble() * subsystem.speed).rotated(curHeading);
-        subsystem.setWeightedDrivePower(new Pose2d(input.getX(), input.getY(), getRotation(curHeading)));
+        Vector2d input = new Vector2d(
+                -y.getAsDouble() * subsystem.speed,
+                -x.getAsDouble() * subsystem.speed
+        ).rotated(curHeading);
+        subsystem.setWeightedDrivePower(
+                new Pose2d(
+                        input.getX(),
+                        input.getY(),
+                        getRotation(curHeading)
+                )
+        );
         subsystem.update();
     }
 

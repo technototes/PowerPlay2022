@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.sixteen750.opmode.diagnosis;
 
-import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem._ELBOW_INTAKE_FLIPPER;
-import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem._ELBOW_SCORE;
-import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem._ELBOW_SCORE_FLIPPER;
-import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem._ELBOW_UPWARD;
-import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem._ELBOW_INTAKE;
-import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem._ELBOW_UPWARD_FLIPPER;
+import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem.FLIPPER_WHEN_ELBOW_INTAKE;
+import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem.ELBOW_SCORE;
+import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem.FLIPPER_WHEN_ELBOW_SCORE;
+import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem.ELBOW_UPWARD;
+import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem.ELBOW_INTAKE;
+import static org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem.FLIPPER_WHEN_ELBOW_UPWARD;
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.CLAW_CLOSE;
 import static org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem.CLAW_OPEN;
 
@@ -19,6 +19,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import com.qualcomm.robotcore.util.Range;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
@@ -44,7 +45,7 @@ public class ClawArmServoTest extends CommandOpMode {
         hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.ARM_CLAW_ONLY);
         robot = new Robot(hardware, Robot.SubsystemCombo.ARM_CLAW_ONLY, Alliance.NONE, StartingPosition.NEUTRAL);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        targetServo = hardware.flipperServo;
+        targetServo = hardware.elbowServo;
     }
 
     @Override
@@ -57,19 +58,19 @@ public class ClawArmServoTest extends CommandOpMode {
             hardware.elbowServo.setPosition(downBtnServoPosition);
         } else if (gamepad1.dpad_left) {
             hardware.elbowServo.setPosition(leftBtnServoPosition);
-        } else if (gamepad1.right_bumper) {
-            hardware.clawServo.setPosition(CLAW_CLOSE);
-        } else if (gamepad1.left_bumper) {
-            hardware.clawServo.setPosition(CLAW_OPEN);
         } else if (gamepad1.square) {
-            hardware.elbowServo.setPosition(_ELBOW_SCORE);
-            hardware.flipperServo.setPosition(_ELBOW_SCORE_FLIPPER);
+            hardware.elbowServo.setPosition(ELBOW_SCORE);
+            hardware.flipperServo.setPosition(FLIPPER_WHEN_ELBOW_SCORE);
         } else if (gamepad1.triangle) {
-            hardware.elbowServo.setPosition(_ELBOW_UPWARD);
-            hardware.flipperServo.setPosition(_ELBOW_UPWARD_FLIPPER);
+            hardware.elbowServo.setPosition(ELBOW_UPWARD);
+            hardware.flipperServo.setPosition(FLIPPER_WHEN_ELBOW_UPWARD);
         } else if (gamepad1.circle) {
-            hardware.elbowServo.setPosition(_ELBOW_INTAKE);
-            hardware.flipperServo.setPosition(_ELBOW_INTAKE_FLIPPER);
+            hardware.elbowServo.setPosition(ELBOW_INTAKE);
+            hardware.flipperServo.setPosition(FLIPPER_WHEN_ELBOW_INTAKE);
+        } else if (gamepad1.left_trigger > 0.5){
+            hardware.elbowServo.setPosition(Range.clip(robot.armSubsystem.getElbowPosition() + 0.05, 0, 1));
+        } else if (gamepad1.right_trigger > 0.5){
+            hardware.elbowServo.setPosition(Range.clip(robot.armSubsystem.getElbowPosition() - 0.05, 0, 1));
         }
 
         if (gamepad2.dpad_up) {
@@ -80,19 +81,30 @@ public class ClawArmServoTest extends CommandOpMode {
             hardware.flipperServo.setPosition(downBtnServoPosition);
         } else if (gamepad2.dpad_left) {
             hardware.flipperServo.setPosition(leftBtnServoPosition);
-        } else if (gamepad1.right_bumper) {
+        } else if (gamepad2.square) {
+            hardware.elbowServo.setPosition(ELBOW_SCORE);
+            hardware.flipperServo.setPosition(FLIPPER_WHEN_ELBOW_SCORE);
+        } else if (gamepad2.triangle) {
+            hardware.elbowServo.setPosition(ELBOW_UPWARD);
+            hardware.flipperServo.setPosition(FLIPPER_WHEN_ELBOW_UPWARD);
+        } else if (gamepad2.circle) {
+            hardware.elbowServo.setPosition(ELBOW_INTAKE);
+            hardware.flipperServo.setPosition(FLIPPER_WHEN_ELBOW_INTAKE);
+        } else if (gamepad2.left_trigger > 0.5){
+            hardware.flipperServo.setPosition(Range.clip(robot.armSubsystem.getFlipperPosition() + 0.05, 0, 1));
+        } else if (gamepad2.right_trigger > 0.5){
+            hardware.flipperServo.setPosition(Range.clip(robot.armSubsystem.getFlipperPosition() - 0.05, 0, 1));
+        }
+
+        if (gamepad1.right_bumper) {
             hardware.clawServo.setPosition(CLAW_CLOSE);
         } else if (gamepad1.left_bumper) {
             hardware.clawServo.setPosition(CLAW_OPEN);
-        } else if (gamepad2.square) {
-            hardware.elbowServo.setPosition(_ELBOW_SCORE);
-            hardware.flipperServo.setPosition(_ELBOW_SCORE_FLIPPER);
-        } else if (gamepad2.triangle) {
-            hardware.elbowServo.setPosition(_ELBOW_UPWARD);
-            hardware.flipperServo.setPosition(_ELBOW_UPWARD_FLIPPER);
-        } else if (gamepad2.circle) {
-            hardware.elbowServo.setPosition(_ELBOW_INTAKE);
-            hardware.flipperServo.setPosition(_ELBOW_INTAKE_FLIPPER);
+        }
+        if (gamepad2.right_bumper) {
+            hardware.clawServo.setPosition(CLAW_CLOSE);
+        } else if (gamepad2.left_bumper) {
+            hardware.clawServo.setPosition(CLAW_OPEN);
         }
 
         telemetry.addData("Claw Servo Position", robot.clawSubsystem.getClawPosition());

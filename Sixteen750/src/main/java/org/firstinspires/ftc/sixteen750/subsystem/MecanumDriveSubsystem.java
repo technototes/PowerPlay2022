@@ -52,7 +52,7 @@ public class MecanumDriveSubsystem extends MecanumDrivebaseSubsystem implements 
         public static double MAX_VEL = 30;
 
         @MaxAccel
-        public static double MAX_ACCEL = 30;
+        public static double MAX_ACCEL = 10;
 
         // This was 180 degrees
         @MaxAngleVelo
@@ -91,10 +91,19 @@ public class MecanumDriveSubsystem extends MecanumDrivebaseSubsystem implements 
                                  IMU i
     ) {
         super(fl, fr, rl, rr, i, () -> MecanumDriveConstants.class);
+        applySnailMode();
     }
 
     @Override
     public Pose2d get() {
         return getPoseEstimate();
+    }
+
+    public void applySnailMode(){
+        this.speed = 0.6;
+    }
+
+    public void applyTurboMode(){
+        this.speed = 1.0;
     }
 }

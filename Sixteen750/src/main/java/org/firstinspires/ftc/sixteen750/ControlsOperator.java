@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.sixteen750;
 
 import org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
-import org.firstinspires.ftc.sixteen750.command.ResetCommandSchedulerCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.arm.ElbowServoIncrementalDownCommand;
@@ -11,8 +10,8 @@ import org.firstinspires.ftc.sixteen750.command.arm.FlipperServoIncrementalUpCom
 import org.firstinspires.ftc.sixteen750.command.compound.ArmIntakeCommand;
 import org.firstinspires.ftc.sixteen750.command.compound.ArmScoreCommand;
 import org.firstinspires.ftc.sixteen750.command.compound.ArmUpwardCommand;
-import org.firstinspires.ftc.sixteen750.command.lift.LiftMoveDownCommand;
-import org.firstinspires.ftc.sixteen750.command.lift.LiftMoveUpCommand;
+import org.firstinspires.ftc.sixteen750.command.lift.LiftMoveDownOverrideCommand;
+import org.firstinspires.ftc.sixteen750.command.lift.LiftMoveUpOverrideCommand;
 
 import com.technototes.library.control.CommandGamepad;
 
@@ -20,29 +19,47 @@ public class ControlsOperator {
     public Robot robot;
     public CommandGamepad gamepad;
 
-    public ControlsOperator(CommandGamepad g, Robot r) {
+    public ControlsOperator(CommandGamepad g, Robot r, boolean enableLift, boolean enableArm, boolean enableClaw) {
         this.robot = r;
         this.gamepad = g;
 
-        if (RobotConstant.LIFT_ENABLED) {
-            bindCoDriverLiftControls();
+        if (enableLift) {
+            bindOperatorArmControls();
+            System.out.println("Binding Lift Controls for Operator");
         }
-        if (RobotConstant.ARM_ENABLED) {
-            bindCoDriverArmControls();
+        if (enableArm) {
+            bindOperatorArmControls();
+            System.out.println("Binding Arm Controls for Operator");
         }
-        if (RobotConstant.CLAW_ENABLED) {
-            bindCoDriverClawControls();
+        if (enableClaw) {
+            bindOperatorClawControls();
+            System.out.println("Binding Claw Controls for Operator");
         }
 
-        gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand(gamepad));
+//        gamepad.leftStickButton.whenPressed(new ResetCommandSchedulerCommand(gamepad));
     }
 
-    public void bindCoDriverClawControls() {
-        gamepad.rightTrigger.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-        gamepad.leftTrigger.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
+    public ControlsOperator(CommandGamepad g, Robot r, Robot.SubsystemCombo combo){
+        this(
+                g,
+                r,
+                combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.LIFT_ENABLED : combo == Robot.SubsystemCombo.LIFT_ONLY,
+                combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.ARM_ENABLED : combo == Robot.SubsystemCombo.ARM_CLAW_ONLY,
+                combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.CLAW_ENABLED : combo == Robot.SubsystemCombo.ARM_CLAW_ONLY
+        );
     }
 
-    public void bindCoDriverArmControls() {
+    public void bindOperatorLiftControls() {
+        gamepad.leftTrigger.whenPressed(new LiftMoveUpOverrideCommand(robot.liftSubsystem));
+        gamepad.rightTrigger.whenPressed(new LiftMoveDownOverrideCommand(robot.liftSubsystem));
+    }
+
+    public void bindOperatorClawControls() {
+        gamepad.leftBumper.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
+        gamepad.rightBumper.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
+    }
+
+    public void bindOperatorArmControls() {
         gamepad.dpadLeft.whenPressed(new FlipperServoIncrementalDownCommand(robot.armSubsystem));
         gamepad.dpadRight.whenPressed(new FlipperServoIncrementalUpCommand(robot.armSubsystem));
         gamepad.dpadDown.whenPressed(new ElbowServoIncrementalDownCommand(robot.armSubsystem));
@@ -51,10 +68,5 @@ public class ControlsOperator {
         gamepad.square.whenPressed(new ArmScoreCommand(robot.armSubsystem));
         gamepad.triangle.whenPressed(new ArmUpwardCommand(robot.armSubsystem));
         gamepad.circle.whenPressed(new ArmIntakeCommand(robot.armSubsystem));
-    }
-
-    public void bindCoDriverLiftControls() {
-        gamepad.leftBumper.whenPressed(new LiftMoveUpCommand(robot.liftSubsystem));
-        gamepad.rightBumper.whenPressed(new LiftMoveDownCommand(robot.liftSubsystem));
     }
 }
