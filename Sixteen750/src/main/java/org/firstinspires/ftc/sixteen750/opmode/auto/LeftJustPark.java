@@ -22,8 +22,8 @@ public class LeftJustPark extends CommandOpMode {
 
     @Override
     public void uponInit() {
-        hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.VISION_DRIVE);
-        robot = new Robot(hardware, Robot.SubsystemCombo.VISION_DRIVE, Alliance.BLUE, StartingPosition.AWAY);
+        hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.VISION_M_DRIVE);
+        robot = new Robot(hardware, Robot.SubsystemCombo.VISION_M_DRIVE, Alliance.BLUE, StartingPosition.AWAY);
         robot.mecanumDriveSubsystem.setPoseEstimate(AutoConstantsBlue.Away.START.toPose());
         CommandScheduler.getInstance()
                 .scheduleForState(
