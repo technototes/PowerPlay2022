@@ -23,14 +23,16 @@ public class AutoConstants {
         public static ConfigurablePose LEFT_MOVE = new ConfigurablePose(-24, 0, toRadians(90));
         public static ConfigurablePose RIGHT_MOVE = new ConfigurablePose(24, 0, toRadians(90));
 
-        public static ConfigurablePose STACK = new ConfigurablePose(67, -16, toRadians(0));
+        public static ConfigurablePose STACK = new ConfigurablePose(65, -16, toRadians(0));
+        //x: 66, y: -16, 0
         public static ConfigurablePose LEFT = new ConfigurablePose(21, -18, toRadians(90));
         public static ConfigurablePose MIDDLE = new ConfigurablePose(39, -16, toRadians(90));
         public static ConfigurablePose RIGHT = new ConfigurablePose(62, -17, toRadians(90));
-        public static ConfigurablePose W_JUNCTION = new ConfigurablePose(31, -11, 1.9);
+        public static ConfigurablePose W_JUNCTION = new ConfigurablePose(26, -11, 1.9);
+        //x:31 y:-11, 1.9
 
         //public static ConfigurablePose BETWEEN_START_W_jUNCTION_ONE = new ConfigurablePose(40, -48, toRadians(180));
-        public static ConfigurablePose BETWEEN_START_W_JUNCTION_TWO = new ConfigurablePose(42, -11, 3.8);
+        public static ConfigurablePose BETWEEN_START_W_JUNCTION_TWO = new ConfigurablePose(42, -11, 3.9);
         public static ConfigurablePose BETWEEN_W_JUNCTION_STACK = new ConfigurablePose(43, -19, 1.5);
         public static ConfigurablePose BETWEEN_STACK_W_JUNCTION = new ConfigurablePose(40, -14, 2.4);
         public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(15, -60, toRadians(90));
