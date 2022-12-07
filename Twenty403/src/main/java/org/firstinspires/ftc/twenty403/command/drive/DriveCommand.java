@@ -121,6 +121,9 @@ public class DriveCommand implements Command {
             yDistance = camHeight / Math.tan(jy / (max_of_jy) * yEdgeAngle);
             xDistance = yDistance * Math.tan(jx / (max_of_jx) * xEdgeAngle);
             // set the drive power to get us to that location
+            subsystem.setWeightedDrivePower(
+                new Pose2d(xDistance, yDistance, getRotationClosest45(curHeading))
+            );
         }
     }
 
@@ -139,8 +142,8 @@ public class DriveCommand implements Command {
             subsystem.setWeightedDrivePower(
                 new Pose2d(input.getX(), input.getY(), getRotation(curHeading))
             );
-            subsystem.update();
         }
+        subsystem.update();
     }
 
     @Override
