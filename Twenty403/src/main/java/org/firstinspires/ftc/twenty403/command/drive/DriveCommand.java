@@ -62,6 +62,15 @@ public class DriveCommand implements Command {
 
     @Override
     public void execute() {
+        // TODO for TileByTile: Check to see if we're running a trajectory sequence.
+        // TS is running:
+        //   Is there an override?
+        //     Yes: abandon the trajectory sequence, and resume manual control
+        //     No: Just update the subsystem and return
+        // TS is not running:
+        // Check to see if we're supposed to *start* a trajectory sequence
+        //   Yes: Start it
+        //   No: resume manual control
         double curHeading = -subsystem.getExternalHeading();
         Vector2d input = new Vector2d(
             -y.getAsDouble() * subsystem.speed,
