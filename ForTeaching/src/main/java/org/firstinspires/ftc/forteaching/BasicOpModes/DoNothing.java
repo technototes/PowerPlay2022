@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @Disabled
 @TeleOp(name = "Do-nothing", group = "demo")
 public class DoNothing extends LinearOpMode {
+
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
 

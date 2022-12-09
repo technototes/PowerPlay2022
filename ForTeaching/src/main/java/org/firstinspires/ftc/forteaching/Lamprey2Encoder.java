@@ -5,7 +5,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 // Started out as an actual device, but that was problematic for robot configuration :(
-public class Lamprey2Encoder /*extends AnalogInput */ {
+public class Lamprey2Encoder /*extends AnalogInput */{
+
     private AnalogInput lamprey;
     /* Stuff for the encoder: I should encapsulate this stuff */
     private ElapsedTime lastRead;
@@ -20,11 +21,14 @@ public class Lamprey2Encoder /*extends AnalogInput */ {
     private boolean isBadRead(double angle) {
         // TODO: Make this check to see if the value is physically possible based on time
         // First: Are we in the 'bad range' where smoothing might screw things up?
-        return (lastGoodAngle < badRange || lastGoodAngle > 360 - badRange)
-                // Are we reporting a number that's outside of what we believe is good?
-                && (angle > badRange + swingRange && angle < 360 - badRange - swingRange)
-                // Have is been short enough that the range we read is not possible?
-                && lastRead.milliseconds() < msRange;
+        return (
+            (lastGoodAngle < badRange || lastGoodAngle > 360 - badRange) &&
+            // Are we reporting a number that's outside of what we believe is good?
+            (angle > badRange + swingRange && angle < 360 - badRange - swingRange) &&
+            // Have is been short enough that the range we read is not possible?
+            lastRead.milliseconds() <
+            msRange
+        );
     }
 
     public double getAngle() {
@@ -42,6 +46,7 @@ public class Lamprey2Encoder /*extends AnalogInput */ {
         lastRead.reset();
         return angle;
     }
+
     // Hopefully this will work from hwMap.get(...)
     public Lamprey2Encoder(HardwareMap hwMap, String name) {
         lamprey = hwMap.get(AnalogInput.class, name);

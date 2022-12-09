@@ -1,22 +1,21 @@
 package org.firstinspires.ftc.twenty403.opmode.testing;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.technototes.library.structure.CommandOpMode;
+import com.technototes.library.util.Alliance;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.twenty403.controls.ControlDriver;
-import org.firstinspires.ftc.twenty403.controls.ControlOperator;
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
-
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
-import com.technototes.library.structure.CommandOpMode;
-import com.technototes.library.util.Alliance;
+import org.firstinspires.ftc.twenty403.controls.ControlDriver;
+import org.firstinspires.ftc.twenty403.controls.ControlOperator;
 
 @Disabled
 @TeleOp(name = "Debug Helper: Dual Controls")
 @SuppressWarnings("unused")
 public class DebugHelper extends CommandOpMode {
+
     public Robot robot;
     public Hardware hardware;
     public ControlOperator oper;

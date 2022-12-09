@@ -1,25 +1,28 @@
 package org.firstinspires.ftc.twenty403.command.drive;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
-
-import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
-
 import com.acmerobotics.roadrunner.drive.DriveSignal;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
-
 import com.technototes.library.command.Command;
 import com.technototes.library.control.Stick;
 import com.technototes.library.util.MathUtils;
+import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
+import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 
 public class DriveCommand implements Command {
+
     static double STRAIGHTEN_DEAD_ZONE = 0.08;
     public DrivebaseSubsystem subsystem;
     public DoubleSupplier x, y, r;
     public BooleanSupplier straight;
 
-    public DriveCommand(DrivebaseSubsystem sub, Stick stick1, Stick stick2, BooleanSupplier straighten) {
+    public DriveCommand(
+        DrivebaseSubsystem sub,
+        Stick stick1,
+        Stick stick2,
+        BooleanSupplier straighten
+    ) {
         addRequirements(sub);
         subsystem = sub;
         x = stick1.getXSupplier();
@@ -60,9 +63,14 @@ public class DriveCommand implements Command {
     @Override
     public void execute() {
         double curHeading = -subsystem.getExternalHeading();
-        Vector2d input = new Vector2d(-y.getAsDouble() * subsystem.speed, -x.getAsDouble() * subsystem.speed)
-                .rotated(curHeading);
-        subsystem.setWeightedDrivePower(new Pose2d(input.getX(), input.getY(), getRotation(curHeading)));
+        Vector2d input = new Vector2d(
+            -y.getAsDouble() * subsystem.speed,
+            -x.getAsDouble() * subsystem.speed
+        )
+            .rotated(curHeading);
+        subsystem.setWeightedDrivePower(
+            new Pose2d(input.getX(), input.getY(), getRotation(curHeading))
+        );
         subsystem.update();
     }
 

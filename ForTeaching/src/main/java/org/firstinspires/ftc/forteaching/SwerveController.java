@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class SwerveController {
+
     // At 4.8v, no load 60 degrees takes super-speed servos .055 seconds to move
     // They're faster at more volts, so 195ms + an extra 55mm for "load" consideration:
     private static int DIR_TRANSITION_DELAY_MS = 250;
@@ -28,8 +29,7 @@ public class SwerveController {
     private static void Delay() {
         try {
             Thread.sleep(DIR_TRANSITION_DELAY_MS);
-        } catch (Exception e) {
-        }
+        } catch (Exception e) {}
     }
 
     // Force a wrap-around value (like degrees or radians) to be within low/high
@@ -50,6 +50,7 @@ public class SwerveController {
     static boolean needFlip(double anglish) {
         return anglish < 0.0;
     }
+
     // This 'flips' the angle. I _think_ this makes sense.
     // To move at .5 power, at -45 degrees is the same as moving at -.5 power at 135 degrees
     // so you just "add" 180 degrees (1 in "anglish" units)
@@ -57,10 +58,19 @@ public class SwerveController {
         // assert(anglish <= 0.0);
         return anglish + 1.0;
     }
+
     // The angles for this function are a scale from -1 to +1 meaning -180 degrees to +180 degrees
     // But since we can only move 180 degrees, we may have to invert the wheel motor...
     private void setControlRelative(
-            double flp, double fla, double frp, double fra, double rlp, double rla, double rrp, double rra) {
+        double flp,
+        double fla,
+        double frp,
+        double fra,
+        double rlp,
+        double rla,
+        double rrp,
+        double rra
+    ) {
         // See if *any* of the servos require 'flipping'
         boolean ffl = (needFlip(fla) != flFlip);
         boolean ffr = (needFlip(fra) != frFlip);
@@ -96,7 +106,15 @@ public class SwerveController {
     }
 
     public SwerveController(
-            DcMotorEx flm, DcMotorEx frm, DcMotorEx rlm, DcMotorEx rrm, Servo fls, Servo frs, Servo rls, Servo rrs) {
+        DcMotorEx flm,
+        DcMotorEx frm,
+        DcMotorEx rlm,
+        DcMotorEx rrm,
+        Servo fls,
+        Servo frs,
+        Servo rls,
+        Servo rrs
+    ) {
         mfl = flm;
         mfr = frm;
         mrl = rlm;
@@ -120,7 +138,15 @@ public class SwerveController {
     }
 
     public void setControlRadians(
-            double flp, double fla, double frp, double fra, double rlp, double rla, double rrp, double rra) {
+        double flp,
+        double fla,
+        double frp,
+        double fra,
+        double rlp,
+        double rla,
+        double rrp,
+        double rra
+    ) {
         fra = inRange(-Math.PI, Math.PI, fra) * INV_PI;
         fla = inRange(-Math.PI, Math.PI, fla) * INV_PI;
         rra = inRange(-Math.PI, Math.PI, rra) * INV_PI;
@@ -129,7 +155,15 @@ public class SwerveController {
     }
 
     public void setControlDegrees(
-            double flp, double fla, double frp, double fra, double rlp, double rla, double rrp, double rra) {
+        double flp,
+        double fla,
+        double frp,
+        double fra,
+        double rlp,
+        double rla,
+        double rrp,
+        double rra
+    ) {
         fra = inRange(-180, 180, fra) * INV_180;
         fla = inRange(-180, 180, fla) * INV_180;
         rra = inRange(-180, 180, rra) * INV_180;

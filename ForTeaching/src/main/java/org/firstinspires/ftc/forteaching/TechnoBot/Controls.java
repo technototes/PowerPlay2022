@@ -1,5 +1,12 @@
 package org.firstinspires.ftc.forteaching.TechnoBot;
 
+import com.technototes.library.command.CommandScheduler;
+import com.technototes.library.command.ParallelCommandGroup;
+import com.technototes.library.control.CommandAxis;
+import com.technototes.library.control.CommandButton;
+import com.technototes.library.control.CommandGamepad;
+import com.technototes.library.control.Stick;
+import com.technototes.library.util.Alliance;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.CloseClawCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.LiftDownCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.LiftUpCommand;
@@ -10,15 +17,8 @@ import org.firstinspires.ftc.forteaching.TechnoBot.Commands.TestEncodedMotorComm
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.TestMotorCommand;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.TestServoCommand;
 
-import com.technototes.library.command.CommandScheduler;
-import com.technototes.library.command.ParallelCommandGroup;
-import com.technototes.library.control.CommandAxis;
-import com.technototes.library.control.CommandButton;
-import com.technototes.library.control.CommandGamepad;
-import com.technototes.library.control.Stick;
-import com.technototes.library.util.Alliance;
-
 public class Controls {
+
     public Alliance alliance;
     public CommandGamepad gamepad;
     public TheBot robot;
@@ -105,10 +105,12 @@ public class Controls {
 
     // Joysticks require a "scheduleJoystick" thing, so the commands are invoked all the time
     private void bindDrivebaseControls() {
-        CommandScheduler.getInstance()
-                .scheduleJoystick(
-                        // new TankDriveCommand(robot.tankDriveBase, leftTankStick, rightTankStick, snapToAngle)
-                        new MecDriveCommand(robot.mecanumDrivebase, leftMecDriveStick, rightMecDriveStick));
+        CommandScheduler
+            .getInstance()
+            .scheduleJoystick(
+                // new TankDriveCommand(robot.tankDriveBase, leftTankStick, rightTankStick, snapToAngle)
+                new MecDriveCommand(robot.mecanumDrivebase, leftMecDriveStick, rightMecDriveStick)
+            );
     }
 
     // Silly helpers to make the code more succinct below
@@ -138,9 +140,19 @@ public class Controls {
         // For command that take "time" you parallel command groups (as they will run at the same
         // time as the other commands) but if you want "do A, then do B, then do C" you should
         // use a sequential command group
-        stop.whenPressed(new ParallelCommandGroup(
-                MakeEncCommand(Operations.Stop), MakeMotorCommand(Operations.Stop), MakeServoCommand(Operations.Stop)));
-        halt.whenPressed(new ParallelCommandGroup(
-                MakeMotorCommand(Operations.Halt), MakeEncCommand(Operations.Halt), MakeServoCommand(Operations.Halt)));
+        stop.whenPressed(
+            new ParallelCommandGroup(
+                MakeEncCommand(Operations.Stop),
+                MakeMotorCommand(Operations.Stop),
+                MakeServoCommand(Operations.Stop)
+            )
+        );
+        halt.whenPressed(
+            new ParallelCommandGroup(
+                MakeMotorCommand(Operations.Halt),
+                MakeEncCommand(Operations.Halt),
+                MakeServoCommand(Operations.Halt)
+            )
+        );
     }
 }

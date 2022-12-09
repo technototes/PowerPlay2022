@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.twenty403.controls;
 
+import com.technototes.library.command.ConditionalCommand;
+import com.technototes.library.control.CommandButton;
+import com.technototes.library.control.CommandGamepad;
+import com.technototes.library.control.Stick;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.claw.ClawAutoCloseToggleCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
@@ -14,11 +18,6 @@ import org.firstinspires.ftc.twenty403.command.lift.LiftMoveDownOverrideCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftMoveUpOverrideCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftSetZeroCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
-
-import com.technototes.library.command.ConditionalCommand;
-import com.technototes.library.control.CommandButton;
-import com.technototes.library.control.CommandGamepad;
-import com.technototes.library.control.Stick;
 
 public class ControlOperator {
 
@@ -69,21 +68,33 @@ public class ControlOperator {
         liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
         liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
         liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));
-        liftHighOrOverrideZero.whenPressed(new ConditionalCommand(
+        liftHighOrOverrideZero.whenPressed(
+            new ConditionalCommand(
                 override,
                 new LiftSetZeroCommand(robot.liftSubsystem),
-                new LiftHighJunctionCommand(robot.liftSubsystem)));
-        liftMediumOrToggleAutoClose.whenPressed(new ConditionalCommand(
+                new LiftHighJunctionCommand(robot.liftSubsystem)
+            )
+        );
+        liftMediumOrToggleAutoClose.whenPressed(
+            new ConditionalCommand(
                 override,
                 new ClawAutoCloseToggleCommand(robot.clawSubsystem),
-                new LiftMidJunctionCommand(robot.liftSubsystem)));
-        liftGroundOrOverrideDown.whenPressed(new ConditionalCommand(
+                new LiftMidJunctionCommand(robot.liftSubsystem)
+            )
+        );
+        liftGroundOrOverrideDown.whenPressed(
+            new ConditionalCommand(
                 override,
                 new LiftMoveDownOverrideCommand(robot.liftSubsystem),
-                new LiftGroundJunctionCommand(robot.liftSubsystem)));
-        liftLowOrOverrideUp.whenPressed(new ConditionalCommand(
+                new LiftGroundJunctionCommand(robot.liftSubsystem)
+            )
+        );
+        liftLowOrOverrideUp.whenPressed(
+            new ConditionalCommand(
                 override,
                 new LiftMoveUpOverrideCommand(robot.liftSubsystem),
-                new LiftLowJunctionCommand(robot.liftSubsystem)));
+                new LiftLowJunctionCommand(robot.liftSubsystem)
+            )
+        );
     }
 }

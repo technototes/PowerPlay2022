@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 public class SensorCode {
+
     public DcMotorEx motorL;
     public DcMotorEx motorR;
     private final DistanceSensor rangeSensor;
@@ -15,11 +16,12 @@ public class SensorCode {
     private final ColorSensor colorSensor;
 
     public SensorCode(
-            DcMotorEx motorL,
-            DcMotorEx motorR,
-            DistanceSensor rangeSensor,
-            TouchSensor touchSensor,
-            ColorSensor colorSensor) {
+        DcMotorEx motorL,
+        DcMotorEx motorR,
+        DistanceSensor rangeSensor,
+        TouchSensor touchSensor,
+        ColorSensor colorSensor
+    ) {
         this.motorL = motorL;
         this.motorR = motorR;
         this.rangeSensor = rangeSensor;

@@ -1,14 +1,15 @@
 package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
 
-import org.openftc.easyopencv.OpenCvCameraRotation;
-
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.vision.hardware.Webcam;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 
 public class VisionSubsystem implements Subsystem, Loggable {
+
     // @Config Disable the dashboard
     public static class VisionSubsystemConstants {
+
         // This is a super-low res image. I don't think we need higher resolution...
         public static int WIDTH = 160;
         public static int HEIGHT = 120;
@@ -26,7 +27,10 @@ public class VisionSubsystem implements Subsystem, Loggable {
 
     public void startStreaming() {
         camera.startStreaming(
-                VisionSubsystemConstants.WIDTH, VisionSubsystemConstants.HEIGHT, VisionSubsystemConstants.ROTATION);
+            VisionSubsystemConstants.WIDTH,
+            VisionSubsystemConstants.HEIGHT,
+            VisionSubsystemConstants.ROTATION
+        );
     }
 
     public void startVisionPipeline() {

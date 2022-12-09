@@ -1,19 +1,19 @@
 package org.firstinspires.ftc.twenty403;
 
+import com.acmerobotics.dashboard.config.Config;
+import com.technototes.library.logger.Loggable;
+import com.technototes.library.util.Alliance;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
 
-import com.acmerobotics.dashboard.config.Config;
-
-import com.technototes.library.logger.Loggable;
-import com.technototes.library.util.Alliance;
-
 public class Robot implements Loggable {
+
     @Config
     public static class RobotConstant {
+
         public static boolean DRIVE_CONNECTED = true;
         public static boolean CLAW_CONNECTED = true;
         public static boolean LIFT_CONNECTED = true;
@@ -33,16 +33,23 @@ public class Robot implements Loggable {
 
     public Robot(Hardware hardware, Alliance team, StartingPosition whichSide) {
         if (RobotConstant.DRIVE_CONNECTED) {
-            drivebaseSubsystem = new DrivebaseSubsystem(
+            drivebaseSubsystem =
+                new DrivebaseSubsystem(
                     hardware.flDriveMotor,
                     hardware.frDriveMotor,
                     hardware.rlDriveMotor,
                     hardware.rrDriveMotor,
-                    hardware.imu);
+                    hardware.imu
+                );
         }
         if (RobotConstant.LIFT_CONNECTED) {
             if (RobotConstant.DUAL_LIFT_SETUP) {
-                liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor, hardware.LiftRightMotor, initialVoltage);
+                liftSubsystem =
+                    new LiftSubsystem(
+                        hardware.LiftLeftMotor,
+                        hardware.LiftRightMotor,
+                        initialVoltage
+                    );
             } else {
                 liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor, initialVoltage);
             }
@@ -50,7 +57,8 @@ public class Robot implements Loggable {
             liftSubsystem = new LiftSubsystem();
         }
         if (RobotConstant.CLAW_CONNECTED) {
-            clawSubsystem = new ClawSubsystem(liftSubsystem, hardware.claw, hardware.clawDistance, team);
+            clawSubsystem =
+                new ClawSubsystem(liftSubsystem, hardware.claw, hardware.clawDistance, team);
         } else {
             clawSubsystem = new ClawSubsystem();
         }

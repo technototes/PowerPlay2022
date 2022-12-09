@@ -1,8 +1,7 @@
 package org.firstinspires.ftc.forteaching;
 
-import java.util.*;
-
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import java.util.*;
 
 public class TankDriveDemo {
 

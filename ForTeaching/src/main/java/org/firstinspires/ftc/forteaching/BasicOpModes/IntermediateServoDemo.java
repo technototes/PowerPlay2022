@@ -1,15 +1,15 @@
 package org.firstinspires.ftc.forteaching.BasicOpModes;
 
-import org.firstinspires.ftc.forteaching.BasicServoCode;
-import org.firstinspires.ftc.forteaching.util.MathHelper;
-
 import com.qualcomm.robotcore.eventloop.opmode.*;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.forteaching.BasicServoCode;
+import org.firstinspires.ftc.forteaching.util.MathHelper;
 
 @Disabled
 @TeleOp(name = "IntermediateServoDemo", group = "demo")
 public class IntermediateServoDemo extends OpMode {
+
     private BasicServoCode servoCode;
     private Servo servo;
     private Gamepad gamepad;
@@ -46,13 +46,15 @@ public class IntermediateServoDemo extends OpMode {
         } else if (this.gamepad.left_bumper) {
             if (!this.isButtonJustPressed) {
                 this.isButtonJustPressed = true;
-                this.currentServoPosition = MathHelper.clamp(this.currentServoPosition - 0.05, 0.0, 1.0);
+                this.currentServoPosition =
+                    MathHelper.clamp(this.currentServoPosition - 0.05, 0.0, 1.0);
                 this.servoCode.setPosition(this.currentServoPosition);
             }
         } else if (this.gamepad.right_bumper) {
             if (!this.isButtonJustPressed) {
                 this.isButtonJustPressed = true;
-                this.currentServoPosition = MathHelper.clamp(this.currentServoPosition + 0.05, 0.0, 1.0);
+                this.currentServoPosition =
+                    MathHelper.clamp(this.currentServoPosition + 0.05, 0.0, 1.0);
                 this.servoCode.setPosition(this.currentServoPosition);
             }
         } else {

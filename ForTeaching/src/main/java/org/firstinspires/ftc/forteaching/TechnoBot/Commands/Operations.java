@@ -4,5 +4,5 @@ public enum Operations {
     Increase,
     Decrease,
     Stop,
-    Halt
+    Halt,
 }
