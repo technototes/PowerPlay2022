@@ -1,16 +1,16 @@
 package org.firstinspires.ftc.forteaching.OpModes;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @TeleOp(name = "Sree's Trial Op Mode")
 public class TrialOpMode extends LinearOpMode {
+
     private DcMotorEx motorL;
     private DcMotorEx motorR;
     private RevTouchSensor bump;

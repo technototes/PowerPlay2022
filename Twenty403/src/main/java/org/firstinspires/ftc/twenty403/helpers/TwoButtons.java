@@ -5,10 +5,11 @@ import java.util.function.BooleanSupplier;
 // This is a helper that returns true if both of the buttons are pressed
 // You can also use it for true if *either* button is pressed.
 public class TwoButtons implements BooleanSupplier {
+
     public enum Combination {
         AND,
-        OR
-    };
+        OR,
+    }
 
     private BooleanSupplier a;
     private BooleanSupplier b;

@@ -1,13 +1,12 @@
 package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
 
 import androidx.core.math.MathUtils;
-
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-
 import com.technototes.library.subsystem.Subsystem;
 
 // @Config - Don't want this on the dashboard
 public class LiftSubsystem implements Subsystem {
+
     // TODO: THESE VALUES ARE ALL WRONG! THEY NEED TO BE SET TO THE RIGHT VALUES!!!!
     public static double TICKS_INCH = 750;
     public static double LOW_JUNCTION = .5 * TICKS_INCH;
@@ -79,7 +78,6 @@ public class LiftSubsystem implements Subsystem {
     }
 
     public void moveDown() {
-
         double position = liftMotor.getCurrentPosition();
         if (position <= MIN_HEIGHT) {
             return;

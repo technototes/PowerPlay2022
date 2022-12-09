@@ -1,10 +1,5 @@
 package org.firstinspires.ftc.twenty403.opmode.testing;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.twenty403.Hardware;
-import org.firstinspires.ftc.twenty403.Robot;
-import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -12,15 +7,19 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 import com.technototes.library.hardware2.HardwareBuilder;
 import com.technototes.library.util.Alliance;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.twenty403.Hardware;
+import org.firstinspires.ftc.twenty403.Robot;
+import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 
 @Config
 @Disabled
 @Autonomous(name = "Drive Motor Test")
 @SuppressWarnings("unused")
 public class DriveMotorTest extends LinearOpMode {
+
     /*
      * This is for doing testing without requiring the TechnoLib command scheduler
      */
@@ -29,6 +28,7 @@ public class DriveMotorTest extends LinearOpMode {
 
     @Config
     public static class MotorScales {
+
         public static double FL = 0.41;
         public static double FR = 0.44;
         public static double RL = 0.5;
@@ -81,10 +81,11 @@ public class DriveMotorTest extends LinearOpMode {
     private String ReadIMU() {
         Orientation o = hardware.imu.getAngularOrientation();
         return String.format(
-                "A:%f B:%f C:%f (%f)",
-                Math.toDegrees(o.firstAngle),
-                Math.toDegrees(o.secondAngle),
-                Math.toDegrees(o.thirdAngle),
-                hardware.imu.gyroHeadingInDegrees());
+            "A:%f B:%f C:%f (%f)",
+            Math.toDegrees(o.firstAngle),
+            Math.toDegrees(o.secondAngle),
+            Math.toDegrees(o.thirdAngle),
+            hardware.imu.gyroHeadingInDegrees()
+        );
     }
 }

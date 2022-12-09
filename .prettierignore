@@ -1,7 +1,7 @@
 **/generated/**
 # Frequently used
-## Sorry: this one is not reasonable, IMO
-# **/AutoConst*.java
+# The Prettier Java plugin messes up the lambdas in these files pretty badly:
+**/AutoConst*.java
 # This is some older code:
 **/ExperimentalSwerveDrive.java
 **/swerve_util/**

@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.twenty403.controls;
 
+import com.technototes.library.command.CommandScheduler;
+import com.technototes.library.control.CommandButton;
+import com.technototes.library.control.CommandGamepad;
+import com.technototes.library.control.Stick;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.claw.ClawAutoCloseToggleCommand;
 import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
@@ -7,12 +11,8 @@ import org.firstinspires.ftc.twenty403.command.drive.ResetGyroCommand;
 import org.firstinspires.ftc.twenty403.command.drive.SlowCommand;
 import org.firstinspires.ftc.twenty403.command.drive.TurboCommand;
 
-import com.technototes.library.command.CommandScheduler;
-import com.technototes.library.control.CommandButton;
-import com.technototes.library.control.CommandGamepad;
-import com.technototes.library.control.Stick;
-
 public class ControlDriver {
+
     public Robot robot;
     public CommandGamepad gamepad;
 
@@ -48,9 +48,16 @@ public class ControlDriver {
     }
 
     public void bindDriveControls() {
-        CommandScheduler.getInstance()
-                .scheduleJoystick(
-                        new DriveCommand(robot.drivebaseSubsystem, driveLeftStick, driveRightStick, driveStraight));
+        CommandScheduler
+            .getInstance()
+            .scheduleJoystick(
+                new DriveCommand(
+                    robot.drivebaseSubsystem,
+                    driveLeftStick,
+                    driveRightStick,
+                    driveStraight
+                )
+            );
         turboButton.whenPressed(new TurboCommand(robot.drivebaseSubsystem));
         turboButton.whenReleased(new SlowCommand(robot.drivebaseSubsystem));
         resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));

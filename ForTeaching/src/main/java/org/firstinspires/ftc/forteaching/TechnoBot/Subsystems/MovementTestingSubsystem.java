@@ -2,7 +2,6 @@ package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.Range;
-
 import com.technototes.library.hardware.motor.Motor;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.logger.Log;
@@ -10,8 +9,10 @@ import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 
 public class MovementTestingSubsystem implements Subsystem, Loggable {
+
     // @Config - Don't want this on the dashboard
     public static class TestingValues {
+
         public static double SERVO_DELTA = 0.09;
         public static double SERVO_HIGH = 0.72;
         public static double SERVO_LOW = 0.0;
@@ -37,13 +38,23 @@ public class MovementTestingSubsystem implements Subsystem, Loggable {
     }
 
     public void increaseServoMotor() {
-        setServo(Range.clip(
-                servo.getPosition() + TestingValues.SERVO_DELTA, TestingValues.SERVO_LOW, TestingValues.SERVO_HIGH));
+        setServo(
+            Range.clip(
+                servo.getPosition() + TestingValues.SERVO_DELTA,
+                TestingValues.SERVO_LOW,
+                TestingValues.SERVO_HIGH
+            )
+        );
     }
 
     public void decreaseServoMotor() {
-        setServo(Range.clip(
-                servo.getPosition() - TestingValues.SERVO_DELTA, TestingValues.SERVO_LOW, TestingValues.SERVO_HIGH));
+        setServo(
+            Range.clip(
+                servo.getPosition() - TestingValues.SERVO_DELTA,
+                TestingValues.SERVO_LOW,
+                TestingValues.SERVO_HIGH
+            )
+        );
     }
 
     public void neutralServoMotor() {

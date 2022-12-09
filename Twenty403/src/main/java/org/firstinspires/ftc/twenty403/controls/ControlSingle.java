@@ -1,5 +1,10 @@
 package org.firstinspires.ftc.twenty403.controls;
 
+import com.technototes.library.command.CommandScheduler;
+import com.technototes.library.command.ConditionalCommand;
+import com.technototes.library.control.CommandButton;
+import com.technototes.library.control.CommandGamepad;
+import com.technototes.library.control.Stick;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
@@ -17,12 +22,6 @@ import org.firstinspires.ftc.twenty403.command.lift.LiftMoveDownOverrideCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftMoveUpOverrideCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftSetZeroCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
-
-import com.technototes.library.command.CommandScheduler;
-import com.technototes.library.command.ConditionalCommand;
-import com.technototes.library.control.CommandButton;
-import com.technototes.library.control.CommandGamepad;
-import com.technototes.library.control.Stick;
 
 public class ControlSingle {
 
@@ -74,14 +73,20 @@ public class ControlSingle {
         liftGroundOrOverrideDown = gamepad.cross;
         liftLowOrOverrideUp = gamepad.square;
         liftOverrideZeroButton = gamepad.triangle;
-
         // TODO: Identify other controls for
     }
 
     public void bindDriveControls() {
-        CommandScheduler.getInstance()
-                .scheduleJoystick(
-                        new DriveCommand(robot.drivebaseSubsystem, driveLeftStick, driveRightStick, driveStraight));
+        CommandScheduler
+            .getInstance()
+            .scheduleJoystick(
+                new DriveCommand(
+                    robot.drivebaseSubsystem,
+                    driveLeftStick,
+                    driveRightStick,
+                    driveStraight
+                )
+            );
         turboButton.whenPressed(new TurboCommand(robot.drivebaseSubsystem));
         turboButton.whenReleased(new SlowCommand(robot.drivebaseSubsystem));
         // TODO: We probably want buttons to reset the Gyro...
@@ -100,16 +105,23 @@ public class ControlSingle {
         liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
         liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));
         liftOverrideZeroButton.whenPressed(
-                new ConditionalCommand(override, new LiftSetZeroCommand(robot.liftSubsystem)));
+            new ConditionalCommand(override, new LiftSetZeroCommand(robot.liftSubsystem))
+        );
 
-        liftGroundOrOverrideDown.whenPressed(new ConditionalCommand(
+        liftGroundOrOverrideDown.whenPressed(
+            new ConditionalCommand(
                 override,
                 new LiftMoveDownOverrideCommand(robot.liftSubsystem),
-                new LiftGroundJunctionCommand(robot.liftSubsystem)));
-        liftLowOrOverrideUp.whenPressed(new ConditionalCommand(
+                new LiftGroundJunctionCommand(robot.liftSubsystem)
+            )
+        );
+        liftLowOrOverrideUp.whenPressed(
+            new ConditionalCommand(
                 override,
                 new LiftMoveUpOverrideCommand(robot.liftSubsystem),
-                new LiftLowJunctionCommand(robot.liftSubsystem)));
+                new LiftLowJunctionCommand(robot.liftSubsystem)
+            )
+        );
         liftMedium.whenPressed(new LiftMidJunctionCommand(robot.liftSubsystem));
         liftHigh.whenPressed(new LiftHighJunctionCommand(robot.liftSubsystem));
     }

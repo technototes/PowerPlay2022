@@ -1,14 +1,13 @@
 package org.firstinspires.ftc.forteaching.BasicOpModes;
 
-import org.firstinspires.ftc.forteaching.SensorCode;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
 import com.qualcomm.robotcore.eventloop.opmode.*;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import org.firstinspires.ftc.forteaching.SensorCode;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Disabled
 @TeleOp(name = "SensorDemo", group = "demo")
@@ -31,8 +30,8 @@ public class SensorDemo extends OpMode {
         started,
         foundColor,
         isClose,
-        isFinished
-    };
+        isFinished,
+    }
 
     State state;
 

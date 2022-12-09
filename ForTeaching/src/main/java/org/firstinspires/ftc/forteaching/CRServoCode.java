@@ -4,7 +4,9 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class CRServoCode {
+
     public class CRServoConstant {
+
         // no need to have import statement of this class
         public static final double MAX_POSITIVE_SPEED = 1.0;
         public static final double MAX_NEGATIVE_SPEED = -1.0;
@@ -38,8 +40,9 @@ public class CRServoCode {
         // not useful since you can't change direction the loop() method
         this.setDirection(
                 this.servo.getDirection() == DcMotorSimple.Direction.FORWARD
-                        ? DcMotorSimple.Direction.REVERSE
-                        : DcMotorSimple.Direction.FORWARD);
+                    ? DcMotorSimple.Direction.REVERSE
+                    : DcMotorSimple.Direction.FORWARD
+            );
     }
 
     public void stop() {

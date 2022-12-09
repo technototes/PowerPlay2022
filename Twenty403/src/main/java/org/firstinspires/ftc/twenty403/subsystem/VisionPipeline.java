@@ -1,11 +1,16 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
 import android.graphics.Bitmap;
-
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+import com.technototes.library.logger.Log;
+import com.technototes.library.logger.LogConfig;
+import com.technototes.library.logger.Loggable;
+import com.technototes.library.util.Alliance;
 import java.util.function.Supplier;
-
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
-
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -13,16 +18,6 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
-
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
-
-import com.technototes.library.logger.Log;
-import com.technototes.library.logger.LogConfig;
-import com.technototes.library.logger.Loggable;
-import com.technototes.library.util.Alliance;
 
 public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>, Loggable {
 
@@ -37,6 +32,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
 
     @Config
     public static class VisionConstants {
+
         public enum ParkingPosition {
             LEFT,
             CENTER,
@@ -94,8 +90,16 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
     public Mat img = null;
 
     private int countColor(double hue) {
-        Scalar edge1 = new Scalar(hue - VisionConstants.RANGE, VisionConstants.lowS, VisionConstants.lowV);
-        Scalar edge2 = new Scalar(hue + VisionConstants.RANGE, VisionConstants.highS, VisionConstants.highV);
+        Scalar edge1 = new Scalar(
+            hue - VisionConstants.RANGE,
+            VisionConstants.lowS,
+            VisionConstants.lowV
+        );
+        Scalar edge2 = new Scalar(
+            hue + VisionConstants.RANGE,
+            VisionConstants.highS,
+            VisionConstants.highV
+        );
         // Check to see which pixels are between edge1 & edge2, output into a boolean matrix Cr
         Core.inRange(customColorSpace, edge1, edge2, Cr);
         int count = 0;
@@ -121,10 +125,13 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
 
         // First, slice the smaller rectangle out of the overall bitmap:
         Mat rectToLookAt = input.submat(
-                // Row start to Row end
-                VisionConstants.Y, VisionConstants.Y + VisionConstants.HEIGHT,
-                // Col start to Col end
-                VisionConstants.X, VisionConstants.X + VisionConstants.WIDTH);
+            // Row start to Row end
+            VisionConstants.Y,
+            VisionConstants.Y + VisionConstants.HEIGHT,
+            // Col start to Col end
+            VisionConstants.X,
+            VisionConstants.X + VisionConstants.WIDTH
+        );
 
         // Next, convert the RGB image to HSV, because HUE is much easier to identify colors in
         // The output is in 'customColorSpace'
