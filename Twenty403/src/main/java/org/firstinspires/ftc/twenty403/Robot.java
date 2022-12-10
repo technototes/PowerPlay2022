@@ -7,6 +7,7 @@ import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
+import org.firstinspires.ftc.twenty403.subsystem.OdoSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
 
 public class Robot implements Loggable {
@@ -18,6 +19,7 @@ public class Robot implements Loggable {
         public static boolean CLAW_CONNECTED = true;
         public static boolean LIFT_CONNECTED = true;
         public static boolean LIFT_MOVE_MOTORS = true;
+        public static boolean ODO_SENSORS_CONNECTED = true;
 
         public static boolean CAMERA_CONNECTED = true;
 
@@ -29,6 +31,7 @@ public class Robot implements Loggable {
     public ClawSubsystem clawSubsystem;
     public LiftSubsystem liftSubsystem;
     public VisionSubsystem visionSystem;
+    public OdoSubsystem odoSubsystem;
     public double initialVoltage;
 
     public Robot(Hardware hardware, Alliance team, StartingPosition whichSide) {
@@ -61,6 +64,13 @@ public class Robot implements Loggable {
                 new ClawSubsystem(liftSubsystem, hardware.claw, hardware.clawDistance, team);
         } else {
             clawSubsystem = new ClawSubsystem();
+        }
+        if (RobotConstant.ODO_SENSORS_CONNECTED) {
+            odoSubsystem =
+                    new OdoSubsystem(hardware.leftdis, hardware.rightdis, hardware.colorleft, hardware.colorcenter, hardware.colorright);
+        }
+        else {
+            odoSubsystem = new OdoSubsystem();
         }
         if (RobotConstant.CAMERA_CONNECTED) {
             visionSystem = new VisionSubsystem(hardware.camera, team, whichSide);

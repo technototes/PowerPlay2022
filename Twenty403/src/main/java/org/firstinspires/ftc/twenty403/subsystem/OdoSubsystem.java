@@ -1,41 +1,37 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
-import com.qualcomm.robotcore.hardware.ColorRangeSensor;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.technototes.library.command.SequentialCommandGroup;
+import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.subsystem.Subsystem;
-import com.technototes.path.command.TrajectorySequenceCommand;
+
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.twenty403.Robot;
-import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
-import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
-import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftCollectCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
+import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 
 public class OdoSubsystem implements Subsystem {
+    public enum GraySensorCombo {
+        All, JustLeft, JustRight, LeftCenter, RightCenter, LeftRight, Weird
+    }
 
-    DistanceSensor dLeft;
-    DistanceSensor dRight;
+    Rev2mDistanceSensor dLeft;
+    Rev2mDistanceSensor dRight;
 
     RevColorSensorV3 cLeft;
-    ColorRangeSensor cMiddle;
+    ColorDistanceSensor cMiddle;
     RevColorSensorV3 cRight;
 
     double leftDistance;
     double rightDistance;
     int leftColor;
-    int middleColor;
+    int centerColor;
     int rightColor;
 
     public OdoSubsystem(
-        DistanceSensor dl,
-        DistanceSensor dr,
-        RevColorSensorV3 cl,
-        ColorRangeSensor cm,
-        RevColorSensorV3 cr
+            Rev2mDistanceSensor dl,
+            Rev2mDistanceSensor dr,
+            RevColorSensorV3 cl,
+            ColorDistanceSensor cm,
+            RevColorSensorV3 cr
     ) {
         dLeft = dl;
         dRight = dr;
@@ -44,29 +40,71 @@ public class OdoSubsystem implements Subsystem {
         cRight = cr;
     }
 
-    public double WallDistance() {
-        // does not need to constantly check distance if stored in variable
-        double leftDistance1 = dLeft.getDistance(DistanceUnit.CM);
-        double rightDistance1 = dRight.getDistance(DistanceUnit.CM);
+    public OdoSubsystem() {
+        this(null, null, null, null, null);
+    }
 
+    public double WallDistance(double angle) {
+        // does not need to constantly check distance if stored in variable
         // cone stack is on the left
-        if (leftDistance1 + 9.5 < rightDistance1) {
-            return leftDistance1 + rightDistance1 / 2;
+        if (leftDistance > 100 || rightDistance > 100)
+            return -123.4;
+        else
+            return Math.cos(angle) * (leftDistance + rightDistance) / 2;
+
+    }
+
+    //Gray = Math.abs(Red - Blue) < 50;
+
+    public GraySensorCombo ReadSensors() {
+        int leftRed = ColorHelper.red(leftColor);
+        int rightRed = ColorHelper.red(rightColor);
+        int centerRed = ColorHelper.red(centerColor);
+        int leftBlue = ColorHelper.blue(leftColor);
+        int rightBlue = ColorHelper.blue(rightColor);
+        int centerBlue = ColorHelper.blue(centerColor);
+        boolean leftGray = Math.abs(leftRed - leftBlue) < 50;
+        boolean rightGray = Math.abs(rightRed - rightBlue) < 50;
+        boolean centerGray = Math.abs(centerRed - centerBlue) < 50;
+
+        if (leftGray == true && rightGray == true && centerGray == true) {
+            return GraySensorCombo.All;
         }
-        // cone stack is on the right
-        else if (leftDistance1 > rightDistance1 + 9.5) {
-            return leftDistance1 + rightDistance1 / 2;
+        if (leftGray == true && rightGray == false && centerGray == false) {
+            return GraySensorCombo.JustLeft;
         }
-        return 123.4;
+        if (leftGray == false && rightGray == true && centerGray == false) {
+            return GraySensorCombo.JustRight;
+        }
+        if (leftGray == true && rightGray == false && centerGray == true) {
+            return GraySensorCombo.LeftCenter;
+        }
+        if (leftGray == false && rightGray == true && centerGray == true) {
+            return GraySensorCombo.RightCenter;
+        }
+        if (leftGray == true && rightGray == true && centerGray == false) {
+            return GraySensorCombo.LeftRight;
+        }
+        return GraySensorCombo.Weird;
     }
 
     @Override
     public void periodic() {
-        // Read the sensors and squirrel away the value
-        leftDistance = dLeft.getDistance(DistanceUnit.CM);
-        rightDistance = dRight.getDistance(DistanceUnit.CM);
-        leftColor = cLeft.argb();
-        middleColor = cMiddle.argb();
-        rightColor = cRight.argb();
+        if (dLeft == null) {
+            leftDistance = 1000.0;
+            rightDistance = 1000.0;
+            leftColor = 0;
+            rightColor = 0;
+            centerColor = 0;
+        } else {
+
+
+            // Read the sensors and squirrel away the value
+            leftDistance = dLeft.getDistance(DistanceUnit.CM);
+            rightDistance = dRight.getDistance(DistanceUnit.CM);
+            leftColor = cLeft.argb();
+            centerColor = cMiddle.argb();
+            rightColor = cRight.argb();
+        }
     }
 }

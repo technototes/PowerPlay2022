@@ -4,6 +4,8 @@ import static org.firstinspires.ftc.twenty403.Robot.RobotConstant;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.lynx.LynxModule;
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
+import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -54,6 +56,12 @@ public class Hardware {
     public EncodedMotor<DcMotorEx> LiftRightMotor;
     public Servo claw;
     public ColorDistanceSensor clawDistance;
+
+    public Rev2mDistanceSensor leftdis;
+    public Rev2mDistanceSensor rightdis;
+    public RevColorSensorV3 colorleft;
+    public RevColorSensorV3 colorright;
+    public ColorDistanceSensor colorcenter;
 
     public Webcam camera;
 
