@@ -118,7 +118,8 @@ public class Hardware {
             rightFrontEncoder = new AbsoluteAnalogEncoder(hwMap.get(AnalogInput.class, HardwareConstant.RF_ENCODER));
             rightRearEncoder = new AbsoluteAnalogEncoder(hwMap.get(AnalogInput.class, HardwareConstant.RR_ENCODER));
 
-            imu = new IMU(HardwareConstant.IMU).remapAxes(AxesOrder.YXZ, IMU.AxesSigns.NNN); // TODO: figure the axes order, its not the same as Mechanum
+            // Problem with TechNoLib
+            // imu = new IMU(HardwareConstant.IMU).remapAxes(AxesOrder.YXZ, IMU.AxesSigns.NNN); // TODO: figure the axes order, its not the same as Mechanum
         }
 
         if (enableLift) {

@@ -17,10 +17,10 @@ public class SwerveModuleDebug extends CommandOpMode {
     SwerveModule rightRearModule;
     SwerveModule rightFrontModule;
 
-    public double leftFrontModuleOrientationRadians = 0;
-    public double leftRearModuleOrientationRadians = 0;
-    public double rightRearModuleOrientationRadians = 0;
-    public double rightFrontModuleOrientationRadians = 0;
+    public double leftFrontModuleTargetOrientationRadians = 0;
+    public double leftRearTargetModuleOrientationRadians = 0;
+    public double rightRearModuleTargetOrientationRadians = 0;
+    public double rightFrontModuleTargetOrientationRadians = 0;
 
     @Override
     public void uponInit() {
@@ -40,24 +40,34 @@ public class SwerveModuleDebug extends CommandOpMode {
     @Override
     public void runLoop() {
         if (gamepad1.dpad_up) {
-            leftFrontModuleOrientationRadians = incrementOrientationRadians(leftFrontModuleOrientationRadians);
+//            leftFrontModuleTargetOrientationRadians = incrementOrientationRadians(leftFrontModuleTargetOrientationRadians);
+            leftFrontModuleTargetOrientationRadians += 0.001;
+//            gamepad1.rumble(100);
         }
         else if (gamepad1.dpad_right) {
-            leftRearModuleOrientationRadians = incrementOrientationRadians(leftRearModuleOrientationRadians);
+            leftRearTargetModuleOrientationRadians = incrementOrientationRadians(leftRearTargetModuleOrientationRadians);
+//            gamepad1.rumble(100);
         }
         else if (gamepad1.dpad_down) {
-            rightRearModuleOrientationRadians = incrementOrientationRadians(rightRearModuleOrientationRadians);
+            rightRearModuleTargetOrientationRadians = incrementOrientationRadians(rightRearModuleTargetOrientationRadians);
+//            gamepad1.rumble(100);
         }
         else if (gamepad1.dpad_left) {
-            rightFrontModuleOrientationRadians = incrementOrientationRadians(rightFrontModuleOrientationRadians);
+            rightFrontModuleTargetOrientationRadians = incrementOrientationRadians(rightFrontModuleTargetOrientationRadians);
+//            gamepad1.rumble(100);
         }
 
-        leftFrontModule.setTargetRotation(leftFrontModuleOrientationRadians);
-        leftRearModule.setTargetRotation(leftRearModuleOrientationRadians);
-        rightRearModule.setTargetRotation(rightRearModuleOrientationRadians);
-        rightFrontModule.setTargetRotation(rightFrontModuleOrientationRadians);
+        leftFrontModule.setTargetRotation(leftFrontModuleTargetOrientationRadians);
+        leftRearModule.setTargetRotation(leftRearTargetModuleOrientationRadians);
+        rightRearModule.setTargetRotation(rightRearModuleTargetOrientationRadians);
+        rightFrontModule.setTargetRotation(rightFrontModuleTargetOrientationRadians);
 
-        telemetry.addData("LF - Target", leftFrontModule.getTargetRotation());
+        leftFrontModule.update();
+        leftRearModule.update();
+        rightRearModule.update();
+        rightFrontModule.update();
+
+        telemetry.addData("LF - Target", leftFrontModuleTargetOrientationRadians);
         telemetry.addData("LF - Current", leftFrontModule.getModuleRotation());
 
         telemetry.addData("LR - Target", leftRearModule.getTargetRotation());
@@ -73,8 +83,10 @@ public class SwerveModuleDebug extends CommandOpMode {
     public double incrementOrientationRadians(double o){
         if (o > 2 * Math.PI){
             o = 0;
+            System.out.println("Resetting orientation to 0");
         } else {
             o += 0.001;
+            System.out.println("Incrementing orientation by 0.001");
         }
         return o;
     }
