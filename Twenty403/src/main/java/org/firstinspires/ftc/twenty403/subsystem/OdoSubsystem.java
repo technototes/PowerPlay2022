@@ -1,11 +1,20 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.subsystem.Subsystem;
+import com.technototes.path.command.TrajectorySequenceCommand;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.twenty403.Robot;
+import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
+import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
+import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
+import org.firstinspires.ftc.twenty403.command.lift.LiftCollectCommand;
+import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
 
 public class OdoSubsystem implements Subsystem {
 
@@ -37,18 +46,23 @@ public class OdoSubsystem implements Subsystem {
     }
 
     public double WallDistance() {
-        // if left and right distance sensors measure the same distance
-        if (leftDistance == rightDistance) {
-            //
-        } else if (dLeft.getDistance(DistanceUnit.CM) < dRight.getDistance(DistanceUnit.CM)) {
-            //
-        } else if (dLeft.getDistance(DistanceUnit.CM) > dRight.getDistance(DistanceUnit.CM)) {
-            //
+        // does not need to constantly check distance if stored in variable
+        double leftDistance1 = dLeft.getDistance(DistanceUnit.CM);
+        double rightDistance1 = dRight.getDistance(DistanceUnit.CM);
+
+        // cone stack is on the left
+        if (leftDistance1 + 9.5 < rightDistance1) {
+            return leftDistance1 + rightDistance1 / 2;
         }
-        return 1234.5;
+        // cone stack is on the right
+        else if (leftDistance1 > rightDistance1 + 9.5) {
+            return leftDistance1 + rightDistance1 / 2;
+        }
+        return 123.4;
     }
 
-    @Override public void periodic() {
+
+        @Override public void periodic() {
         // Read the sensors and squirrel away the value
         leftDistance = dLeft.getDistance(DistanceUnit.CM);
         rightDistance = dRight.getDistance(DistanceUnit.CM);
@@ -57,3 +71,4 @@ public class OdoSubsystem implements Subsystem {
         rightColor = cRight.argb();
     }
 }
+

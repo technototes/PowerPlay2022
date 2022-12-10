@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.twenty403.Robot.RobotConstant;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.sensor.ColorDistanceSensor;
@@ -33,6 +34,13 @@ public class Hardware {
 
         public static String LIFT_LEFT_MOTOR = "LLIFT";
         public static String LIFT_RIGHT_MOTOR = "RLIFT";
+
+        public static String DISTANCE_SENSOR_LEFT = "LeftDis";
+        public static String DISTANCE_SENSOR_RIGHT = "RightDis";
+        public static String COLOR_SENSOR_LEFT= "ColorLeft";
+        public static String COLOR_SENSOR_CENTER= "ColorCenter";
+        public static String COLOR_SENSOR_RIGHT= "ColorRight";
+
     }
 
     public List<LynxModule> hubs;
