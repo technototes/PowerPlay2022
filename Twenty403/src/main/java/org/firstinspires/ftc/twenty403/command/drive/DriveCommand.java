@@ -3,6 +3,8 @@ package org.firstinspires.ftc.twenty403.command.drive;
 import com.acmerobotics.roadrunner.drive.DriveSignal;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.qualcomm.robotcore.util.Range;
 import com.technototes.library.command.Command;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.Stick;
@@ -17,12 +19,21 @@ import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline;
 
 public class DriveCommand implements Command {
 
+    public enum DriveState {
+        Normal,
+        TrajectoryStart,
+        TrajectoryRun,
+    }
+
+    TileMoving tile;
+
     static double STRAIGHTEN_DEAD_ZONE = 0.08;
     public DrivebaseSubsystem subsystem;
     public DoubleSupplier x, y, r;
     public BooleanSupplier straight;
     public BooleanSupplier watchTrigger;
     public VisionPipeline visionPipeline;
+    public DriveState currentDriveState;
 
     public DriveCommand(
         DrivebaseSubsystem sub,
@@ -40,6 +51,7 @@ public class DriveCommand implements Command {
         straight = straighten;
         watchTrigger = watchAndAlign;
         visionPipeline = vp;
+        currentDriveState = DriveState.Normal;
     }
 
     public DriveCommand(
@@ -129,21 +141,61 @@ public class DriveCommand implements Command {
 
     @Override
     public void execute() {
-        if (watchTrigger != null && watchTrigger.getAsBoolean()) {
-            // do the auto-align stuff
-            autoAlign45();
-        } else {
-            double curHeading = -subsystem.getExternalHeading();
-            Vector2d input = new Vector2d(
-                -y.getAsDouble() * subsystem.speed,
-                -x.getAsDouble() * subsystem.speed
-            )
-                .rotated(curHeading);
-            subsystem.setWeightedDrivePower(
-                new Pose2d(input.getX(), input.getY(), getRotation(curHeading))
-            );
+        // TODO for TileByTile: Check to see if we're running a trajectory sequence.
+        // TS is running:
+        //   Is there an override?
+        //     Yes: abandon the trajectory sequence, and resume manual control
+        //     No: Just update the subsystem and return
+        // TS is not running:
+        // Check to see if we're supposed to *start* a trajectory sequence
+        //   Yes: Start it
+        //   No: resume manual control
+        switch (currentDriveState) {
+            case Normal:
+                if (subsystem.isTrajectoryRequested()) {
+                    startNewTrajectory();
+                    currentDriveState = DriveState.TrajectoryRun;
+                    subsystem.clearTrajectory();
+                } else {
+                    if (watchTrigger != null && watchTrigger.getAsBoolean()) {
+                        // do the auto-align stuff
+                        autoAlign45();
+                    } else {
+                        double curHeading = -subsystem.getExternalHeading();
+                        Vector2d input = new Vector2d(
+                            -y.getAsDouble() * subsystem.speed,
+                            -x.getAsDouble() * subsystem.speed
+                        )
+                            .rotated(curHeading);
+                        subsystem.setWeightedDrivePower(
+                            new Pose2d(input.getX(), input.getY(), getRotation(curHeading))
+                        );
+                    }
+                }
+                break;
+            case TrajectoryRun:
+                if (!subsystem.isBusy()) {
+                    currentDriveState = DriveState.Normal;
+                }
+                break;
         }
         subsystem.update();
+    }
+
+    //run when starting new trajectory
+    public void startNewTrajectory() {
+        Pose2d start = subsystem.getPoseEstimate();
+        double endX = Range.clip(start.getX() + subsystem.trajectoryX, -72, 72);
+        double endY = Range.clip(start.getY() + subsystem.trajectoryY, -72, 72);
+        int endHeading = Math.floorMod((int) (start.getHeading() + subsystem.trajectoryAngle), 360);
+
+        if (endHeading > 180) {
+            endHeading -= 360;
+        }
+
+        Pose2d end = new Pose2d(endX, endY, endHeading);
+        Trajectory traj1 = subsystem.trajectoryBuilder(start).lineToLinearHeading(end).build();
+        subsystem.followTrajectoryAsync(traj1);
     }
 
     @Override

@@ -115,6 +115,8 @@ public class DrivebaseSubsystem
 
     private static final boolean ENABLE_POSE_DIAGNOSTICS = true;
 
+    public double trajectoryX, trajectoryY, trajectoryAngle;
+
     @Log(name = "Pose2d: ")
     public String poseDisplay = ENABLE_POSE_DIAGNOSTICS ? "" : null;
 
@@ -175,5 +177,22 @@ public class DrivebaseSubsystem
         leftRear.setPower(v1 * DriveConstants.ARL_SCALE);
         rightRear.setPower(v2 * DriveConstants.ARR_SCALE);
         rightFront.setPower(v3 * DriveConstants.AFR_SCALE);
+    }
+
+    public void requestTrajectoryMove(double deltaX, double deltaY, double deltaAngle) {
+        trajectoryX = deltaX;
+        trajectoryY = deltaY;
+        trajectoryAngle = deltaAngle;
+    }
+
+    public boolean isTrajectoryRequested() {
+        if (trajectoryX != 0 || trajectoryY != 0 || trajectoryAngle != 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public void clearTrajectory() {
+        requestTrajectoryMove(0, 0, 0);
     }
 }
