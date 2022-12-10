@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.path.command.TrajectorySequenceCommand;
-
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
@@ -61,8 +60,8 @@ public class OdoSubsystem implements Subsystem {
         return 123.4;
     }
 
-
-        @Override public void periodic() {
+    @Override
+    public void periodic() {
         // Read the sensors and squirrel away the value
         leftDistance = dLeft.getDistance(DistanceUnit.CM);
         rightDistance = dRight.getDistance(DistanceUnit.CM);
@@ -71,4 +70,3 @@ public class OdoSubsystem implements Subsystem {
         rightColor = cRight.argb();
     }
 }
-

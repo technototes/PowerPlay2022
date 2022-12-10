@@ -37,10 +37,9 @@ public class Hardware {
 
         public static String DISTANCE_SENSOR_LEFT = "LeftDis";
         public static String DISTANCE_SENSOR_RIGHT = "RightDis";
-        public static String COLOR_SENSOR_LEFT= "ColorLeft";
-        public static String COLOR_SENSOR_CENTER= "ColorCenter";
-        public static String COLOR_SENSOR_RIGHT= "ColorRight";
-
+        public static String COLOR_SENSOR_LEFT = "ColorLeft";
+        public static String COLOR_SENSOR_CENTER = "ColorCenter";
+        public static String COLOR_SENSOR_RIGHT = "ColorRight";
     }
 
     public List<LynxModule> hubs;
