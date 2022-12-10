@@ -176,5 +176,6 @@ public class DrivebaseSubsystem
         rightRear.setPower(v2 * DriveConstants.ARR_SCALE);
         rightFront.setPower(v3 * DriveConstants.AFR_SCALE);
     }
-    public void RequestTileMove(){}
+
+    public void RequestTileMove() {}
 }

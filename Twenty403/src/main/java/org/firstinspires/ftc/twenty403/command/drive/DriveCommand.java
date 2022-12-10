@@ -11,7 +11,8 @@ import java.util.function.DoubleSupplier;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 
 public class DriveCommand implements Command {
-    public enum DriveState{
+
+    public enum DriveState {
         Normal,
         TrajectoryStart,
         TrajectoryRun,
@@ -22,8 +23,6 @@ public class DriveCommand implements Command {
     public DoubleSupplier x, y, r;
     public BooleanSupplier straight;
     public DriveState currentDriveState;
-
-
 
     public DriveCommand(
         DrivebaseSubsystem sub,
@@ -81,20 +80,18 @@ public class DriveCommand implements Command {
         //   Yes: Start it
         //   No: resume manual control
         switch (currentDriveState) {
-
             case Normal:
-            double curHeading = -subsystem.getExternalHeading();
-            Vector2d input = new Vector2d(
+                double curHeading = -subsystem.getExternalHeading();
+                Vector2d input = new Vector2d(
                     -y.getAsDouble() * subsystem.speed,
                     -x.getAsDouble() * subsystem.speed
-            )
+                )
                     .rotated(curHeading);
-            subsystem.setWeightedDrivePower(
+                subsystem.setWeightedDrivePower(
                     new Pose2d(input.getX(), input.getY(), getRotation(curHeading))
-            );
-            break;
+                );
+                break;
             case TrajectoryStart:
-
                 break;
             case TrajectoryRun:
                 if (!subsystem.isBusy()) {
@@ -103,7 +100,6 @@ public class DriveCommand implements Command {
                 break;
         }
         subsystem.update();
-
     }
 
     @Override
