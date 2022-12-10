@@ -3,12 +3,14 @@ package org.firstinspires.ftc.twenty403.subsystem;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.technototes.library.hardware.sensor.ColorDistanceSensor;
+import com.technototes.library.logger.Log;
+import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 
-public class OdoSubsystem implements Subsystem {
+public class OdoSubsystem implements Subsystem, Loggable {
 
     public enum GraySensorCombo {
         All,
@@ -93,6 +95,9 @@ public class OdoSubsystem implements Subsystem {
         return GraySensorCombo.Weird;
     }
 
+    @Log
+    public String odoData = "";
+
     @Override
     public void periodic() {
         if (dLeft == null) {
@@ -109,5 +114,6 @@ public class OdoSubsystem implements Subsystem {
             centerColor = cMiddle.argb();
             rightColor = cRight.argb();
         }
+        odoData = String.format("%s : %f, %f", ReadSensors().toString(), leftDistance, rightDistance);
     }
 }
