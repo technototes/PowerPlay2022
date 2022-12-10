@@ -14,7 +14,7 @@ import org.firstinspires.ftc.sixteen750.command.autonomous.AutoConstantsBlue;
 import org.firstinspires.ftc.sixteen750.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.sixteen750.command.autonomous.left.LeftParkingSelectionCommandJustPark;
 
-@Disabled
+
 @Autonomous(name = "LeftJustPark")
 public class LeftJustPark extends CommandOpMode {
     public Robot robot;
