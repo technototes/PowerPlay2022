@@ -23,36 +23,16 @@ public class TileMoveCommand implements Command {
             case Up:
                 // It's not clear if this will allow other subsystems to run.
                 // If it doesn't, we'll need to expose capabilities in the drivebase subsystem
-                robot.drivebaseSubsystem.followTrajectory(
-                    robot.drivebaseSubsystem
-                        .trajectoryBuilder(AutoConstants.Right.TELESTART.toPose())
-                        .lineTo(AutoConstants.Right.FORWARD_MOVE.toVec())
-                        .build()
-                );
+                robot.drivebaseSubsystem.requestTrajectoryMove(0, 24, 0);
                 break;
             case Down:
-                robot.drivebaseSubsystem.followTrajectory(
-                    robot.drivebaseSubsystem
-                        .trajectoryBuilder(AutoConstants.Right.TELESTART.toPose())
-                        .lineTo(AutoConstants.Right.BACKWARD_MOVE.toVec())
-                        .build()
-                );
+                robot.drivebaseSubsystem.requestTrajectoryMove(0, -24, 0);
                 break;
             case Left:
-                robot.drivebaseSubsystem.followTrajectory(
-                    robot.drivebaseSubsystem
-                        .trajectoryBuilder(AutoConstants.Right.TELESTART.toPose())
-                        .lineTo(AutoConstants.Right.LEFT_MOVE.toVec())
-                        .build()
-                );
+                robot.drivebaseSubsystem.requestTrajectoryMove(-24, 0, 0);
                 break;
             case Right:
-                robot.drivebaseSubsystem.followTrajectory(
-                    robot.drivebaseSubsystem
-                        .trajectoryBuilder(AutoConstants.Right.TELESTART.toPose())
-                        .lineTo(AutoConstants.Right.RIGHT_MOVE.toVec())
-                        .build()
-                );
+                robot.drivebaseSubsystem.requestTrajectoryMove(24, 0, 0);
                 break;
         }
     }
