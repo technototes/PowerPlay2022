@@ -14,7 +14,7 @@ public class TileMoveCommand implements Command {
     public TileMoveCommand(Robot r, TileMoving tm) {
         robot = r;
         tile = tm;
-        // addRequirements(r);
+
     }
 
     @Override
@@ -32,10 +32,28 @@ public class TileMoveCommand implements Command {
                 );
                 break;
             case Down:
+                robot.drivebaseSubsystem.followTrajectory(
+                        robot.drivebaseSubsystem
+                                .trajectoryBuilder(AutoConstants.Right.TELESTART.toPose())
+                                .lineTo(AutoConstants.Right.BACKWARD_MOVE.toVec())
+                                .build()
+                );
                 break;
             case Left:
+                robot.drivebaseSubsystem.followTrajectory(
+                        robot.drivebaseSubsystem
+                                .trajectoryBuilder(AutoConstants.Right.TELESTART.toPose())
+                                .lineTo(AutoConstants.Right.LEFT_MOVE.toVec())
+                                .build()
+                );
                 break;
             case Right:
+                robot.drivebaseSubsystem.followTrajectory(
+                        robot.drivebaseSubsystem
+                                .trajectoryBuilder(AutoConstants.Right.TELESTART.toPose())
+                                .lineTo(AutoConstants.Right.RIGHT_MOVE.toVec())
+                                .build()
+                );
                 break;
         }
     }

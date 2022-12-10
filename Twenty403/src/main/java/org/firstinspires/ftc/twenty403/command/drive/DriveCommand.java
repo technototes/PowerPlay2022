@@ -11,11 +11,19 @@ import java.util.function.DoubleSupplier;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 
 public class DriveCommand implements Command {
+    public enum DriveState{
+        Normal,
+        TrajectoryStart,
+        TrajectoryRun,
+    }
 
     static double STRAIGHTEN_DEAD_ZONE = 0.08;
     public DrivebaseSubsystem subsystem;
     public DoubleSupplier x, y, r;
     public BooleanSupplier straight;
+    public DriveState currentDriveState;
+
+
 
     public DriveCommand(
         DrivebaseSubsystem sub,
@@ -29,6 +37,7 @@ public class DriveCommand implements Command {
         y = stick1.getYSupplier();
         r = stick2.getXSupplier();
         straight = straighten;
+        currentDriveState = DriveState.Normal;
     }
 
     public DriveCommand(DrivebaseSubsystem sub, Stick stick1, Stick stick2) {
@@ -71,16 +80,30 @@ public class DriveCommand implements Command {
         // Check to see if we're supposed to *start* a trajectory sequence
         //   Yes: Start it
         //   No: resume manual control
-        double curHeading = -subsystem.getExternalHeading();
-        Vector2d input = new Vector2d(
-            -y.getAsDouble() * subsystem.speed,
-            -x.getAsDouble() * subsystem.speed
-        )
-            .rotated(curHeading);
-        subsystem.setWeightedDrivePower(
-            new Pose2d(input.getX(), input.getY(), getRotation(curHeading))
-        );
+        switch (currentDriveState) {
+
+            case Normal:
+            double curHeading = -subsystem.getExternalHeading();
+            Vector2d input = new Vector2d(
+                    -y.getAsDouble() * subsystem.speed,
+                    -x.getAsDouble() * subsystem.speed
+            )
+                    .rotated(curHeading);
+            subsystem.setWeightedDrivePower(
+                    new Pose2d(input.getX(), input.getY(), getRotation(curHeading))
+            );
+            break;
+            case TrajectoryStart:
+
+                break;
+            case TrajectoryRun:
+                if (!subsystem.isBusy()) {
+                    currentDriveState = DriveState.Normal;
+                }
+                break;
+        }
         subsystem.update();
+
     }
 
     @Override
