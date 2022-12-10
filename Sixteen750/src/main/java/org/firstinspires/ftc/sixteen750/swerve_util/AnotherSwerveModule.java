@@ -142,8 +142,9 @@ public class AnotherSwerveModule {
     }
 
     public static double MIN_MOTOR_TO_TURN = 0.05;
+    public boolean enableMotor = true;
     public void setTargetRotation(double target) {
-        if(Math.abs(lastMotorPower) < MIN_MOTOR_TO_TURN){
+        if(enableMotor && Math.abs(lastMotorPower) < MIN_MOTOR_TO_TURN){
             //add stuff like X-ing preAlign
             return;
         }

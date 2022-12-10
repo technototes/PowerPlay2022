@@ -89,6 +89,7 @@ public class AnotherSwerveDriveSubsystem extends SwerveDrive {
     private BNO055IMU imu;
 
     // For debugging
+    public boolean enableMotor = true;
     public Orientation imuAngularOrientation;
     public AngularVelocity imuAngularVelocity;
 
@@ -448,10 +449,16 @@ public class AnotherSwerveDriveSubsystem extends SwerveDrive {
 
     @Override
     public void setMotorPowers(double v, double v1, double v2, double v3) {
-        leftFrontModule.setMotorPower(v);
-        leftRearModule.setMotorPower(v1);
-        rightRearModule.setMotorPower(v2);
-        rightFrontModule.setMotorPower(v3);
+        leftFrontModule.enableMotor = this.enableMotor;
+        rightFrontModule.enableMotor = this.enableMotor;
+        leftRearModule.enableMotor = this.enableMotor;
+        rightRearModule.enableMotor = this.enableMotor;
+        if (enableMotor){
+            leftFrontModule.setMotorPower(v);
+            leftRearModule.setMotorPower(v1);
+            rightRearModule.setMotorPower(v2);
+            rightFrontModule.setMotorPower(v3);
+        }
     }
 
     @Override
