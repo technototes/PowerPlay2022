@@ -30,6 +30,7 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
 TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+/*
 package org.firstinspires.ftc.robotcontroller.external.samples;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
@@ -41,6 +42,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+*/
 
 /**
  * This file demonstrates the impact of setting the IMU orientation correctly or incorrectly. This
@@ -70,6 +72,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
  * The rotational velocities should follow the change in corresponding axes.
  */
 
+/*
 @TeleOp(name="Concept: IMU Orientation", group="Concept")
 @Disabled
 public class ConceptExploringIMUOrientation extends LinearOpMode {
@@ -183,3 +186,5 @@ public class ConceptExploringIMUOrientation extends LinearOpMode {
         }
     }
 }
+
+ */
