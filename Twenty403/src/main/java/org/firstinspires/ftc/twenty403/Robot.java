@@ -67,9 +67,14 @@ public class Robot implements Loggable {
         }
         if (RobotConstant.ODO_SENSORS_CONNECTED) {
             odoSubsystem =
-                    new OdoSubsystem(hardware.leftdis, hardware.rightdis, hardware.colorleft, hardware.colorcenter, hardware.colorright);
-        }
-        else {
+                new OdoSubsystem(
+                    hardware.leftdis,
+                    hardware.rightdis,
+                    hardware.colorleft,
+                    hardware.colorcenter,
+                    hardware.colorright
+                );
+        } else {
             odoSubsystem = new OdoSubsystem();
         }
         if (RobotConstant.CAMERA_CONNECTED) {
