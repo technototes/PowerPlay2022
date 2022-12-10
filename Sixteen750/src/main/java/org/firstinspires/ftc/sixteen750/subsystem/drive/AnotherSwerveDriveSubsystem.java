@@ -37,7 +37,6 @@ import org.firstinspires.ftc.sixteen750.swerve_util.LeftRearSwerveModule;
 import org.firstinspires.ftc.sixteen750.swerve_util.RightFrontSwerveModule;
 import org.firstinspires.ftc.sixteen750.swerve_util.RightRearSwerveModule;
 import org.firstinspires.ftc.sixteen750.swerve_util.LynxModuleUtil;
-import org.firstinspires.ftc.sixteen750.swerve_util.SwerveModule;
 import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequence;
 import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequenceRunner;
@@ -71,10 +70,10 @@ public class AnotherSwerveDriveSubsystem extends SwerveDrive {
     private final TrajectoryFollower follower;
 
 //    public SwerveModule leftFrontModule, leftRearModule, rightRearModule, rightFrontModule;
-    LeftFrontSwerveModule leftFrontModule;
-    LeftRearSwerveModule leftRearModule;
-    RightFrontSwerveModule rightFrontModule;
-    RightRearSwerveModule rightRearModule;
+    AnotherSwerveModule leftFrontModule;
+    AnotherSwerveModule leftRearModule;
+    AnotherSwerveModule rightFrontModule;
+    AnotherSwerveModule rightRearModule;
     public List<AnotherSwerveModule> modules;
 
     private final VoltageSensor batteryVoltageSensor;
@@ -183,10 +182,10 @@ public class AnotherSwerveDriveSubsystem extends SwerveDrive {
     public AnotherSwerveDriveSubsystem(
             HardwareMap hardwareMap,
             BNO055IMU imu,
-            LeftFrontSwerveModule leftFrontSwerveModule,
-            LeftRearSwerveModule leftRearSwerveModule,
-            RightFrontSwerveModule rightFrontSwerveModule,
-            RightRearSwerveModule rightRearSwerveModule
+            AnotherSwerveModule leftFrontSwerveModule,
+            AnotherSwerveModule leftRearSwerveModule,
+            AnotherSwerveModule rightFrontSwerveModule,
+            AnotherSwerveModule rightRearSwerveModule
     ) {
         // The HardwareMap still needed but now can have arbitrary naming to these hardware devices
         super(SwerveDriveConstant.kV, SwerveDriveConstant.kA, SwerveDriveConstant.kStatic, SwerveDriveConstant.TRACK_WIDTH);
@@ -267,15 +266,15 @@ public class AnotherSwerveDriveSubsystem extends SwerveDrive {
         PhotonCore.CONTROL_HUB.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
         PhotonCore.experimental.setMaximumParallelCommands(MAX_PARALLEL_COMMANDS);
     }
-
+    public static PIDCoefficients SERVO_ROTATION_PID = new PIDCoefficients(0.6, 0, 0);
     public AnotherSwerveDriveSubsystem(HardwareMap hardwareMap){
         this(
                 hardwareMap,
                 hardwareMap.get(BNO055IMU.class, "imu"),
-                new LeftFrontSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder"),
-                new LeftRearSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder"),
-                new RightFrontSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder"),
-                new RightRearSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder")
+                new LeftFrontSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", SERVO_ROTATION_PID),
+                new LeftRearSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", SERVO_ROTATION_PID),
+                new RightFrontSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", SERVO_ROTATION_PID),
+                new RightRearSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", SERVO_ROTATION_PID)
         );
     }
 
@@ -361,7 +360,13 @@ public class AnotherSwerveDriveSubsystem extends SwerveDrive {
     }
 
     public void updateModules(){
-        for (AnotherSwerveModule m : modules) m.update();
+        StringBuilder logLine = new StringBuilder();
+        logLine.append("Modules: ");
+        for (AnotherSwerveModule m : modules) {
+            m.update();
+            logLine.append(m.getServoPower() + ", ");
+        }
+        System.out.println(logLine.toString());
         PhotonCore.CONTROL_HUB.clearBulkCache();
     }
 

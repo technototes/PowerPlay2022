@@ -20,13 +20,13 @@ import org.firstinspires.ftc.sixteen750.subsystem.drive.SwerveDriveSubsystem.Swe
 
 
 public class AnotherSwerveModule {
-    public static PIDCoefficients ROTATION_PID = new PIDCoefficients(0.6, 0, 0.03);
+//    public static PIDCoefficients ROTATION_PID = new PIDCoefficients(0.6, 0, 0.03);
 
-    public static double K_STATIC = 0.2, K_MOTOR = 0;
+    public static double K_STATIC = 0.0, K_MOTOR = 0;
 
     public static CRServoProfiler.Constraints SERVO_CONSTRAINTS = new CRServoProfiler.Constraints(1, 1000, 2);
 
-    public static double MAX_SERVO = 1, MAX_MOTOR = 1;
+    public static double MAX_SERVO_SPEED = 1, MAX_MOTOR_SPEED = 1;
 
     //EXPERIMENTAL FEATURES
     public static boolean WAIT_FOR_TARGET = false;
@@ -48,10 +48,10 @@ public class AnotherSwerveModule {
 
     private boolean wheelFlipped = false;
 
-    public AnotherSwerveModule(DcMotorEx m, CRServo s, AbsoluteAnalogEncoder e, PIDCoefficients rotationPID, CRServoProfiler.Constraints servoConstraints) {
+    public AnotherSwerveModule(DcMotorEx m, CRServo s, AbsoluteAnalogEncoder e, PIDCoefficients rotationPID) {
         motor = m;
         MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
-        motorConfigurationType.setAchieveableMaxRPMFraction(MAX_MOTOR);
+        motorConfigurationType.setAchieveableMaxRPMFraction(MAX_MOTOR_SPEED);
         motor.setMotorType(motorConfigurationType);
 
         servo = s;
@@ -61,19 +61,19 @@ public class AnotherSwerveModule {
         encoder = e;
         e.setInverted(Encoder.Direction.REVERSE);
         rotationController = new PIDFController(rotationPID, 0, 0, K_STATIC, (p, v) -> lastMotorPower * K_MOTOR);
-        rotationProfiler = new CRServoProfiler(servo, servoConstraints);
+        rotationProfiler = new CRServoProfiler(servo, SERVO_CONSTRAINTS);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        System.out.println("Rotation PID: " + rotationPID);
     }
 
-    public AnotherSwerveModule(DcMotorEx m, CRServo s, AbsoluteAnalogEncoder e){
-        this(m, s, e, ROTATION_PID, SERVO_CONSTRAINTS);
-    }
 
-    public AnotherSwerveModule(HardwareMap hardwareMap, String motorName, String servoName, String encoderName) {
+    public AnotherSwerveModule(HardwareMap hardwareMap, String motorName, String servoName, String encoderName, PIDCoefficients rotationPID) {
         this(
                 hardwareMap.get(DcMotorEx.class, motorName),
                 hardwareMap.get(CRServo.class, servoName),
-                new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, encoderName))
+                new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, encoderName)),
+                rotationPID
         );
     }
 
@@ -82,9 +82,10 @@ public class AnotherSwerveModule {
         double target = getTargetRotation(), current = getModuleRotation();
         if (current - target > Math.PI) current -= (2 * Math.PI);
         else if (target - current > Math.PI) current += (2 * Math.PI);
-        double power = Range.clip(rotationController.update(current), -MAX_SERVO, MAX_SERVO);
+        double power = Range.clip(rotationController.update(current), -MAX_SERVO_SPEED, MAX_SERVO_SPEED);
         if(Double.isNaN(power)) power = 0;
         servo.setPower(Math.abs(rotationController.getLastError()) > ALLOWED_BB_ERROR ? power : 0);
+        //System.out.println("Target: " + Math.toDegrees(target) + " Current: " + Math.toDegrees(current) + " Power: " + power + ", " + rotationController.getTargetPosition() +", " + rotationController.getTargetVelocity() + ", " + rotationController.getTargetAcceleration());
     }
 
     public double getTargetRotation() {
