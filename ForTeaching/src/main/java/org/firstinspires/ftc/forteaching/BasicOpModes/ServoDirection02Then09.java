@@ -1,13 +1,13 @@
 package org.firstinspires.ftc.forteaching.BasicOpModes;
 
-import org.firstinspires.ftc.forteaching.BasicServoCode;
-
 import com.qualcomm.robotcore.eventloop.opmode.*;
 import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.forteaching.BasicServoCode;
 
 @Disabled
 @TeleOp(name = "ServoDirection02Then09", group = "demo")
 public class ServoDirection02Then09 extends OpMode {
+
     private BasicServoCode servoCode;
     private Servo servo;
 

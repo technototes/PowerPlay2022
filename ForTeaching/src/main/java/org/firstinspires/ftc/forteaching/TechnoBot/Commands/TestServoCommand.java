@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.forteaching.TechnoBot.Commands;
 
+import com.technototes.library.command.Command;
 import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.MovementTestingSubsystem;
 
-import com.technototes.library.command.Command;
-
 public class TestServoCommand implements Command {
+
     MovementTestingSubsystem movement;
     Operations which;
 

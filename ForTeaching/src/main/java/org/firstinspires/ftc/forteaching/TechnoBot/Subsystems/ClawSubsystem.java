@@ -1,16 +1,15 @@
 package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
 import com.qualcomm.robotcore.hardware.DistanceSensor;
-
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 // @Config - Don't wan this on the dashboard
 public class ClawSubsystem implements Subsystem, Loggable {
+
     public static double OPEN_SERVO_POSITION = .8;
     public static double CLOSE_SERVO_POSITION = .5;
     public static double CARRY_SERVO_POSITION = .4;

@@ -1,10 +1,6 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
-
 import com.acmerobotics.dashboard.config.Config;
-
 import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.logger.Log;
@@ -12,9 +8,12 @@ import com.technototes.library.logger.LogConfig;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.library.util.Alliance;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 
 @Config
 public class ClawSubsystem implements Subsystem, Loggable {
+
     // Correct numbers, tested 11/27/22
     public static double OPEN_SERVO_POSITION = .33;
     public static double CLOSE_SERVO_POSITION = .43;
@@ -97,7 +96,10 @@ public class ClawSubsystem implements Subsystem, Loggable {
         // This is going to say the claw is closed, just because we squeeze the jaws together
         // manually, so we need to check to see if the servo has had it's position explicitly set
         // instead of just checking the servo's position...
-        return servoSet && Math.abs(curPos - CLOSE_SERVO_POSITION) < Math.abs(curPos - OPEN_SERVO_POSITION);
+        return (
+            servoSet &&
+            Math.abs(curPos - CLOSE_SERVO_POSITION) < Math.abs(curPos - OPEN_SERVO_POSITION)
+        );
     }
 
     public void toggleAutoClose() {
@@ -107,7 +109,9 @@ public class ClawSubsystem implements Subsystem, Loggable {
     @Override
     public void periodic() {
         if (isHardware && autoClose) {
-            if (liftSubsystem.canAutoClose() && !isClawClosed() && isAllianceCone() && isConeClose()) {
+            if (
+                liftSubsystem.canAutoClose() && !isClawClosed() && isAllianceCone() && isConeClose()
+            ) {
                 close();
             }
         }

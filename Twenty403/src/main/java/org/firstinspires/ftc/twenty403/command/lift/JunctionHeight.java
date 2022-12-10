@@ -5,5 +5,5 @@ public enum JunctionHeight {
     Ground,
     Low,
     Medium,
-    High
+    High,
 }

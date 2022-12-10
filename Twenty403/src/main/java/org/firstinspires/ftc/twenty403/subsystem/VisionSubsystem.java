@@ -1,19 +1,18 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
-import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
-
-import org.openftc.easyopencv.OpenCvCameraRotation;
-
 import com.acmerobotics.dashboard.config.Config;
-
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.library.util.Alliance;
 import com.technototes.vision.hardware.Webcam;
+import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 
 public class VisionSubsystem implements Subsystem, Loggable {
+
     @Config
     public static class VisionSubsystemConstants {
+
         // This is a super-low res image. I don't think we need higher resolution...
         // Note: This may be too small for the older camera.
         // I think it only goes down to 320 x 240
@@ -35,7 +34,10 @@ public class VisionSubsystem implements Subsystem, Loggable {
 
     public void startStreaming() {
         camera.startStreaming(
-                VisionSubsystemConstants.WIDTH, VisionSubsystemConstants.HEIGHT, VisionSubsystemConstants.ROTATION);
+            VisionSubsystemConstants.WIDTH,
+            VisionSubsystemConstants.HEIGHT,
+            VisionSubsystemConstants.ROTATION
+        );
     }
 
     public void startVisionPipeline() {

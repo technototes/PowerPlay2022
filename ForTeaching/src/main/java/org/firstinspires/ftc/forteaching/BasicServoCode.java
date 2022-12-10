@@ -3,6 +3,7 @@ package org.firstinspires.ftc.forteaching;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class BasicServoCode {
+
     private final Servo servo; // Since there's only one Servo so just name it as is
 
     public BasicServoCode(Servo servo) {

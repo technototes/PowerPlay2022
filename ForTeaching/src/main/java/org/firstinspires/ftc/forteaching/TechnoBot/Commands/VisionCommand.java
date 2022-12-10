@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.forteaching.TechnoBot.Commands;
 
-import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.VisionSubsystem;
-
 import com.technototes.library.command.Command;
 import com.technototes.library.util.Alliance;
+import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.VisionSubsystem;
 
 public class VisionCommand implements Command {
+
     public VisionSubsystem subsystem;
 
     public VisionCommand(VisionSubsystem s, Alliance alliance) {

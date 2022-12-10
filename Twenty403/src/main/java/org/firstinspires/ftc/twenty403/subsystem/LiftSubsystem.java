@@ -1,22 +1,20 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
-import java.util.function.Supplier;
-
-import org.firstinspires.ftc.twenty403.Robot;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.Range;
-
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
+import java.util.function.Supplier;
+import org.firstinspires.ftc.twenty403.Robot;
 
 @Config
 public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
+
     public static double TICKS_INCH = 89;
 
     public static double INTAKE_POSITION_LEFT = 0;
@@ -75,6 +73,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
         setNewZero();
     }
+
     // For the left side, positive is *down*
     // For the right side, positive is *up*
     public LiftSubsystem(EncodedMotor<DcMotorEx> lm, EncodedMotor<DcMotorEx> rm, double volts) {
@@ -130,7 +129,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         //        if (leftError > DEAD_ZONE || rightError > DEAD_ZONE) {
         //        }
         setMotorPower(lclippedSpeed, rclippedSpeed);
-        setLiftPosition_OVERRIDE(leftPidController.getTargetPosition(), rightPidController.getTargetPosition());
+        setLiftPosition_OVERRIDE(
+            leftPidController.getTargetPosition(),
+            rightPidController.getTargetPosition()
+        );
     }
 
     /* Stuff for Logging */

@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.twenty403.command;
 
+import com.technototes.library.command.Command;
 import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
 
-import com.technototes.library.command.Command;
-
 public class VisionCommand implements Command {
+
     public VisionSubsystem subsystem;
 
     public VisionCommand(VisionSubsystem s) {

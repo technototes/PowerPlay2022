@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
 
+import com.qualcomm.robotcore.util.Range;
+import com.technototes.library.logger.Log;
+import com.technototes.library.logger.LogConfig;
+import com.technototes.library.logger.Loggable;
 import java.util.function.Supplier;
-
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
@@ -9,16 +12,11 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-import com.qualcomm.robotcore.util.Range;
-
-import com.technototes.library.logger.Log;
-import com.technototes.library.logger.LogConfig;
-import com.technototes.library.logger.Loggable;
-
 public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>, Loggable {
 
     // @Config Disable the dashboard
     public static class VisionConstants {
+
         public enum ParkingPosition {
             LEFT,
             CENTER,
@@ -70,8 +68,16 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
     public Mat img = null;
 
     private int countColor(double hue) {
-        Scalar edge1 = new Scalar(hue - VisionConstants.RANGE, VisionConstants.lowS, VisionConstants.lowV);
-        Scalar edge2 = new Scalar(hue + VisionConstants.RANGE, VisionConstants.highS, VisionConstants.highV);
+        Scalar edge1 = new Scalar(
+            hue - VisionConstants.RANGE,
+            VisionConstants.lowS,
+            VisionConstants.lowV
+        );
+        Scalar edge2 = new Scalar(
+            hue + VisionConstants.RANGE,
+            VisionConstants.highS,
+            VisionConstants.highV
+        );
         // Check to see which pixels are between edge1 & edge2, output into a boolean matrix Cr
         Core.inRange(customColorSpace, edge1, edge2, Cr);
         // TODO: This should probably do something faster
@@ -83,7 +89,11 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                     count++;
                     // Draw a dot on the image at this point - input was put into img
                     // The color choice makes things stripey
-                    img.put(j + VisionConstants.Y, i + VisionConstants.X, ((j + i) & 3) != 0 ? edge1.val : edge2.val);
+                    img.put(
+                        j + VisionConstants.Y,
+                        i + VisionConstants.X,
+                        ((j + i) & 3) != 0 ? edge1.val : edge2.val
+                    );
                 }
             }
         }

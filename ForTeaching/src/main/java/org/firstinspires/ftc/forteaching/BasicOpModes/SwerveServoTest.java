@@ -1,15 +1,12 @@
 package org.firstinspires.ftc.forteaching.BasicOpModes;
 
 import android.util.Log;
-
-import java.util.List;
-
-import org.firstinspires.ftc.forteaching.SwerveModule;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import java.util.List;
+import org.firstinspires.ftc.forteaching.SwerveModule;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /*
 Motors: GoBilda 5202/3/4:
@@ -31,6 +28,7 @@ Analog Inputs:
 @Disabled
 @TeleOp(name = "Servo Thing", group = "demo")
 public class SwerveServoTest extends LinearOpMode {
+
     SwerveModule leftFront;
     SwerveModule rightFront;
     SwerveModule leftRear;
@@ -75,15 +73,16 @@ public class SwerveServoTest extends LinearOpMode {
                 rightFront.setRotatePower(curPower);
                 rightRear.setRotatePower(curPower);
                 String data = String.format(
-                        "LF: %f(%f) RF: %f(%f) LR: %f(%f) RR: %f(%f)",
-                        leftFront.getAngle(),
-                        curPower,
-                        rightFront.getAngle(),
-                        curPower,
-                        leftRear.getAngle(),
-                        curPower,
-                        rightRear.getAngle(),
-                        curPower);
+                    "LF: %f(%f) RF: %f(%f) LR: %f(%f) RR: %f(%f)",
+                    leftFront.getAngle(),
+                    curPower,
+                    rightFront.getAngle(),
+                    curPower,
+                    leftRear.getAngle(),
+                    curPower,
+                    rightRear.getAngle(),
+                    curPower
+                );
                 telemetry.addLine(data);
                 Log.d("info", data);
                 telemetry.addData("Loop", et.toString());

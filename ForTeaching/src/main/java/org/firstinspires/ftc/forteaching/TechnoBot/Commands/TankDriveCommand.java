@@ -1,21 +1,25 @@
 package org.firstinspires.ftc.forteaching.TechnoBot.Commands;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
-
-import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.TankDriveSubsystem;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-
 import com.technototes.library.command.Command;
 import com.technototes.library.control.CommandAxis;
 import com.technototes.library.control.CommandButton;
+import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
+import org.firstinspires.ftc.forteaching.TechnoBot.Subsystems.TankDriveSubsystem;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class TankDriveCommand implements Command {
+
     TankDriveSubsystem subsys;
     DoubleSupplier left, right;
     BooleanSupplier shouldStraighten;
 
-    public TankDriveCommand(TankDriveSubsystem dbSubsystem, CommandAxis l, CommandAxis r, CommandButton straighten) {
+    public TankDriveCommand(
+        TankDriveSubsystem dbSubsystem,
+        CommandAxis l,
+        CommandAxis r,
+        CommandButton straighten
+    ) {
         subsys = dbSubsystem;
         addRequirements(subsys);
         left = l;

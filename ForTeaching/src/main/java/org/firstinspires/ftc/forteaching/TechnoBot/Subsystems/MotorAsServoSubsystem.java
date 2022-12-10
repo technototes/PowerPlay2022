@@ -1,20 +1,20 @@
 package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
 
-import java.util.function.Supplier;
-
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.Range;
-
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
+import java.util.function.Supplier;
 
 public class MotorAsServoSubsystem implements Subsystem, Supplier<Double>, Loggable {
+
     // @Config - Removed so it doesn't show up on the dashboard
     public static class MotorAsServoConstants {
+
         public static double LOWER_LIMIT = 0.0;
         public static double UPPER_LIMIT = 2250.0;
         public static double DEAD_ZONE = 10.0;
@@ -33,7 +33,8 @@ public class MotorAsServoSubsystem implements Subsystem, Supplier<Double>, Logga
 
     public void setPosition(double pos) {
         pidController.setTargetPosition(
-                Range.clip(pos, MotorAsServoConstants.LOWER_LIMIT, MotorAsServoConstants.UPPER_LIMIT));
+            Range.clip(pos, MotorAsServoConstants.LOWER_LIMIT, MotorAsServoConstants.UPPER_LIMIT)
+        );
     }
 
     public void setTop() {
@@ -76,8 +77,11 @@ public class MotorAsServoSubsystem implements Subsystem, Supplier<Double>, Logga
     @Override
     public void periodic() {
         double targetSpeed = pidController.update(motor.get());
-        double clippedSpeed =
-                Range.clip(targetSpeed, MotorAsServoConstants.MIN_MOTOR_SPEED, MotorAsServoConstants.MAX_MOTOR_SPEED);
+        double clippedSpeed = Range.clip(
+            targetSpeed,
+            MotorAsServoConstants.MIN_MOTOR_SPEED,
+            MotorAsServoConstants.MAX_MOTOR_SPEED
+        );
         motor.setSpeed(clippedSpeed);
         // For logging purposes, I'm also doing this, to ensure that both values are updated
         setEncMotor(get());

@@ -7,7 +7,6 @@ import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.motor.Motor;
 import com.technototes.library.hardware.sensor.IMU;
@@ -16,9 +15,11 @@ import com.technototes.library.hardware.servo.Servo;
 import com.technototes.vision.hardware.Webcam;
 
 public class Hardware {
+
     // Put all the names of the devices in here:
     // @Config Disable for the dashboard
     public static class DeviceNames {
+
         public static String FLEFT_MOTOR = "flMotor";
         public static String FRIGHT_MOTOR = "frMotor";
         public static String RLEFT_MOTOR = "rlMotor";

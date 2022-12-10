@@ -1,21 +1,21 @@
 package org.firstinspires.ftc.forteaching.TechnoBot.Subsystems;
 
-import java.util.function.Supplier;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
-
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.sensor.IMU;
 import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.path.subsystem.MecanumConstants;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
+import java.util.function.Supplier;
 
-public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Supplier<Pose2d>, Loggable {
+public class DrivebaseSubsystem
+    extends MecanumDrivebaseSubsystem
+    implements Supplier<Pose2d>, Loggable {
 
     // Notes from Kevin:
     // The 5203 motors when direct driven
@@ -23,6 +23,7 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
 
     @Config
     public abstract static class DriveConstants implements MecanumConstants {
+
         public static double SLOW_MOTOR_SPEED = 0.6;
         public static double FAST_MOTOR_SPEED = 1.0;
 
@@ -36,8 +37,12 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
         public static final boolean RUN_USING_ENCODER = false;
 
         @MotorVeloPID
-        public static PIDFCoefficients MOTOR_VELO_PID =
-                new PIDFCoefficients(20, 0, 3, MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
+        public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(
+            20,
+            0,
+            3,
+            MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV)
+        );
 
         @WheelRadius
         public static double WHEEL_RADIUS = 1.88976; // in
@@ -52,7 +57,8 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
         public static double WHEEL_BASE = 8.5; // in
 
         @KV
-        public static double kV = 1.0 / MecanumConstants.rpmToVelocity(MAX_RPM, WHEEL_RADIUS, GEAR_RATIO);
+        public static double kV =
+            1.0 / MecanumConstants.rpmToVelocity(MAX_RPM, WHEEL_RADIUS, GEAR_RATIO);
 
         @KA
         public static double kA = 0;
@@ -113,11 +119,12 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
     public EncodedMotor<DcMotorEx> rr2;
 
     public DrivebaseSubsystem(
-            EncodedMotor<DcMotorEx> fl,
-            EncodedMotor<DcMotorEx> fr,
-            EncodedMotor<DcMotorEx> rl,
-            EncodedMotor<DcMotorEx> rr,
-            IMU i) {
+        EncodedMotor<DcMotorEx> fl,
+        EncodedMotor<DcMotorEx> fr,
+        EncodedMotor<DcMotorEx> rl,
+        EncodedMotor<DcMotorEx> rr,
+        IMU i
+    ) {
         super(fl, fr, rl, rr, i, () -> DriveConstants.class);
         fl2 = fl;
         fr2 = fr;
@@ -145,7 +152,10 @@ public class DrivebaseSubsystem extends MecanumDrivebaseSubsystem implements Sup
             updatePoseEstimate();
             Pose2d pose = getPoseEstimate();
             Pose2d poseVelocity = getPoseVelocity();
-            poseDisplay = pose.toString() + " : " + (poseVelocity != null ? poseVelocity.toString() : "<null>");
+            poseDisplay =
+                pose.toString() +
+                " : " +
+                (poseVelocity != null ? poseVelocity.toString() : "<null>");
             System.out.println("Pose: " + poseDisplay);
         }
     }
