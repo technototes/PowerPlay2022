@@ -3,6 +3,7 @@ package org.firstinspires.ftc.twenty403;
 import static org.firstinspires.ftc.twenty403.Robot.RobotConstant;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.outoftheboxrobotics.photoncore.Neutrino.Rev2MSensor.Rev2mDistanceSensorEx;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
@@ -12,9 +13,12 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.hardware.sensor.IMU;
+import com.technototes.library.hardware.sensor.Rev2MDistanceSensor;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.vision.hardware.Webcam;
+
 import java.util.List;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.VoltageUnit;
 
@@ -57,10 +61,10 @@ public class Hardware {
     public Servo claw;
     public ColorDistanceSensor clawDistance;
 
-    public Rev2mDistanceSensor leftdis;
-    public Rev2mDistanceSensor rightdis;
-    public RevColorSensorV3 colorleft;
-    public RevColorSensorV3 colorright;
+    public Rev2MDistanceSensor leftdis;
+    public Rev2MDistanceSensor rightdis;
+    public ColorDistanceSensor colorleft;
+    public ColorDistanceSensor colorright;
     public ColorDistanceSensor colorcenter;
 
     public Webcam camera;
@@ -87,6 +91,15 @@ public class Hardware {
         if (RobotConstant.CAMERA_CONNECTED) {
             camera = new Webcam(HardwareConstant.CAMERA);
         }
+        if (RobotConstant.ODO_SENSORS_CONNECTED) {
+            leftdis = new Rev2MDistanceSensor(HardwareConstant.DISTANCE_SENSOR_LEFT);
+            rightdis = new Rev2MDistanceSensor(HardwareConstant.DISTANCE_SENSOR_RIGHT);
+            colorleft = new ColorDistanceSensor(HardwareConstant.COLOR_SENSOR_LEFT);
+            colorright = new ColorDistanceSensor(HardwareConstant.COLOR_SENSOR_RIGHT);
+            colorcenter = new ColorDistanceSensor(HardwareConstant.COLOR_SENSOR_CENTER);
+
+        }
+
     }
 
     public double voltage() {

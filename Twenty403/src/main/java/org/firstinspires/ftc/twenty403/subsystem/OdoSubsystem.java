@@ -3,6 +3,7 @@ package org.firstinspires.ftc.twenty403.subsystem;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.technototes.library.hardware.sensor.ColorDistanceSensor;
+import com.technototes.library.hardware.sensor.Rev2MDistanceSensor;
 import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
@@ -22,12 +23,12 @@ public class OdoSubsystem implements Subsystem, Loggable {
         Weird,
     }
 
-    Rev2mDistanceSensor dLeft;
-    Rev2mDistanceSensor dRight;
+    Rev2MDistanceSensor dLeft;
+    Rev2MDistanceSensor dRight;
 
-    RevColorSensorV3 cLeft;
+    ColorDistanceSensor cLeft;
     ColorDistanceSensor cMiddle;
-    RevColorSensorV3 cRight;
+    ColorDistanceSensor cRight;
 
     double leftDistance;
     double rightDistance;
@@ -36,11 +37,11 @@ public class OdoSubsystem implements Subsystem, Loggable {
     int rightColor;
 
     public OdoSubsystem(
-            Rev2mDistanceSensor dl,
-            Rev2mDistanceSensor dr,
-            RevColorSensorV3 cl,
+            Rev2MDistanceSensor dl,
+            Rev2MDistanceSensor dr,
+            ColorDistanceSensor cl,
             ColorDistanceSensor cm,
-            RevColorSensorV3 cr
+            ColorDistanceSensor cr
     ) {
         dLeft = dl;
         dRight = dr;
