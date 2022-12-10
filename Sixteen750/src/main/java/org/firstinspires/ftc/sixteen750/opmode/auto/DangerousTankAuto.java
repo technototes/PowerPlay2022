@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.sixteen750.opmode.auto;
 
-import org.firstinspires.ftc.sixteen750.subsystem.TankDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.drive.TankDriveSubsystem;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;

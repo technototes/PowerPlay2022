@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.sixteen750.subsystem;
+package org.firstinspires.ftc.sixteen750.subsystem.drive;
 
 import com.technototes.library.subsystem.Subsystem;
 

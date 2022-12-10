@@ -1,7 +1,7 @@
-package org.firstinspires.ftc.sixteen750.subsystem;
+package org.firstinspires.ftc.sixteen750.subsystem.drive;
 
-import static org.firstinspires.ftc.sixteen750.subsystem.TankDriveSubsystem.TankDriveConstants.MAX_ANG_ACCEL;
-import static org.firstinspires.ftc.sixteen750.subsystem.TankDriveSubsystem.TankDriveConstants.MOTOR_VELO_PID;
+import static org.firstinspires.ftc.sixteen750.subsystem.drive.TankDriveSubsystem.TankDriveConstants.MAX_ANG_ACCEL;
+import static org.firstinspires.ftc.sixteen750.subsystem.drive.TankDriveSubsystem.TankDriveConstants.MOTOR_VELO_PID;
 
 import androidx.annotation.NonNull;
 

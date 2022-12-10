@@ -7,7 +7,7 @@ import com.technototes.library.hardware2.HardwareBuilder;
 
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
-import org.firstinspires.ftc.sixteen750.subsystem.SimpleMecanumDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.drive.SimpleMecanumDriveSubsystem;
 
 @Config
 @Autonomous(name = "JustParkMiddle")

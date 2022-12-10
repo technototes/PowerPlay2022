@@ -16,6 +16,7 @@ import com.technototes.library.hardware2.HardwareBuilder;
 import com.technototes.library.util.Alliance;
 
 
+@Disabled
 @Config
 @TeleOp()
 @SuppressWarnings("unused")

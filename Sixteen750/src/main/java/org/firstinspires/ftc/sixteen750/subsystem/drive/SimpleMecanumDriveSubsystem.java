@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.sixteen750.subsystem;
+package org.firstinspires.ftc.sixteen750.subsystem.drive;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;

@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.sixteen750.swerve_util;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -17,7 +16,7 @@ import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.sixteen750.subsystem.SwerveDriveSubsystem.SwerveDriveConstant;
+import org.firstinspires.ftc.sixteen750.subsystem.drive.SwerveDriveSubsystem.SwerveDriveConstant;
 
 
 public class AnotherSwerveModule {

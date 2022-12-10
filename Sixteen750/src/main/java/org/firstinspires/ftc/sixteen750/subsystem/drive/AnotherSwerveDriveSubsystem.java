@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.sixteen750.subsystem;
+package org.firstinspires.ftc.sixteen750.subsystem.drive;
 
 import androidx.annotation.GuardedBy;
 import androidx.annotation.NonNull;
@@ -32,13 +32,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.sixteen750.swerve_util.AnotherBetterSwerveLocalizer;
 import org.firstinspires.ftc.sixteen750.swerve_util.AnotherSwerveModule;
-import org.firstinspires.ftc.sixteen750.swerve_util.BetterSwerveLocalizer;
 import org.firstinspires.ftc.sixteen750.swerve_util.LeftFrontSwerveModule;
 import org.firstinspires.ftc.sixteen750.swerve_util.LeftRearSwerveModule;
 import org.firstinspires.ftc.sixteen750.swerve_util.RightFrontSwerveModule;
 import org.firstinspires.ftc.sixteen750.swerve_util.RightRearSwerveModule;
-import org.firstinspires.ftc.sixteen750.swerve_util.SwerveModule;
 import org.firstinspires.ftc.sixteen750.swerve_util.LynxModuleUtil;
+import org.firstinspires.ftc.sixteen750.swerve_util.SwerveModule;
 import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequence;
 import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequenceRunner;
@@ -268,6 +267,18 @@ public class AnotherSwerveDriveSubsystem extends SwerveDrive {
         PhotonCore.CONTROL_HUB.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
         PhotonCore.experimental.setMaximumParallelCommands(MAX_PARALLEL_COMMANDS);
     }
+
+    public AnotherSwerveDriveSubsystem(HardwareMap hardwareMap){
+        this(
+                hardwareMap,
+                hardwareMap.get(BNO055IMU.class, "imu"),
+                new LeftFrontSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder"),
+                new LeftRearSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder"),
+                new RightFrontSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder"),
+                new RightRearSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder")
+        );
+    }
+
 
     public void startIMUThread(LinearOpMode opMode) {
         imuThread = new Thread(() -> {

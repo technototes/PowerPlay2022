@@ -9,7 +9,7 @@ import com.technototes.library.util.Alliance;
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
 import org.firstinspires.ftc.sixteen750.command.autonomous.StartingPosition;
-import org.firstinspires.ftc.sixteen750.subsystem.SimpleMecanumDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.drive.SimpleMecanumDriveSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.VisionSubsystem;
 
 @Config

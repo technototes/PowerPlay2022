@@ -4,8 +4,8 @@ import org.firstinspires.ftc.sixteen750.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
-import org.firstinspires.ftc.sixteen750.subsystem.MecanumDriveSubsystem;
-import org.firstinspires.ftc.sixteen750.subsystem.SwerveDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.drive.MecanumDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.drive.SwerveDriveSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.VisionSubsystem;
 
 import com.acmerobotics.dashboard.config.Config;
