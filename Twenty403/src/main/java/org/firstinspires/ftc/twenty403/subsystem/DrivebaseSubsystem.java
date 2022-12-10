@@ -2,6 +2,7 @@ package org.firstinspires.ftc.twenty403.subsystem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -14,26 +15,59 @@ import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.path.subsystem.MecanumConstants;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
+
+import org.opencv.core.Mat;
+
 import java.util.function.Supplier;
 
 public class DrivebaseSubsystem
-    extends MecanumDrivebaseSubsystem
-    implements Supplier<Pose2d>, Loggable {
+        extends MecanumDrivebaseSubsystem
+        implements Supplier<Pose2d>, Loggable {
 
-    public class OverriderLocalizer implements Localizer {
+    public class OverriderLocalizer implements Localizer, Loggable {
 
         Localizer orig;
+        OdoSubsystem odometry;
 
-        public OverriderLocalizer(Localizer original) {
+        public OverriderLocalizer(Localizer original, OdoSubsystem odo) {
             orig = original;
+            odometry = odo;
+        }
+
+        @Log
+        public String useful = "na";
+
+        private boolean odometryIsUseful(Pose2d position) {
+            if (Math.abs(position.getX()) < 45) {
+                useful = "x out of range";
+                return false;
+            }
+            if (position.getY() > -10 || position.getY() < -30) {
+                useful = "y out of range";
+                return false;
+            }
+            double heading = position.getHeading();
+            if (Math.abs(heading) > 20 && Math.abs(heading - 180) > 20) {
+                useful = "angle out of range";
+                return false;
+            }
+            useful = "useful";
+            return true;
         }
 
         @NonNull
         @Override
         public Pose2d getPoseEstimate() {
             // TODO: If the sensors are in accurate range, use them instead of orig for the pose
-            return orig.getPoseEstimate();
+            Pose2d curEst = orig.getPoseEstimate();
+            if (odometryIsUseful(curEst)) {
+                // Check to see if we have better ODO values
+                return curEst;
+            } else {
+                return curEst;
+            }
         }
+
 
         @Override
         public void setPoseEstimate(@NonNull Pose2d pose2d) {
@@ -73,10 +107,10 @@ public class DrivebaseSubsystem
 
         @MotorVeloPID
         public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(
-            20,
-            0,
-            3,
-            MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV)
+                20,
+                0,
+                3,
+                MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV)
         );
 
         @WheelRadius
@@ -93,7 +127,7 @@ public class DrivebaseSubsystem
 
         @KV
         public static double kV =
-            1.0 / MecanumConstants.rpmToVelocity(MAX_RPM, WHEEL_RADIUS, GEAR_RATIO);
+                1.0 / MecanumConstants.rpmToVelocity(MAX_RPM, WHEEL_RADIUS, GEAR_RATIO);
 
         @KA
         public static double kA = 0;
@@ -162,12 +196,15 @@ public class DrivebaseSubsystem
     // @Log.Number(name = "RR")
     public EncodedMotor<DcMotorEx> rr2;
 
+    public OdoSubsystem odometry;
+
     public DrivebaseSubsystem(
-        EncodedMotor<DcMotorEx> fl,
-        EncodedMotor<DcMotorEx> fr,
-        EncodedMotor<DcMotorEx> rl,
-        EncodedMotor<DcMotorEx> rr,
-        IMU i
+            EncodedMotor<DcMotorEx> fl,
+            EncodedMotor<DcMotorEx> fr,
+            EncodedMotor<DcMotorEx> rl,
+            EncodedMotor<DcMotorEx> rr,
+            IMU i,
+            OdoSubsystem odo
     ) {
         super(fl, fr, rl, rr, i, () -> DriveConstants.class);
         fl2 = fl;
@@ -175,6 +212,11 @@ public class DrivebaseSubsystem
         rl2 = rl;
         rr2 = rr;
         speed = DriveConstants.SLOW_MOTOR_SPEED;
+        odometry = odo;
+
+        if (this.getLocalizer() != null) {
+            this.setLocalizer(new OverriderLocalizer(this.getLocalizer(), odo));
+        }
     }
 
     public void fast() {
@@ -197,9 +239,9 @@ public class DrivebaseSubsystem
             Pose2d pose = getPoseEstimate();
             Pose2d poseVelocity = getPoseVelocity();
             poseDisplay =
-                pose.toString() +
-                " : " +
-                (poseVelocity != null ? poseVelocity.toString() : "<null>");
+                    pose.toString() +
+                            " : " +
+                            (poseVelocity != null ? poseVelocity.toString() : "<null>");
             System.out.println("Pose: " + poseDisplay);
         }
     }
