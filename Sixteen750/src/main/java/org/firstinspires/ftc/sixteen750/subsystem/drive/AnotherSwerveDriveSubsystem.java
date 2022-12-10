@@ -46,6 +46,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
+@Config
 public class AnotherSwerveDriveSubsystem extends SwerveDrive {
     public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(4, 0, 0);
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(4, 0, 0);
@@ -266,15 +267,16 @@ public class AnotherSwerveDriveSubsystem extends SwerveDrive {
         PhotonCore.CONTROL_HUB.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
         PhotonCore.experimental.setMaximumParallelCommands(MAX_PARALLEL_COMMANDS);
     }
-    public static PIDCoefficients SERVO_ROTATION_PID = new PIDCoefficients(0.6, 0, 0);
+    public static PIDCoefficients DEFAULT_SERVO_ROTATION_PID = new PIDCoefficients(0.6, 0, 0);
+    public static PIDCoefficients RF_SERVO_ROTATION_PID = new PIDCoefficients(0.4, 0, 0);
     public AnotherSwerveDriveSubsystem(HardwareMap hardwareMap){
         this(
                 hardwareMap,
                 hardwareMap.get(BNO055IMU.class, "imu"),
-                new LeftFrontSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", SERVO_ROTATION_PID),
-                new LeftRearSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", SERVO_ROTATION_PID),
-                new RightFrontSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", SERVO_ROTATION_PID),
-                new RightRearSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", SERVO_ROTATION_PID)
+                new LeftFrontSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", DEFAULT_SERVO_ROTATION_PID),
+                new LeftRearSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", DEFAULT_SERVO_ROTATION_PID),
+                new RightFrontSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RF_SERVO_ROTATION_PID),
+                new RightRearSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", DEFAULT_SERVO_ROTATION_PID)
         );
     }
 
