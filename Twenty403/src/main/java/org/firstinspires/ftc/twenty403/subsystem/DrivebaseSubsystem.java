@@ -6,7 +6,6 @@ import androidx.annotation.Nullable;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.localization.Localizer;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.technototes.library.hardware.motor.EncodedMotor;
@@ -16,75 +15,12 @@ import com.technototes.library.logger.Loggable;
 import com.technototes.path.subsystem.MecanumConstants;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 
-import org.opencv.core.Mat;
-
 import java.util.function.Supplier;
 
 public class DrivebaseSubsystem
         extends MecanumDrivebaseSubsystem
         implements Supplier<Pose2d>, Loggable {
 
-    public class OverriderLocalizer implements Localizer, Loggable {
-
-        Localizer orig;
-        OdoSubsystem odometry;
-
-        public OverriderLocalizer(Localizer original, OdoSubsystem odo) {
-            orig = original;
-            odometry = odo;
-        }
-
-        @Log
-        public String useful = "na";
-
-        private boolean odometryIsUseful(Pose2d position) {
-            if (Math.abs(position.getX()) < 45) {
-                useful = "x out of range";
-                return false;
-            }
-            if (position.getY() > -10 || position.getY() < -30) {
-                useful = "y out of range";
-                return false;
-            }
-            double heading = position.getHeading();
-            if (Math.abs(heading) > 20 && Math.abs(heading - 180) > 20) {
-                useful = "angle out of range";
-                return false;
-            }
-            useful = "useful";
-            return true;
-        }
-
-        @NonNull
-        @Override
-        public Pose2d getPoseEstimate() {
-            // TODO: If the sensors are in accurate range, use them instead of orig for the pose
-            Pose2d curEst = orig.getPoseEstimate();
-            if (odometryIsUseful(curEst)) {
-                // Check to see if we have better ODO values
-                return curEst;
-            } else {
-                return curEst;
-            }
-        }
-
-
-        @Override
-        public void setPoseEstimate(@NonNull Pose2d pose2d) {
-            orig.setPoseEstimate(pose2d);
-        }
-
-        @Nullable
-        @Override
-        public Pose2d getPoseVelocity() {
-            return orig.getPoseVelocity();
-        }
-
-        @Override
-        public void update() {
-            orig.update();
-        }
-    }
 
     // Notes from Kevin:
     // The 5203 motors when direct driven
@@ -196,6 +132,9 @@ public class DrivebaseSubsystem
     // @Log.Number(name = "RR")
     public EncodedMotor<DcMotorEx> rr2;
 
+    @Log
+    public String locState = "none";
+
     public OdoSubsystem odometry;
 
     public DrivebaseSubsystem(
@@ -215,7 +154,10 @@ public class DrivebaseSubsystem
         odometry = odo;
 
         if (this.getLocalizer() != null) {
-            this.setLocalizer(new OverriderLocalizer(this.getLocalizer(), odo));
+            this.setLocalizer(new OverrideLocalizer(this.getLocalizer(), odo, this));
+            locState = "created";
+        } else {
+            locState = "not created";
         }
     }
 

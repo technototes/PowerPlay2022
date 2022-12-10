@@ -4,6 +4,7 @@ import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.subsystem.Subsystem;
+
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 
@@ -33,11 +34,11 @@ public class OdoSubsystem implements Subsystem {
     int rightColor;
 
     public OdoSubsystem(
-        Rev2mDistanceSensor dl,
-        Rev2mDistanceSensor dr,
-        RevColorSensorV3 cl,
-        ColorDistanceSensor cm,
-        RevColorSensorV3 cr
+            Rev2mDistanceSensor dl,
+            Rev2mDistanceSensor dr,
+            RevColorSensorV3 cl,
+            ColorDistanceSensor cm,
+            RevColorSensorV3 cr
     ) {
         dLeft = dl;
         dRight = dr;
@@ -53,7 +54,7 @@ public class OdoSubsystem implements Subsystem {
     public double WallDistance(double angle) {
         // does not need to constantly check distance if stored in variable
         // cone stack is on the left
-        if (leftDistance > 100 || rightDistance > 100) {
+        if (leftDistance > 36 || rightDistance > 36) {
             return -123.4;
         } else return (Math.cos(angle) * (leftDistance + rightDistance) / 2);
     }
@@ -102,8 +103,8 @@ public class OdoSubsystem implements Subsystem {
             centerColor = 0;
         } else {
             // Read the sensors and squirrel away the value
-            leftDistance = dLeft.getDistance(DistanceUnit.CM);
-            rightDistance = dRight.getDistance(DistanceUnit.CM);
+            leftDistance = dLeft.getDistance(DistanceUnit.INCH);
+            rightDistance = dRight.getDistance(DistanceUnit.INCH);
             leftColor = cLeft.argb();
             centerColor = cMiddle.argb();
             rightColor = cRight.argb();
