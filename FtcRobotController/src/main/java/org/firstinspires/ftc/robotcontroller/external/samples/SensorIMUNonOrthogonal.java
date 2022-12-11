@@ -27,7 +27,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*
 package org.firstinspires.ftc.robotcontroller.external.samples;
 
 import static com.qualcomm.hardware.rev.RevHubOrientationOnRobot.xyzOrientation;
@@ -42,7 +41,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
-*/
 
 /**
  * {@link SensorIMUNonOrthogonal} shows how to use the new universal {@link IMU} interface. This
@@ -73,7 +71,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
  * <p>
  * Finally, edit this OpMode to use at least one angle around an axis to orient your Hub.
  */
-/*
 @TeleOp(name = "Sensor: IMU Non-Orthogonal", group = "Sensor")
 @Disabled     // Comment this out to add to the OpMode list
 public class SensorIMUNonOrthogonal extends LinearOpMode
@@ -90,7 +87,7 @@ public class SensorIMUNonOrthogonal extends LinearOpMode
         // Retrieve and initialize the IMU.
         // This sample expects the IMU to be in a REV Hub and named "imu".
         imu = hardwareMap.get(IMU.class, "imu");
-*/
+
         /* Define how the hub is mounted to the robot to get the correct Yaw, Pitch and Roll values.
          *
          * You can apply up to three axis rotations to orient your Hub according to how it's mounted on the robot.
@@ -148,7 +145,6 @@ public class SensorIMUNonOrthogonal extends LinearOpMode
 
         // The next three lines define the desired axis rotations.
         // To Do: EDIT these values to match YOUR mounting configuration.
-/*
         double xRotation = 0;  // enter the desired X rotation angle here.
         double yRotation = 0;  // enter the desired Y rotation angle here.
         double zRotation = 0;  // enter the desired Z rotation angle here.
@@ -185,4 +181,3 @@ public class SensorIMUNonOrthogonal extends LinearOpMode
         }
     }
 }
-*/
