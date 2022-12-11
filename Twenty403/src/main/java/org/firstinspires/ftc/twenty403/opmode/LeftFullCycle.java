@@ -7,7 +7,6 @@ import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
-
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.VisionCommand;
@@ -35,24 +34,23 @@ public class LeftFullCycle extends CommandOpMode {
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Left.START.toPose());
         // ElapsedTimeHelper timeout = new ElapsedTimeHelper(() -> this.getOpModeRuntime(), 25);
         CommandScheduler
-                .getInstance()
-                .scheduleForState(
-                        new SequentialCommandGroup(
-                                new AutoSpeedCommand(robot.drivebaseSubsystem),
-                                new ClawCloseCommand(robot.clawSubsystem),
-                                new AutoLeftParkingSelectionFullCycleCommand(
-                                        robot),
-                                CommandScheduler.getInstance()::terminateOpMode
-                        ),
-                        CommandOpMode.OpModeState.RUN
-                );
+            .getInstance()
+            .scheduleForState(
+                new SequentialCommandGroup(
+                    new AutoSpeedCommand(robot.drivebaseSubsystem),
+                    new ClawCloseCommand(robot.clawSubsystem),
+                    new AutoLeftParkingSelectionFullCycleCommand(robot),
+                    CommandScheduler.getInstance()::terminateOpMode
+                ),
+                CommandOpMode.OpModeState.RUN
+            );
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
             CommandScheduler
-                    .getInstance()
-                    .scheduleInit(
-                            new ClawCloseCommand(robot.clawSubsystem)
-                                    .andThen(new VisionCommand(robot.visionSystem))
-                    );
+                .getInstance()
+                .scheduleInit(
+                    new ClawCloseCommand(robot.clawSubsystem)
+                        .andThen(new VisionCommand(robot.visionSystem))
+                );
         }
     }
 }

@@ -8,7 +8,6 @@ import com.technototes.library.logger.LogConfig;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.library.util.Alliance;
-
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 
@@ -98,8 +97,8 @@ public class ClawSubsystem implements Subsystem, Loggable {
         // manually, so we need to check to see if the servo has had it's position explicitly set
         // instead of just checking the servo's position...
         return (
-                servoSet &&
-                        Math.abs(curPos - CLOSE_SERVO_POSITION) < Math.abs(curPos - OPEN_SERVO_POSITION)
+            servoSet &&
+            Math.abs(curPos - CLOSE_SERVO_POSITION) < Math.abs(curPos - OPEN_SERVO_POSITION)
         );
     }
 
@@ -111,7 +110,7 @@ public class ClawSubsystem implements Subsystem, Loggable {
     public void periodic() {
         if (isHardware && autoClose) {
             if (
-                    liftSubsystem.canAutoClose() && !isClawClosed() && isAllianceCone() && isConeClose()
+                liftSubsystem.canAutoClose() && !isClawClosed() && isAllianceCone() && isConeClose()
             ) {
                 close();
             }
