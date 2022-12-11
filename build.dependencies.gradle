@@ -38,7 +38,7 @@ dependencies {
     implementation 'org.firstinspires.ftc:gameAssets-PowerPlay:1.0.0'
 
     // TechnoLib:
-    implementation 'com.github.technototes:TechnoLib:1.1.2'
+    // implementation 'com.github.technototes:TechnoLib:1.1.2'
 
     // RoadRunner:
     implementation 'com.acmerobotics.roadrunner:core:0.5.5'

@@ -1,4 +1,7 @@
 include ':FtcRobotController'
+include ':TechnoLib:RobotLibrary'
+include ':TechnoLib:Path'
+include ':TechnoLib:Vision'
 include ':Sixteen750'
 include ':Twenty403'
 include ':ForTeaching'
