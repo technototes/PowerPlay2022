@@ -7,7 +7,6 @@ import com.technototes.library.hardware.sensor.Rev2MDistanceSensor;
 import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
-
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 
@@ -37,11 +36,11 @@ public class OdoSubsystem implements Subsystem, Loggable {
     int rightColor;
 
     public OdoSubsystem(
-            Rev2MDistanceSensor dl,
-            Rev2MDistanceSensor dr,
-            ColorDistanceSensor cl,
-            ColorDistanceSensor cm,
-            ColorDistanceSensor cr
+        Rev2MDistanceSensor dl,
+        Rev2MDistanceSensor dr,
+        ColorDistanceSensor cl,
+        ColorDistanceSensor cm,
+        ColorDistanceSensor cr
     ) {
         dLeft = dl;
         dRight = dr;
@@ -115,6 +114,7 @@ public class OdoSubsystem implements Subsystem, Loggable {
             centerColor = cMiddle.argb();
             rightColor = cRight.argb();
         }
-        odoData = String.format("%s : %f, %f", ReadSensors().toString(), leftDistance, rightDistance);
+        odoData =
+            String.format("%s : %f, %f", ReadSensors().toString(), leftDistance, rightDistance);
     }
 }

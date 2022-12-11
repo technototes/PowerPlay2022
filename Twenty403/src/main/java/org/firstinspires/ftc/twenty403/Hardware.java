@@ -16,9 +16,7 @@ import com.technototes.library.hardware.sensor.IMU;
 import com.technototes.library.hardware.sensor.Rev2MDistanceSensor;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.vision.hardware.Webcam;
-
 import java.util.List;
-
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.VoltageUnit;
 
@@ -97,9 +95,7 @@ public class Hardware {
             colorleft = new ColorDistanceSensor(HardwareConstant.COLOR_SENSOR_LEFT);
             colorright = new ColorDistanceSensor(HardwareConstant.COLOR_SENSOR_RIGHT);
             colorcenter = new ColorDistanceSensor(HardwareConstant.COLOR_SENSOR_CENTER);
-
         }
-
     }
 
     public double voltage() {

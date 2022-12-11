@@ -2,7 +2,6 @@ package org.firstinspires.ftc.twenty403.subsystem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -14,13 +13,11 @@ import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.path.subsystem.MecanumConstants;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
-
 import java.util.function.Supplier;
 
 public class DrivebaseSubsystem
-        extends MecanumDrivebaseSubsystem
-        implements Supplier<Pose2d>, Loggable {
-
+    extends MecanumDrivebaseSubsystem
+    implements Supplier<Pose2d>, Loggable {
 
     // Notes from Kevin:
     // The 5203 motors when direct driven
@@ -43,10 +40,10 @@ public class DrivebaseSubsystem
 
         @MotorVeloPID
         public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(
-                20,
-                0,
-                3,
-                MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV)
+            20,
+            0,
+            3,
+            MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV)
         );
 
         @WheelRadius
@@ -63,7 +60,7 @@ public class DrivebaseSubsystem
 
         @KV
         public static double kV =
-                1.0 / MecanumConstants.rpmToVelocity(MAX_RPM, WHEEL_RADIUS, GEAR_RATIO);
+            1.0 / MecanumConstants.rpmToVelocity(MAX_RPM, WHEEL_RADIUS, GEAR_RATIO);
 
         @KA
         public static double kA = 0;
@@ -138,12 +135,12 @@ public class DrivebaseSubsystem
     public OdoSubsystem odometry;
 
     public DrivebaseSubsystem(
-            EncodedMotor<DcMotorEx> fl,
-            EncodedMotor<DcMotorEx> fr,
-            EncodedMotor<DcMotorEx> rl,
-            EncodedMotor<DcMotorEx> rr,
-            IMU i,
-            OdoSubsystem odo
+        EncodedMotor<DcMotorEx> fl,
+        EncodedMotor<DcMotorEx> fr,
+        EncodedMotor<DcMotorEx> rl,
+        EncodedMotor<DcMotorEx> rr,
+        IMU i,
+        OdoSubsystem odo
     ) {
         super(fl, fr, rl, rr, i, () -> DriveConstants.class);
         fl2 = fl;
@@ -181,9 +178,9 @@ public class DrivebaseSubsystem
             Pose2d pose = getPoseEstimate();
             Pose2d poseVelocity = getPoseVelocity();
             poseDisplay =
-                    pose.toString() +
-                            " : " +
-                            (poseVelocity != null ? poseVelocity.toString() : "<null>");
+                pose.toString() +
+                " : " +
+                (poseVelocity != null ? poseVelocity.toString() : "<null>");
             System.out.println("Pose: " + poseDisplay);
         }
     }

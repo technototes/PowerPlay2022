@@ -6,10 +6,8 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.technototes.library.command.Command;
 import com.technototes.library.control.Stick;
 import com.technototes.library.util.MathUtils;
-
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
-
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 
 public class DriveCommand implements Command {
@@ -20,10 +18,10 @@ public class DriveCommand implements Command {
     public BooleanSupplier straight;
 
     public DriveCommand(
-            DrivebaseSubsystem sub,
-            Stick stick1,
-            Stick stick2,
-            BooleanSupplier straighten
+        DrivebaseSubsystem sub,
+        Stick stick1,
+        Stick stick2,
+        BooleanSupplier straighten
     ) {
         addRequirements(sub, sub.odometry);
         subsystem = sub;
@@ -66,12 +64,12 @@ public class DriveCommand implements Command {
     public void execute() {
         double curHeading = -subsystem.getExternalHeading();
         Vector2d input = new Vector2d(
-                -y.getAsDouble() * subsystem.speed,
-                -x.getAsDouble() * subsystem.speed
+            -y.getAsDouble() * subsystem.speed,
+            -x.getAsDouble() * subsystem.speed
         )
-                .rotated(curHeading);
+            .rotated(curHeading);
         subsystem.setWeightedDrivePower(
-                new Pose2d(input.getX(), input.getY(), getRotation(curHeading))
+            new Pose2d(input.getX(), input.getY(), getRotation(curHeading))
         );
         subsystem.update();
     }
