@@ -28,18 +28,18 @@ public class OverrideLocalizer implements Localizer, Loggable {
         double heading = position.getHeading();
 
         if (Math.abs(x) < 45) {
-            driveSubsys.locState = "x out of range";
+            // driveSubsys.locState = "x out of range";
             return false;
         }
         if (y > -10 || y < -30) {
-            driveSubsys.locState = "y out of range";
+            // driveSubsys.locState = "y out of range";
             return false;
         }
         if (Math.abs(heading) > 20 && Math.abs(heading - 180) > 20) {
-            driveSubsys.locState = "angle out of range";
+            // driveSubsys.locState = "angle out of range";
             return false;
         }
-        driveSubsys.locState = "useful";
+        // driveSubsys.locState = "useful";
         return true;
     }
 
@@ -48,40 +48,59 @@ public class OverrideLocalizer implements Localizer, Loggable {
         double y = cur.getY();
         double h = cur.getHeading();
         double dist = odometry.WallDistance(h);
+        StringBuilder adjustment = new StringBuilder();
         if (dist > 0) {
             // Wall distance is good: Update x
+            double newX = x;
             if (x < 0) {
-                x = -65 + dist;
+                newX = -65 + dist;
             } else {
-                x = 65 - dist;
+                newX = 65 - dist;
+            }
+            // Let's only update it's "worth" doing:
+            if (Math.abs(newX - x) > .5) {
+                adjustment.append(String.format("X: %f -> %f ", x, newX));
+                x = newX;
             }
         }
         OdoSubsystem.GraySensorCombo sensorRead = odometry.ReadSensors();
 
         boolean left = x < 0;
+        double newY = y;
         switch (sensorRead) {
             case LeftCenter:
                 //two inches off
-                y = left ? -19 : -14;
+                newY = left ? -19 : -14;
                 break;
             case LeftRight:
                 //centered
-                y = left ? -17 : -16;
+                newY = left ? -17 : -16;
                 break;
             case JustLeft:
                 //one inch off
-                y = left ? -18 : -15;
+                newY = left ? -18 : -15;
                 break;
             case JustRight:
                 //one inch off
-                y = left ? -16 : -17;
+                newY = left ? -16 : -17;
                 break;
             case RightCenter:
                 //two inches off
-                y = left ? -15 : -18;
+                newY = left ? -15 : -18;
                 break;
             default:
-
+                // Don't change for all gray or weird
+                newY = y;
+                break;
+        }
+        if (Math.abs(newY - y) > .5) {
+            adjustment.append(String.format("Y: %f -> %f ", y, newY));
+            y = newY;
+        }
+        if (adjustment.length() > 0) {
+            driveSubsys.locState = adjustment.toString();
+        } else {
+            driveSubsys.locState = "No odo adjustement";
         }
         return new Pose2d(x, y, h);
     }
