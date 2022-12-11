@@ -1,7 +1,10 @@
 include ':FtcRobotController'
-include ':TechnoLib:RobotLibrary'
-include ':TechnoLib:Path'
-include ':TechnoLib:Vision'
+include 'RobotLibrary'
+project(':RobotLibrary').projectDir = new File('TechnoLib/RobotLibrary')
+include 'Path'
+project(':Path').projectDir = new File('TechnoLib/Path')
+include 'Vision'
+project(':Vision').projectDir = new File('TechnoLib/Vision')
 include ':Sixteen750'
 include ':Twenty403'
 include ':ForTeaching'

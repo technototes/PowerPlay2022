@@ -21,7 +21,7 @@ android {
 
 dependencies {
 
-    implementation project(':TechnoLib:RobotLibrary')
+    implementation project(':RobotLibrary')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation('org.ejml:ejml-simple:0.39') {
