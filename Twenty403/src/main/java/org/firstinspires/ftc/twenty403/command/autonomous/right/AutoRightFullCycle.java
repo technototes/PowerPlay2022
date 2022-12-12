@@ -12,8 +12,10 @@ import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
+import org.firstinspires.ftc.twenty403.command.drive.SlowCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftIntakeCommand;
+import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 
 // autonomous for right
 // parks in left position
@@ -38,10 +40,15 @@ public class AutoRightFullCycle extends SequentialCommandGroup {
                     )
                 ),
             new ClawOpenCommand(r.clawSubsystem),
-            new AutoRightSingleCycle(r),
-            new AutoRightSingleCycle(r),
+            new AutoRightSingleCycleOne(r),
+            new AutoRightSingleCycleOne(r),
+            new AutoRightSingleCycleTwo(r),
+            //new AutoRightSingleCycleTwo(r),
+            //new AutoRightSingleCycleThree(r),
+            //new AutoRightSingleCycleThree(r),
             new TrajectorySequenceCommand(r.drivebaseSubsystem, parkingDestination)
-                .alongWith(new LiftIntakeCommand(r.liftSubsystem))
+                .alongWith(new LiftIntakeCommand(r.liftSubsystem)),
+            new SlowCommand(r.drivebaseSubsystem)
         );
         // new AutoRightSingleCycle(drivebaseSubsystem, liftSubsystem, clawSubsystem),
         // new AutoRightSingleCycle(drivebaseSubsystem, liftSubsystem, clawSubsystem),
