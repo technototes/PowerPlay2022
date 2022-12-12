@@ -15,8 +15,8 @@ import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 public class ClawSubsystem implements Subsystem, Loggable {
 
     // Correct numbers, tested 11/27/22
-    public static double OPEN_SERVO_POSITION = .33;
-    public static double CLOSE_SERVO_POSITION = .43;
+    public static double OPEN_SERVO_POSITION = .36;// .33;
+    public static double CLOSE_SERVO_POSITION = .47;// .43;
 
     // # of CM distance before we auto-close the claw
     public static double CONE_IS_CLOSE_ENOUGH = 6.0;
