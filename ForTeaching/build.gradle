@@ -17,7 +17,7 @@ apply from: '../build.dependencies.gradle'
 
 android {
     namespace = 'org.firstinspires.ftc.forteaching'
-		
+
     packagingOptions {
         jniLibs.useLegacyPackaging true
     }
@@ -25,5 +25,9 @@ android {
 
 dependencies {
     implementation project(':FtcRobotController')
+    // Uncomment this to use a local version of TechnoLib
+    // implementation project(':RobotLibrary') // TechnoLibLocal
+    // implementation project(':Path')         // TechnoLibLocal
+    // implementation project(':Vision')       // TechnoLibLocal
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
 }
