@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.twenty403.opmode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.SequentialCommandGroup;
@@ -11,7 +13,9 @@ import org.firstinspires.ftc.twenty403.command.VisionCommand;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.twenty403.command.autonomous.left.AutoLeftParkingSelectionFullCycleCommand;
+import org.firstinspires.ftc.twenty403.command.autonomous.right.AutoRightParkingSelectionFullCycleCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
+import org.firstinspires.ftc.twenty403.command.drive.AutoSpeedCommand;
 import org.firstinspires.ftc.twenty403.controls.ControlSingle;
 
 @Autonomous(name = "LeftFullCycle")
@@ -24,26 +28,28 @@ public class LeftFullCycle extends CommandOpMode {
 
     @Override
     public void uponInit() {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware, Alliance.NONE, StartingPosition.LEFT);
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Left.START.toPose());
+        // ElapsedTimeHelper timeout = new ElapsedTimeHelper(() -> this.getOpModeRuntime(), 25);
         CommandScheduler
             .getInstance()
             .scheduleForState(
                 new SequentialCommandGroup(
+                    new AutoSpeedCommand(robot.drivebaseSubsystem),
                     new ClawCloseCommand(robot.clawSubsystem),
                     new AutoLeftParkingSelectionFullCycleCommand(robot),
                     CommandScheduler.getInstance()::terminateOpMode
                 ),
                 CommandOpMode.OpModeState.RUN
             );
-        // Claw close on Init doesn't work yet
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
             CommandScheduler
                 .getInstance()
                 .scheduleInit(
-                    new VisionCommand(robot.visionSystem)
-                        .alongWith(new ClawCloseCommand(robot.clawSubsystem))
+                    new ClawCloseCommand(robot.clawSubsystem)
+                        .andThen(new VisionCommand(robot.visionSystem))
                 );
         }
     }

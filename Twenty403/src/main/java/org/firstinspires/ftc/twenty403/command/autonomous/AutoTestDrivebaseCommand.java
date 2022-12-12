@@ -13,8 +13,8 @@ public class AutoTestDrivebaseCommand extends SequentialCommandGroup {
     public AutoTestDrivebaseCommand(MecanumDrivebaseSubsystem drive) {
         super(
             new TrajectorySequenceCommand(drive, AutoConstants.Right.START_TO_W_JUNCTION),
-            new TrajectorySequenceCommand(drive, AutoConstants.Right.W_JUNCTION_TO_STACK),
-            new TrajectorySequenceCommand(drive, AutoConstants.Right.STACK_TO_W_JUNCTION),
+            new TrajectorySequenceCommand(drive, AutoConstants.Right.W_JUNCTION_TO_STACK_ONE),
+            new TrajectorySequenceCommand(drive, AutoConstants.Right.STACK_TO_W_JUNCTION_ONE),
             CommandScheduler.getInstance()::terminateOpMode
             //                .alongWith(new ConeReadyToScoreCommand(cone)),
             // new ClawOpenCommand(claw),

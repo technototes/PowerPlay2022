@@ -22,13 +22,13 @@ public class AutoRightCycleRight extends SequentialCommandGroup {
                     new ClawOpenCommand(r.clawSubsystem),
                     new TrajectorySequenceCommand(
                         r.drivebaseSubsystem,
-                        AutoConstants.Right.W_JUNCTION_TO_STACK
+                        AutoConstants.Right.W_JUNCTION_TO_STACK_ONE
                     )
                         .alongWith(new LiftCollectCommand(r.liftSubsystem)),
                     new ClawCloseCommand(r.clawSubsystem),
                     new TrajectorySequenceCommand(
                         r.drivebaseSubsystem,
-                        AutoConstants.Right.STACK_TO_W_JUNCTION
+                        AutoConstants.Right.STACK_TO_W_JUNCTION_ONE
                     )
                         .alongWith(new LiftHighJunctionCommand(r.liftSubsystem)),
                     new ClawOpenCommand(r.clawSubsystem),
