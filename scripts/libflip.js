@@ -1,8 +1,19 @@
-// This script should  move all local branches with no unmerged changes forward
-// to the latest 'main', and then push them
+/*
+ * This script should invert all comment lines in the build system with a
+ * '// TechnoLibLocal' comment at the end. This will let you add a subdirectory
+ * "TechnoLib" (as a git subtree, submodule, or just a copy) that contains
+ * TechnoLib instead of pulling down the latest release from jitpack.io through
+ * Maven or whatever that remote repo is.
+ *
+ * So, "yarn libflip" will, from a normal repo, enable you to build & link with
+ * a local copy of TechnoLib in <root>\TechnoLib. Once you're done, run
+ * "yarn libflip" again, and it will restore the dependency on the publicly
+ * released copy of TechnoLib
+ */
 
-const { readFile, writeFile } = require ('fs/promises');
+const { readFile, writeFile } = require('fs/promises');
 
+const commentMarker = '// TechnoLibLocal';
 const files = [
   'ForTeaching/build.gradle',
   'Sixteen750/build.gradle',
@@ -11,22 +22,26 @@ const files = [
   'settings.gradle',
 ];
 
-// For any line that ends with '// TechnoLibLocal', toggle the line comment marker
+// For any line that ends with '// TechnoLibLocal',
+// toggle the line comment 'status'
 function toggleLine(lineFull) {
   const line = lineFull.trimEnd();
-  if (line.endsWith('// TechnoLibLocal')) {
-    if (line.trimStart().startsWith('//')) {
-      // Remove the comment marker
-      return line.replace(/^( *)\/\/ */, '$1');
-    } else {
-      // Add the comment marker
-      return line.replace(/^( *)([^ ])/, '$1// $2');
-    }
+	// If the line doesn't end with the comment marker, don't change it at all
+  if (!line.endsWith(commentMarker)) {
+    return line;
   }
-  return line;
+  if (line.trimStart().startsWith('//')) {
+		// If the line starts with a comment, 
+		// remove the comment at the beginning of the line
+    return line.replace(/^( *)\/\/ */, '$1');
+  } else {
+		// If the line does *not* start with a comment, 
+    // add the comment at the beginning of the line
+    return line.replace(/^( *)([^ ])/, '$1// $2');
+  }
 }
 
-// Read the file, flipping the comments for lines with markers
+// Read the file, flip the comments for lines with markers, the write it back
 async function toggleFile(file) {
   try {
     const contents = await readFile(file, 'utf-8');
@@ -41,12 +56,13 @@ async function toggleFile(file) {
 }
 
 async function toggleLinesWithComments() {
-	for (let filename of files) {
-		await toggleFile(filename);
-	}
+  for (let filename of files) {
+    await toggleFile(filename);
+  }
 }
 
 // Call our script...
 toggleLinesWithComments()
   // Reporting errors
-  .catch((err) => console.error(err));
+  .catch((err) => console.error(err))
+	.finally(() => console.log("Processing complete"));
