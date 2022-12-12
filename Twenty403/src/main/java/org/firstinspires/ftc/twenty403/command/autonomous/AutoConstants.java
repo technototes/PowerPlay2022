@@ -23,15 +23,20 @@ public class AutoConstants {
         public static ConfigurablePose LEFT_MOVE = new ConfigurablePose(-24, 0, toRadians(90));
         public static ConfigurablePose RIGHT_MOVE = new ConfigurablePose(24, 0, toRadians(90));
 
-        public static ConfigurablePose STACK = new ConfigurablePose(65, -16, toRadians(0));
+        public static ConfigurablePose STACK_ONE = new ConfigurablePose(63, -14, toRadians(0));
+        public static ConfigurablePose STACK_TWO = new ConfigurablePose(70, -16, toRadians(0));
+        public static ConfigurablePose STACK_THREE = new ConfigurablePose(73, -16, toRadians(0));
         //x: 66, y: -16, 0
         public static ConfigurablePose LEFT = new ConfigurablePose(21, -18, toRadians(90));
         public static ConfigurablePose MIDDLE = new ConfigurablePose(39, -16, toRadians(90));
         public static ConfigurablePose RIGHT = new ConfigurablePose(62, -17, toRadians(90));
-        public static ConfigurablePose W_JUNCTION = new ConfigurablePose(26, -11, 1.9);
-        //x:31 y:-11, 1.9
+        public static ConfigurablePose W_JUNCTION_ONE = new ConfigurablePose(28, -10, 1.9);
+        public static ConfigurablePose W_JUNCTION_TWO = new ConfigurablePose(34, -11, 2);
+        public static ConfigurablePose W_JUNCTION_THREE = new ConfigurablePose(37, -11, 2);
+
 
         //public static ConfigurablePose BETWEEN_START_W_jUNCTION_ONE = new ConfigurablePose(40, -48, toRadians(180));
+        public static ConfigurablePose BETWEEN_START_W_JUNCTION = new ConfigurablePose(41, -11, 3.9);
         public static ConfigurablePose BETWEEN_START_W_JUNCTION_TWO = new ConfigurablePose(42, -11, 3.9);
         public static ConfigurablePose BETWEEN_W_JUNCTION_STACK = new ConfigurablePose(43, -19, 1.5);
         public static ConfigurablePose BETWEEN_STACK_W_JUNCTION = new ConfigurablePose(40, -14, 2.4);
@@ -77,32 +82,51 @@ public class AutoConstants {
 
         START_TO_W_JUNCTION =
                 b -> b.apply(START.toPose())
-                        //.lineToLinearHeading(BETWEEN_START_W_jUNCTION_ONE.toPose())
-                        .lineToLinearHeading(BETWEEN_START_W_JUNCTION_TWO.toPose())
-                        .lineToLinearHeading(W_JUNCTION.toPose())
+                        .lineToLinearHeading(BETWEEN_START_W_JUNCTION.toPose())
+                        .lineToLinearHeading(W_JUNCTION_ONE.toPose())
                         .build(),
-                W_JUNCTION_TO_STACK =
-                        b -> b.apply(W_JUNCTION.toPose())
+                W_JUNCTION_TO_STACK_ONE =
+                        b -> b.apply(W_JUNCTION_ONE.toPose())
                                 .lineToLinearHeading(BETWEEN_W_JUNCTION_STACK.toPose())
-                                .lineToLinearHeading(STACK.toPose())
+                                .lineToLinearHeading(STACK_ONE.toPose())
                                 .build(),
-                STACK_TO_W_JUNCTION =
-                        b -> b.apply(STACK.toPose())
+                W_JUNCTION_TO_STACK_TWO =
+                        b -> b.apply(W_JUNCTION_TWO.toPose())
+                                .lineToLinearHeading(BETWEEN_W_JUNCTION_STACK.toPose())
+                                .lineToLinearHeading(STACK_TWO.toPose())
+                                .build(),
+                W_JUNCTION_TO_STACK_THREE =
+                        b -> b.apply(W_JUNCTION_THREE.toPose())
+                                .lineToLinearHeading(BETWEEN_W_JUNCTION_STACK.toPose())
+                                .lineToLinearHeading(STACK_THREE.toPose())
+                                .build(),
+                STACK_TO_W_JUNCTION_ONE =
+                        b -> b.apply(STACK_ONE.toPose())
                                 .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
-                                .lineToLinearHeading(W_JUNCTION.toPose())
+                                .lineToLinearHeading(W_JUNCTION_ONE.toPose())
+                                .build(),
+                STACK_TO_W_JUNCTION_TWO =
+                        b -> b.apply(STACK_TWO.toPose())
+                                .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
+                                .lineToLinearHeading(W_JUNCTION_TWO.toPose())
+                                .build(),
+                STACK_TO_W_JUNCTION_THREE =
+                        b -> b.apply(STACK_THREE.toPose())
+                                .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
+                                .lineToLinearHeading(W_JUNCTION_THREE.toPose())
                                 .build(),
                 W_JUNCTION_TO_LEFT_PARK =
-                        b -> b.apply(W_JUNCTION.toPose())
+                        b -> b.apply(W_JUNCTION_THREE.toPose())
                                 .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
                                 .lineToLinearHeading(LEFT.toPose())
                                 .build(),
                 W_JUNCTION_TO_MIDDLE_PARK =
-                        b -> b.apply(W_JUNCTION.toPose())
+                        b -> b.apply(W_JUNCTION_THREE.toPose())
                                 .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
                                 .lineToLinearHeading(MIDDLE.toPose())
                                 .build(),
                 W_JUNCTION_TO_RIGHT_PARK =
-                        b -> b.apply(W_JUNCTION.toPose())
+                        b -> b.apply(W_JUNCTION_THREE.toPose())
                                 .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
                                 .lineToLinearHeading(RIGHT.toPose())
                                 .build(),

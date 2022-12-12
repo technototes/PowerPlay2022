@@ -9,19 +9,19 @@ import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftCollectCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
 
-public class AutoRightSingleCycle extends SequentialCommandGroup {
+public class AutoRightSingleCycleThree extends SequentialCommandGroup {
 
-    public AutoRightSingleCycle(Robot r) {
+    public AutoRightSingleCycleThree(Robot r) {
         super(
             new TrajectorySequenceCommand(
                 r.drivebaseSubsystem,
-                AutoConstants.Right.W_JUNCTION_TO_STACK
+                AutoConstants.Right.W_JUNCTION_TO_STACK_THREE
             )
                 .alongWith(new LiftCollectCommand(r.liftSubsystem)),
             new ClawCloseCommand(r.clawSubsystem),
             new TrajectorySequenceCommand(
                 r.drivebaseSubsystem,
-                AutoConstants.Right.STACK_TO_W_JUNCTION
+                AutoConstants.Right.STACK_TO_W_JUNCTION_THREE
             )
                 .alongWith(new LiftHighJunctionCommand(r.liftSubsystem)),
             new ClawOpenCommand(r.clawSubsystem)
