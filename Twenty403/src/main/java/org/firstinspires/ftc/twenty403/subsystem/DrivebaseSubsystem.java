@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.localization.Localizer;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.technototes.library.hardware.motor.EncodedMotor;
@@ -17,6 +20,38 @@ public class DrivebaseSubsystem
     extends MecanumDrivebaseSubsystem
     implements Supplier<Pose2d>, Loggable {
 
+    public class OverriderLocalizer implements Localizer {
+
+        Localizer orig;
+
+        public OverriderLocalizer(Localizer original) {
+            orig = original;
+        }
+
+        @NonNull
+        @Override
+        public Pose2d getPoseEstimate() {
+            // TODO: If the sensors are in accurate range, use them instead of orig for the pose
+            return orig.getPoseEstimate();
+        }
+
+        @Override
+        public void setPoseEstimate(@NonNull Pose2d pose2d) {
+            orig.setPoseEstimate(pose2d);
+        }
+
+        @Nullable
+        @Override
+        public Pose2d getPoseVelocity() {
+            return orig.getPoseVelocity();
+        }
+
+        @Override
+        public void update() {
+            orig.update();
+        }
+    }
+
     // Notes from Kevin:
     // The 5203 motors when direct driven
     // move about 63 inches forward and is measured as roughly 3000 ticks on the encoders
@@ -26,6 +61,7 @@ public class DrivebaseSubsystem
 
         public static double SLOW_MOTOR_SPEED = 0.6;
         public static double FAST_MOTOR_SPEED = 1.0;
+        public static double AUTO_MOTOR_SPEED = 0.75;
 
         @TicksPerRev
         public static final double TICKS_PER_REV = 537.6; // 2021: 28;
@@ -140,6 +176,9 @@ public class DrivebaseSubsystem
         rl2 = rl;
         rr2 = rr;
         speed = DriveConstants.SLOW_MOTOR_SPEED;
+        if (this.getLocalizer() != null) {
+            this.setLocalizer(new OverriderLocalizer(this.getLocalizer()));
+        }
     }
 
     public void fast() {
@@ -148,6 +187,10 @@ public class DrivebaseSubsystem
 
     public void slow() {
         speed = DriveConstants.SLOW_MOTOR_SPEED;
+    }
+
+    public void auto() {
+        speed = DriveConstants.AUTO_MOTOR_SPEED;
     }
 
     @Override
