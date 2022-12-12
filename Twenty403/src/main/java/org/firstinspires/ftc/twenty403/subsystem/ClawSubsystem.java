@@ -14,7 +14,7 @@ import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 @Config
 public class ClawSubsystem implements Subsystem, Loggable {
 
-    // Correct numbers, tested 11/27/22
+    // Correct numbers, tested 12/10/22
     public static double OPEN_SERVO_POSITION = .38;
     public static double CLOSE_SERVO_POSITION = .47;
 
