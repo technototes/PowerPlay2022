@@ -210,7 +210,7 @@ public class DrivebaseSubsystem
                 pose.toString() +
                 " : " +
                 (poseVelocity != null ? poseVelocity.toString() : "<null>");
-            System.out.println("Pose: " + poseDisplay);
+           // System.out.println("Pose: " + poseDisplay);
         }
     }
 

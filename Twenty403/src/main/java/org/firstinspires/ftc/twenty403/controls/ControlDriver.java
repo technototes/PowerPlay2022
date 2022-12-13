@@ -8,8 +8,10 @@ import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
 import com.technototes.library.control.Stick;
+import com.technototes.library.structure.CommandOpMode;
 import com.technototes.path.command.TrajectorySequenceCommand;
 import org.firstinspires.ftc.twenty403.Robot;
+import org.firstinspires.ftc.twenty403.command.VisionDuringTeleCommand;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
 import org.firstinspires.ftc.twenty403.command.claw.ClawAutoCloseToggleCommand;
 import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
@@ -40,6 +42,9 @@ public class ControlDriver {
         }
         if (Robot.RobotConstant.CLAW_CONNECTED) {
             bindClawControls();
+        }
+        if (Robot.RobotConstant.CAMERA_CONNECTED){
+            bindVisionCommand();
         }
     }
 
@@ -99,6 +104,12 @@ public class ControlDriver {
             )
         );
     }
+    public void bindVisionCommand(){
+        CommandScheduler
+                .getInstance()
+                .scheduleForState(new VisionDuringTeleCommand(robot.visionSystem, gamepad.share), CommandOpMode.OpModeState.RUN);
+    }
+
 
     public void bindClawControls() {
         clawToggleAutoCloseButton.whenPressed(new ClawAutoCloseToggleCommand(robot.clawSubsystem));

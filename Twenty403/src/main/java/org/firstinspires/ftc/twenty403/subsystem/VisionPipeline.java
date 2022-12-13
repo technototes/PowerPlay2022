@@ -11,6 +11,7 @@ import com.technototes.library.logger.Loggable;
 import com.technototes.library.util.Alliance;
 import java.util.function.Supplier;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
+import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -63,7 +64,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         // The high saturation point for color identification
         public static double highS = 255;
         // The low value for color ID
-        public static double lowV = 50;
+        public static double lowV = 65;
         // The high value for color ID
         public static double highV = 255;
 
@@ -74,7 +75,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         public static int HEIGHT = 60;
 
         // What color should we draw the outlining rectangle?
-        public static Scalar HIGHLIGHT = new Scalar(255, 0, 255);
+        public static Scalar HIGHLIGHT = new Scalar(255, 128, 255);
     }
 
     @LogConfig.Run(duringRun = false, duringInit = true)
@@ -178,11 +179,11 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
     }
 
     public void detectJunction(Mat frame) {
+        android.util.Log.d("VIS", "We're running");
         Imgproc.cvtColor(frame, customColorSpace, Imgproc.COLOR_RGB2HSV);
-        int yellowHeight = -1;
         int startX = -1;
         int endX = -1;
-        int range = 20;
+        int range = 10;
         for (int j = customColorSpace.height() - 1; j > 0; j--) {
             for (int i = customColorSpace.width() - 1; i > 0; i--) {
                 double[] color = customColorSpace.get(j, i);
@@ -210,10 +211,12 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                     }
                 }
             }
+
             if (startX != -1 && endX != -1) {
-                if (startX - endX > range) {
+                if (Math.abs(startX - endX) > range) {
                     junctionY = j;
                     junctionX = (startX + endX) / 2;
+                    Imgproc.rectangle(img, new Rect((int) junctionX, (int) junctionY, 5, 5), VisionConstants.HIGHLIGHT);
                     return;
                 }
             }
@@ -239,7 +242,12 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                 sendBitmap();
             }
         } else if (activeMode == Mode.Junction) {
+
             detectJunction(input);
+
+            if (VisionSubsystem.VisionSubsystemConstants.DEBUG_VIEW) {
+                sendBitmap();
+            }
         }
         return input;
     }
