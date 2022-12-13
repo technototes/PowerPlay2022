@@ -8,16 +8,19 @@ import com.qualcomm.robotcore.util.Range;
 import com.technototes.library.command.Command;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.Stick;
+import com.technototes.library.logger.Log;
+import com.technototes.library.logger.Loggable;
 import com.technototes.library.util.MathUtils;
 import java.util.function.BooleanSupplier;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import java.util.function.DoubleSupplier;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline;
 
-public class DriveCommand implements Command {
+public class DriveCommand implements Command, Loggable {
 
     public enum DriveState {
         Normal,
@@ -176,6 +179,7 @@ public class DriveCommand implements Command {
             case TrajectoryRun:
                 if (!subsystem.isBusy()) {
                     currentDriveState = DriveState.Normal;
+                    subsystem.poseDisplay += " (done)";
                 }
                 break;
         }
@@ -187,13 +191,21 @@ public class DriveCommand implements Command {
         Pose2d start = subsystem.getPoseEstimate();
         double endX = Range.clip(start.getX() + subsystem.trajectoryX, -72, 72);
         double endY = Range.clip(start.getY() + subsystem.trajectoryY, -72, 72);
-        int endHeading = Math.floorMod((int) (start.getHeading() + subsystem.trajectoryAngle), 360);
-
-        if (endHeading > 180) {
-            endHeading -= 360;
-        }
+        double endHeading = AngleUnit.normalizeDegrees(
+            start.getHeading() + subsystem.trajectoryAngle
+        );
 
         Pose2d end = new Pose2d(endX, endY, endHeading);
+        subsystem.poseDisplay =
+            String.format(
+                "%f, %f [%f] => %f, %f [%f]",
+                start.getX(),
+                start.getY(),
+                start.getHeading(),
+                end.getX(),
+                end.getY(),
+                end.getHeading()
+            );
         Trajectory traj1 = subsystem.trajectoryBuilder(start).lineToLinearHeading(end).build();
         subsystem.followTrajectoryAsync(traj1);
     }

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.twenty403.controls;
 
+import android.service.quicksettings.Tile;
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.control.CommandButton;
@@ -17,6 +18,8 @@ import org.firstinspires.ftc.twenty403.command.claw.ClawAutoCloseToggleCommand;
 import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
 import org.firstinspires.ftc.twenty403.command.drive.ResetGyroCommand;
 import org.firstinspires.ftc.twenty403.command.drive.SlowCommand;
+import org.firstinspires.ftc.twenty403.command.drive.TileMoveCommand;
+import org.firstinspires.ftc.twenty403.command.drive.TileMoving;
 import org.firstinspires.ftc.twenty403.command.drive.TurboCommand;
 
 public class ControlDriver {
@@ -79,30 +82,10 @@ public class ControlDriver {
         turboButton.whenReleased(new SlowCommand(robot.drivebaseSubsystem));
         resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
 
-        tileRight.whenPressed(
-            new TrajectorySequenceCommand(
-                robot.drivebaseSubsystem,
-                AutoConstants.Right.TELESTART_TO_RIGHT_MOVE
-            )
-        );
-        tileLeft.whenPressed(
-            new TrajectorySequenceCommand(
-                robot.drivebaseSubsystem,
-                AutoConstants.Right.TELESTART_TO_LEFT_MOVE
-            )
-        );
-        tileUp.whenPressed(
-            new TrajectorySequenceCommand(
-                robot.drivebaseSubsystem,
-                AutoConstants.Right.TELESTART_TO_FORWARD_MOVE
-            )
-        );
-        tileDown.whenPressed(
-            new TrajectorySequenceCommand(
-                robot.drivebaseSubsystem,
-                AutoConstants.Right.TELESTART_TO_BACKWARD_MOVE
-            )
-        );
+        tileRight.whenPressed(new TileMoveCommand(robot, TileMoving.Right));
+        tileLeft.whenPressed(new TileMoveCommand(robot, TileMoving.Left));
+        tileUp.whenPressed(new TileMoveCommand(robot, TileMoving.Up));
+        tileDown.whenPressed(new TileMoveCommand(robot, TileMoving.Down));
     }
     public void bindVisionCommand(){
         CommandScheduler

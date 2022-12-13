@@ -202,7 +202,7 @@ public class DrivebaseSubsystem
 
     @Override
     public void periodic() {
-        if (ENABLE_POSE_DIAGNOSTICS) {
+        if (ENABLE_POSE_DIAGNOSTICS && false) {
             updatePoseEstimate();
             Pose2d pose = getPoseEstimate();
             Pose2d poseVelocity = getPoseVelocity();
