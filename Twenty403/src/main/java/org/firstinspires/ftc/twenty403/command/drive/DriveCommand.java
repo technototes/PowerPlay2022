@@ -6,17 +6,12 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.util.Range;
 import com.technototes.library.command.Command;
-import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.Stick;
-import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.util.MathUtils;
 import java.util.function.BooleanSupplier;
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
 import java.util.function.DoubleSupplier;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline;
 
@@ -99,7 +94,7 @@ public class DriveCommand implements Command, Loggable {
         // headingInRads is [0-2pi]
         double heading = -Math.toDegrees(headingInRads);
         // Snap to the closest 90 or 270 degree angle (for going through the depot)
-        double close = MathUtils.closestTo(heading, 0, 45, 90, 135, 180);
+        double close = MathUtils.closestTo(heading, 0, 45, 90, 135, 180, 225, 270, 315, 360);
         double offBy = close - heading;
         // Normalize the error to -1 to 1
         double normalized = Math.max(Math.min(offBy / 45, 1.), -1.);
@@ -144,8 +139,9 @@ public class DriveCommand implements Command, Loggable {
 
     @Override
     public void execute() {
-        // TODO for TileByTile: Check to see if we're running a trajectory sequence.
-        // TS is running:
+        // For driving a trajectory:
+        // Check to see if we're running a trajectory sequence.
+        // Yes a TS is running:
         //   Is there an override?
         //     Yes: abandon the trajectory sequence, and resume manual control
         //     No: Just update the subsystem and return
@@ -158,13 +154,14 @@ public class DriveCommand implements Command, Loggable {
                 if (subsystem.isTrajectoryRequested()) {
                     startNewTrajectory();
                     currentDriveState = DriveState.TrajectoryRun;
-                    subsystem.clearTrajectory();
                 } else {
                     if (watchTrigger != null && watchTrigger.getAsBoolean()) {
                         // do the auto-align stuff
                         autoAlign45();
                     } else {
                         double curHeading = -subsystem.getExternalHeading();
+                        // The math & signs looks wonky, because this makes things field-relative
+                        // (Recall that "3 O'Clock" is zero degrees)
                         Vector2d input = new Vector2d(
                             -y.getAsDouble() * subsystem.speed,
                             -x.getAsDouble() * subsystem.speed
@@ -181,6 +178,7 @@ public class DriveCommand implements Command, Loggable {
                     currentDriveState = DriveState.Normal;
                     subsystem.poseDisplay += " (done)";
                 }
+                // TODO: Add a "halt" button to watch?
                 break;
         }
         subsystem.update();
@@ -191,23 +189,32 @@ public class DriveCommand implements Command, Loggable {
         Pose2d start = subsystem.getPoseEstimate();
         double endX = Range.clip(start.getX() + subsystem.trajectoryX, -72, 72);
         double endY = Range.clip(start.getY() + subsystem.trajectoryY, -72, 72);
-        double endHeading = AngleUnit.normalizeDegrees(
-            start.getHeading() + subsystem.trajectoryAngle
+        double endHeading = AngleUnit.normalizeRadians(
+            start.getHeading() + subsystem.trajectoryAngleRadians
         );
 
-        Pose2d end = new Pose2d(endX, endY, endHeading);
         subsystem.poseDisplay =
             String.format(
                 "%f, %f [%f] => %f, %f [%f]",
                 start.getX(),
                 start.getY(),
                 start.getHeading(),
-                end.getX(),
-                end.getY(),
-                end.getHeading()
+                endX,
+                endY,
+                endHeading
             );
-        Trajectory traj1 = subsystem.trajectoryBuilder(start).lineToLinearHeading(end).build();
-        subsystem.followTrajectoryAsync(traj1);
+        System.out.println(subsystem.poseDisplay);
+        // lineToLinearHeading seems to mess things up, maybe? :/
+        Trajectory t;
+        if (Math.abs(subsystem.trajectoryAngleRadians) > .01) {
+            Pose2d end = new Pose2d(endX, endY, endHeading);
+            t = subsystem.trajectoryBuilder(start).lineToLinearHeading(end).build();
+        } else {
+            Vector2d end = new Vector2d(endX, endY);
+            t = subsystem.trajectoryBuilder(start).lineTo(end).build();
+        }
+        subsystem.followTrajectoryAsync(t);
+        subsystem.clearRequestedTrajectory();
     }
 
     @Override

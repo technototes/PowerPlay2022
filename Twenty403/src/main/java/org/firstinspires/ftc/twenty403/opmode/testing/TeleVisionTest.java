@@ -8,7 +8,6 @@ import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
-
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.VisionCommand;
@@ -20,11 +19,12 @@ import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 @Config
 @TeleOp(group = "TeleVision Test")
 public class TeleVisionTest extends CommandOpMode {
+
     Robot robot;
     Hardware hardware;
     DrivebaseSubsystem drive;
     ControlDriver driverControls;
-    //    ControlsOperator operatorControls;
+    // ControlsOperator operatorControls;
     ControlOperator coDriverControls;
 
     @Override
@@ -32,26 +32,30 @@ public class TeleVisionTest extends CommandOpMode {
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware, Alliance.BLUE, StartingPosition.NEUTRAL);
         driverControls = new ControlDriver(driverGamepad, robot);
-//        operatorControls = new ControlsOperator(codriverGamepad, robot, Robot.SubsystemCombo.DEFAULT);
+        // operatorControls = new ControlsOperator(codriverGamepad, robot, Robot.SubsystemCombo.DEFAULT);
         coDriverControls = new ControlOperator(codriverGamepad, robot);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        if (Robot.RobotConstant.CAMERA_CONNECTED) {
+        // I don't think we want to do this, as it stops the pipeline 'after init' and that
+        // may be triggered *after* we start the pipeline when we 'upon start'.
+        if (false && Robot.RobotConstant.CAMERA_CONNECTED) {
             CommandScheduler.getInstance().scheduleInit(new VisionCommand(robot.visionSystem));
         }
     }
 
     @Override
-    public void uponStart() {
-
-    }
+    public void uponStart() {}
 
     @Override
     public void runLoop() {
         telemetry.addData("External Heading", robot.drivebaseSubsystem.getExternalHeading());
-        telemetry.addData("Left Stick X", gamepad1.left_stick_x);
-        telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
-        telemetry.addData("Right Stick X", gamepad1.right_stick_x);
-        telemetry.addData("Right Stick Y", gamepad1.right_stick_y);
+        telemetry.addData(
+            "Left Stick",
+            String.format("%f, %f", gamepad1.left_stick_x, gamepad1.left_stick_y)
+        );
+        telemetry.addData(
+            "Left Stick",
+            String.format("%f, %f", gamepad1.right_stick_x, gamepad1.right_stick_y)
+        );
         telemetry.addData("PoseEstimate", robot.drivebaseSubsystem.getPoseEstimate());
         telemetry.addData("Vis State: ", robot.visionSystem.visionPipeline.activeMode.toString());
         telemetry.addData("Junction X: ", robot.visionSystem.visionPipeline.junctionX);

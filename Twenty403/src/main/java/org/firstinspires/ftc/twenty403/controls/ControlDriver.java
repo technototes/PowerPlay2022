@@ -46,7 +46,7 @@ public class ControlDriver {
         if (Robot.RobotConstant.CLAW_CONNECTED) {
             bindClawControls();
         }
-        if (Robot.RobotConstant.CAMERA_CONNECTED){
+        if (Robot.RobotConstant.CAMERA_CONNECTED) {
             bindVisionCommand();
         }
     }
@@ -87,12 +87,15 @@ public class ControlDriver {
         tileUp.whenPressed(new TileMoveCommand(robot, TileMoving.Up));
         tileDown.whenPressed(new TileMoveCommand(robot, TileMoving.Down));
     }
-    public void bindVisionCommand(){
-        CommandScheduler
-                .getInstance()
-                .scheduleForState(new VisionDuringTeleCommand(robot.visionSystem, gamepad.share), CommandOpMode.OpModeState.RUN);
-    }
 
+    public void bindVisionCommand() {
+        CommandScheduler
+            .getInstance()
+            .scheduleForState(
+                new VisionDuringTeleCommand(robot.visionSystem, gamepad.share),
+                CommandOpMode.OpModeState.RUN
+            );
+    }
 
     public void bindClawControls() {
         clawToggleAutoCloseButton.whenPressed(new ClawAutoCloseToggleCommand(robot.clawSubsystem));
