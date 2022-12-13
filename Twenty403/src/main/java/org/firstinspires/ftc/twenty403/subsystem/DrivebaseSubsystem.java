@@ -222,10 +222,16 @@ public class DrivebaseSubsystem
         rightFront.setPower(v3 * DriveConstants.AFR_SCALE);
     }
 
-    public void requestTrajectoryMove(double deltaX, double deltaY, double deltaAngle) {
+    public void requestTrajectoryMove(double deltaX, double deltaY, double deltaAngleRadians) {
         trajectoryX = deltaX;
         trajectoryY = deltaY;
-        trajectoryAngleRadians = deltaAngle;
+        trajectoryAngleRadians = deltaAngleRadians;
+    }
+
+    public void requestTrajectoryMove(double deltaX, double deltaY) {
+        trajectoryX = deltaX;
+        trajectoryY = deltaY;
+        trajectoryAngleRadians = 0.0;
     }
 
     public boolean isTrajectoryRequested() {

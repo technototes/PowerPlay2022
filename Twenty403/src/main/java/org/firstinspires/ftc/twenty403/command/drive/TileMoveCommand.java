@@ -23,16 +23,16 @@ public class TileMoveCommand implements Command {
             case Up:
                 // It's not clear if this will allow other subsystems to run.
                 // If it doesn't, we'll need to expose capabilities in the drivebase subsystem
-                robot.drivebaseSubsystem.requestTrajectoryMove(0, 24, 0);
+                robot.drivebaseSubsystem.requestTrajectoryMove(0, 24);
                 break;
             case Down:
-                robot.drivebaseSubsystem.requestTrajectoryMove(0, -24, 0);
+                robot.drivebaseSubsystem.requestTrajectoryMove(0, -24);
                 break;
             case Left:
-                robot.drivebaseSubsystem.requestTrajectoryMove(-24, 0, 0);
+                robot.drivebaseSubsystem.requestTrajectoryMove(-24, 0);
                 break;
             case Right:
-                robot.drivebaseSubsystem.requestTrajectoryMove(24, 0, 0);
+                robot.drivebaseSubsystem.requestTrajectoryMove(24, 0);
                 break;
         }
     }
