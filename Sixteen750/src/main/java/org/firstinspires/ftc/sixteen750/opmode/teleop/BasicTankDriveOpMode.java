@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.sixteen750.opmode.teleop;
 
-import org.firstinspires.ftc.sixteen750.subsystem.TankDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.drive.TankDriveSubsystem;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;

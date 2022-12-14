@@ -3,7 +3,7 @@ package org.firstinspires.ftc.sixteen750.command.drive;
 import com.technototes.library.command.Command;
 import com.technototes.library.control.CommandGamepad;
 
-import org.firstinspires.ftc.sixteen750.subsystem.MecanumDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.drive.MecanumDriveSubsystem;
 
 public class ResetGyroCommand implements Command {
     public MecanumDriveSubsystem mecanumDriveSubsystem;

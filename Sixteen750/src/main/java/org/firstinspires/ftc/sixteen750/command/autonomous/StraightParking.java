@@ -3,7 +3,7 @@ package org.firstinspires.ftc.sixteen750.command.autonomous;
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.path.command.TrajectorySequenceCommand;
 
-import org.firstinspires.ftc.sixteen750.subsystem.MecanumDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.drive.MecanumDriveSubsystem;
 
 public class StraightParking extends SequentialCommandGroup {
     public StraightParking(MecanumDriveSubsystem driveSubsystem) {

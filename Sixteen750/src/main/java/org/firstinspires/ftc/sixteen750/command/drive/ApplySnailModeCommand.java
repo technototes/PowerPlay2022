@@ -2,7 +2,7 @@ package org.firstinspires.ftc.sixteen750.command.drive;
 
 import com.technototes.library.command.Command;
 
-import org.firstinspires.ftc.sixteen750.subsystem.MecanumDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.drive.MecanumDriveSubsystem;
 
 public class ApplySnailModeCommand implements Command {
     MecanumDriveSubsystem driveSubsystem;
