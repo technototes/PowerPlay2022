@@ -163,12 +163,18 @@ public class DrivebaseSubsystem
     // @Log.Number(name = "RR")
     public EncodedMotor<DcMotorEx> rr2;
 
+    @Log
+    public String locState = "none";
+
+    public OdoSubsystem odometry;
+
     public DrivebaseSubsystem(
         EncodedMotor<DcMotorEx> fl,
         EncodedMotor<DcMotorEx> fr,
         EncodedMotor<DcMotorEx> rl,
         EncodedMotor<DcMotorEx> rr,
-        IMU i
+        IMU i,
+        OdoSubsystem odo
     ) {
         super(fl, fr, rl, rr, i, () -> DriveConstants.class);
         fl2 = fl;
@@ -176,8 +182,13 @@ public class DrivebaseSubsystem
         rl2 = rl;
         rr2 = rr;
         speed = DriveConstants.SLOW_MOTOR_SPEED;
+        odometry = odo;
+
         if (this.getLocalizer() != null) {
-            this.setLocalizer(new OverriderLocalizer(this.getLocalizer()));
+            this.setLocalizer(new OverrideLocalizer(this.getLocalizer(), odo, this));
+            locState = "created";
+        } else {
+            locState = "not created";
         }
     }
 

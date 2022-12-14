@@ -23,7 +23,7 @@ public class DriveCommand implements Command {
         Stick stick2,
         BooleanSupplier straighten
     ) {
-        addRequirements(sub);
+        addRequirements(sub, sub.odometry);
         subsystem = sub;
         x = stick1.getXSupplier();
         y = stick1.getYSupplier();
