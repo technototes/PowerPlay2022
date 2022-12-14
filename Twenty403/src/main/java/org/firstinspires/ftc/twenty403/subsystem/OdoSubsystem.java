@@ -70,9 +70,9 @@ public class OdoSubsystem implements Subsystem, Loggable {
         int leftBlue = ColorHelper.blue(leftColor);
         int rightBlue = ColorHelper.blue(rightColor);
         int centerBlue = ColorHelper.blue(centerColor);
-        boolean leftGray = Math.abs(leftRed - leftBlue) < 50;
-        boolean rightGray = Math.abs(rightRed - rightBlue) < 50;
-        boolean centerGray = Math.abs(centerRed - centerBlue) < 50;
+        boolean leftGray = leftRed == leftBlue;
+        boolean rightGray = rightRed == rightBlue;
+        boolean centerGray = centerRed == centerBlue;
 
         if (leftGray == true && rightGray == true && centerGray == true) {
             return GraySensorCombo.All;
@@ -115,6 +115,7 @@ public class OdoSubsystem implements Subsystem, Loggable {
             rightColor = cRight.argb();
         }
         odoData =
-            String.format("%s : %f, %f", ReadSensors().toString(), leftDistance, rightDistance);
+            String.format("O%s-%d,%d:%x|%x|%x", ReadSensors().toString(),
+                    (int)leftDistance, (int)rightDistance, leftColor, centerColor, rightColor);
     }
 }
