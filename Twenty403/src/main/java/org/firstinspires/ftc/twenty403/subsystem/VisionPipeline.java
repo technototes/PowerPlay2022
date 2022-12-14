@@ -216,7 +216,11 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                 if (Math.abs(startX - endX) > range) {
                     junctionY = j;
                     junctionX = (startX + endX) / 2;
-                    Imgproc.rectangle(img, new Rect((int) junctionX, (int) junctionY, 5, 5), VisionConstants.HIGHLIGHT);
+                    Imgproc.rectangle(
+                        img,
+                        new Rect((int) junctionX, (int) junctionY, 5, 5),
+                        VisionConstants.HIGHLIGHT
+                    );
                     return;
                 }
             }
@@ -232,22 +236,19 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         fps = 1000 / time.milliseconds();
         time.reset();
 
-        if (activeMode == Mode.Inactive) {
-            return input;
+        switch (activeMode) {
+            case Signal:
+                detectSignal(input);
+                break;
+            case Junction:
+                detectJunction(input);
+                break;
+            case Inactive:
+            default:
+                return input;
         }
-        if (activeMode == Mode.Signal) {
-            detectSignal(input);
-
-            if (VisionSubsystem.VisionSubsystemConstants.DEBUG_VIEW) {
-                sendBitmap();
-            }
-        } else if (activeMode == Mode.Junction) {
-
-            detectJunction(input);
-
-            if (VisionSubsystem.VisionSubsystemConstants.DEBUG_VIEW) {
-                sendBitmap();
-            }
+        if (VisionSubsystem.VisionSubsystemConstants.DEBUG_VIEW) {
+            sendBitmap();
         }
         return input;
     }
