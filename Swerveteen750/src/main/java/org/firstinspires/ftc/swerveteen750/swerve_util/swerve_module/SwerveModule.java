@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.swerveteen750.swerve_util;
+package org.firstinspires.ftc.swerveteen750.swerve_util.swerve_module;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -17,16 +18,19 @@ import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigu
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.SwerveDriveSubsystem;
+import org.firstinspires.ftc.swerveteen750.swerve_util.AbsoluteAnalogEncoder;
+import org.firstinspires.ftc.swerveteen750.swerve_util.CRServoProfiler;
+import org.firstinspires.ftc.swerveteen750.swerve_util.Encoder;
 
+@Config
+public class SwerveModule {
+    public static PIDCoefficients MODULE_PID = new PIDCoefficients(0.6, 0, 0.03);
 
-public class AnotherSwerveModule {
-//    public static PIDCoefficients ROTATION_PID = new PIDCoefficients(0.6, 0, 0.03);
-
-    public static double K_STATIC = 0.0, K_MOTOR = 0;
+    public static double K_STATIC = 0.2, K_MOTOR = 0;
 
     public static CRServoProfiler.Constraints SERVO_CONSTRAINTS = new CRServoProfiler.Constraints(1, 1000, 2);
 
-    public static double MAX_SERVO_SPEED = 1, MAX_MOTOR_SPEED = 1;
+    public static double MAX_SERVO = 1, MAX_MOTOR = 1;
 
     //EXPERIMENTAL FEATURES
     public static boolean WAIT_FOR_TARGET = false;
@@ -48,10 +52,12 @@ public class AnotherSwerveModule {
 
     private boolean wheelFlipped = false;
 
-    public AnotherSwerveModule(DcMotorEx m, CRServo s, AbsoluteAnalogEncoder e, PIDCoefficients rotationPID) {
+
+
+    public SwerveModule(DcMotorEx m, CRServo s, AbsoluteAnalogEncoder e) {
         motor = m;
         MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
-        motorConfigurationType.setAchieveableMaxRPMFraction(MAX_MOTOR_SPEED);
+        motorConfigurationType.setAchieveableMaxRPMFraction(MAX_MOTOR);
         motor.setMotorType(motorConfigurationType);
 
         servo = s;
@@ -60,21 +66,15 @@ public class AnotherSwerveModule {
 
         encoder = e;
         e.setInverted(Encoder.Direction.REVERSE);
-        rotationController = new PIDFController(rotationPID, 0, 0, K_STATIC, (p, v) -> lastMotorPower * K_MOTOR);
+        rotationController = new PIDFController(MODULE_PID, 0, 0, K_STATIC, (p, v)->lastMotorPower*K_MOTOR);
         rotationProfiler = new CRServoProfiler(servo, SERVO_CONSTRAINTS);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        System.out.println("Rotation PID: " + rotationPID);
     }
 
-
-    public AnotherSwerveModule(HardwareMap hardwareMap, String motorName, String servoName, String encoderName, PIDCoefficients rotationPID) {
-        this(
-                hardwareMap.get(DcMotorEx.class, motorName),
+    public SwerveModule(HardwareMap hardwareMap, String motorName, String servoName, String encoderName) {
+        this(hardwareMap.get(DcMotorEx.class, motorName),
                 hardwareMap.get(CRServo.class, servoName),
-                new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, encoderName)),
-                rotationPID
-        );
+                new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, encoderName)));
     }
 
 
@@ -82,10 +82,9 @@ public class AnotherSwerveModule {
         double target = getTargetRotation(), current = getModuleRotation();
         if (current - target > Math.PI) current -= (2 * Math.PI);
         else if (target - current > Math.PI) current += (2 * Math.PI);
-        double power = Range.clip(rotationController.update(current), -MAX_SERVO_SPEED, MAX_SERVO_SPEED);
+        double power = Range.clip(rotationController.update(current), -MAX_SERVO, MAX_SERVO);
         if(Double.isNaN(power)) power = 0;
         servo.setPower(Math.abs(rotationController.getLastError()) > ALLOWED_BB_ERROR ? power : 0);
-        //System.out.println("Target: " + Math.toDegrees(target) + " Current: " + Math.toDegrees(current) + " Power: " + power + ", " + rotationController.getTargetPosition() +", " + rotationController.getTargetVelocity() + ", " + rotationController.getTargetAcceleration());
     }
 
     public double getTargetRotation() {
@@ -118,7 +117,6 @@ public class AnotherSwerveModule {
     public void setPIDFCoefficients(DcMotor.RunMode runMode, PIDFCoefficients coefficients) {
         motor.setPIDFCoefficients(runMode, coefficients);
     }
-
     double lastMotorPower = 0;
     public void setMotorPower(double power) {
         //target check
@@ -142,9 +140,8 @@ public class AnotherSwerveModule {
     }
 
     public static double MIN_MOTOR_TO_TURN = 0.05;
-    public boolean enableMotor = true;
     public void setTargetRotation(double target) {
-        if(enableMotor && Math.abs(lastMotorPower) < MIN_MOTOR_TO_TURN){
+        if(Math.abs(lastMotorPower) < MIN_MOTOR_TO_TURN){
             //add stuff like X-ing preAlign
             return;
         }
@@ -169,9 +166,9 @@ public class AnotherSwerveModule {
     }
 
     public static class SwerveModuleState {
-        public AnotherSwerveModule module;
+        public SwerveModule module;
         public double wheelPos, podRot;
-        public SwerveModuleState(AnotherSwerveModule s){
+        public SwerveModuleState(SwerveModule s){
             module = s;
             wheelPos = 0;
             podRot = 0;

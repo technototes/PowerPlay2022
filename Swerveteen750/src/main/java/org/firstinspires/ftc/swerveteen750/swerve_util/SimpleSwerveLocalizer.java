@@ -3,6 +3,8 @@ package org.firstinspires.ftc.swerveteen750.swerve_util;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 
+import org.firstinspires.ftc.swerveteen750.swerve_util.swerve_module.SwerveModule;
+
 import java.util.Arrays;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;

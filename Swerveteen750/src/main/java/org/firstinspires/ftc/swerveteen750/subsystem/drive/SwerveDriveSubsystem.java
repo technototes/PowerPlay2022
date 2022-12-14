@@ -31,7 +31,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.swerveteen750.swerve_util.BetterSwerveLocalizer;
-import org.firstinspires.ftc.swerveteen750.swerve_util.SwerveModule;
+import org.firstinspires.ftc.swerveteen750.swerve_util.swerve_module.SwerveModule;
 import org.firstinspires.ftc.swerveteen750.swerve_util.LynxModuleUtil;
 import org.firstinspires.ftc.swerveteen750.swerve_util.TrajectorySequence;
 import org.firstinspires.ftc.swerveteen750.swerve_util.TrajectorySequenceBuilder;

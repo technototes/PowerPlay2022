@@ -3,7 +3,7 @@ package org.firstinspires.ftc.swerveteen750.subsystem.drive;
 import com.technototes.library.subsystem.Subsystem;
 
 import org.firstinspires.ftc.swerveteen750.swerve_util.SimpleSwerveLocalizer;
-import org.firstinspires.ftc.swerveteen750.swerve_util.SwerveModule;
+import org.firstinspires.ftc.swerveteen750.swerve_util.swerve_module.SwerveModule;
 
 import java.util.ArrayList;
 

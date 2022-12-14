@@ -31,11 +31,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.swerveteen750.swerve_util.AnotherBetterSwerveLocalizer;
-import org.firstinspires.ftc.swerveteen750.swerve_util.AnotherSwerveModule;
-import org.firstinspires.ftc.swerveteen750.swerve_util.LeftFrontSwerveModule;
-import org.firstinspires.ftc.swerveteen750.swerve_util.LeftRearSwerveModule;
-import org.firstinspires.ftc.swerveteen750.swerve_util.RightFrontSwerveModule;
-import org.firstinspires.ftc.swerveteen750.swerve_util.RightRearSwerveModule;
+import org.firstinspires.ftc.swerveteen750.swerve_util.swerve_module.AnotherSwerveModule;
 import org.firstinspires.ftc.swerveteen750.swerve_util.LynxModuleUtil;
 import org.firstinspires.ftc.swerveteen750.swerve_util.TrajectorySequence;
 import org.firstinspires.ftc.swerveteen750.swerve_util.TrajectorySequenceBuilder;
@@ -268,16 +264,21 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         PhotonCore.CONTROL_HUB.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
         PhotonCore.experimental.setMaximumParallelCommands(MAX_PARALLEL_COMMANDS);
     }
-    public static PIDCoefficients DEFAULT_SERVO_ROTATION_PID = new PIDCoefficients(0.6, 0, 0);
+
+    public static PIDCoefficients LF_SERVO_ROTATION_PID = new PIDCoefficients(0.6, 0, 0);
+    public static PIDCoefficients LR_SERVO_ROTATION_PID = new PIDCoefficients(0.6, 0, 0);
     public static PIDCoefficients RF_SERVO_ROTATION_PID = new PIDCoefficients(0.4, 0, 0);
+    public static PIDCoefficients RR_SERVO_ROTATION_PID = new PIDCoefficients(0.6, 0, 0);
+
+
     public ConfigurableSwerveDriveSubsystem(HardwareMap hardwareMap){
         this(
                 hardwareMap,
                 hardwareMap.get(BNO055IMU.class, "imu"),
-                new LeftFrontSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", DEFAULT_SERVO_ROTATION_PID),
-                new LeftRearSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", DEFAULT_SERVO_ROTATION_PID),
-                new RightFrontSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RF_SERVO_ROTATION_PID),
-                new RightRearSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", DEFAULT_SERVO_ROTATION_PID)
+                new AnotherSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", LF_SERVO_ROTATION_PID),
+                new AnotherSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", LR_SERVO_ROTATION_PID),
+                new AnotherSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RF_SERVO_ROTATION_PID),
+                new AnotherSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", RR_SERVO_ROTATION_PID)
         );
     }
 

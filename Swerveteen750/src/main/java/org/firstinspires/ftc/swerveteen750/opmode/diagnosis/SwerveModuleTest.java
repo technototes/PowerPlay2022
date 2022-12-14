@@ -7,18 +7,16 @@ import com.technototes.library.structure.CommandOpMode;
 
 import org.firstinspires.ftc.swerveteen750.Hardware;
 import org.firstinspires.ftc.swerveteen750.Robot;
-import org.firstinspires.ftc.swerveteen750.swerve_util.LeftFrontSwerveModule;
-import org.firstinspires.ftc.swerveteen750.swerve_util.LeftRearSwerveModule;
-import org.firstinspires.ftc.swerveteen750.swerve_util.RightFrontSwerveModule;
-import org.firstinspires.ftc.swerveteen750.swerve_util.RightRearSwerveModule;
+import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
+import org.firstinspires.ftc.swerveteen750.swerve_util.swerve_module.AnotherSwerveModule;
 
 @TeleOp(group = "Test-Hardware")
 public class SwerveModuleTest extends CommandOpMode {
     Hardware hardware;
-    LeftFrontSwerveModule leftFrontModule;
-    LeftRearSwerveModule leftRearModule;
-    RightFrontSwerveModule rightFrontModule;
-    RightRearSwerveModule rightRearModule;
+    AnotherSwerveModule leftFrontModule;
+    AnotherSwerveModule leftRearModule;
+    AnotherSwerveModule rightFrontModule;
+    AnotherSwerveModule rightRearModule;
 
 
     public double leftFrontModuleTargetOrientationRadians = 0;
@@ -30,10 +28,10 @@ public class SwerveModuleTest extends CommandOpMode {
     public void uponInit() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.S_DRIVE_ONLY);
-        leftFrontModule = new LeftFrontSwerveModule(hardware.leftFrontMotorQ, hardware.leftFrontServo, hardware.leftFrontEncoder);
-        leftRearModule = new LeftRearSwerveModule(hardware.leftRearMotorQ, hardware.leftRearServo, hardware.leftRearEncoder);
-        rightFrontModule = new RightFrontSwerveModule(hardware.rightFrontMotorQ, hardware.rightFrontServo, hardware.rightFrontEncoder);
-        rightRearModule = new RightRearSwerveModule(hardware.rightRearMotorQ, hardware.rightRearServo, hardware.rightRearEncoder);
+        leftFrontModule = new AnotherSwerveModule(hardware.leftFrontMotorQ, hardware.leftFrontServo, hardware.leftFrontEncoder, ConfigurableSwerveDriveSubsystem.LF_SERVO_ROTATION_PID);
+        leftRearModule = new AnotherSwerveModule(hardware.leftRearMotorQ, hardware.leftRearServo, hardware.leftRearEncoder, ConfigurableSwerveDriveSubsystem.LR_SERVO_ROTATION_PID);
+        rightFrontModule = new AnotherSwerveModule(hardware.rightFrontMotorQ, hardware.rightFrontServo, hardware.rightFrontEncoder, ConfigurableSwerveDriveSubsystem.RF_SERVO_ROTATION_PID);
+        rightRearModule = new AnotherSwerveModule(hardware.rightRearMotorQ, hardware.rightRearServo, hardware.rightRearEncoder, ConfigurableSwerveDriveSubsystem.RR_SERVO_ROTATION_PID);
     }
 
     @Override
