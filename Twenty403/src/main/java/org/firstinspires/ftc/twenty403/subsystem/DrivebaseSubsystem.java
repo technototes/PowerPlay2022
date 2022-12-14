@@ -247,13 +247,15 @@ public class DrivebaseSubsystem
 
     private boolean cancelled;
 
-    public boolean isTrajectoryCancelled(){
+    public boolean isTrajectoryCancelled() {
         return cancelled;
     }
-    public void requestCancelled(){
+
+    public void requestCancelled() {
         cancelled = true;
     }
-    public void clearCancelledRequest(){
+
+    public void clearCancelledRequest() {
         cancelled = false;
     }
 }
