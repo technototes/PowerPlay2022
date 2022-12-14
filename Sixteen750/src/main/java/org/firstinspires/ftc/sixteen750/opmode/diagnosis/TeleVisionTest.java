@@ -34,7 +34,7 @@ public class TeleVisionTest extends CommandOpMode {
 //        operatorControls = new ControlsOperator(codriverGamepad, robot, Robot.SubsystemCombo.DEFAULT);
         coDriverControls = new ControlsCoDriver(codriverGamepad, robot, Robot.SubsystemCombo.DEFAULT);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        if (Robot.RobotConstant.CAMERA_ENABLED) {
+        if (false && Robot.RobotConstant.CAMERA_ENABLED) {
             CommandScheduler.getInstance().scheduleInit(new VisionCommand(robot.visionSubsystem));
         }
     }

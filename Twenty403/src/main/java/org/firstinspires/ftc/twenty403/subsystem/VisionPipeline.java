@@ -76,6 +76,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
 
         // What color should we draw the outlining rectangle?
         public static Scalar HIGHLIGHT = new Scalar(255, 128, 255);
+        public static Scalar GREEN = new Scalar(0, 255, 0);
     }
 
     @LogConfig.Run(duringRun = false, duringInit = true)
@@ -179,6 +180,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
     }
 
     public void detectJunction(Mat frame) {
+        Imgproc.rectangle(img, new Rect(2, 2, 7, 9), VisionConstants.GREEN);
         android.util.Log.d("VIS", "We're running");
         Imgproc.cvtColor(frame, customColorSpace, Imgproc.COLOR_RGB2HSV);
         int startX = -1;
@@ -199,7 +201,8 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                         startX = i;
                     } else {
                         endX = i;
-                    }
+                    };
+                    img.put(j, i, VisionConstants.YELLOW);
                     // Draw a dot on the image at this point - input was put into img
                     // The color choice makes things stripey, which makes it easier to identif
                     // if less than 20 for range after not seeing yellow than set both to -1 as not junction ypou are
