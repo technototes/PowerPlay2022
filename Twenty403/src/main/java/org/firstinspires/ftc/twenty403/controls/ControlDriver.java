@@ -18,6 +18,7 @@ import org.firstinspires.ftc.twenty403.command.claw.ClawAutoCloseToggleCommand;
 import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
 import org.firstinspires.ftc.twenty403.command.drive.ResetGyroCommand;
 import org.firstinspires.ftc.twenty403.command.drive.SlowCommand;
+import org.firstinspires.ftc.twenty403.command.drive.TileAbortCommand;
 import org.firstinspires.ftc.twenty403.command.drive.TileMoveCommand;
 import org.firstinspires.ftc.twenty403.command.drive.TileMoving;
 import org.firstinspires.ftc.twenty403.command.drive.TurboCommand;
@@ -28,7 +29,7 @@ public class ControlDriver {
     public CommandGamepad gamepad;
 
     public Stick driveLeftStick, driveRightStick;
-    public CommandButton tileRight, tileLeft, tileUp, tileDown;
+    public CommandButton tileRight, tileLeft, tileUp, tileDown, tileAbort;
     public CommandButton resetGyroButton, driveStraight, turboButton;
     public CommandButton clawToggleAutoCloseButton;
     public CommandButton override;
@@ -60,7 +61,7 @@ public class ControlDriver {
         tileUp = gamepad.dpadUp;
         tileLeft = gamepad.dpadLeft;
         tileRight = gamepad.dpadRight;
-
+        tileAbort = gamepad.leftBumper;
         turboButton = gamepad.triangle;
 
         driveStraight = gamepad.rightTrigger.getAsButton(0.5);
@@ -86,6 +87,7 @@ public class ControlDriver {
         tileLeft.whenPressed(new TileMoveCommand(robot, TileMoving.Left));
         tileUp.whenPressed(new TileMoveCommand(robot, TileMoving.Up));
         tileDown.whenPressed(new TileMoveCommand(robot, TileMoving.Down));
+        tileAbort.whenPressed(new TileAbortCommand(robot));
     }
 
     public void bindVisionCommand() {

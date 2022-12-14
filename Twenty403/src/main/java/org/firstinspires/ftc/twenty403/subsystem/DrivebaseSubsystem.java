@@ -255,4 +255,18 @@ public class DrivebaseSubsystem
     public void clearRequestedTrajectory() {
         requestTrajectoryMove(0, 0, 0);
     }
+
+    private boolean cancelled;
+
+    public boolean isTrajectoryCancelled() {
+        return cancelled;
+    }
+
+    public void requestCancelled() {
+        cancelled = true;
+    }
+
+    public void clearCancelledRequest() {
+        cancelled = false;
+    }
 }

@@ -178,6 +178,11 @@ public class DriveCommand implements Command, Loggable {
                     currentDriveState = DriveState.Normal;
                     subsystem.poseDisplay += " (done)";
                 }
+                if (subsystem.isTrajectoryCancelled()) {
+                    subsystem.stop();
+
+                    subsystem.clearCancelledRequest();
+                }
                 // TODO: Add a "halt" button to watch?
                 break;
         }
