@@ -151,6 +151,8 @@ public class DrivebaseSubsystem
 
     private static final boolean ENABLE_POSE_DIAGNOSTICS = true;
 
+    public double trajectoryX, trajectoryY, trajectoryAngleRadians;
+
     @Log(name = "Pose2d: ")
     public String poseDisplay = ENABLE_POSE_DIAGNOSTICS ? "" : null;
 
@@ -211,7 +213,7 @@ public class DrivebaseSubsystem
 
     @Override
     public void periodic() {
-        if (ENABLE_POSE_DIAGNOSTICS) {
+        if (ENABLE_POSE_DIAGNOSTICS && false) {
             updatePoseEstimate();
             Pose2d pose = getPoseEstimate();
             Pose2d poseVelocity = getPoseVelocity();
@@ -219,7 +221,7 @@ public class DrivebaseSubsystem
                 pose.toString() +
                 " : " +
                 (poseVelocity != null ? poseVelocity.toString() : "<null>");
-            System.out.println("Pose: " + poseDisplay);
+            // System.out.println("Pose: " + poseDisplay);
         }
     }
 
@@ -229,5 +231,42 @@ public class DrivebaseSubsystem
         leftRear.setPower(v1 * DriveConstants.ARL_SCALE);
         rightRear.setPower(v2 * DriveConstants.ARR_SCALE);
         rightFront.setPower(v3 * DriveConstants.AFR_SCALE);
+    }
+
+    public void requestTrajectoryMove(double deltaX, double deltaY, double deltaAngleRadians) {
+        trajectoryX = deltaX;
+        trajectoryY = deltaY;
+        trajectoryAngleRadians = deltaAngleRadians;
+    }
+
+    public void requestTrajectoryMove(double deltaX, double deltaY) {
+        trajectoryX = deltaX;
+        trajectoryY = deltaY;
+        trajectoryAngleRadians = 0.0;
+    }
+
+    public boolean isTrajectoryRequested() {
+        if (trajectoryX != 0 || trajectoryY != 0 || trajectoryAngleRadians != 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public void clearRequestedTrajectory() {
+        requestTrajectoryMove(0, 0, 0);
+    }
+
+    private boolean cancelled;
+
+    public boolean isTrajectoryCancelled() {
+        return cancelled;
+    }
+
+    public void requestCancelled() {
+        cancelled = true;
+    }
+
+    public void clearCancelledRequest() {
+        cancelled = false;
     }
 }

@@ -9,6 +9,7 @@ import org.firstinspires.ftc.sixteen750.command.compound.ArmScoreCommand;
 import org.firstinspires.ftc.sixteen750.command.compound.ArmUpwardCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftMoveDownOverrideCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftMoveUpOverrideCommand;
+import org.firstinspires.ftc.sixteen750.opmode.diagnosis.TeleVisionTest;
 
 public class ControlsCoDriver {
     public Robot robot;
@@ -51,7 +52,7 @@ public class ControlsCoDriver {
 
     public void bindCoDriverArmControls(){
         gamepad.square.whenPressed(new ArmScoreCommand(robot.armSubsystem));
-        gamepad.triangle.whenPressed(new ArmUpwardCommand(robot.armSubsystem));
+       // gamepad.triangle.whenPressed(new ArmUpwardCommand(robot.armSubsystem));
         gamepad.circle.whenPressed(new ArmIntakeCommand(robot.armSubsystem));
     }
 

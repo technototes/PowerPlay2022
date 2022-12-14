@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.twenty403.opmode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
@@ -20,6 +22,7 @@ public class DualRed extends CommandOpMode {
 
     @Override
     public void uponInit() {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware, Alliance.RED, StartingPosition.NEUTRAL);
         controlsDriver = new ControlDriver(driverGamepad, robot);
