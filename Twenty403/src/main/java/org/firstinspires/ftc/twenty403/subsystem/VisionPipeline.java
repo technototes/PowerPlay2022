@@ -75,13 +75,21 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
 
         // What color should we draw the outlining rectangle?
         public static Scalar RGB_HIGHLIGHT = new Scalar(255, 128, 255);
+        public static int RED_RANGE = 30;
         public static Scalar RGB_RED = new Scalar(255, 0, 0);
+        public static int GREEN_RANGE = 30;
         public static Scalar RGB_GREEN = new Scalar(0, 255, 0);
+        public static int BLUE_RANGE = 30;
         public static Scalar RGB_BLUE = new Scalar(0, 0, 255);
+        public static int YELLOW_RANGE = 30;
         public static Scalar RGB_YELLOW = new Scalar(0, 255, 255);
+        public static int AQUA_RANGE = 30;
         public static Scalar RGB_AQUA = new Scalar(255, 255, 0);
+        public static int PINK_RANGE = 30;
         public static Scalar RGB_PINK = new Scalar(255, 0, 255);
+        public static int PURPLE_RANGE = 30;
         public static Scalar RGB_PURPLE = new Scalar(128, 0, 128);
+        public static int WHITE_RANGE = 30;
         public static Scalar RGB_WHITE = new Scalar(255, 255, 255);
     }
 
@@ -207,7 +215,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                     } else {
                         endX = i;
                     }
-                    img.put(j, i, VisionConstants.RGB_YELLOW.val);
+                    img.put(j, i, VisionConstants.RGB_WHITE.val);
                     // Draw a dot on the image at this point - input was put into img
                     // The color choice makes things stripey, which makes it easier to identif
                     // if less than 20 for range after not seeing yellow than set both to -1 as not junction ypou are
@@ -220,33 +228,50 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                     // Debug some stuff:
                     if (
                         color[1] > VisionConstants.lowS &&
-                        color[1] < VisionConstants.highS &&
+                        color[1] <= VisionConstants.highS &&
                         color[2] > VisionConstants.lowV &&
-                        color[2] < VisionConstants.highV
+                        color[2] <= VisionConstants.highV
                     ) {
                         // Let's draw some colors to help identify the right range
-                        switch ((int) (color[0] / 30)) {
-                            case 0:
-                                img.put(j, i, VisionConstants.RGB_RED.val);
-                                break;
-                            case 1:
-                                img.put(j, i, VisionConstants.RGB_GREEN.val);
-                                break;
-                            case 2:
-                                img.put(j, i, VisionConstants.RGB_BLUE.val);
-                                break;
-                            case 3:
-                                img.put(j, i, VisionConstants.RGB_PURPLE.val);
-                                break;
-                            case 4:
-                                img.put(j, i, VisionConstants.RGB_PINK.val);
-                                break;
-                            case 5:
-                                img.put(j, i, VisionConstants.RGB_AQUA.val);
-                                break;
-                            default:
-                                img.put(j, i, VisionConstants.RGB_WHITE.val);
-                                break;
+                        int thecolor = (int)color[0];
+                        if (thecolor < VisionConstants.RED_RANGE) {
+                            img.put(j, i, VisionConstants.RGB_RED.val);
+                            continue;
+                        }
+                        thecolor -= VisionConstants.RED_RANGE;
+                        if (thecolor < VisionConstants.GREEN_RANGE) {
+                            img.put(j, i, VisionConstants.RGB_GREEN.val);
+                            continue;
+                        }
+                        thecolor -= VisionConstants.GREEN_RANGE;
+                        if (thecolor < VisionConstants.BLUE_RANGE) {
+                            img.put(j, i, VisionConstants.RGB_BLUE.val);
+                            continue;
+                        }
+                        thecolor -= VisionConstants.BLUE_RANGE;
+                        if (thecolor < VisionConstants.YELLOW_RANGE) {
+                            img.put(j, i, VisionConstants.RGB_YELLOW.val);
+                            continue;
+                        }
+                        thecolor -= VisionConstants.YELLOW_RANGE;
+                        if (thecolor < VisionConstants.AQUA_RANGE) {
+                            img.put(j, i, VisionConstants.RGB_AQUA.val);
+                            continue;
+                        }
+                        thecolor -= VisionConstants.AQUA_RANGE;
+                        if (thecolor < VisionConstants.PINK_RANGE) {
+                            img.put(j, i, VisionConstants.RGB_PINK.val);
+                            continue;
+                        }
+                        thecolor -= VisionConstants.PINK_RANGE;
+                        if (thecolor < VisionConstants.PURPLE_RANGE) {
+                            img.put(j, i, VisionConstants.RGB_PURPLE.val);
+                            continue;
+                        }
+                        thecolor -= VisionConstants.PURPLE_RANGE;
+                        if (thecolor < VisionConstants.WHITE_RANGE) {
+                            img.put(j, i, VisionConstants.RGB_WHITE.val);
+                            continue;
                         }
                     }
                 }
