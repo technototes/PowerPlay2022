@@ -3,19 +3,54 @@ package org.firstinspires.ftc.twenty403.command.drive;
 import com.acmerobotics.roadrunner.drive.DriveSignal;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.qualcomm.robotcore.util.Range;
 import com.technototes.library.command.Command;
 import com.technototes.library.control.Stick;
+import com.technototes.library.logger.Loggable;
 import com.technototes.library.util.MathUtils;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
+import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline;
 
-public class DriveCommand implements Command {
+public class DriveCommand implements Command, Loggable {
+
+    public enum DriveState {
+        Normal,
+        TrajectoryStart,
+        TrajectoryRun,
+    }
+
+    TileMoving tile;
 
     static double STRAIGHTEN_DEAD_ZONE = 0.08;
     public DrivebaseSubsystem subsystem;
     public DoubleSupplier x, y, r;
     public BooleanSupplier straight;
+    public BooleanSupplier watchTrigger;
+    public VisionPipeline visionPipeline;
+    public DriveState currentDriveState;
+
+    public DriveCommand(
+        DrivebaseSubsystem sub,
+        Stick stick1,
+        Stick stick2,
+        BooleanSupplier straighten,
+        BooleanSupplier watchAndAlign,
+        VisionPipeline vp
+    ) {
+        addRequirements(sub, sub.odometry);
+        subsystem = sub;
+        x = stick1.getXSupplier();
+        y = stick1.getYSupplier();
+        r = stick2.getXSupplier();
+        straight = straighten;
+        watchTrigger = watchAndAlign;
+        visionPipeline = vp;
+        currentDriveState = DriveState.Normal;
+    }
 
     public DriveCommand(
         DrivebaseSubsystem sub,
@@ -23,16 +58,11 @@ public class DriveCommand implements Command {
         Stick stick2,
         BooleanSupplier straighten
     ) {
-        addRequirements(sub);
-        subsystem = sub;
-        x = stick1.getXSupplier();
-        y = stick1.getYSupplier();
-        r = stick2.getXSupplier();
-        straight = straighten;
+        this(sub, stick1, stick2, straighten, null, null);
     }
 
     public DriveCommand(DrivebaseSubsystem sub, Stick stick1, Stick stick2) {
-        this(sub, stick1, stick2, null);
+        this(sub, stick1, stick2, null, null, null);
     }
 
     private double getRotation(double headingInRads) {
@@ -60,18 +90,136 @@ public class DriveCommand implements Command {
         }
     }
 
+    private double getRotationClosest45(double headingInRads) {
+        // headingInRads is [0-2pi]
+        double heading = -Math.toDegrees(headingInRads);
+        // Snap to the closest 90 or 270 degree angle (for going through the depot)
+        double close = MathUtils.closestTo(heading, 0, 45, 90, 135, 180, 225, 270, 315, 360);
+        double offBy = close - heading;
+        // Normalize the error to -1 to 1
+        double normalized = Math.max(Math.min(offBy / 45, 1.), -1.);
+        // Dead zone of 5 degreesLiftHighJunctionCommand(liftSubsystem)
+        if (Math.abs(normalized) < STRAIGHTEN_DEAD_ZONE) {
+            return 0.0;
+        }
+        // Scale it by the cube root, the scale that down by 30%
+        // .9 (about 40 degrees off) provides .96 power => .288
+        // .1 (about 5 degrees off) provides .46 power => .14
+        return Math.cbrt(normalized) * 0.3;
+    }
+
+    public static double idk = 1.0, max_of_jy = 1.0, max_of_jx = 1.0;
+
+    public static double xEdgeAngle = idk; // angles of the edge points seen by the camera relative to pixel
+    public double yEdgeAngle = idk;
+    public double camHeight = idk;
+
+    private void autoAlign45() {
+        double curHeading = -subsystem.getExternalHeading();
+        double rotPower = getRotationClosest45(curHeading);
+        if (Math.abs(rotPower) > .000001) {
+            subsystem.setWeightedDrivePower(new Pose2d(0, 0, rotPower));
+        } else {
+            // Look for the current junctionX/junctionY
+            double jx = visionPipeline.getJunctionX();
+            double jy = visionPipeline.getJunctionY();
+            if (jx == 0.0 && jy == 0.0) {
+                return;
+            }
+            double yDistance;
+            double xDistance;
+            yDistance = camHeight / Math.tan(jy / (max_of_jy) * yEdgeAngle);
+            xDistance = yDistance * Math.tan(jx / (max_of_jx) * xEdgeAngle);
+            // set the drive power to get us to that location
+            subsystem.setWeightedDrivePower(
+                new Pose2d(xDistance, yDistance, getRotationClosest45(curHeading))
+            );
+        }
+    }
+
     @Override
     public void execute() {
-        double curHeading = -subsystem.getExternalHeading();
-        Vector2d input = new Vector2d(
-            -y.getAsDouble() * subsystem.speed,
-            -x.getAsDouble() * subsystem.speed
-        )
-            .rotated(curHeading);
-        subsystem.setWeightedDrivePower(
-            new Pose2d(input.getX(), input.getY(), getRotation(curHeading))
-        );
+        // For driving a trajectory:
+        // Check to see if we're running a trajectory sequence.
+        // Yes a TS is running:
+        //   Is there an override?
+        //     Yes: abandon the trajectory sequence, and resume manual control
+        //     No: Just update the subsystem and return
+        // TS is not running:
+        // Check to see if we're supposed to *start* a trajectory sequence
+        //   Yes: Start it
+        //   No: resume manual control
+        switch (currentDriveState) {
+            case Normal:
+                if (subsystem.isTrajectoryRequested()) {
+                    startNewTrajectory();
+                    currentDriveState = DriveState.TrajectoryRun;
+                } else {
+                    if (watchTrigger != null && watchTrigger.getAsBoolean()) {
+                        // do the auto-align stuff
+                        autoAlign45();
+                    } else {
+                        double curHeading = -subsystem.getExternalHeading();
+                        // The math & signs looks wonky, because this makes things field-relative
+                        // (Recall that "3 O'Clock" is zero degrees)
+                        Vector2d input = new Vector2d(
+                            -y.getAsDouble() * subsystem.speed,
+                            -x.getAsDouble() * subsystem.speed
+                        )
+                            .rotated(curHeading);
+                        subsystem.setWeightedDrivePower(
+                            new Pose2d(input.getX(), input.getY(), getRotation(curHeading))
+                        );
+                    }
+                }
+                break;
+            case TrajectoryRun:
+                if (!subsystem.isBusy()) {
+                    currentDriveState = DriveState.Normal;
+                    subsystem.poseDisplay += " (done)";
+                }
+                if (subsystem.isTrajectoryCancelled()) {
+                    subsystem.stop();
+
+                    subsystem.clearCancelledRequest();
+                }
+                // TODO: Add a "halt" button to watch?
+                break;
+        }
         subsystem.update();
+    }
+
+    //run when starting new trajectory
+    public void startNewTrajectory() {
+        Pose2d start = subsystem.getPoseEstimate();
+        double endX = Range.clip(start.getX() + subsystem.trajectoryX, -72, 72);
+        double endY = Range.clip(start.getY() + subsystem.trajectoryY, -72, 72);
+        double endHeading = AngleUnit.normalizeRadians(
+            start.getHeading() + subsystem.trajectoryAngleRadians
+        );
+
+        subsystem.poseDisplay =
+            String.format(
+                "%f, %f [%f] => %f, %f [%f]",
+                start.getX(),
+                start.getY(),
+                start.getHeading(),
+                endX,
+                endY,
+                endHeading
+            );
+        System.out.println(subsystem.poseDisplay);
+        // lineToLinearHeading seems to mess things up, maybe? :/
+        Trajectory t;
+        if (Math.abs(subsystem.trajectoryAngleRadians) > .01) {
+            Pose2d end = new Pose2d(endX, endY, endHeading);
+            t = subsystem.trajectoryBuilder(start).lineToLinearHeading(end).build();
+        } else {
+            Vector2d end = new Vector2d(endX, endY);
+            t = subsystem.trajectoryBuilder(start).lineTo(end).build();
+        }
+        subsystem.followTrajectoryAsync(t);
+        subsystem.clearRequestedTrajectory();
     }
 
     @Override

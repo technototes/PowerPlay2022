@@ -11,21 +11,21 @@ import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
 
 public class AutoConstantsBlue {
     public static class Home {
-        public static ConfigurablePose START = new ConfigurablePose(36, 66, toRadians(-180)); // was 90
+        public static ConfigurablePose START = new ConfigurablePose(36, -66, toRadians(-90)); // was 90
         public static ConfigurablePose STACK = new ConfigurablePose(-60, 12, toRadians(180));
         public static ConfigurablePose BETWEEN = new ConfigurablePose(-40, 12, toRadians(180));
         public static ConfigurablePose BETWEEN_2 = new ConfigurablePose(-36, 6, toRadians(90));
         public static ConfigurablePose BETWEEN_3 = new ConfigurablePose(-36, 36, toRadians(90));
         public static ConfigurablePose LEFT = new ConfigurablePose(-12, 36, toRadians(-90));
-        public static ConfigurablePose MIDDLE = new ConfigurablePose(-36, 36, toRadians(90));
+        public static ConfigurablePose MIDDLE = new ConfigurablePose(-36, 36, toRadians(-90));
         public static ConfigurablePose RIGHT = new ConfigurablePose(-60, 36, toRadians(-90));
         // These have "home/away" modifiers, because we want to stay on "our side" during auto
         public static ConfigurablePose N_JUNCTION = new ConfigurablePose(18, -3, toRadians(-135));
         public static ConfigurablePose E_JUNCTION = new ConfigurablePose(-30, 6, toRadians(-45));
         public static ConfigurablePose S_JUNCTION = new ConfigurablePose(-10, 30, toRadians(-135));
         public static ConfigurablePose W_JUNCTION = new ConfigurablePose(28, 4, toRadians(-135));
-        public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(15, -60, toRadians(90));
-        public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(60, -60, toRadians(90));
+        public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(15, 60, toRadians(-90));
+        public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(60, 60, toRadians(-90));
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
@@ -129,11 +129,11 @@ public class AutoConstantsBlue {
         public static ConfigurablePose PARK_LEFT = new ConfigurablePose(-60, -36, toRadians(90));
         public static ConfigurablePose PARK_MIDDLE = new ConfigurablePose(-36, -36, toRadians(-90));
         public static ConfigurablePose PARK_RIGHT = new ConfigurablePose(-12, -36, toRadians(-90));
-        public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(-58, -66, toRadians(90));
-        public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(-14, -60, toRadians(90));
-        public static ConfigurablePose LEFT = new ConfigurablePose(-58, -22, toRadians(90));
+        public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(-58, -66, toRadians(-90));
+        public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(-14, -60, toRadians(-90));
+        public static ConfigurablePose LEFT = new ConfigurablePose(-58, -22, toRadians(-90));
         public static ConfigurablePose MIDDLE = new ConfigurablePose(-36, -16, toRadians(-90)); // was 90
-        public static ConfigurablePose RIGHT = new ConfigurablePose(-14, -15, toRadians(90));
+        public static ConfigurablePose RIGHT = new ConfigurablePose(-14, -15, toRadians(-90));
 
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
                 START_TO_JUNCTION =

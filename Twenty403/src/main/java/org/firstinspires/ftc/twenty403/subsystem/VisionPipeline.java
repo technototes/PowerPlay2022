@@ -11,6 +11,7 @@ import com.technototes.library.logger.Loggable;
 import com.technototes.library.util.Alliance;
 import java.util.function.Supplier;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
+import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -21,6 +22,13 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>, Loggable {
 
+    public enum Mode {
+        Signal,
+        Junction,
+        Inactive,
+    }
+
+    public Mode activeMode;
     public Alliance alliance;
     public StartingPosition side;
 
@@ -28,6 +36,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         super();
         alliance = teamAlliance;
         side = startSide;
+        activeMode = Mode.Signal;
     }
 
     @Config
@@ -39,6 +48,8 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
             RIGHT,
         }
 
+        // Junction color for tele
+        public static double JUNCTION;
         // Yellow is around 25 (50 degrees)
         public static double YELLOW = 25;
         // Aqua is at 100 (200 degrees)
@@ -53,7 +64,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         // The high saturation point for color identification
         public static double highS = 255;
         // The low value for color ID
-        public static double lowV = 50;
+        public static double lowV = 65;
         // The high value for color ID
         public static double highV = 255;
 
@@ -64,7 +75,8 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         public static int HEIGHT = 60;
 
         // What color should we draw the outlining rectangle?
-        public static Scalar HIGHLIGHT = new Scalar(255, 0, 255);
+        public static Scalar HIGHLIGHT = new Scalar(255, 128, 255);
+        public static Scalar GREEN = new Scalar(0, 255, 0);
     }
 
     @LogConfig.Run(duringRun = false, duringInit = true)
@@ -79,9 +91,17 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
     @Log.Boolean(name = "right")
     public volatile boolean rightDetected = false;
 
-    @LogConfig.Run(duringRun = false, duringInit = true)
+    @LogConfig.Run(duringRun = true, duringInit = true)
     @Log.Number(name = "FPS")
     public volatile double fps = 0.0;
+
+    @LogConfig.Run(duringRun = true, duringInit = true)
+    @Log.Number(name = "Junction X")
+    public volatile double junctionX = -1;
+
+    @LogConfig.Run(duringRun = true, duringInit = true)
+    @Log.Number(name = "Junction Y")
+    public volatile double junctionY = -1;
 
     private ElapsedTime time = new ElapsedTime();
 
@@ -119,7 +139,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         return count;
     }
 
-    public void inputToCr(Mat input) {
+    public void detectSignal(Mat input) {
         // Put the input matrix in a member variable, so that other functions can draw on it
         img = input;
 
@@ -156,7 +176,60 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
     }
 
     public void init(Mat firstFrame) {
-        inputToCr(firstFrame);
+        detectSignal(firstFrame);
+    }
+
+    public void detectJunction(Mat frame) {
+        Imgproc.rectangle(img, new Rect(2, 2, 7, 9), VisionConstants.GREEN);
+        android.util.Log.d("VIS", "We're running");
+        Imgproc.cvtColor(frame, customColorSpace, Imgproc.COLOR_RGB2HSV);
+        int startX = -1;
+        int endX = -1;
+        int range = 10;
+        for (int j = customColorSpace.height() - 1; j > 0; j--) {
+            for (int i = customColorSpace.width() - 1; i > 0; i--) {
+                double[] color = customColorSpace.get(j, i);
+                if (
+                    color[0] < VisionConstants.YELLOW + VisionConstants.RANGE &&
+                    color[0] > VisionConstants.YELLOW - VisionConstants.RANGE &&
+                    color[1] > VisionConstants.lowS &&
+                    color[1] < VisionConstants.highS &&
+                    color[2] > VisionConstants.lowV &&
+                    color[2] < VisionConstants.highV
+                ) {
+                    if (startX == -1) {
+                        startX = i;
+                    } else {
+                        endX = i;
+                    }
+                    img.put(j, i, VisionConstants.YELLOW);
+                    // Draw a dot on the image at this point - input was put into img
+                    // The color choice makes things stripey, which makes it easier to identif
+                    // if less than 20 for range after not seeing yellow than set both to -1 as not junction ypou are
+                    // looking for
+                } else {
+                    if (startX != -1 && (startX - endX < range) || endX == -1) {
+                        startX = -1;
+                        endX = -1;
+                    }
+                }
+            }
+
+            if (startX != -1 && endX != -1) {
+                if (Math.abs(startX - endX) > range) {
+                    junctionY = j;
+                    junctionX = (startX + endX) / 2;
+                    Imgproc.rectangle(
+                        img,
+                        new Rect((int) junctionX, (int) junctionY, 5, 5),
+                        VisionConstants.HIGHLIGHT
+                    );
+                    return;
+                }
+            }
+        }
+        junctionX = -1;
+        junctionY = -1;
     }
 
     @Override
@@ -166,8 +239,17 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         fps = 1000 / time.milliseconds();
         time.reset();
 
-        inputToCr(input);
-
+        switch (activeMode) {
+            case Signal:
+                detectSignal(input);
+                break;
+            case Junction:
+                detectJunction(input);
+                break;
+            case Inactive:
+            default:
+                return input;
+        }
         if (VisionSubsystem.VisionSubsystemConstants.DEBUG_VIEW) {
             sendBitmap();
         }
@@ -189,6 +271,14 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
 
     public boolean right() {
         return rightDetected;
+    }
+
+    public double getJunctionX() {
+        return junctionX;
+    }
+
+    public double getJunctionY() {
+        return junctionY;
     }
 
     // Helper to send the bitmap to the FTC Dashboard

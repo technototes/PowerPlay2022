@@ -10,10 +10,13 @@ import com.technototes.path.geometry.ConfigurablePose;
 import com.technototes.path.trajectorysequence.TrajectorySequence;
 import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
 
+import org.firstinspires.ftc.twenty403.subsystem.OdoSubsystem;
+
 public class AutoConstants {
     @Config
     public static class Right {
         public static double finalCycleStartTime = 20;
+        public static ConfigurablePose ZERO = new ConfigurablePose(0,0,toRadians(90));
         public static ConfigurablePose START = new ConfigurablePose(36, -66, toRadians(90));
         public static ConfigurablePose STRAIGHT = new ConfigurablePose(36, -18, toRadians(90));
         public static ConfigurablePose LEFTSIDE = new ConfigurablePose(-12, -66, toRadians(90));
@@ -63,10 +66,10 @@ public class AutoConstants {
                                 .lineToLinearHeading(RIGHT_MOVE.toPose())
                                 .build(),
         //Testing Straights
-        START_TO_STRAIGHT =
-                b -> b.apply(START.toPose())
-                        .lineTo(STRAIGHT.toPose().vec())
-                        .build(),
+                START_TO_STRAIGHT =
+                        b -> b.apply(START.toPose())
+                                .lineTo(STRAIGHT.toPose().vec())
+                                .build(),
                 STRAIGHT_TO_START =
                         b -> b.apply(STRAIGHT.toPose())
                                 .lineTo(START.toPose().vec())

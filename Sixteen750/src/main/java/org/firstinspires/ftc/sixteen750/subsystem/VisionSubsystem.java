@@ -35,6 +35,13 @@ public class VisionSubsystem implements Subsystem, Loggable {
         camera.startStreaming(
                 VisionSubsystemConstants.WIDTH, VisionSubsystemConstants.HEIGHT, VisionSubsystemConstants.ROTATION);
     }
+    public void pauseScanning() {
+        visionPipeline.activeMode = VisionPipeline.Mode.Inactive;
+    }
+
+    public void startJunctionScanning() {
+        visionPipeline.activeMode = VisionPipeline.Mode.Junction;
+    }
 
     public void startVisionPipeline() {
         camera.setPipeline(visionPipeline);

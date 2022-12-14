@@ -17,6 +17,7 @@ const commentMarker = '// TechnoLibLocal';
 const files = [
   'ForTeaching/build.gradle',
   'Sixteen750/build.gradle',
+  'Swerveteen750/build.gradle',
   'Twenty403/build.gradle',
   'build.dependencies.gradle',
   'settings.gradle',

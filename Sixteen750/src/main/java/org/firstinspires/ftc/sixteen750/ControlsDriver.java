@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.sixteen750;
 
 import org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
+import org.firstinspires.ftc.sixteen750.command.VisionDuringTeleCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.sixteen750.command.compound.ArmIntakeCommand;
@@ -18,6 +19,9 @@ import org.firstinspires.ftc.sixteen750.command.lift.LiftMoveUpOverrideCommand;
 
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.control.CommandGamepad;
+import com.technototes.library.structure.CommandOpMode;
+
+import java.util.function.BooleanSupplier;
 
 public class ControlsDriver {
     public Robot robot;
@@ -78,6 +82,12 @@ public class ControlsDriver {
         gamepad.leftStickButton.whenPressed(new ApplyTurboModeCommand(robot.mecanumDriveSubsystem));
         gamepad.rightStickButton.whenPressed(new ApplyTurboModeCommand(robot.mecanumDriveSubsystem));
         gamepad.x.whenPressed(new ResetGyroCommand(robot.mecanumDriveSubsystem, gamepad));
+    }
+
+    public void bindVisionCommand(){
+        CommandScheduler
+                .getInstance()
+                .scheduleForState(new VisionDuringTeleCommand(robot.visionSubsystem, gamepad.share), CommandOpMode.OpModeState.RUN);
     }
 
     public void bindSwerveDriveControls(){
