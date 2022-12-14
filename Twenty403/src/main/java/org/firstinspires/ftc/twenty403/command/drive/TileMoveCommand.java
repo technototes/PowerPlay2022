@@ -18,7 +18,7 @@ public class TileMoveCommand implements Command {
 
     @Override
     public void execute() {
-        robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Right.TELESTART.toPose());
+        // robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Right.TELESTART.toPose());
         switch (tile) {
             case Up:
                 // It's not clear if this will allow other subsystems to run.
