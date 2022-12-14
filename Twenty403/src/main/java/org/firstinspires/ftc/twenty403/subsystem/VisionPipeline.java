@@ -11,7 +11,6 @@ import com.technototes.library.logger.Loggable;
 import com.technototes.library.util.Alliance;
 import java.util.function.Supplier;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
-import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -75,8 +74,15 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         public static int HEIGHT = 60;
 
         // What color should we draw the outlining rectangle?
-        public static Scalar HIGHLIGHT = new Scalar(255, 128, 255);
-        public static Scalar GREEN = new Scalar(0, 255, 0);
+        public static Scalar RGB_HIGHLIGHT = new Scalar(255, 128, 255);
+        public static Scalar RGB_RED = new Scalar(255, 0, 0);
+        public static Scalar RGB_GREEN = new Scalar(0, 255, 0);
+        public static Scalar RGB_BLUE = new Scalar(0, 0, 255);
+        public static Scalar RGB_YELLOW = new Scalar(0, 255, 255);
+        public static Scalar RGB_AQUA = new Scalar(255, 255, 0);
+        public static Scalar RGB_PINK = new Scalar(255, 0, 255);
+        public static Scalar RGB_PURPLE = new Scalar(128, 0, 128);
+        public static Scalar RGB_WHITE = new Scalar(255, 255, 255);
     }
 
     @LogConfig.Run(duringRun = false, duringInit = true)
@@ -172,7 +178,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         int y = Range.clip(VisionConstants.Y - 1, 0, input.height() - 1);
         int w = Range.clip(VisionConstants.WIDTH + 2, 1, input.width() - x);
         int h = Range.clip(VisionConstants.HEIGHT + 2, 1, input.height() - y);
-        Imgproc.rectangle(input, new Rect(x, y, w, h), VisionConstants.HIGHLIGHT);
+        Imgproc.rectangle(input, new Rect(x, y, w, h), VisionConstants.RGB_HIGHLIGHT);
     }
 
     public void init(Mat firstFrame) {
@@ -180,8 +186,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
     }
 
     public void detectJunction(Mat frame) {
-        Imgproc.rectangle(img, new Rect(2, 2, 7, 9), VisionConstants.GREEN);
-        android.util.Log.d("VIS", "We're running");
+        Imgproc.rectangle(img, new Rect(2, 2, 7, 9), VisionConstants.RGB_GREEN);
         Imgproc.cvtColor(frame, customColorSpace, Imgproc.COLOR_RGB2HSV);
         int startX = -1;
         int endX = -1;
@@ -202,7 +207,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                     } else {
                         endX = i;
                     }
-                    img.put(j, i, VisionConstants.YELLOW);
+                    img.put(j, i, VisionConstants.RGB_YELLOW.val);
                     // Draw a dot on the image at this point - input was put into img
                     // The color choice makes things stripey, which makes it easier to identif
                     // if less than 20 for range after not seeing yellow than set both to -1 as not junction ypou are
@@ -211,6 +216,38 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                     if (startX != -1 && (startX - endX < range) || endX == -1) {
                         startX = -1;
                         endX = -1;
+                    }
+                    // Debug some stuff:
+                    if (
+                        color[1] > VisionConstants.lowS &&
+                        color[1] < VisionConstants.highS &&
+                        color[2] > VisionConstants.lowV &&
+                        color[2] < VisionConstants.highV
+                    ) {
+                        // Let's draw some colors to help identify the right range
+                        switch ((int) (color[0] / 30)) {
+                            case 0:
+                                img.put(j, i, VisionConstants.RGB_RED.val);
+                                break;
+                            case 1:
+                                img.put(j, i, VisionConstants.RGB_GREEN.val);
+                                break;
+                            case 2:
+                                img.put(j, i, VisionConstants.RGB_BLUE.val);
+                                break;
+                            case 3:
+                                img.put(j, i, VisionConstants.RGB_PURPLE.val);
+                                break;
+                            case 4:
+                                img.put(j, i, VisionConstants.RGB_PINK.val);
+                                break;
+                            case 5:
+                                img.put(j, i, VisionConstants.RGB_AQUA.val);
+                                break;
+                            default:
+                                img.put(j, i, VisionConstants.RGB_WHITE.val);
+                                break;
+                        }
                     }
                 }
             }
@@ -222,7 +259,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                     Imgproc.rectangle(
                         img,
                         new Rect((int) junctionX, (int) junctionY, 5, 5),
-                        VisionConstants.HIGHLIGHT
+                        VisionConstants.RGB_HIGHLIGHT
                     );
                     return;
                 }
