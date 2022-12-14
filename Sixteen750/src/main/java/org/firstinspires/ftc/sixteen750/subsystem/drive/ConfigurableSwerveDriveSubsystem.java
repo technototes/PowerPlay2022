@@ -47,7 +47,7 @@ import java.util.List;
 import java.util.function.Function;
 
 @Config
-public class AnotherSwerveDriveSubsystem extends SwerveDrive {
+public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(4, 0, 0);
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(4, 0, 0);
 
@@ -99,7 +99,7 @@ public class AnotherSwerveDriveSubsystem extends SwerveDrive {
     private boolean debugTelemetryEnabled = false;
     private Telemetry telemetry;
     private boolean telemetryCallUpdate = false;
-    public Function<AnotherSwerveDriveSubsystem, Integer> updateCallback = null;
+    public Function<ConfigurableSwerveDriveSubsystem, Integer> updateCallback = null;
 
     /*
      * Constants shared between multiple drive types.
@@ -181,7 +181,7 @@ public class AnotherSwerveDriveSubsystem extends SwerveDrive {
         }
     }
 
-    public AnotherSwerveDriveSubsystem(
+    public ConfigurableSwerveDriveSubsystem(
             HardwareMap hardwareMap,
             BNO055IMU imu,
             AnotherSwerveModule leftFrontSwerveModule,
@@ -270,7 +270,7 @@ public class AnotherSwerveDriveSubsystem extends SwerveDrive {
     }
     public static PIDCoefficients DEFAULT_SERVO_ROTATION_PID = new PIDCoefficients(0.6, 0, 0);
     public static PIDCoefficients RF_SERVO_ROTATION_PID = new PIDCoefficients(0.4, 0, 0);
-    public AnotherSwerveDriveSubsystem(HardwareMap hardwareMap){
+    public ConfigurableSwerveDriveSubsystem(HardwareMap hardwareMap){
         this(
                 hardwareMap,
                 hardwareMap.get(BNO055IMU.class, "imu"),

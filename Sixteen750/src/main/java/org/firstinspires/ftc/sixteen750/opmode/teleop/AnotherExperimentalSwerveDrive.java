@@ -8,16 +8,16 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.technototes.library.structure.CommandOpMode;
 
-import org.firstinspires.ftc.sixteen750.subsystem.drive.AnotherSwerveDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
 
 @TeleOp(group = "Swerve")
 @SuppressWarnings("unused")
 public class AnotherExperimentalSwerveDrive extends CommandOpMode {
-    AnotherSwerveDriveSubsystem drive;
+    ConfigurableSwerveDriveSubsystem drive;
 
     @Override
     public void uponInit() {
-        drive = new AnotherSwerveDriveSubsystem(hardwareMap);
+        drive = new ConfigurableSwerveDriveSubsystem(hardwareMap);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         drive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
