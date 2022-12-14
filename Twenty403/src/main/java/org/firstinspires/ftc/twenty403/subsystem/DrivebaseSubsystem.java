@@ -151,8 +151,6 @@ public class DrivebaseSubsystem
 
     private static final boolean ENABLE_POSE_DIAGNOSTICS = true;
 
-    public double trajectoryX, trajectoryY, trajectoryAngleRadians;
-
     @Log(name = "Pose2d: ")
     public String poseDisplay = ENABLE_POSE_DIAGNOSTICS ? "" : null;
 
@@ -222,6 +220,11 @@ public class DrivebaseSubsystem
         rightFront.setPower(v3 * DriveConstants.AFR_SCALE);
     }
 
+    // Stuff below is used for tele-op trajectory motion
+    
+    public double trajectoryX, trajectoryY, trajectoryAngleRadians;
+    private boolean cancelled;
+
     public void requestTrajectoryMove(double deltaX, double deltaY, double deltaAngleRadians) {
         trajectoryX = deltaX;
         trajectoryY = deltaY;
@@ -247,7 +250,7 @@ public class DrivebaseSubsystem
 
     private boolean cancelled;
 
-    public boolean isTrajectoryCancelled(){
+    public boolean isTrajectoryCancelled() {
         return cancelled;
     }
     public void requestCancelled(){
