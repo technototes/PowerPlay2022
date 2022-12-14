@@ -10,6 +10,8 @@ import com.technototes.path.geometry.ConfigurablePose;
 import com.technototes.path.trajectorysequence.TrajectorySequence;
 import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
 
+import org.firstinspires.ftc.twenty403.subsystem.OdoSubsystem;
+
 public class AutoConstants {
     @Config
     public static class Right {

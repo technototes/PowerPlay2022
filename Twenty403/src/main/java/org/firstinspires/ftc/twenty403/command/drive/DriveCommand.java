@@ -41,7 +41,7 @@ public class DriveCommand implements Command, Loggable {
         BooleanSupplier watchAndAlign,
         VisionPipeline vp
     ) {
-        addRequirements(sub);
+        addRequirements(sub, sub.odometry);
         subsystem = sub;
         x = stick1.getXSupplier();
         y = stick1.getYSupplier();
