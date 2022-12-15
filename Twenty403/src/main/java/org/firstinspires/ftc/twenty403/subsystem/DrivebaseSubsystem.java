@@ -5,15 +5,21 @@ import androidx.annotation.Nullable;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.localization.Localizer;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.util.Range;
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.sensor.IMU;
 import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.path.subsystem.MecanumConstants;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 import java.util.function.Supplier;
 
 public class DrivebaseSubsystem
@@ -223,40 +229,68 @@ public class DrivebaseSubsystem
     // Stuff below is used for tele-op trajectory motion
     
     public double trajectoryX, trajectoryY, trajectoryAngleRadians;
-    private boolean cancelled;
+    public double moveIncrement = 0;
 
     public void requestTrajectoryMove(double deltaX, double deltaY, double deltaAngleRadians) {
         trajectoryX = deltaX;
         trajectoryY = deltaY;
         trajectoryAngleRadians = deltaAngleRadians;
+        startNewTrajectory();
     }
 
     public void requestTrajectoryMove(double deltaX, double deltaY) {
         trajectoryX = deltaX;
         trajectoryY = deltaY;
         trajectoryAngleRadians = 0.0;
+        startNewTrajectory();
     }
 
-    public boolean isTrajectoryRequested() {
-        if (trajectoryX != 0 || trajectoryY != 0 || trajectoryAngleRadians != 0) {
-            return true;
-        }
-        return false;
-    }
+//    public boolean isTrajectoryRequested() {
+//        if (trajectoryX != 0 || trajectoryY != 0 || trajectoryAngleRadians != 0) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     public void clearRequestedTrajectory() {
         requestTrajectoryMove(0, 0, 0);
     }
 
-    private boolean cancelled;
 
-    public boolean isTrajectoryCancelled() {
-        return cancelled;
-    }
     public void requestCancelled(){
-        cancelled = true;
+        this.stop();
     }
-    public void clearCancelledRequest(){
-        cancelled = false;
+
+    public void startNewTrajectory() {
+        Pose2d start = this.getPoseEstimate();
+        double endX = Range.clip(start.getX() + this.trajectoryX, -72, 72);
+        double endY = Range.clip(start.getY() + this.trajectoryY, -72, 72);
+        double endHeading = AngleUnit.normalizeRadians(
+                start.getHeading() + this.trajectoryAngleRadians
+        );
+
+        this.poseDisplay =
+                String.format(
+                        "%f, %f [%f] => %f, %f [%f]",
+                        start.getX(),
+                        start.getY(),
+                        start.getHeading(),
+                        endX,
+                        endY,
+                        endHeading
+                );
+        System.out.println(this.poseDisplay);
+        // lineToLinearHeading seems to mess things up, maybe? :/
+        Trajectory t;
+        if (Math.abs(this.trajectoryAngleRadians) > .01) {
+            Pose2d end = new Pose2d(endX, endY, endHeading);
+            t = this.trajectoryBuilder(start).lineToLinearHeading(end).build();
+        } else {
+            Vector2d end = new Vector2d(endX, endY);
+            t = this.trajectoryBuilder(start).lineTo(end).build();
+        }
+        this.followTrajectoryAsync(t);
+        this.clearRequestedTrajectory();
     }
+
 }
