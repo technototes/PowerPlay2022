@@ -42,10 +42,10 @@ public class AutoRightFullCycle extends SequentialCommandGroup {
             new ClawOpenCommand(r.clawSubsystem),
             new AutoRightSingleCycleOne(r),
             new AutoRightSingleCycleOne(r),
-            new AutoRightSingleCycleTwo(r),
-            //new AutoRightSingleCycleTwo(r),
-            //new AutoRightSingleCycleThree(r),
-            //new AutoRightSingleCycleThree(r),
+            new AutoRightSingleCycleOne(r),
+            //new AutoRightSingleCycleOne(r),
+            //new AutoRightSingleCycleOne(r),
+            //new AutoRightSingleCycleOne(r),
             new TrajectorySequenceCommand(r.drivebaseSubsystem, parkingDestination)
                 .alongWith(new LiftIntakeCommand(r.liftSubsystem)),
             new SlowCommand(r.drivebaseSubsystem)
