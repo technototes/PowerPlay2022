@@ -39,7 +39,8 @@ public class LeftFullCycle extends CommandOpMode {
                 new SequentialCommandGroup(
                     new AutoSpeedCommand(robot.drivebaseSubsystem),
                     new ClawCloseCommand(robot.clawSubsystem),
-                    new AutoLeftParkingSelectionFullCycleCommand(robot),
+                    new AutoLeftParkingSelectionFullCycleCommand(robot,
+                            () -> this.getOpModeRuntime()),
                     CommandScheduler.getInstance()::terminateOpMode
                 ),
                 CommandOpMode.OpModeState.RUN
