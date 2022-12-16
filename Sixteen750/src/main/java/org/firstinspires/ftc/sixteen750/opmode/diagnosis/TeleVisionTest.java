@@ -14,7 +14,7 @@ import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
 import org.firstinspires.ftc.sixteen750.command.VisionCommand;
 import org.firstinspires.ftc.sixteen750.command.autonomous.StartingPosition;
-import org.firstinspires.ftc.sixteen750.subsystem.MecanumDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.drive.MecanumDriveSubsystem;
 
 @Config
 @TeleOp(group = "TeleVision Test")

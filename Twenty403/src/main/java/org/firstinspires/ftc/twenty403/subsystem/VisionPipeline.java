@@ -201,7 +201,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                         startX = i;
                     } else {
                         endX = i;
-                    };
+                    }
                     img.put(j, i, VisionConstants.YELLOW);
                     // Draw a dot on the image at this point - input was put into img
                     // The color choice makes things stripey, which makes it easier to identif

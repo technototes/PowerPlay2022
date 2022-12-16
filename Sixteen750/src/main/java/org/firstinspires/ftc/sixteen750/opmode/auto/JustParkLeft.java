@@ -7,7 +7,7 @@ import com.technototes.library.hardware2.HardwareBuilder;
 
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
-import org.firstinspires.ftc.sixteen750.subsystem.SimpleMecanumDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.drive.SimpleMecanumDriveSubsystem;
 
 @Config
 @Autonomous(name = "JustParkLeft")
@@ -17,7 +17,7 @@ public class JustParkLeft extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         HardwareBuilder.initMap(hardwareMap);
-        Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DRIVE_ONLY);
+        Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.M_DRIVE_ONLY);
         SimpleMecanumDriveSubsystem drive = new SimpleMecanumDriveSubsystem(hardware);
         drive.setEncoderZero();
 
