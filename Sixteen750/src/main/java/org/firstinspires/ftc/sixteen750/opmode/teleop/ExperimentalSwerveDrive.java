@@ -4,15 +4,13 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.technototes.library.structure.CommandOpMode;
 
-import org.firstinspires.ftc.sixteen750.subsystem.SwerveDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.drive.SwerveDriveSubsystem;
 
-@Disabled
 @TeleOp(name = "ExperimentalSwerveDrive", group = "Swerve")
 @SuppressWarnings("unused")
 public class ExperimentalSwerveDrive extends CommandOpMode {

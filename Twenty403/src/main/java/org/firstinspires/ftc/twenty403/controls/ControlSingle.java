@@ -33,6 +33,7 @@ public class ControlSingle {
     public CommandButton liftDownButton, liftUpButton, clawOpenButton, clawCloseButton, liftOverrideZeroButton;
     public CommandButton liftGroundOrOverrideDown, liftLowOrOverrideUp, liftMedium, liftHigh, liftIntakePos;
     public CommandButton override;
+    public CommandButton watchButton;
 
     public ControlSingle(CommandGamepad g, Robot r) {
         this.robot = r;
@@ -49,6 +50,9 @@ public class ControlSingle {
         }
         if (Robot.RobotConstant.LIFT_CONNECTED) {
             bindLiftControls();
+        }
+        if (Robot.RobotConstant.CAMERA_CONNECTED) {
+            // TODO: bindAlignControls();
         }
     }
 
@@ -73,6 +77,7 @@ public class ControlSingle {
         liftGroundOrOverrideDown = gamepad.cross;
         liftLowOrOverrideUp = gamepad.square;
         liftOverrideZeroButton = gamepad.triangle;
+        watchButton = gamepad.options;
         // TODO: Identify other controls for
     }
 
@@ -84,7 +89,9 @@ public class ControlSingle {
                     robot.drivebaseSubsystem,
                     driveLeftStick,
                     driveRightStick,
-                    driveStraight
+                    driveStraight,
+                    watchButton,
+                    robot.visionSystem.visionPipeline
                 )
             );
         turboButton.whenPressed(new TurboCommand(robot.drivebaseSubsystem));

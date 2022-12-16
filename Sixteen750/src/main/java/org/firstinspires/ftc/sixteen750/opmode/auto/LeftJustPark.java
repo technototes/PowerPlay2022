@@ -14,7 +14,7 @@ import org.firstinspires.ftc.sixteen750.command.autonomous.AutoConstantsBlue;
 import org.firstinspires.ftc.sixteen750.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.sixteen750.command.autonomous.left.LeftParkingSelectionCommandJustPark;
 
-@Disabled
+
 @Autonomous(name = "LeftJustPark")
 public class LeftJustPark extends CommandOpMode {
     public Robot robot;
@@ -22,8 +22,8 @@ public class LeftJustPark extends CommandOpMode {
 
     @Override
     public void uponInit() {
-        hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.VISION_DRIVE);
-        robot = new Robot(hardware, Robot.SubsystemCombo.VISION_DRIVE, Alliance.BLUE, StartingPosition.AWAY);
+        hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.VISION_M_DRIVE);
+        robot = new Robot(hardware, Robot.SubsystemCombo.VISION_M_DRIVE, Alliance.BLUE, StartingPosition.AWAY);
         robot.mecanumDriveSubsystem.setPoseEstimate(AutoConstantsBlue.Away.START.toPose());
         CommandScheduler.getInstance()
                 .scheduleForState(

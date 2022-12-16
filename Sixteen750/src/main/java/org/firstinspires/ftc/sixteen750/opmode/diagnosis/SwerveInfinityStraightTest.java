@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.sixteen750.opmode.diagnosis;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.sixteen750.subsystem.SwerveDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.drive.SwerveDriveSubsystem;
 import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequence;
 
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -9,10 +9,8 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Disabled
 @Config
 @Autonomous(group = "Test-Path")
 @SuppressWarnings("unused")

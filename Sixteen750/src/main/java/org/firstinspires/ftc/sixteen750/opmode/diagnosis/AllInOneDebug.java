@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.sixteen750.opmode.diagnosis;
 
-import org.firstinspires.ftc.sixteen750.subsystem.SwerveDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.drive.SwerveDriveSubsystem;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
