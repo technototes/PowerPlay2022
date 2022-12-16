@@ -16,7 +16,7 @@ public class AutoConstants {
     @Config
     public static class Right {
         public static double finalCycleStartTime = 20;
-        public static ConfigurablePose ZERO = new ConfigurablePose(0,0,toRadians(90));
+//        public static ConfigurablePose ZERO = new ConfigurablePose(0,0,toRadians(90));
         public static ConfigurablePose START = new ConfigurablePose(36, -66, toRadians(90));
         public static ConfigurablePose STRAIGHT = new ConfigurablePose(36, -18, toRadians(90));
         public static ConfigurablePose LEFTSIDE = new ConfigurablePose(-12, -66, toRadians(90));

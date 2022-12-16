@@ -274,6 +274,7 @@ public class DrivebaseSubsystem
 
     public void startNewTrajectory() {
         Pose2d start = this.getPoseEstimate();
+        start = new Pose2d(start.getX()+.01, start.getY(), start.getHeading());
         double endX = Range.clip(start.getX() + this.trajectoryX, -72, 72);
         double endY = Range.clip(start.getY() + this.trajectoryY, -72, 72);
         double endHeading = AngleUnit.normalizeRadians(
