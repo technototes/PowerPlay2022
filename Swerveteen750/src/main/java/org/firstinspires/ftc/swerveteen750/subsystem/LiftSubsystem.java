@@ -16,7 +16,7 @@ import com.technototes.library.subsystem.Subsystem;
 public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     // Assuming the 0 position for both lift motor might be different?
     // The LiftSubsystem should be able to any of the motor combination
-    public static double TICKS_PER_INCH = 118;
+    public static double TICKS_PER_INCH = 118; // might not be the best value, but it works
     public static double L_INTAKE_FLOOR = 0.1 * TICKS_PER_INCH;
     public static double L_GROUND_JUNCTION = 1.75 * TICKS_PER_INCH;
     public static double L_LOW_JUNCTION = 14.5 * TICKS_PER_INCH;

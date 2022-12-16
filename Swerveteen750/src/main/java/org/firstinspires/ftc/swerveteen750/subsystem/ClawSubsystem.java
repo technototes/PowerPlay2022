@@ -2,14 +2,16 @@ package org.firstinspires.ftc.swerveteen750.subsystem;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.subsystem.Subsystem;
 
+@Config
 public class ClawSubsystem implements Subsystem {
-    public static double CLAW_OPEN = 0.6; // Verified
-    public static double CLAW_CLOSE = 0.50; // Verified
+    public static double CLAW_OPEN = 0.4; // Verified
+    public static double CLAW_CLOSE = 0.33; // Verified
 
     private Servo clawServo;
     private DistanceSensor distanceSensor; // not on the bot currently

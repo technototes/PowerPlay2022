@@ -127,7 +127,7 @@ public class Hardware {
         }
 
         if (enableClaw) {
-            clawServo = new Servo(HardwareConstant.CLAW_SERVO).invert();
+            clawServo = new Servo(HardwareConstant.CLAW_SERVO);
             // clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR); // not installed
         }
         if (enableCamera){

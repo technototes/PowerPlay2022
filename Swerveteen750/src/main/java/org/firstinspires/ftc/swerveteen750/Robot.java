@@ -21,7 +21,7 @@ public class Robot implements Loggable {
         public static boolean MECANUM_DRIVE_ENABLED = false;
         public static boolean LIFT_ENABLED = true;
         public static boolean CLAW_ENABLED = true;
-        public static boolean CAMERA_ENABLED = true;
+        public static boolean CAMERA_ENABLED = false;
     }
 
     public SwerveDriveSubsystem swerveDriveSubsystem;
