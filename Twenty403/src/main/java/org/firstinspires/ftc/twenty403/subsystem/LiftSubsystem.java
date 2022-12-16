@@ -42,13 +42,13 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double MIN_MOTOR_SPEED = -1;
 
     // This is used to hopefully counteract gravity...
-    public static double DOWNWARD_SCALE_FACTOR = 0.65;
+    public static double DOWNWARD_SCALE_FACTOR = 0.57;
 
     public static double MOVE_LEFT = 1.50 * TICKS_INCH;
     public static double MOVE_RIGHT = 1.50 * TICKS_INCH;
     public static double CONE_HEIGHT_DIFFERENCE = .9 * TICKS_INCH;
 
-    public static PIDCoefficients PID = new PIDCoefficients(0.0048, 0.0, 0);
+    public static PIDCoefficients PID = new PIDCoefficients(0.0027, 0.0, 0.00015);
 
     private EncodedMotor<DcMotorEx> _leftMotor;
     private EncodedMotor<DcMotorEx> _rightMotor;
