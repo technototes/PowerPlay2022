@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
 import android.graphics.Bitmap;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -9,9 +10,10 @@ import com.technototes.library.logger.Log;
 import com.technototes.library.logger.LogConfig;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.util.Alliance;
+
 import java.util.function.Supplier;
+
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
-import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -48,10 +50,14 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
             RIGHT,
         }
 
-        // Junction color for tele
-        public static double JUNCTION;
+
         // Yellow is around 25 (50 degrees)
-        public static double YELLOW = 25;
+        public static double YELLOW = 10;
+
+        //Other yellow value
+        public static double YELLOW2 = 170;
+
+
         // Aqua is at 100 (200 degrees)
         public static double AQUA = 100;
         // Purple is at 170 (340 degrees)
@@ -75,8 +81,23 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         public static int HEIGHT = 60;
 
         // What color should we draw the outlining rectangle?
-        public static Scalar HIGHLIGHT = new Scalar(255, 128, 255);
-        public static Scalar GREEN = new Scalar(0, 255, 0);
+        public static Scalar RGB_HIGHLIGHT = new Scalar(255, 128, 255);
+        public static int RED_RANGE = 30;
+        public static Scalar RGB_RED = new Scalar(255, 0, 0);
+        public static int GREEN_RANGE = 30;
+        public static Scalar RGB_GREEN = new Scalar(0, 255, 0);
+        public static int BLUE_RANGE = 30;
+        public static Scalar RGB_BLUE = new Scalar(0, 0, 255);
+        public static int YELLOW_RANGE = 30;
+        public static Scalar RGB_YELLOW = new Scalar(0, 255, 255);
+        public static int AQUA_RANGE = 30;
+        public static Scalar RGB_AQUA = new Scalar(255, 255, 0);
+        public static int PINK_RANGE = 30;
+        public static Scalar RGB_PINK = new Scalar(255, 0, 255);
+        public static int PURPLE_RANGE = 30;
+        public static Scalar RGB_PURPLE = new Scalar(128, 0, 128);
+        public static int WHITE_RANGE = 30;
+        public static Scalar RGB_WHITE = new Scalar(255, 255, 255);
     }
 
     @LogConfig.Run(duringRun = false, duringInit = true)
@@ -111,14 +132,14 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
 
     private int countColor(double hue) {
         Scalar edge1 = new Scalar(
-            hue - VisionConstants.RANGE,
-            VisionConstants.lowS,
-            VisionConstants.lowV
+                hue - VisionConstants.RANGE,
+                VisionConstants.lowS,
+                VisionConstants.lowV
         );
         Scalar edge2 = new Scalar(
-            hue + VisionConstants.RANGE,
-            VisionConstants.highS,
-            VisionConstants.highV
+                hue + VisionConstants.RANGE,
+                VisionConstants.highS,
+                VisionConstants.highV
         );
         // Check to see which pixels are between edge1 & edge2, output into a boolean matrix Cr
         Core.inRange(customColorSpace, edge1, edge2, Cr);
@@ -145,12 +166,12 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
 
         // First, slice the smaller rectangle out of the overall bitmap:
         Mat rectToLookAt = input.submat(
-            // Row start to Row end
-            VisionConstants.Y,
-            VisionConstants.Y + VisionConstants.HEIGHT,
-            // Col start to Col end
-            VisionConstants.X,
-            VisionConstants.X + VisionConstants.WIDTH
+                // Row start to Row end
+                VisionConstants.Y,
+                VisionConstants.Y + VisionConstants.HEIGHT,
+                // Col start to Col end
+                VisionConstants.X,
+                VisionConstants.X + VisionConstants.WIDTH
         );
 
         // Next, convert the RGB image to HSV, because HUE is much easier to identify colors in
@@ -172,7 +193,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         int y = Range.clip(VisionConstants.Y - 1, 0, input.height() - 1);
         int w = Range.clip(VisionConstants.WIDTH + 2, 1, input.width() - x);
         int h = Range.clip(VisionConstants.HEIGHT + 2, 1, input.height() - y);
-        Imgproc.rectangle(input, new Rect(x, y, w, h), VisionConstants.HIGHLIGHT);
+        Imgproc.rectangle(input, new Rect(x, y, w, h), VisionConstants.RGB_HIGHLIGHT);
     }
 
     public void init(Mat firstFrame) {
@@ -180,29 +201,30 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
     }
 
     public void detectJunction(Mat frame) {
-        Imgproc.rectangle(img, new Rect(2, 2, 7, 9), VisionConstants.GREEN);
-        android.util.Log.d("VIS", "We're running");
+        Imgproc.rectangle(img, new Rect(2, 2, 7, 9), VisionConstants.RGB_GREEN);
         Imgproc.cvtColor(frame, customColorSpace, Imgproc.COLOR_RGB2HSV);
         int startX = -1;
         int endX = -1;
         int range = 10;
-        for (int j = customColorSpace.height() - 1; j > 0; j--) {
+        for (int j = 0; j < customColorSpace.height(); j++) {
             for (int i = customColorSpace.width() - 1; i > 0; i--) {
                 double[] color = customColorSpace.get(j, i);
                 if (
-                    color[0] < VisionConstants.YELLOW + VisionConstants.RANGE &&
-                    color[0] > VisionConstants.YELLOW - VisionConstants.RANGE &&
-                    color[1] > VisionConstants.lowS &&
-                    color[1] < VisionConstants.highS &&
-                    color[2] > VisionConstants.lowV &&
-                    color[2] < VisionConstants.highV
+                        (color[0] < VisionConstants.YELLOW + VisionConstants.RANGE &&
+                                color[0] > VisionConstants.YELLOW - VisionConstants.RANGE) ||
+                                (color[0] < VisionConstants.YELLOW2 + VisionConstants.RANGE &&
+                                        color[0] > VisionConstants.YELLOW2 - VisionConstants.RANGE) &&
+                                        color[1] > VisionConstants.lowS &&
+                                        color[1] < VisionConstants.highS &&
+                                        color[2] > VisionConstants.lowV &&
+                                        color[2] < VisionConstants.highV
                 ) {
                     if (startX == -1) {
                         startX = i;
                     } else {
                         endX = i;
                     }
-                    img.put(j, i, VisionConstants.YELLOW);
+                    img.put(j, i, VisionConstants.RGB_WHITE.val);
                     // Draw a dot on the image at this point - input was put into img
                     // The color choice makes things stripey, which makes it easier to identif
                     // if less than 20 for range after not seeing yellow than set both to -1 as not junction ypou are
@@ -212,6 +234,55 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                         startX = -1;
                         endX = -1;
                     }
+                    // Debug some stuff:
+                    if (
+                            color[1] > VisionConstants.lowS &&
+                                    color[1] <= VisionConstants.highS &&
+                                    color[2] > VisionConstants.lowV &&
+                                    color[2] <= VisionConstants.highV
+                    ) {
+                        // Let's draw some colors to help identify the right range
+                        int thecolor = (int) color[0];
+                        if (thecolor < VisionConstants.RED_RANGE) {
+                            img.put(j, i, VisionConstants.RGB_RED.val);
+                            continue;
+                        }
+                        thecolor -= VisionConstants.RED_RANGE;
+                        if (thecolor < VisionConstants.GREEN_RANGE) {
+                            img.put(j, i, VisionConstants.RGB_GREEN.val);
+                            continue;
+                        }
+                        thecolor -= VisionConstants.GREEN_RANGE;
+                        if (thecolor < VisionConstants.BLUE_RANGE) {
+                            img.put(j, i, VisionConstants.RGB_BLUE.val);
+                            continue;
+                        }
+                        thecolor -= VisionConstants.BLUE_RANGE;
+                        if (thecolor < VisionConstants.YELLOW_RANGE) {
+                            img.put(j, i, VisionConstants.RGB_YELLOW.val);
+                            continue;
+                        }
+                        thecolor -= VisionConstants.YELLOW_RANGE;
+                        if (thecolor < VisionConstants.AQUA_RANGE) {
+                            img.put(j, i, VisionConstants.RGB_AQUA.val);
+                            continue;
+                        }
+                        thecolor -= VisionConstants.AQUA_RANGE;
+                        if (thecolor < VisionConstants.PINK_RANGE) {
+                            img.put(j, i, VisionConstants.RGB_PINK.val);
+                            continue;
+                        }
+                        thecolor -= VisionConstants.PINK_RANGE;
+                        if (thecolor < VisionConstants.PURPLE_RANGE) {
+                            img.put(j, i, VisionConstants.RGB_PURPLE.val);
+                            continue;
+                        }
+                        thecolor -= VisionConstants.PURPLE_RANGE;
+                        if (thecolor < VisionConstants.WHITE_RANGE) {
+                            img.put(j, i, VisionConstants.RGB_WHITE.val);
+                            continue;
+                        }
+                    }
                 }
             }
 
@@ -220,9 +291,9 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                     junctionY = j;
                     junctionX = (startX + endX) / 2;
                     Imgproc.rectangle(
-                        img,
-                        new Rect((int) junctionX, (int) junctionY, 5, 5),
-                        VisionConstants.HIGHLIGHT
+                            img,
+                            new Rect((int) junctionX, (int) junctionY, 5, 5),
+                            VisionConstants.RGB_HIGHLIGHT
                     );
                     return;
                 }
