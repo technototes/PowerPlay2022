@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.twenty403.command.autonomous.right;
 
 import com.technototes.library.command.SequentialCommandGroup;
+import com.technototes.library.command.WaitCommand;
 import com.technototes.path.command.TrajectorySequenceCommand;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
@@ -17,7 +18,9 @@ public class AutoRightSingleCycleOne extends SequentialCommandGroup {
                 r.drivebaseSubsystem,
                 AutoConstants.Right.W_JUNCTION_TO_STACK_ONE
             )
-                .alongWith(new LiftCollectCommand(r.liftSubsystem)),
+                .alongWith(new SequentialCommandGroup(
+                        new WaitCommand(0.4),
+                new LiftCollectCommand(r.liftSubsystem))),
             new ClawCloseCommand(r.clawSubsystem),
             new TrajectorySequenceCommand(
                 r.drivebaseSubsystem,
