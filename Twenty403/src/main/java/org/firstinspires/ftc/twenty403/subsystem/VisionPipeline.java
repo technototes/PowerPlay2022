@@ -209,15 +209,14 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         for (int j = 0; j < customColorSpace.height(); j++) {
             for (int i = customColorSpace.width() - 1; i > 0; i--) {
                 double[] color = customColorSpace.get(j, i);
-                if (
-                        (color[0] < VisionConstants.YELLOW + VisionConstants.RANGE &&
-                                color[0] > VisionConstants.YELLOW - VisionConstants.RANGE) ||
-                                (color[0] < VisionConstants.YELLOW2 + VisionConstants.RANGE &&
-                                        color[0] > VisionConstants.YELLOW2 - VisionConstants.RANGE) &&
-                                        color[1] > VisionConstants.lowS &&
-                                        color[1] < VisionConstants.highS &&
-                                        color[2] > VisionConstants.lowV &&
-                                        color[2] < VisionConstants.highV
+                if ((color[0] < VisionConstants.YELLOW - VisionConstants.RANGE &&
+                        color[0] > VisionConstants.YELLOW + VisionConstants.RANGE) ||
+                        (color[0] < VisionConstants.YELLOW2 - VisionConstants.RANGE &&
+                                color[0] > VisionConstants.YELLOW2 + VisionConstants.RANGE) &&
+                                color[1] > VisionConstants.lowS &&
+                                color[1] < VisionConstants.highS &&
+                                color[2] > VisionConstants.lowV &&
+                                color[2] < VisionConstants.highV
                 ) {
                     if (startX == -1) {
                         startX = i;
