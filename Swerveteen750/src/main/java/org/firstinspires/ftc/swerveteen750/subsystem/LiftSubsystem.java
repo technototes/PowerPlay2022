@@ -26,7 +26,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double L_ABSOLUTE_MAX_HEIGHT = 38 * TICKS_PER_INCH; // 4510
     public static double L_MAX_MOTOR_SPEED = 0.8;
     public static double L_MIN_MOTOR_SPEED = -0.4; //  Gravity
-    public static double L_REGULAR_MOVE = 1.5 * TICKS_PER_INCH;
+    public static double L_REGULAR_MOVE = 1.0 * TICKS_PER_INCH;
     public static double L_TINY_MOVE = 0.5 * TICKS_PER_INCH; // When close to the upper limit
 
     // Don't change these: They're used for user-redefining the 'zero' location during gameplay
