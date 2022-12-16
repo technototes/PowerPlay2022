@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.swerveteen750;
 
 import org.firstinspires.ftc.swerveteen750.command.autonomous.StartingPosition;
-import org.firstinspires.ftc.swerveteen750.subsystem.ArmSubsystem;
 import org.firstinspires.ftc.swerveteen750.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.swerveteen750.subsystem.LiftSubsystem;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.MecanumDriveSubsystem;

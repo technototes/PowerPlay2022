@@ -4,6 +4,7 @@ import org.firstinspires.ftc.swerveteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.swerveteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.swerveteen750.command.drive.ApplyTurboModeCommand;
 import org.firstinspires.ftc.swerveteen750.command.drive.MecanumDriveCommand;
+import org.firstinspires.ftc.swerveteen750.command.lift.LiftFloorIntakeCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftGroundJunctionCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftHighPoleCommand;
 import org.firstinspires.ftc.swerveteen750.command.drive.ResetGyroCommand;
@@ -85,6 +86,6 @@ public class ControlsDriver {
         gamepad.dpadLeft.whenPressed(new LiftLowPoleCommand(robot.liftSubsystem));
         gamepad.dpadRight.whenPressed(new LiftMidPoleCommand(robot.liftSubsystem));
         gamepad.dpadUp.whenPressed(new LiftHighPoleCommand(robot.liftSubsystem));
-        gamepad.dpadDown.whenPressed(new LiftGroundJunctionCommand(robot.liftSubsystem));
+        gamepad.dpadDown.whenPressed(new LiftFloorIntakeCommand(robot.liftSubsystem));
     }
 }

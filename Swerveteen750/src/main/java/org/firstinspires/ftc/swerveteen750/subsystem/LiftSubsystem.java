@@ -16,16 +16,16 @@ import com.technototes.library.subsystem.Subsystem;
 public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     // Assuming the 0 position for both lift motor might be different?
     // The LiftSubsystem should be able to any of the motor combination
-    public static double TICKS_PER_INCH = 185; // was 180
-    public static double L_INTAKE_FLOOR = 0.1 * TICKS_PER_INCH; // wrong
-    public static double L_GROUND_JUNCTION = 1.75 * TICKS_PER_INCH; // now 3, 360, 120
-    public static double L_LOW_JUNCTION = 14.5 * TICKS_PER_INCH; // now 14.125, 2680
-    public static double L_MEDIUM_JUNCTION = 25 * TICKS_PER_INCH; // now 23.5, 4613
-    public static double L_HIGH_JUNCTION = 36 * TICKS_PER_INCH; // now 33.5, 6646
+    public static double TICKS_PER_INCH = 118;
+    public static double L_INTAKE_FLOOR = 0.1 * TICKS_PER_INCH;
+    public static double L_GROUND_JUNCTION = 1.75 * TICKS_PER_INCH;
+    public static double L_LOW_JUNCTION = 14.5 * TICKS_PER_INCH;
+    public static double L_MEDIUM_JUNCTION = 25 * TICKS_PER_INCH;
+    public static double L_HIGH_JUNCTION = 36 * TICKS_PER_INCH;
     public static double L_ABSOLUTE_MIN_HEIGHT = 0;
-    public static double L_ABSOLUTE_MAX_HEIGHT = 38 * TICKS_PER_INCH;
-    public static double L_MAX_MOTOR_SPEED = 0.8; // Unverified
-    public static double L_MIN_MOTOR_SPEED = -0.4; // Unverified, Gravity
+    public static double L_ABSOLUTE_MAX_HEIGHT = 38 * TICKS_PER_INCH; // 4510
+    public static double L_MAX_MOTOR_SPEED = 0.8;
+    public static double L_MIN_MOTOR_SPEED = -0.4; //  Gravity
     public static double L_REGULAR_MOVE = 1.5 * TICKS_PER_INCH;
     public static double L_TINY_MOVE = 0.5 * TICKS_PER_INCH; // When close to the upper limit
 
@@ -100,7 +100,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         if (isLeftConnected) {
             double leftTargetSpeed = leftPidController.update(getLeftPos());
             double leftClippedSpeed = Range.clip(leftTargetSpeed, L_MIN_MOTOR_SPEED, L_MAX_MOTOR_SPEED);
-            this.setMotorSpeed(leftMotor, leftClippedSpeed);
+            this.setMotorSpeed(leftMotor, -leftClippedSpeed);
         }
     }
 
@@ -114,7 +114,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     public double getLeftPos() {
         if (isLeftConnected) {
-            return leftMotor.getEncoder().getPosition();
+            return -leftMotor.getEncoder().getPosition();
         }
         return 0.0;
     }

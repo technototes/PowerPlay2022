@@ -32,8 +32,9 @@ public class LiftMotorTest extends CommandOpMode {
 
     @Override
     public void runLoop() {
-        telemetry.addData("Left Lift Motor Encoder", robot.liftSubsystem.getLeftPos());
-        telemetry.addData("Left lift motor position", hardware.leftLiftMotor.getDevice().getCurrentPosition());
+        telemetry.addData("Left Lift Motor Target Position", robot.liftSubsystem.getLeftTargetPos());
+        telemetry.addData("Left Lift Motor Current Position", robot.liftSubsystem.getLeftPos());
+        telemetry.addData("Left lift Motor Encoder", hardware.leftLiftMotor.getDevice().getCurrentPosition());
         telemetry.update();
     }
 }
