@@ -157,6 +157,8 @@ public class DrivebaseSubsystem
 
     private static final boolean ENABLE_POSE_DIAGNOSTICS = true;
 
+    public double trajectoryX, trajectoryY, trajectoryAngleRadians;
+
     @Log(name = "Pose2d: ")
     public String poseDisplay = ENABLE_POSE_DIAGNOSTICS ? "" : null;
 
@@ -169,12 +171,18 @@ public class DrivebaseSubsystem
     // @Log.Number(name = "RR")
     public EncodedMotor<DcMotorEx> rr2;
 
+    @Log
+    public String locState = "none";
+
+    public OdoSubsystem odometry;
+
     public DrivebaseSubsystem(
         EncodedMotor<DcMotorEx> fl,
         EncodedMotor<DcMotorEx> fr,
         EncodedMotor<DcMotorEx> rl,
         EncodedMotor<DcMotorEx> rr,
-        IMU i
+        IMU i,
+        OdoSubsystem odo
     ) {
         super(fl, fr, rl, rr, i, () -> DriveConstants.class);
         fl2 = fl;
@@ -182,8 +190,13 @@ public class DrivebaseSubsystem
         rl2 = rl;
         rr2 = rr;
         speed = DriveConstants.SLOW_MOTOR_SPEED;
+        odometry = odo;
+
         if (this.getLocalizer() != null) {
-            this.setLocalizer(new OverriderLocalizer(this.getLocalizer()));
+            this.setLocalizer(new OverrideLocalizer(this.getLocalizer(), odo, this));
+            locState = "created";
+        } else {
+            locState = "not created";
         }
     }
 
@@ -227,7 +240,7 @@ public class DrivebaseSubsystem
     }
 
     // Stuff below is used for tele-op trajectory motion
-    
+
     public double trajectoryX, trajectoryY, trajectoryAngleRadians;
     public double moveIncrement = 0;
 
@@ -292,5 +305,4 @@ public class DrivebaseSubsystem
         this.followTrajectoryAsync(t);
         this.clearRequestedTrajectory();
     }
-
 }
