@@ -10,7 +10,7 @@ import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.Stick;
 import com.technototes.library.util.MathUtils;
 
-import org.firstinspires.ftc.sixteen750.subsystem.MecanumDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.drive.MecanumDriveSubsystem;
 
 public class MecanumDriveCommand implements Command {
     // TODO: change to actual drive-base subsystem

@@ -5,7 +5,7 @@ import org.firstinspires.ftc.sixteen750.ControlsOperator;
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
 import org.firstinspires.ftc.sixteen750.command.autonomous.StartingPosition;
-import org.firstinspires.ftc.sixteen750.subsystem.TankDriveSubsystem;
+import org.firstinspires.ftc.sixteen750.subsystem.drive.TankDriveSubsystem;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.sixteen750.opmode.diagnosis;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.technototes.library.hardware2.HardwareBuilder;
 import com.technototes.library.util.Alliance;
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.sixteen750.Robot;
 import org.firstinspires.ftc.sixteen750.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.sixteen750.subsystem.VisionSubsystem;
 
+@Disabled
 @Autonomous()
 public class FixTheVision extends LinearOpMode {
     @Override

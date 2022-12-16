@@ -1,17 +1,17 @@
-package org.firstinspires.ftc.sixteen750.subsystem;
+package org.firstinspires.ftc.swerveteen750.subsystem.drive;
 
-import static org.firstinspires.ftc.sixteen750.subsystem.TankDriveSubsystem.TankDriveConstants.MAX_ANG_ACCEL;
-import static org.firstinspires.ftc.sixteen750.subsystem.TankDriveSubsystem.TankDriveConstants.MOTOR_VELO_PID;
+import static org.firstinspires.ftc.swerveteen750.subsystem.drive.TankDriveSubsystem.TankDriveConstants.MAX_ANG_ACCEL;
+import static org.firstinspires.ftc.swerveteen750.subsystem.drive.TankDriveSubsystem.TankDriveConstants.MOTOR_VELO_PID;
 
 import androidx.annotation.NonNull;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.firstinspires.ftc.sixteen750.swerve_util.LynxModuleUtil;
-import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequence;
-import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequenceBuilder;
-import org.firstinspires.ftc.sixteen750.swerve_util.TrajectorySequenceRunner;
+import org.firstinspires.ftc.swerveteen750.swerve_util.LynxModuleUtil;
+import org.firstinspires.ftc.swerveteen750.swerve_util.TrajectorySequence;
+import org.firstinspires.ftc.swerveteen750.swerve_util.TrajectorySequenceBuilder;
+import org.firstinspires.ftc.swerveteen750.swerve_util.TrajectorySequenceRunner;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
