@@ -40,13 +40,13 @@ public class AutoLeftFullCycle extends SequentialCommandGroup {
                 new ClawOpenCommand(r.clawSubsystem),
                 new AutoLeftSingleCycle(r),
                 new AutoLeftSingleCycle(r),
-                new AutoLeftSingleCycle(r),
+                //new AutoLeftSingleCycle(r),
                 //new AutoRightSingleCycleOne(r),
                 //new AutoRightSingleCycleOne(r),
                 //new AutoRightSingleCycleOne(r),
                 new TrajectorySequenceCommand(r.drivebaseSubsystem, parkingDestination)
-                        .alongWith(new LiftIntakeCommand(r.liftSubsystem)),
-                new SlowCommand(r.drivebaseSubsystem)
+                        .alongWith(new LiftIntakeCommand(r.liftSubsystem))
+                //new SlowCommand(r.drivebaseSubsystem)
         );
         // new AutoRightSingleCycle(drivebaseSubsystem, liftSubsystem, clawSubsystem),
         // new AutoRightSingleCycle(drivebaseSubsystem, liftSubsystem, clawSubsystem),

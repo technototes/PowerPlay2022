@@ -26,14 +26,14 @@ public class AutoConstants {
         public static ConfigurablePose LEFT_MOVE = new ConfigurablePose(-24, 0, toRadians(90));
         public static ConfigurablePose RIGHT_MOVE = new ConfigurablePose(24, 0, toRadians(90));
 
-        public static ConfigurablePose STACK_ONE = new ConfigurablePose(63, -14, toRadians(0));
+        public static ConfigurablePose STACK_ONE = new ConfigurablePose(65, -14, toRadians(0));
         public static ConfigurablePose STACK_TWO = new ConfigurablePose(70, -16, toRadians(0));
         public static ConfigurablePose STACK_THREE = new ConfigurablePose(73, -16, toRadians(0));
         //x: 66, y: -16, 0
         public static ConfigurablePose LEFT = new ConfigurablePose(21, -18, toRadians(90));
         public static ConfigurablePose MIDDLE = new ConfigurablePose(39, -16, toRadians(90));
         public static ConfigurablePose RIGHT = new ConfigurablePose(62, -17, toRadians(90));
-        public static ConfigurablePose W_JUNCTION_ONE = new ConfigurablePose(28, -10, 1.9);
+        public static ConfigurablePose W_JUNCTION_ONE = new ConfigurablePose(26, -10, 1.9);
         public static ConfigurablePose W_JUNCTION_TWO = new ConfigurablePose(34, -11, 2);
         public static ConfigurablePose W_JUNCTION_THREE = new ConfigurablePose(37, -11, 2);
 
@@ -51,7 +51,7 @@ public class AutoConstants {
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
                 TELESTART_TO_FORWARD_MOVE =
                 b -> b.apply(TELESTART.toPose())
-                        .lineToLinearHeading(FORWARD_MOVE.toPose())
+                        .lineToLinearHeading (FORWARD_MOVE.toPose())
                         .build(),
                 TELESTART_TO_BACKWARD_MOVE =
                         b -> b.apply(TELESTART.toPose())
