@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.sixteen750;
 
 import org.firstinspires.ftc.sixteen750.Robot.RobotConstant;
-import org.firstinspires.ftc.sixteen750.command.ResetCommandSchedulerCommand;
 import org.firstinspires.ftc.sixteen750.command.VisionDuringTeleCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.sixteen750.command.claw.ClawOpenCommand;
@@ -13,9 +12,7 @@ import org.firstinspires.ftc.sixteen750.command.drive.MecanumDriveCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftGroundJunctionCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftHighPoleCommand;
 import org.firstinspires.ftc.sixteen750.command.drive.ResetGyroCommand;
-import org.firstinspires.ftc.sixteen750.command.lift.LiftMoveDownCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftMoveDownOverrideCommand;
-import org.firstinspires.ftc.sixteen750.command.lift.LiftMoveUpCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftLowPoleCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftMidPoleCommand;
 import org.firstinspires.ftc.sixteen750.command.lift.LiftMoveUpOverrideCommand;
@@ -30,13 +27,24 @@ public class ControlsDriver {
     public Robot robot;
     public CommandGamepad gamepad;
 
-    public ControlsDriver(CommandGamepad g, Robot r, boolean enableMecanumDrive, boolean enableLift, boolean enableArm, boolean enableClaw) {
+    public ControlsDriver(CommandGamepad g,
+                          Robot r,
+                          boolean enableSwerveDrive,
+                          boolean enableMecanumDrive,
+                          boolean enableLift,
+                          boolean enableArm,
+                          boolean enableClaw
+    ) {
         this.robot = r;
         gamepad = g;
 
         if (enableMecanumDrive) {
             bindMecanumDriveControls();
             System.out.println("Binding Mecanum Drive Controls for Driver");
+        }
+        else if (enableSwerveDrive) {
+            bindSwerveDriveControls();
+            System.out.println("Binding Swerve Drive Controls for Driver");
         }
         if (enableLift) {
             bindDriverLiftControls();
@@ -58,7 +66,8 @@ public class ControlsDriver {
         this(
                 g,
                 r,
-                combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.MECANUM_DRIVE_ENABLED : combo == Robot.SubsystemCombo.DRIVE_ONLY || combo == Robot.SubsystemCombo.VISION_DRIVE,
+                combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.SWERVE_DRIVE_ENABLED : combo == Robot.SubsystemCombo.S_DRIVE_ONLY,
+                combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.MECANUM_DRIVE_ENABLED : combo == Robot.SubsystemCombo.M_DRIVE_ONLY || combo == Robot.SubsystemCombo.VISION_M_DRIVE,
                 combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.LIFT_ENABLED : combo == Robot.SubsystemCombo.LIFT_ONLY,
                 combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.ARM_ENABLED : combo == Robot.SubsystemCombo.ARM_CLAW_ONLY,
                 combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.CLAW_ENABLED : combo == Robot.SubsystemCombo.ARM_CLAW_ONLY
@@ -79,6 +88,10 @@ public class ControlsDriver {
         CommandScheduler
                 .getInstance()
                 .scheduleForState(new VisionDuringTeleCommand(robot.visionSubsystem, gamepad.share), CommandOpMode.OpModeState.RUN);
+    }
+
+    public void bindSwerveDriveControls(){
+        System.err.println("Swerve Drive Controls Not Implemented");
     }
 
     public void bindDriverClawControls() {

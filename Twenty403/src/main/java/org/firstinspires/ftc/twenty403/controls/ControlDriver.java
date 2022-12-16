@@ -61,7 +61,7 @@ public class ControlDriver {
         tileUp = gamepad.dpadUp;
         tileLeft = gamepad.dpadLeft;
         tileRight = gamepad.dpadRight;
-        tileAbort= gamepad.leftBumper;
+        tileAbort = gamepad.leftBumper;
         turboButton = gamepad.triangle;
 
         driveStraight = gamepad.rightTrigger.getAsButton(0.5);

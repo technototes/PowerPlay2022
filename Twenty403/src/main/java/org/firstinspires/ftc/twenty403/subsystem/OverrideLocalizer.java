@@ -8,7 +8,7 @@ import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-public class OverrideLocalizer implements Localizer, Loggable {
+public class OverrideLocalizer implements Localizer {
 
     Localizer orig;
     OdoSubsystem odometry;
