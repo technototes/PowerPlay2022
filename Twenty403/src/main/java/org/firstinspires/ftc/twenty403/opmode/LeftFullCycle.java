@@ -16,6 +16,7 @@ import org.firstinspires.ftc.twenty403.command.autonomous.left.AutoLeftParkingSe
 import org.firstinspires.ftc.twenty403.command.autonomous.right.AutoRightParkingSelectionFullCycleCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.command.drive.AutoSpeedCommand;
+import org.firstinspires.ftc.twenty403.command.drive.TurboCommand;
 import org.firstinspires.ftc.twenty403.controls.ControlSingle;
 
 @Autonomous(name = "LeftFullCycle")
@@ -37,9 +38,10 @@ public class LeftFullCycle extends CommandOpMode {
             .getInstance()
             .scheduleForState(
                 new SequentialCommandGroup(
-                    new AutoSpeedCommand(robot.drivebaseSubsystem),
+                    //new TurboCommand(robot.drivebaseSubsystem),
                     new ClawCloseCommand(robot.clawSubsystem),
-                    new AutoLeftParkingSelectionFullCycleCommand(robot),
+                    new AutoLeftParkingSelectionFullCycleCommand(robot,
+                            () -> this.getOpModeRuntime()),
                     CommandScheduler.getInstance()::terminateOpMode
                 ),
                 CommandOpMode.OpModeState.RUN
