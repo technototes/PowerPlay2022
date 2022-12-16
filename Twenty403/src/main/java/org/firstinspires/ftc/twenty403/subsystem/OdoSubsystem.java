@@ -115,7 +115,14 @@ public class OdoSubsystem implements Subsystem, Loggable {
             rightColor = cRight.argb();
         }
         odoData =
-            String.format("O%s-%d,%d:%x|%x|%x", ReadSensors().toString(),
-                    (int)leftDistance, (int)rightDistance, leftColor, centerColor, rightColor);
+            String.format(
+                "O%s-%d,%d:%x|%x|%x",
+                ReadSensors().toString(),
+                (int) leftDistance,
+                (int) rightDistance,
+                leftColor,
+                centerColor,
+                rightColor
+            );
     }
 }
