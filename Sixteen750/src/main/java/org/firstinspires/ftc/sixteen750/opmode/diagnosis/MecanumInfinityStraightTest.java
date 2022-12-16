@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.technototes.library.util.Alliance;
 import com.technototes.path.trajectorysequence.TrajectorySequence;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
 import org.firstinspires.ftc.sixteen750.command.autonomous.StartingPosition;
 
+@Disabled
 @Config
 @Autonomous(group = "Test-Path")
 @SuppressWarnings("unused")
@@ -24,8 +26,8 @@ public class MecanumInfinityStraightTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DRIVE_ONLY);
-        Robot robot = new Robot(hardware, Robot.SubsystemCombo.DRIVE_ONLY, Alliance.NONE, StartingPosition.NEUTRAL);
+        Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.M_DRIVE_ONLY);
+        Robot robot = new Robot(hardware, Robot.SubsystemCombo.M_DRIVE_ONLY, Alliance.NONE, StartingPosition.NEUTRAL);
 
         TrajectorySequence backandFourthTrajectory = robot.mecanumDriveSubsystem
                 .trajectorySequenceBuilder(new Pose2d(0, 0, 0))

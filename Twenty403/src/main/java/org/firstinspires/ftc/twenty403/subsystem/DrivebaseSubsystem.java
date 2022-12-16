@@ -157,8 +157,6 @@ public class DrivebaseSubsystem
 
     private static final boolean ENABLE_POSE_DIAGNOSTICS = true;
 
-    public double trajectoryX, trajectoryY, trajectoryAngleRadians;
-
     @Log(name = "Pose2d: ")
     public String poseDisplay = ENABLE_POSE_DIAGNOSTICS ? "" : null;
 

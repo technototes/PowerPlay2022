@@ -1,0 +1,18 @@
+package org.firstinspires.ftc.swerveteen750.command.autonomous.left;
+
+import android.util.Pair;
+
+import com.technototes.library.command.ChoiceCommand;
+
+import org.firstinspires.ftc.swerveteen750.subsystem.drive.MecanumDriveSubsystem;
+import org.firstinspires.ftc.swerveteen750.subsystem.VisionSubsystem;
+
+public class LeftParkingSelectionCommandJustPark extends ChoiceCommand {
+    public LeftParkingSelectionCommandJustPark(
+            VisionSubsystem visionSubsystem, MecanumDriveSubsystem driveSubsystem) {
+        super(
+                new Pair<>(visionSubsystem.visionPipeline::left, new LeftJustParkLeft(driveSubsystem)),
+                new Pair<>(visionSubsystem.visionPipeline::middle, new LeftJustParkMiddle(driveSubsystem)),
+                new Pair<>(visionSubsystem.visionPipeline::right, new LeftJustParkRight(driveSubsystem)));
+    }
+}
