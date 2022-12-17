@@ -240,21 +240,44 @@ public class DrivebaseSubsystem
     // Stuff below is used for tele-op trajectory motion
 
     public double trajectoryX, trajectoryY, trajectoryAngleRadians;
-    public double moveIncrement = 0;
+    public Pose2d targetPose, newPose;
+    public double xdifference, ydifference;
 
     public void requestTrajectoryMove(double deltaX, double deltaY, double deltaAngleRadians) {
-        trajectoryX = deltaX;
-        trajectoryY = deltaY;
-        trajectoryAngleRadians = deltaAngleRadians;
-        startNewTrajectory();
+        if (!isBusy()) {
+            trajectoryX = deltaX;
+            trajectoryY = deltaY;
+            trajectoryAngleRadians = deltaAngleRadians;
+            targetPose = new Pose2d(trajectoryX, trajectoryY, trajectoryAngleRadians);
+            startNewTrajectory();
+        }
+        else {
+        queueTrajectory(deltaX, deltaY, deltaAngleRadians);
+        }
+
+    }
+    public void queueTrajectory(double deltaX, double deltaY, double deltaAngleRadians){
+        Pose2d curPose = getPoseEstimate();
+        xdifference = targetPose.getX()- curPose.getX();
+        ydifference = targetPose.getY() - curPose.getY();
+        newPose = new Pose2d(xdifference);
+        if (deltaX==0.0 && targetPose.getX()==0.0){
+            trajectoryX = 0;
+            trajectoryY = ydifference + deltaY;
+            trajectoryAngleRadians = deltaAngleRadians;
+            startNewTrajectory();
+        }
+        if (deltaY == 0.0 && targetPose.getY()==0.0){
+            trajectoryY = 0;
+            trajectoryX = xdifference + deltaX;
+            trajectoryAngleRadians = deltaAngleRadians;
+            startNewTrajectory();
+        }
     }
 
-    public void requestTrajectoryMove(double deltaX, double deltaY) {
-        trajectoryX = deltaX;
-        trajectoryY = deltaY;
-        trajectoryAngleRadians = 0.0;
-        startNewTrajectory();
-    }
+//    public void requestTrajectoryMove(double deltaX, double deltaY) {
+//        requestTrajectoryMove(deltaX,deltaY,0);
+//    }
 
 //    public boolean isTrajectoryRequested() {
 //        if (trajectoryX != 0 || trajectoryY != 0 || trajectoryAngleRadians != 0) {
@@ -264,7 +287,9 @@ public class DrivebaseSubsystem
 //    }
 
     public void clearRequestedTrajectory() {
-        requestTrajectoryMove(0, 0, 0);
+        trajectoryX = 0;
+        trajectoryY = 0;
+        trajectoryAngleRadians = 0;
     }
 
 
@@ -275,8 +300,8 @@ public class DrivebaseSubsystem
     public void startNewTrajectory() {
         Pose2d start = this.getPoseEstimate();
         start = new Pose2d(start.getX()+.01, start.getY(), start.getHeading());
-        double endX = Range.clip(start.getX() + this.trajectoryX, -72, 72);
-        double endY = Range.clip(start.getY() + this.trajectoryY, -72, 72);
+        double endX = start.getX() + this.trajectoryX;
+        double endY = start.getY() + this.trajectoryY;
         double endHeading = AngleUnit.normalizeRadians(
                 start.getHeading() + this.trajectoryAngleRadians
         );
