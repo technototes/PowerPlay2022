@@ -70,7 +70,7 @@ public class DriveCommand implements Command, Loggable {
         if (straight == null || straight.getAsBoolean() == false) {
             // No straighten override: return the stick value
             // (with some adjustment...)
-            return -Math.pow(r.getAsDouble() * subsystem.speed, 3);
+            return -Math.pow(r.getAsDouble(), 3) * subsystem.speed;
         } else {
             // headingInRads is [0-2pi]
             double heading = -Math.toDegrees(headingInRads);
