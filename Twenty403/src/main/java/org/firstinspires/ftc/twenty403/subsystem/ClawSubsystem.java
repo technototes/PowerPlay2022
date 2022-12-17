@@ -11,6 +11,7 @@ import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.library.util.Alliance;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.twenty403.command.claw.ClawAutoCloseWithLift;
 import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
 import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 
@@ -115,9 +116,10 @@ public class ClawSubsystem implements Subsystem, Loggable {
             if (
                 liftSubsystem.canAutoClose() && !isClawClosed() && isAllianceCone() && isConeClose()
             ) {
-                close();
-                CommandScheduler.getInstance().scheduleOnceForState();
-
+//                close();
+//                new WaitCommand(.2);
+//                new LiftUpCommand(liftSubsystem);
+                CommandScheduler.getInstance().scheduleOnce(new ClawAutoCloseWithLift(this, liftSubsystem));
             }
         }
     }
