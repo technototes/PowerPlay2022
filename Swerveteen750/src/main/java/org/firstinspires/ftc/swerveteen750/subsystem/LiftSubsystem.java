@@ -28,7 +28,8 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double L_MIN_MOTOR_SPEED = -0.4; //  Gravity
     public static double L_REGULAR_MOVE = 1.0 * TICKS_PER_INCH;
     public static double L_TINY_MOVE = 0.5 * TICKS_PER_INCH; // When close to the upper limit
-    public static double L_RELATIVELY_HIGH = 30 * TICKS_PER_INCH; // To indicate the lift is high
+    public static double L_EXTENDED_HIGH = 30 * TICKS_PER_INCH; // To indicate the lift is high
+    public static double L_EXTENDED_MEDIUM = 20 * TICKS_PER_INCH; // To indicate the lift is medium
 
     // Don't change these: They're used for user-redefining the 'zero' location during gameplay
     public static double L_ACTUAL_ZERO = 10;
@@ -221,6 +222,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     }
 
     public boolean isLiftHigh() {
-        return getLeftPos() > L_RELATIVELY_HIGH;
+        return getLeftPos() > L_EXTENDED_HIGH;
+    }
+
+    public boolean isLiftMedium() {
+        return getLeftPos() < L_EXTENDED_MEDIUM;
     }
 }

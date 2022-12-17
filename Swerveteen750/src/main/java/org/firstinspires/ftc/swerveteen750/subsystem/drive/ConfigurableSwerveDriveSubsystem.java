@@ -56,8 +56,15 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public static double VY_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 1;
 
-    public static double STICK_X_SCALAR = 1;
-    public static double STICK_Y_SCALAR = 1;
+
+    public static double STICK_X_SCALAR = 0.8;
+    public static double STICK_Y_SCALAR = 0.8;
+
+    public static double STICK_SCALAR_MAX = 1;
+    public static double STICK_SCALAR_HIGH = 0.8;
+    public static double STICK_SCALAR_MED = 0.6;
+    public static double STICK_SCALAR_LOW = 0.4;
+    public static double STICK_SCALAR_MIN = 0.25;
 
     public static int MAX_PARALLEL_COMMANDS = 8;
 
