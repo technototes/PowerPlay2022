@@ -40,6 +40,7 @@ public class ControlDriver {
         this.robot = r;
         gamepad = g;
         override = g.leftTrigger.getAsButton(0.5);
+        visionPipeline = robot.visionSystem.visionPipeline;
 
         AssignNamedControllerButton();
 
@@ -52,7 +53,6 @@ public class ControlDriver {
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
             bindVisionCommand();
         }
-        visionPipeline = robot.visionSystem.visionPipeline;
     }
 
     private void AssignNamedControllerButton() {
