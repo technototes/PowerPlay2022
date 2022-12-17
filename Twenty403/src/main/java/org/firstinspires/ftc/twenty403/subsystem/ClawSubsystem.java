@@ -20,7 +20,7 @@ public class ClawSubsystem implements Subsystem, Loggable {
 
     // Correct numbers, tested 12/10/22
     public static double OPEN_SERVO_POSITION = .38;
-    public static double CLOSE_SERVO_POSITION = .44; //47
+    public static double CLOSE_SERVO_POSITION = .455; //.47;
 
     // # of CM distance before we auto-close the claw
     public static double CONE_IS_CLOSE_ENOUGH = 6.0;
@@ -119,7 +119,8 @@ public class ClawSubsystem implements Subsystem, Loggable {
 //                close();
 //                new WaitCommand(.2);
 //                new LiftUpCommand(liftSubsystem);
-                CommandScheduler.getInstance().scheduleOnce(new ClawAutoCloseWithLift(this, liftSubsystem));
+                CommandScheduler.getInstance().schedule(new ClawAutoCloseWithLift(this,liftSubsystem));
+                //CommandScheduler.getInstance().scheduleOnce(new ClawAutoCloseWithLift(this, liftSubsystem));
             }
         }
     }
