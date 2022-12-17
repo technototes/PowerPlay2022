@@ -110,11 +110,11 @@ public class DrivebaseSubsystem
 
         // This was 60, which was too fast. Things slid around a lot.
         @MaxVelo
-        public static double MAX_VEL = 30; // TODO: change this back to 30
+        public static double MAX_VEL = 50;
 
         // This was 35, which also felt a bit too fast. The bot controls more smoothly now
         @MaxAccel
-        public static double MAX_ACCEL = 30;
+        public static double MAX_ACCEL = 35;
 
         // This was 180 degrees
         @MaxAngleVelo
