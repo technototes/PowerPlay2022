@@ -236,7 +236,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         Imgproc.cvtColor(frame, customColorSpace, Imgproc.COLOR_RGB2HSV);
         int startX = -1;
         int endX = -1;
-        for (int j = 0; j < customColorSpace.height(); j++) {
+        for (int j = customColorSpace.height() - 1; j >= 0; j--) {
             for (int i = 0; i < customColorSpace.width(); i++) {
                 double[] color = customColorSpace.get(j, i);
                 if (
