@@ -7,19 +7,30 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.technototes.library.structure.CommandOpMode;
+import com.technototes.library.util.Alliance;
 
+import org.firstinspires.ftc.swerveteen750.ControlsDriver;
+import org.firstinspires.ftc.swerveteen750.Hardware;
+import org.firstinspires.ftc.swerveteen750.Robot;
+import org.firstinspires.ftc.swerveteen750.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
 
 @TeleOp(group = "Swerve")
 @SuppressWarnings("unused")
 public class AnotherExperimentalSwerveDrive extends CommandOpMode {
+    Robot robot;
+    Hardware hardware;
     ConfigurableSwerveDriveSubsystem drive;
+    ControlsDriver driverControls;
 
     @Override
     public void uponInit() {
+        hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DEFAULT);
+        robot = new Robot(hardware, Robot.SubsystemCombo.DEFAULT, Alliance.NONE, StartingPosition.NEUTRAL);
         drive = new ConfigurableSwerveDriveSubsystem(hardwareMap);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         drive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        driverControls = new ControlsDriver(driverGamepad, robot, Robot.SubsystemCombo.DEFAULT);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
