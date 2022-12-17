@@ -35,7 +35,7 @@ public class ClawServoTest extends CommandOpMode {
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.CLAW_ONLY);
-        robot = new Robot(hardware, Robot.SubsystemCombo.CLAW_ONLY, Alliance.NONE, StartingPosition.NEUTRAL);
+        robot = new Robot(hardwareMap, hardware, Robot.SubsystemCombo.CLAW_ONLY, Alliance.NONE, StartingPosition.NEUTRAL);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 

@@ -4,9 +4,10 @@ import org.firstinspires.ftc.swerveteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.swerveteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.swerveteen750.command.drive.ApplyTurboModeCommand;
 import org.firstinspires.ftc.swerveteen750.command.drive.MecanumDriveCommand;
+import org.firstinspires.ftc.swerveteen750.command.drive.ResetSwerveGyroCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftFloorIntakeCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftHighPoleCommand;
-import org.firstinspires.ftc.swerveteen750.command.drive.ResetGyroCommand;
+import org.firstinspires.ftc.swerveteen750.command.drive.ResetMecanumGyroCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftMoveDownOverrideCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftLowPoleCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftMidPoleCommand;
@@ -67,11 +68,11 @@ public class ControlsDriver {
                 .scheduleJoystick(new MecanumDriveCommand(robot.mecanumDriveSubsystem, gamepad.leftStick, gamepad.rightStick));
         gamepad.leftStickButton.whenPressed(new ApplyTurboModeCommand(robot.mecanumDriveSubsystem));
         gamepad.rightStickButton.whenPressed(new ApplyTurboModeCommand(robot.mecanumDriveSubsystem));
-        gamepad.x.whenPressed(new ResetGyroCommand(robot.mecanumDriveSubsystem, gamepad));
+        gamepad.x.whenPressed(new ResetMecanumGyroCommand(robot.mecanumDriveSubsystem, gamepad));
     }
 
     public void bindSwerveDriveControls(){
-        System.err.println("Swerve Drive Controls Not Implemented");
+        gamepad.x.whenPressed(new ResetSwerveGyroCommand(robot.swerveDriveSubsystem, gamepad));
     }
 
     public void bindDriverClawControls() {

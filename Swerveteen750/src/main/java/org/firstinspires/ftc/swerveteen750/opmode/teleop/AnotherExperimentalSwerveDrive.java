@@ -26,8 +26,8 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DEFAULT);
-        robot = new Robot(hardware, Robot.SubsystemCombo.DEFAULT, Alliance.NONE, StartingPosition.NEUTRAL);
-        drive = new ConfigurableSwerveDriveSubsystem(hardwareMap);
+        robot = new Robot(hardwareMap, hardware, Robot.SubsystemCombo.DEFAULT, Alliance.NONE, StartingPosition.NEUTRAL);
+        drive = robot.swerveDriveSubsystem;
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         drive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         driverControls = new ControlsDriver(driverGamepad, robot, Robot.SubsystemCombo.DEFAULT);

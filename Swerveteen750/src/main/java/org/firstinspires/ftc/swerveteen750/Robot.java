@@ -3,12 +3,14 @@ package org.firstinspires.ftc.swerveteen750;
 import org.firstinspires.ftc.swerveteen750.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.swerveteen750.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.swerveteen750.subsystem.LiftSubsystem;
+import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.MecanumDriveSubsystem;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.SwerveDriveSubsystem;
 import org.firstinspires.ftc.swerveteen750.subsystem.VisionSubsystem;
 
 import com.acmerobotics.dashboard.config.Config;
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.util.Alliance;
 
@@ -24,13 +26,14 @@ public class Robot implements Loggable {
         public static boolean CAMERA_ENABLED = false;
     }
 
-    public SwerveDriveSubsystem swerveDriveSubsystem;
+    public ConfigurableSwerveDriveSubsystem swerveDriveSubsystem;
     public MecanumDriveSubsystem mecanumDriveSubsystem;
     public LiftSubsystem liftSubsystem;
     public ClawSubsystem clawSubsystem;
     public VisionSubsystem visionSubsystem;
 
-    public Robot(Hardware hardware,
+    public Robot(HardwareMap hardwareMap,
+                 Hardware hardware,
                  boolean enableSwerveDrive,
                  boolean enableMecanumDrive,
                  boolean enableLift,
@@ -51,6 +54,7 @@ public class Robot implements Loggable {
         }
         else if (enableSwerveDrive) {
             // Hint: we never put the SwerveDriveSubsystem in the Robot class
+            swerveDriveSubsystem = new ConfigurableSwerveDriveSubsystem(hardwareMap); // much simpler
         }
 
         if (enableLift) {
@@ -74,14 +78,15 @@ public class Robot implements Loggable {
         S_DRIVE_ONLY,
         M_DRIVE_ONLY,
         LIFT_ONLY,
-        ARM_CLAW_ONLY,
         CLAW_ONLY,
         VISION_ONLY,
         VISION_M_DRIVE,
     }
 
-    public Robot(Hardware hardware, SubsystemCombo combo, Alliance team, StartingPosition whichSide) {
-        this(hardware,
+    public Robot(HardwareMap hardwareMap, Hardware hardware, SubsystemCombo combo, Alliance team, StartingPosition whichSide) {
+        this(
+                hardwareMap,
+                hardware,
                 combo == SubsystemCombo.DEFAULT ? RobotConstant.SWERVE_DRIVE_ENABLED : combo == SubsystemCombo.S_DRIVE_ONLY,
                 combo == SubsystemCombo.DEFAULT ? RobotConstant.MECANUM_DRIVE_ENABLED : combo == SubsystemCombo.M_DRIVE_ONLY || combo == SubsystemCombo.VISION_M_DRIVE,
                 combo == SubsystemCombo.DEFAULT ? RobotConstant.LIFT_ENABLED : combo == SubsystemCombo.LIFT_ONLY,
