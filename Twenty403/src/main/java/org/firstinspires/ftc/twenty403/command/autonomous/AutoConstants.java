@@ -16,7 +16,7 @@ public class AutoConstants {
     @Config
     public static class Right {
         public static double finalCycleStartTime = 20;
-        public static ConfigurablePose ZERO = new ConfigurablePose(0,0,toRadians(90));
+        public static ConfigurablePose ZERO = new ConfigurablePose(0, 0, toRadians(90));
         public static ConfigurablePose START = new ConfigurablePose(36, -66, toRadians(90));
         public static ConfigurablePose STRAIGHT = new ConfigurablePose(36, -18, toRadians(90));
         public static ConfigurablePose LEFTSIDE = new ConfigurablePose(-12, -66, toRadians(90));
@@ -30,10 +30,10 @@ public class AutoConstants {
         public static ConfigurablePose STACK_TWO = new ConfigurablePose(70, -16, toRadians(0));
         public static ConfigurablePose STACK_THREE = new ConfigurablePose(73, -16, toRadians(0));
         //x: 66, y: -16, 0
-        public static ConfigurablePose LEFT = new ConfigurablePose(21, -18, toRadians(90));
+        public static ConfigurablePose LEFT = new ConfigurablePose(16, -18, toRadians(90));
         public static ConfigurablePose MIDDLE = new ConfigurablePose(39, -16, toRadians(90));
         public static ConfigurablePose RIGHT = new ConfigurablePose(62, -17, toRadians(90));
-        public static ConfigurablePose W_JUNCTION_ONE = new ConfigurablePose(26, -10, 1.9);
+        public static ConfigurablePose W_JUNCTION_ONE = new ConfigurablePose(30, -10, 1.9);
         public static ConfigurablePose W_JUNCTION_TWO = new ConfigurablePose(34, -11, 2);
         public static ConfigurablePose W_JUNCTION_THREE = new ConfigurablePose(37, -11, 2);
 
@@ -42,7 +42,7 @@ public class AutoConstants {
         public static ConfigurablePose BETWEEN_START_W_JUNCTION = new ConfigurablePose(41, -11, 3.9);
         public static ConfigurablePose BETWEEN_START_W_JUNCTION_TWO = new ConfigurablePose(42, -11, 3.9);
         public static ConfigurablePose BETWEEN_W_JUNCTION_STACK = new ConfigurablePose(43, -19, 1.5);
-        public static ConfigurablePose BETWEEN_STACK_W_JUNCTION = new ConfigurablePose(40, -14, 2.4);
+        public static ConfigurablePose BETWEEN_STACK_W_JUNCTION = new ConfigurablePose(40, -15, 2.4);
         public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(15, -60, toRadians(90));
         public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(60, -60, toRadians(90));
         public static ConfigurablePose TERMINAL = new ConfigurablePose(61, -64, toRadians(180));
@@ -51,7 +51,7 @@ public class AutoConstants {
         public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
                 TELESTART_TO_FORWARD_MOVE =
                 b -> b.apply(TELESTART.toPose())
-                        .lineToLinearHeading (FORWARD_MOVE.toPose())
+                        .lineToLinearHeading(FORWARD_MOVE.toPose())
                         .build(),
                 TELESTART_TO_BACKWARD_MOVE =
                         b -> b.apply(TELESTART.toPose())
@@ -66,10 +66,10 @@ public class AutoConstants {
                                 .lineToLinearHeading(RIGHT_MOVE.toPose())
                                 .build(),
         //Testing Straights
-                START_TO_STRAIGHT =
-                        b -> b.apply(START.toPose())
-                                .lineTo(STRAIGHT.toPose().vec())
-                                .build(),
+        START_TO_STRAIGHT =
+                b -> b.apply(START.toPose())
+                        .lineTo(STRAIGHT.toPose().vec())
+                        .build(),
                 STRAIGHT_TO_START =
                         b -> b.apply(STRAIGHT.toPose())
                                 .lineTo(START.toPose().vec())
@@ -160,15 +160,17 @@ public class AutoConstants {
     @Config
     public static class Left {
         public static ConfigurablePose START = new ConfigurablePose(-36, -66, toRadians(90));
-        public static ConfigurablePose E_JUNCTION = new ConfigurablePose(-27, -9, 0.63);
+        public static ConfigurablePose E_JUNCTION = new ConfigurablePose(-30, -9, 0.7);
         public static ConfigurablePose E_JUNCTION_2 = new ConfigurablePose(-29, -11, 0.63);
-        public static ConfigurablePose STACK = new ConfigurablePose(-61, -17, toRadians(180));
-        public static ConfigurablePose LEFT = new ConfigurablePose(-58, -22, toRadians(90));
-        public static ConfigurablePose MIDDLE = new ConfigurablePose(-34, -16, toRadians(90));
+        public static ConfigurablePose STACK = new ConfigurablePose(-63, -15, toRadians(180));
+        public static ConfigurablePose LEFT = new ConfigurablePose(-58, -20, toRadians(90));
+        public static ConfigurablePose LEFT2 = new ConfigurablePose(-58, -18, toRadians(180));
+        //-58,-20,90
+        public static ConfigurablePose MIDDLE = new ConfigurablePose(-34, -17, toRadians(90));
         public static ConfigurablePose RIGHT = new ConfigurablePose(-14, -15, toRadians(90));
-        public static ConfigurablePose BETWEEN_START_E_JUNCTION = new ConfigurablePose(-36, -15, 6);
-        public static ConfigurablePose BETWEEN_E_JUNCTION_STACK = new ConfigurablePose(-38, -17, 3.14159);
-        public static ConfigurablePose BETWEEN_STACK_E_JUNCTION = new ConfigurablePose(-38, -20, 1.3089969389957472);
+        public static ConfigurablePose BETWEEN_START_E_JUNCTION = new ConfigurablePose(-36, -15, 5.9);
+        public static ConfigurablePose BETWEEN_E_JUNCTION_STACK = new ConfigurablePose(-36, -14, 3.14159);
+        public static ConfigurablePose BETWEEN_STACK_E_JUNCTION = new ConfigurablePose(-38, -13, 1.3089969389957472);
         public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(-58, -60, toRadians(90));
         public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(-14, -60, toRadians(90));
         public static ConfigurablePose TERMINAL = new ConfigurablePose(-61, -64, toRadians(180));
@@ -208,6 +210,11 @@ public class AutoConstants {
                         b -> b.apply(E_JUNCTION.toPose())
                                 .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
                                 .lineToLinearHeading(RIGHT.toPose())
+                                .build(),
+                LEFT_1_2 =
+                        b -> b.apply(LEFT.toPose())
+                                .lineToLinearHeading(LEFT2.toPose())
+                                .lineToLinearHeading(LEFT.toPose())
                                 .build(),
 
         START_TO_LEFT_PARK =

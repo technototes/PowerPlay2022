@@ -52,7 +52,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
 
 
         // Yellow is around 25 (50 degrees)
-        public static double YELLOW = 10;
+        public static double YELLOW = 25;
 
         //Other yellow value
         public static double YELLOW2 = 170;
