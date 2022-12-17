@@ -60,6 +60,11 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         telemetry.addData("y", poseEstimate.getY());
         telemetry.addData("LeftStick-X", gamepad1.left_stick_x);
         telemetry.addData("LeftStick-Y", gamepad1.left_stick_y);
+        telemetry.addData("ExternalHeading", robot.swerveDriveSubsystem.getExternalHeading());
+        telemetry.addData("LF - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.leftFrontModuleTargetOrientation));
+        telemetry.addData("LR - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.leftRearModuleTargetOrientation));
+        telemetry.addData("RF - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.rightFrontModuleTargetOrientation));
+        telemetry.addData("RR - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.rightRearModuleTargetOrientation));
         telemetry.update();
     }
 }

@@ -11,11 +11,11 @@ import java.util.ArrayList;
 
 // Intended to use in Autonomous
 public class SimpleSwerveDriveSubsystem implements Subsystem {
-    private AnotherSwerveModule leftFrontModule;
-    private AnotherSwerveModule leftRearModule;
-    private AnotherSwerveModule rightFrontModule;
-    private AnotherSwerveModule rightRearModule;
-    private ArrayList<AnotherSwerveModule> modules;
+    private final AnotherSwerveModule leftFrontModule;
+    private final AnotherSwerveModule leftRearModule;
+    private final AnotherSwerveModule rightFrontModule;
+    private final AnotherSwerveModule rightRearModule;
+    private final ArrayList<AnotherSwerveModule> modules;
     private SimpleSwerveLocalizer localizer;
 
     public static boolean spammyDebug = true;
@@ -35,24 +35,28 @@ public class SimpleSwerveDriveSubsystem implements Subsystem {
         this.modules = new ArrayList<>();
         if (leftFrontModule != null) {
             this.modules.add(leftFrontModule);
+            leftFrontModule.setTargetRotation(0);
         }
         else {
             System.err.println("Left Front Module is null");
         }
         if (leftRearModule != null) {
             this.modules.add(leftRearModule);
+            leftRearModule.setTargetRotation(0);
         }
         else {
             System.err.println("Left Rear Module is null");
         }
         if (rightFrontModule != null) {
             this.modules.add(rightFrontModule);
+            rightFrontModule.setTargetRotation(0);
         }
         else {
             System.err.println("Right Front Module is null");
         }
         if (rightRearModule != null) {
             this.modules.add(rightRearModule);
+            rightRearModule.setTargetRotation(0);
         }
         else {
             System.err.println("Right Rear Module is null");
@@ -97,10 +101,10 @@ public class SimpleSwerveDriveSubsystem implements Subsystem {
     }
 
     public void setModulePowers(double leftFront, double leftRear, double rightRear, double rightFront) {
-        leftFrontModule.setServoPower(leftFront);
-        leftRearModule.setServoPower(leftRear);
-        rightFrontModule.setServoPower(rightFront);
-        rightRearModule.setServoPower(rightRear);
+        leftFrontModule.setMotorPower(leftFront);
+        leftRearModule.setMotorPower(leftRear);
+        rightFrontModule.setMotorPower(rightFront);
+        rightRearModule.setMotorPower(rightRear);
     }
 
     public void setModulePowers(@NonNull double[] powers) {
@@ -109,5 +113,9 @@ public class SimpleSwerveDriveSubsystem implements Subsystem {
             return;
         }
         setModulePowers(powers[0], powers[1], powers[2], powers[3]);
+    }
+
+    public void rotatingClockwise() {
+        setModuleOrientations(Math.toRadians(315), Math.toRadians(15), Math.toRadians(315), Math.toRadians(15));
     }
 }

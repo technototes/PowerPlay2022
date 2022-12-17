@@ -502,8 +502,8 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public void setModuleOrientations(double v0, double v1, double v2, double v3) {
         leftFrontModule.setTargetRotation(v0);
         leftRearModule.setTargetRotation(v1);
-        rightRearModule.setTargetRotation(v2);
-        rightFrontModule.setTargetRotation(v3);
+        rightFrontModule.setTargetRotation(v2);
+        rightRearModule.setTargetRotation(v3);
 
         leftFrontModuleTargetOrientation = leftFrontModule.getTargetRotation();
         leftRearModuleTargetOrientation = leftRearModule.getTargetRotation();
