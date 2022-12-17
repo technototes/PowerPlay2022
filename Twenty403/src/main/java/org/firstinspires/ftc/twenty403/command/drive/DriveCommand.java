@@ -129,10 +129,10 @@ public class DriveCommand implements Command, Loggable {
             }
             double yDistance;
             double xDistance;
-            yDistance = camHeight / Math.tan(jy / (VisionSubsystem.VisionSubsystemConstants.HEIGHT) * (3.14/4));
+            yDistance = camHeight / Math.tan((VisionSubsystem.VisionSubsystemConstants.HEIGHT - jy) / (VisionSubsystem.VisionSubsystemConstants.HEIGHT) * (3.14/4));
             xDistance = yDistance * Math.tan(jx / (VisionSubsystem.VisionSubsystemConstants.WIDTH) * (3.14/4));
             // set the drive power to get us to that location
-            subsystem.requestTrajectoryMove(xDistance, yDistance, curHeading);
+            subsystem.requestTrajectoryMove(-xDistance, -yDistance,rotPower);
 
         }
     }
