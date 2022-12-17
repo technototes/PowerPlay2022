@@ -27,8 +27,8 @@ public class AutoConstants {
         public static ConfigurablePose RIGHT_MOVE = new ConfigurablePose(24, 0, toRadians(90));
 
         public static ConfigurablePose STACK_ONE = new ConfigurablePose(65, -14, toRadians(0));
-        public static ConfigurablePose STACK_TWO = new ConfigurablePose(70, -16, toRadians(0));
-        public static ConfigurablePose STACK_THREE = new ConfigurablePose(73, -16, toRadians(0));
+        public static ConfigurablePose STACK_TWO = new ConfigurablePose(65, -14, toRadians(0)); //70, -16
+        public static ConfigurablePose STACK_THREE = new ConfigurablePose(65, -14, toRadians(0)); // 73, -16
         //x: 66, y: -16, 0
         public static ConfigurablePose LEFT = new ConfigurablePose(21, -18, toRadians(90));
         public static ConfigurablePose MIDDLE = new ConfigurablePose(39, -16, toRadians(90));

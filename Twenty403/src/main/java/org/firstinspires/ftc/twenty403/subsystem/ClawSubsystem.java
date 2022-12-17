@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.technototes.library.command.CommandScheduler;
+import com.technototes.library.command.WaitCommand;
 import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.logger.Log;
@@ -9,6 +11,7 @@ import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 import com.technototes.library.util.Alliance;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
 import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 
 @Config
@@ -113,6 +116,8 @@ public class ClawSubsystem implements Subsystem, Loggable {
                 liftSubsystem.canAutoClose() && !isClawClosed() && isAllianceCone() && isConeClose()
             ) {
                 close();
+                CommandScheduler.getInstance().scheduleOnceForState();
+
             }
         }
     }
