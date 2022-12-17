@@ -14,6 +14,7 @@ import java.util.function.DoubleSupplier;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline;
+import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
 
 public class DriveCommand implements Command, Loggable {
 
@@ -128,12 +129,11 @@ public class DriveCommand implements Command, Loggable {
             }
             double yDistance;
             double xDistance;
-            yDistance = camHeight / Math.tan(jy / (max_of_jy) * yEdgeAngle);
-            xDistance = yDistance * Math.tan(jx / (max_of_jx) * xEdgeAngle);
+            yDistance = camHeight / Math.tan(jy / (VisionSubsystem.VisionSubsystemConstants.HEIGHT) * (3.14/4));
+            xDistance = yDistance * Math.tan(jx / (VisionSubsystem.VisionSubsystemConstants.WIDTH) * (3.14/4));
             // set the drive power to get us to that location
-            subsystem.setWeightedDrivePower(
-                new Pose2d(xDistance, yDistance, getRotationClosest45(curHeading))
-            );
+            subsystem.requestTrajectoryMove(xDistance, yDistance, curHeading);
+
         }
     }
 

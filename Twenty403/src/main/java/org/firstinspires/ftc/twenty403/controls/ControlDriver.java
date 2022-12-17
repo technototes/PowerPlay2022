@@ -22,6 +22,7 @@ import org.firstinspires.ftc.twenty403.command.drive.TileAbortCommand;
 import org.firstinspires.ftc.twenty403.command.drive.TileMoveCommand;
 import org.firstinspires.ftc.twenty403.command.drive.TileMoving;
 import org.firstinspires.ftc.twenty403.command.drive.TurboCommand;
+import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline;
 
 public class ControlDriver {
 
@@ -30,9 +31,10 @@ public class ControlDriver {
 
     public Stick driveLeftStick, driveRightStick;
     public CommandButton tileRight, tileLeft, tileUp, tileDown, tileAbort;
-    public CommandButton resetGyroButton, driveStraight, turboButton;
+    public CommandButton resetGyroButton, driveStraight, turboButton, autoAlign;
     public CommandButton clawToggleAutoCloseButton;
     public CommandButton override;
+    VisionPipeline visionPipeline;
 
     public ControlDriver(CommandGamepad g, Robot r) {
         this.robot = r;
@@ -50,6 +52,7 @@ public class ControlDriver {
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
             bindVisionCommand();
         }
+        visionPipeline = robot.visionSystem.visionPipeline;
     }
 
     private void AssignNamedControllerButton() {
@@ -63,9 +66,12 @@ public class ControlDriver {
         tileRight = gamepad.dpadRight;
         tileAbort = gamepad.leftBumper;
         turboButton = gamepad.triangle;
+        autoAlign = gamepad.square;
 
         driveStraight = gamepad.rightTrigger.getAsButton(0.5);
         clawToggleAutoCloseButton = gamepad.circle;
+
+
     }
 
     public void bindDriveControls() {
@@ -76,7 +82,9 @@ public class ControlDriver {
                     robot.drivebaseSubsystem,
                     driveLeftStick,
                     driveRightStick,
-                    driveStraight
+                    driveStraight,
+                    autoAlign,
+                    visionPipeline
                 )
             );
         turboButton.whenPressed(new TurboCommand(robot.drivebaseSubsystem));
@@ -88,6 +96,8 @@ public class ControlDriver {
         tileUp.whenPressed(new TileMoveCommand(robot, TileMoving.Up));
         tileDown.whenPressed(new TileMoveCommand(robot, TileMoving.Down));
         tileAbort.whenPressed(new TileAbortCommand(robot));
+
+
     }
 
     public void bindVisionCommand() {

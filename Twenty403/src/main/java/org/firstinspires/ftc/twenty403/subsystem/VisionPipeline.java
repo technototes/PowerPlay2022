@@ -52,7 +52,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
 
         public static double JYELLOW = 10;
         // Other yellow value?
-        public static double JYELLOW2 = 170;
+        public static double JYELLOW2 = 15;
         // the width, in pixels, of a junction
         public static int JUNCTION_WIDTH = 10;
 
@@ -64,7 +64,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         public static double RANGE = 10;
 
         // The low saturation point for color identification
-        public static double lowS = 60;
+        public static double lowS = 100;
         // The high saturation point for color identification
         public static double highS = 255;
         // The low value for color ID
