@@ -1,28 +1,31 @@
 package org.firstinspires.ftc.swerveteen750.subsystem.drive;
 
+import androidx.annotation.NonNull;
+
 import com.technototes.library.subsystem.Subsystem;
 
 import org.firstinspires.ftc.swerveteen750.swerve_util.SimpleSwerveLocalizer;
-import org.firstinspires.ftc.swerveteen750.swerve_util.swerve_module.SwerveModule;
+import org.firstinspires.ftc.swerveteen750.swerve_util.swerve_module.AnotherSwerveModule;
 
 import java.util.ArrayList;
 
+// Intended to use in Autonomous
 public class SimpleSwerveDriveSubsystem implements Subsystem {
-    private SwerveModule leftFrontModule;
-    private SwerveModule leftRearModule;
-    private SwerveModule rightFrontModule;
-    private SwerveModule rightRearModule;
-    private ArrayList<SwerveModule> modules;
+    private AnotherSwerveModule leftFrontModule;
+    private AnotherSwerveModule leftRearModule;
+    private AnotherSwerveModule rightFrontModule;
+    private AnotherSwerveModule rightRearModule;
+    private ArrayList<AnotherSwerveModule> modules;
     private SimpleSwerveLocalizer localizer;
 
     public static boolean spammyDebug = true;
     public static boolean enableLocalizer = false;
 
     // TODO: take IMU and calculate ExternalHeading
-    public SimpleSwerveDriveSubsystem(SwerveModule leftFrontModule,
-                                      SwerveModule leftRearModule,
-                                      SwerveModule rightFrontModule,
-                                      SwerveModule rightRearModule
+    public SimpleSwerveDriveSubsystem(AnotherSwerveModule leftFrontModule,
+                                      AnotherSwerveModule leftRearModule,
+                                      AnotherSwerveModule rightFrontModule,
+                                      AnotherSwerveModule rightRearModule
     ) {
         this.leftFrontModule = leftFrontModule;
         this.leftRearModule = leftRearModule;
@@ -56,13 +59,13 @@ public class SimpleSwerveDriveSubsystem implements Subsystem {
         }
 
         if (enableLocalizer) {
-            this.localizer = new SimpleSwerveLocalizer(() -> 0, this.modules.toArray(new SwerveModule[4]));
+            this.localizer = new SimpleSwerveLocalizer(() -> 0, this.modules.toArray(new AnotherSwerveModule[4]));
         }
     }
 
     @Override
     public void periodic() {
-        for (SwerveModule m : modules) {
+        for (AnotherSwerveModule m : modules) {
             m.update();
         }
 
@@ -75,5 +78,36 @@ public class SimpleSwerveDriveSubsystem implements Subsystem {
                 System.out.println(localizer.get());
             }
         }
+    }
+
+    // The order of parameter being adjusted as the original one
+    public void setModuleOrientations(double leftFront, double leftRear, double rightRear, double rightFront) {
+        leftFrontModule.setTargetRotation(leftFront);
+        leftRearModule.setTargetRotation(leftRear);
+        rightFrontModule.setTargetRotation(rightFront);
+        rightRearModule.setTargetRotation(rightRear);
+    }
+
+    public void setModuleOrientations(@NonNull double[] orientations) {
+        if (orientations.length != 4) {
+            System.err.println("Invalid array length for setModuleOrientations()");
+            return;
+        }
+        setModuleOrientations(orientations[0], orientations[1], orientations[2], orientations[3]);
+    }
+
+    public void setModulePowers(double leftFront, double leftRear, double rightRear, double rightFront) {
+        leftFrontModule.setServoPower(leftFront);
+        leftRearModule.setServoPower(leftRear);
+        rightFrontModule.setServoPower(rightFront);
+        rightRearModule.setServoPower(rightRear);
+    }
+
+    public void setModulePowers(@NonNull double[] powers) {
+        if (powers.length != 4) {
+            System.err.println("Invalid array length for setModulePowers()");
+            return;
+        }
+        setModulePowers(powers[0], powers[1], powers[2], powers[3]);
     }
 }
