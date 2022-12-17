@@ -65,6 +65,23 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         telemetry.addData("LR - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.leftRearModuleTargetOrientation));
         telemetry.addData("RF - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.rightFrontModuleTargetOrientation));
         telemetry.addData("RR - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.rightRearModuleTargetOrientation));
+        telemetry.addData("LF - Motor Power", Math.toDegrees(robot.swerveDriveSubsystem.leftFrontMotorPower));
+        telemetry.addData("LR - Motor Power", Math.toDegrees(robot.swerveDriveSubsystem.leftRearMotorPower));
+        telemetry.addData("RF - Motor Power", Math.toDegrees(robot.swerveDriveSubsystem.rightFrontMotorPower));
+        telemetry.addData("RR - Motor Power", Math.toDegrees(robot.swerveDriveSubsystem.rightRearMotorPower));
+        telemetry.addData("STICK_X_SCALAR", ConfigurableSwerveDriveSubsystem.STICK_X_SCALAR);
+        telemetry.addData("STICK_Y_SCALAR", ConfigurableSwerveDriveSubsystem.STICK_Y_SCALAR);
+        if (robot.liftSubsystem != null) {
+            telemetry.addData("is lift high", robot.liftSubsystem.isLiftHigh());
+            if (robot.liftSubsystem.isLiftHigh()) {
+                ConfigurableSwerveDriveSubsystem.STICK_X_SCALAR = 0.5;
+                ConfigurableSwerveDriveSubsystem.STICK_Y_SCALAR = 0.5;
+            }
+            else {
+                ConfigurableSwerveDriveSubsystem.STICK_X_SCALAR = 1;
+                ConfigurableSwerveDriveSubsystem.STICK_Y_SCALAR = 1;
+            }
+        }
         telemetry.update();
     }
 }

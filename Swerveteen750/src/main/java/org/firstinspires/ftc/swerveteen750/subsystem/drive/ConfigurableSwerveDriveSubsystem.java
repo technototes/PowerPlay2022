@@ -56,6 +56,9 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public static double VY_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 1;
 
+    public static double STICK_X_SCALAR = 1;
+    public static double STICK_Y_SCALAR = 1;
+
     public static int MAX_PARALLEL_COMMANDS = 8;
 
     private final TrajectorySequenceRunner trajectorySequenceRunner;
@@ -92,6 +95,7 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     // Extra logging
     public double leftFrontModuleTargetOrientation, rightFrontModuleTargetOrientation, leftRearModuleTargetOrientation, rightRearModuleTargetOrientation = 0;
     public double leftFrontModuleCurrentOrientation, rightFrontModuleCurrentOrientation, leftRearModuleCurrentOrientation, rightRearModuleCurrentOrientation = 0;
+    public double leftFrontMotorPower, rightFrontMotorPower, leftRearMotorPower, rightRearMotorPower = 0;
     private boolean debugTelemetryEnabled = false;
     private Telemetry telemetry;
     private boolean telemetryCallUpdate = false;
@@ -413,11 +417,15 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         for (AnotherSwerveModule m : modules) m.setPIDFCoefficients(runMode, compensatedCoefficients);
     }
 
-    public void setWeightedDrivePower(Pose2d drivePower) {
+    public void setWeightedDrivePower(@NonNull Pose2d drivePower) {
+        drivePower = new Pose2d(
+                drivePower.getX() * STICK_X_SCALAR,
+                drivePower.getY() * STICK_Y_SCALAR,
+                drivePower.getHeading()
+        );
         Pose2d vel = drivePower;
 
-        if (Math.abs(drivePower.getX()) + Math.abs(drivePower.getY())
-                + Math.abs(drivePower.getHeading()) > 1) {
+        if (Math.abs(drivePower.getX()) + Math.abs(drivePower.getY()) + Math.abs(drivePower.getHeading()) > 1) {
             // re-normalize the powers according to the weights
             double denom = VX_WEIGHT * Math.abs(drivePower.getX())
                     + VY_WEIGHT * Math.abs(drivePower.getY())
@@ -449,17 +457,22 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     }
 
     @Override
-    public void setMotorPowers(double v, double v1, double v2, double v3) {
+    public void setMotorPowers(double v0, double v1, double v2, double v3) {
         leftFrontModule.enableMotor = this.enableMotor;
         rightFrontModule.enableMotor = this.enableMotor;
         leftRearModule.enableMotor = this.enableMotor;
         rightRearModule.enableMotor = this.enableMotor;
+        // TODO: figure out the order of the motors
         if (enableMotor){
-            leftFrontModule.setMotorPower(v);
+            leftFrontModule.setMotorPower(v0);
             leftRearModule.setMotorPower(v1);
-            rightRearModule.setMotorPower(v2);
-            rightFrontModule.setMotorPower(v3);
+            rightFrontModule.setMotorPower(v2);
+            rightRearModule.setMotorPower(v3);
         }
+        leftFrontMotorPower = v0;
+        leftRearMotorPower = v1;
+        rightFrontMotorPower = v2;
+        rightRearMotorPower = v3;
     }
 
     @Override

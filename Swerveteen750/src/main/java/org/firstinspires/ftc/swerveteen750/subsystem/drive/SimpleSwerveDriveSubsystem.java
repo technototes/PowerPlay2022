@@ -85,7 +85,7 @@ public class SimpleSwerveDriveSubsystem implements Subsystem {
     }
 
     // The order of parameter being adjusted as the original one
-    public void setModuleOrientations(double leftFront, double leftRear, double rightRear, double rightFront) {
+    public void setModuleOrientations(double leftFront, double leftRear, double rightFront, double rightRear) {
         leftFrontModule.setTargetRotation(leftFront);
         leftRearModule.setTargetRotation(leftRear);
         rightFrontModule.setTargetRotation(rightFront);
@@ -100,7 +100,7 @@ public class SimpleSwerveDriveSubsystem implements Subsystem {
         setModuleOrientations(orientations[0], orientations[1], orientations[2], orientations[3]);
     }
 
-    public void setModulePowers(double leftFront, double leftRear, double rightRear, double rightFront) {
+    public void setModulePowers(double leftFront, double leftRear, double rightFront, double rightRear) {
         leftFrontModule.setMotorPower(leftFront);
         leftRearModule.setMotorPower(leftRear);
         rightFrontModule.setMotorPower(rightFront);
