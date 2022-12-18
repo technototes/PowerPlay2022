@@ -475,16 +475,16 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         leftRearModule.enableMotor = this.enableMotor;
         rightRearModule.enableMotor = this.enableMotor;
         // TODO: figure out the order of the motors
-        if (enableMotor){
-            leftFrontModule.setMotorPower(v0 * LF_MOTOR_SCALAR);
-            leftRearModule.setMotorPower(v1 * LR_MOTOR_SCALAR);
-            rightFrontModule.setMotorPower(v2 * RF_MOTOR_SCALAR);
-            rightRearModule.setMotorPower(v3 * RR_MOTOR_SCALAR);
-        }
-        leftFrontMotorPower = v0 * LF_MOTOR_SCALAR;
-        leftRearMotorPower = v1 * LR_MOTOR_SCALAR;
-        rightFrontMotorPower = v2 * RF_MOTOR_SCALAR;
-        rightRearMotorPower = v3 * RR_MOTOR_SCALAR;
+//        if (enableMotor){
+//            leftFrontModule.setMotorPower(v0 * LF_MOTOR_SCALAR);
+//            leftRearModule.setMotorPower(v1 * LR_MOTOR_SCALAR);
+//            rightFrontModule.setMotorPower(v2 * RF_MOTOR_SCALAR);
+//            rightRearModule.setMotorPower(v3 * RR_MOTOR_SCALAR);
+//        }
+//        leftFrontMotorPower = v0 * LF_MOTOR_SCALAR;
+//        leftRearMotorPower = v1 * LR_MOTOR_SCALAR;
+//        rightFrontMotorPower = v2 * RF_MOTOR_SCALAR;
+//        rightRearMotorPower = v3 * RR_MOTOR_SCALAR;
 
 
 //        if (enableMotor){
@@ -497,6 +497,17 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
 //        leftRearMotorPower = v1;
 //        rightFrontMotorPower = v2;
 //        rightRearMotorPower = v3;
+
+        if (enableMotor){
+            leftFrontModule.setMotorVelocity(v0);
+            leftRearModule.setMotorVelocity(v1);
+            rightFrontModule.setMotorVelocity(v2);
+            rightRearModule.setMotorVelocity(v3);
+        }
+        leftFrontMotorPower = v0;
+        leftRearMotorPower = v1;
+        rightFrontMotorPower = v2;
+        rightRearMotorPower = v3;
     }
 
     @Override

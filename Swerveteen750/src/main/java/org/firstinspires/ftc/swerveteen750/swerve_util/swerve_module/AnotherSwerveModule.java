@@ -135,6 +135,15 @@ public class AnotherSwerveModule {
         motor.setPower(power);
     }
 
+    public void setMotorVelocity(double velocity) {
+        lastMotorPower = velocity;
+
+        velocity *= 2300.0;
+        if(MOTOR_FLIPPING) velocity *= flipModifier();
+
+        motor.setVelocity(velocity);
+    }
+
     public boolean isWithinAllowedError(){
         double error = Math.abs(rotationController.getLastError());
         return error < ALLOWED_COS_ERROR || error > 2*Math.PI - ALLOWED_COS_ERROR;
