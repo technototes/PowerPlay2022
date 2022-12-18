@@ -14,6 +14,7 @@ import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 @Config
 public class ClawSubsystem implements Subsystem, Loggable {
 
+    public static double autoCloseDeadzone = 0;
     // Correct numbers, tested 12/17/22 (Skipped a gear, fixed, and now need this :/ )
     public static double OPEN_SERVO_POSITION = .37;
     public static double CLOSE_SERVO_POSITION = .46;
@@ -36,6 +37,8 @@ public class ClawSubsystem implements Subsystem, Loggable {
     private boolean isHardware;
     private Alliance alliance;
     private LiftSubsystem liftSubsystem;
+
+
 
     // This indicates that we've actually explicitly closed the claw at some point
     // which means the servo motor is engaged...
@@ -91,14 +94,15 @@ public class ClawSubsystem implements Subsystem, Loggable {
         }
     }
 
-    public boolean isClawClosed() {
+    public boolean isClawClose() {
         double curPos = readServo();
         // This is going to say the claw is closed, just because we squeeze the jaws together
         // manually, so we need to check to see if the servo has had it's position explicitly set
         // instead of just checking the servo's position...
         return (
             servoSet &&
-            Math.abs(curPos - CLOSE_SERVO_POSITION) < Math.abs(curPos - OPEN_SERVO_POSITION)
+            //Math.abs(curPos - CLOSE_SERVO_POSITION) < Math.abs(curPos - OPEN_SERVO_POSITION)
+                    (curPos <= CLOSE_SERVO_POSITION + autoCloseDeadzone /*&& curPos >= CLOSE_SERVO_POSITION - autoCloseDeadzone*/)
         );
     }
 
@@ -110,9 +114,12 @@ public class ClawSubsystem implements Subsystem, Loggable {
     public void periodic() {
         if (isHardware && autoClose) {
             if (
-                liftSubsystem.canAutoClose() && !isClawClosed() && isAllianceCone() && isConeClose()
+                liftSubsystem.canAutoClose() && !isClawClose() && isAllianceCone() && isConeClose()
             ) {
                 close();
+                ///this.wait(.2);
+                //CommandScheduler.getInstance().schedule(new ClawAutoCloseWithLift(this,liftSubsystem));
+                //CommandScheduler.getInstance().scheduleOnce(new ClawAutoCloseWithLift(this, liftSubsystem));
             }
         }
     }
