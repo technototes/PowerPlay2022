@@ -160,15 +160,16 @@ public class AutoConstants {
     @Config
     public static class Left {
         public static ConfigurablePose START = new ConfigurablePose(-36, -66, toRadians(90));
-        public static ConfigurablePose E_JUNCTION = new ConfigurablePose(-30, -9, 0.7);
-        public static ConfigurablePose E_JUNCTION_2 = new ConfigurablePose(-29, -11, 0.63);
-        public static ConfigurablePose STACK = new ConfigurablePose(-63, -15, toRadians(180));
-        public static ConfigurablePose LEFT = new ConfigurablePose(-58, -20, toRadians(90));
+        public static ConfigurablePose E_JUNCTION = new ConfigurablePose(-28, -10, 1.1);
+        public static ConfigurablePose E_JUNCTION_2 = new ConfigurablePose(-30, -8, 1.1);
+        public static ConfigurablePose STACK = new ConfigurablePose(-62, -17, toRadians(180));
+        public static ConfigurablePose STACK2 = new ConfigurablePose(-65, -17, toRadians(180));
+        public static ConfigurablePose LEFT = new ConfigurablePose(-59, -20, toRadians(90));
         public static ConfigurablePose LEFT2 = new ConfigurablePose(-58, -18, toRadians(180));
         //-58,-20,90
-        public static ConfigurablePose MIDDLE = new ConfigurablePose(-34, -17, toRadians(90));
-        public static ConfigurablePose RIGHT = new ConfigurablePose(-14, -15, toRadians(90));
-        public static ConfigurablePose BETWEEN_START_E_JUNCTION = new ConfigurablePose(-36, -15, 5.9);
+        public static ConfigurablePose MIDDLE = new ConfigurablePose(-35, -17, toRadians(90));
+        public static ConfigurablePose RIGHT = new ConfigurablePose(-16, -15, toRadians(90));
+        public static ConfigurablePose BETWEEN_START_E_JUNCTION = new ConfigurablePose(-36, -12, 5.9);
         public static ConfigurablePose BETWEEN_E_JUNCTION_STACK = new ConfigurablePose(-36, -14, 3.14159);
         public static ConfigurablePose BETWEEN_STACK_E_JUNCTION = new ConfigurablePose(-38, -13, 1.3089969389957472);
         public static ConfigurablePose BETWEEN_START_LEFT = new ConfigurablePose(-58, -60, toRadians(90));
@@ -191,10 +192,15 @@ public class AutoConstants {
                                 .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
                                 .lineToLinearHeading(E_JUNCTION.toPose())
                                 .build(),
-                STACK_TO_E_JUNCTION_2 =
+                STACK_TO_E_JUNCTION_TWO =
                         b -> b.apply(STACK.toPose())
                                 .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
                                 .lineToLinearHeading(E_JUNCTION_2.toPose())
+                                .build(),
+                E_JUNCTION_TO_STACK_TWO =
+                        b -> b.apply(E_JUNCTION_2.toPose())
+                                .lineToLinearHeading(BETWEEN_E_JUNCTION_STACK.toPose())
+                                .lineToLinearHeading(STACK2.toPose())
                                 .build(),
                 E_JUNCTION_TO_LEFT_PARK =
                         b -> b.apply(E_JUNCTION.toPose())
