@@ -3,6 +3,7 @@ package org.firstinspires.ftc.swerveteen750;
 import com.technototes.library.control.CommandGamepad;
 
 import org.firstinspires.ftc.swerveteen750.command.claw.ClawCloseCommand;
+import org.firstinspires.ftc.swerveteen750.command.claw.ClawFlatCommand;
 import org.firstinspires.ftc.swerveteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftMoveDownOverrideCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftMoveUpOverrideCommand;
@@ -41,6 +42,7 @@ public class ControlsCoDriver {
     public void bindCoDriverClawControls() {
         gamepad.leftBumper.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
         gamepad.rightBumper.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
+        gamepad.triangle.whenPressed(new ClawFlatCommand(robot.clawSubsystem));
     }
 
     public void bindCoDriverLiftControls() {

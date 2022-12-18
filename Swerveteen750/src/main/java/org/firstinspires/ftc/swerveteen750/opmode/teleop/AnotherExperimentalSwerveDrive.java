@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
+import org.firstinspires.ftc.swerveteen750.ControlsCoDriver;
 import org.firstinspires.ftc.swerveteen750.ControlsDriver;
 import org.firstinspires.ftc.swerveteen750.Hardware;
 import org.firstinspires.ftc.swerveteen750.Robot;
@@ -22,6 +23,7 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
     Hardware hardware;
     ConfigurableSwerveDriveSubsystem drive;
     ControlsDriver driverControls;
+    ControlsCoDriver coDriverControls;
 
     @Override
     public void uponInit() {
@@ -31,6 +33,7 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         drive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         driverControls = new ControlsDriver(driverGamepad, robot, Robot.SubsystemCombo.DEFAULT);
+        coDriverControls = new ControlsCoDriver(codriverGamepad, robot, Robot.SubsystemCombo.DEFAULT);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 

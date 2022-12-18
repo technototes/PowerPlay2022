@@ -12,6 +12,7 @@ import com.technototes.library.subsystem.Subsystem;
 public class ClawSubsystem implements Subsystem {
     public static double CLAW_OPEN = 0.4; // Verified
     public static double CLAW_CLOSE = 0.33; // Verified
+    public static double CLAW_FLAT = 0.6;
 
     private Servo clawServo;
     private DistanceSensor distanceSensor; // not on the bot currently
@@ -37,6 +38,10 @@ public class ClawSubsystem implements Subsystem {
 
     public void clawClose() {
         setClawServoPosition(CLAW_CLOSE);
+    }
+
+    public void clawFlat() {
+        setClawServoPosition(CLAW_FLAT);
     }
 
     public boolean isConeClose() {
