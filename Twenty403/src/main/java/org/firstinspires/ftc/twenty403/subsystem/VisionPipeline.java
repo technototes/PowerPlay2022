@@ -112,7 +112,6 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
             public static Scalar RGB_PURPLE = new Scalar(128, 0, 128);
             public static int WHITE_RANGE = 150;
             public static Scalar RGB_WHITE = new Scalar(255, 255, 255);
-
         }
     }
 
