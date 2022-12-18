@@ -67,7 +67,7 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
 
     public static double STICK_SCALAR_MAX = 1;
     public static double STICK_SCALAR_HIGH = 0.8;
-    public static double STICK_SCALAR_MED = 0.6;
+    public static double STICK_SCALAR_MID = 0.6;
     public static double STICK_SCALAR_LOW = 0.4;
     public static double STICK_SCALAR_MIN = 0.25;
 

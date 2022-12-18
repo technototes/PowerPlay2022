@@ -46,7 +46,7 @@ public class ControlsCoDriver {
     public void bindCoDriverClawControls() {
         gamepad.leftBumper.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
         gamepad.rightBumper.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
-        gamepad.triangle.whenPressed(new ClawFlatCommand(robot.clawSubsystem));
+        gamepad.rightStickButton .whenPressed(new ClawFlatCommand(robot.clawSubsystem));
     }
 
     public void bindCoDriverLiftControls() {
