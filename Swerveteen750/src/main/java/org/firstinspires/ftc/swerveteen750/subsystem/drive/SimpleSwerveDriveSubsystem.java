@@ -2,6 +2,7 @@ package org.firstinspires.ftc.swerveteen750.subsystem.drive;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.technototes.library.subsystem.Subsystem;
 
 import org.firstinspires.ftc.swerveteen750.swerve_util.SimpleSwerveLocalizer;
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.swerveteen750.swerve_util.swerve_module.AnotherSwer
 import java.util.ArrayList;
 
 // Intended to use in Autonomous
+@Config
 public class SimpleSwerveDriveSubsystem implements Subsystem {
     private final AnotherSwerveModule leftFrontModule;
     private final AnotherSwerveModule leftRearModule;
@@ -20,6 +22,11 @@ public class SimpleSwerveDriveSubsystem implements Subsystem {
 
     public static boolean spammyDebug = true;
     public static boolean enableLocalizer = false;
+
+    public static double LF_MOTOR_SCALAR = 1.00;
+    public static double LR_MOTOR_SCALAR = 0.81;
+    public static double RF_MOTOR_SCALAR = 0.94;
+    public static double RR_MOTOR_SCALAR = 0.83;
 
     // TODO: take IMU and calculate ExternalHeading
     public SimpleSwerveDriveSubsystem(AnotherSwerveModule leftFrontModule,
@@ -101,10 +108,10 @@ public class SimpleSwerveDriveSubsystem implements Subsystem {
     }
 
     public void setModulePowers(double leftFront, double leftRear, double rightFront, double rightRear) {
-        leftFrontModule.setMotorPower(leftFront);
-        leftRearModule.setMotorPower(leftRear);
-        rightFrontModule.setMotorPower(rightFront);
-        rightRearModule.setMotorPower(rightRear);
+        leftFrontModule.setMotorPower(leftFront * LF_MOTOR_SCALAR);
+        leftRearModule.setMotorPower(leftRear * LR_MOTOR_SCALAR);
+        rightFrontModule.setMotorPower(rightFront * RF_MOTOR_SCALAR);
+        rightRearModule.setMotorPower(rightRear * RR_MOTOR_SCALAR);
     }
 
     public void setModulePowers(@NonNull double[] powers) {
@@ -117,5 +124,26 @@ public class SimpleSwerveDriveSubsystem implements Subsystem {
 
     public void rotatingClockwise() {
         setModuleOrientations(Math.toRadians(315), Math.toRadians(15), Math.toRadians(315), Math.toRadians(15));
+    }
+
+    double leftFrontMotorEncoderZero = 0;
+    double leftRearMotorEncoderZero = 0;
+    double rightFrontMotorEncoderZero = 0;
+    double rightRearMotorEncoderZero = 0;
+
+    public void setMotorEncoderZero(){
+        leftFrontMotorEncoderZero = leftFrontModule.getWheelPosition();
+        leftRearMotorEncoderZero = leftRearModule.getWheelPosition();
+        rightFrontMotorEncoderZero = rightFrontModule.getWheelPosition();
+        rightRearMotorEncoderZero = rightRearModule.getWheelPosition();
+    }
+
+    public double[] getAdjustedMotorEncoderValues(){
+        return new double[]{
+                leftFrontModule.getWheelPosition() - leftFrontMotorEncoderZero,
+                leftRearModule.getWheelPosition() - leftRearMotorEncoderZero,
+                rightFrontModule.getWheelPosition() - rightFrontMotorEncoderZero,
+                rightRearModule.getWheelPosition() - rightRearMotorEncoderZero
+        };
     }
 }

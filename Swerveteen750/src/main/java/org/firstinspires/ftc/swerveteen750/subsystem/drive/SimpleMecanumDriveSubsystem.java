@@ -93,10 +93,10 @@ public class SimpleMecanumDriveSubsystem {
     }
 
     public void goStraightForward(double power) {
-        leftFrontMotor.setSpeed(power);
-        leftRearMotor.setSpeed(power);
-        rightFrontMotor.setSpeed(-power);
-        rightRearMotor.setSpeed(-power);
+        leftFrontMotor.setSpeed(power * -1.0);
+        leftRearMotor.setSpeed(power * 0.81);
+        rightFrontMotor.setSpeed(-power * 0.94);
+        rightRearMotor.setSpeed(-power * 0.835);
     }
 
     public void goStraightBackward(double power) {

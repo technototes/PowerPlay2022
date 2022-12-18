@@ -64,16 +64,20 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         telemetry.addData("LeftStick-X", gamepad1.left_stick_x);
         telemetry.addData("LeftStick-Y", gamepad1.left_stick_y);
         telemetry.addData("ExternalHeading", robot.swerveDriveSubsystem.getExternalHeading());
-        telemetry.addData("LF - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.leftFrontModuleTargetOrientation));
-        telemetry.addData("LR - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.leftRearModuleTargetOrientation));
-        telemetry.addData("RF - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.rightFrontModuleTargetOrientation));
-        telemetry.addData("RR - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.rightRearModuleTargetOrientation));
+//        telemetry.addData("LF - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.leftFrontModuleTargetOrientation));
+//        telemetry.addData("LR - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.leftRearModuleTargetOrientation));
+//        telemetry.addData("RF - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.rightFrontModuleTargetOrientation));
+//        telemetry.addData("RR - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.rightRearModuleTargetOrientation));
         telemetry.addData("LF - Motor Power", Math.toDegrees(robot.swerveDriveSubsystem.leftFrontMotorPower));
         telemetry.addData("LR - Motor Power", Math.toDegrees(robot.swerveDriveSubsystem.leftRearMotorPower));
         telemetry.addData("RF - Motor Power", Math.toDegrees(robot.swerveDriveSubsystem.rightFrontMotorPower));
         telemetry.addData("RR - Motor Power", Math.toDegrees(robot.swerveDriveSubsystem.rightRearMotorPower));
-        telemetry.addData("STICK_X_SCALAR", ConfigurableSwerveDriveSubsystem.STICK_X_SCALAR);
-        telemetry.addData("STICK_Y_SCALAR", ConfigurableSwerveDriveSubsystem.STICK_Y_SCALAR);
+        telemetry.addData("LF - Wheel Velocity", Math.toDegrees(robot.swerveDriveSubsystem.leftFrontModule.getWheelVelocity()));
+        telemetry.addData("LR - Wheel Velocity", Math.toDegrees(robot.swerveDriveSubsystem.leftRearModule.getWheelVelocity()));
+        telemetry.addData("RF - Wheel Velocity", Math.toDegrees(robot.swerveDriveSubsystem.rightFrontModule.getWheelVelocity()));
+        telemetry.addData("RR - Wheel Velocity", Math.toDegrees(robot.swerveDriveSubsystem.rightRearModule.getWheelVelocity()));
+//        telemetry.addData("STICK_X_SCALAR", ConfigurableSwerveDriveSubsystem.STICK_X_SCALAR);
+//        telemetry.addData("STICK_Y_SCALAR", ConfigurableSwerveDriveSubsystem.STICK_Y_SCALAR);
         if (robot.liftSubsystem != null) {
             telemetry.addData("is lift high", robot.liftSubsystem.isLiftHigh());
             if (robot.liftSubsystem.isLiftHigh()) {

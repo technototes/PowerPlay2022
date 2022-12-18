@@ -1,5 +1,10 @@
 package org.firstinspires.ftc.swerveteen750.subsystem.drive;
 
+import static org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleSwerveDriveSubsystem.LF_MOTOR_SCALAR;
+import static org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleSwerveDriveSubsystem.LR_MOTOR_SCALAR;
+import static org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleSwerveDriveSubsystem.RF_MOTOR_SCALAR;
+import static org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleSwerveDriveSubsystem.RR_MOTOR_SCALAR;
+
 import androidx.annotation.GuardedBy;
 import androidx.annotation.NonNull;
 
@@ -77,10 +82,10 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     private final TrajectoryFollower follower;
 
 //    public SwerveModule leftFrontModule, leftRearModule, rightRearModule, rightFrontModule;
-    AnotherSwerveModule leftFrontModule;
-    AnotherSwerveModule leftRearModule;
-    AnotherSwerveModule rightFrontModule;
-    AnotherSwerveModule rightRearModule;
+    public AnotherSwerveModule leftFrontModule;
+    public AnotherSwerveModule leftRearModule;
+    public AnotherSwerveModule rightFrontModule;
+    public AnotherSwerveModule rightRearModule;
     public List<AnotherSwerveModule> modules;
 
     private final VoltageSensor batteryVoltageSensor;
@@ -276,20 +281,20 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         PhotonCore.experimental.setMaximumParallelCommands(MAX_PARALLEL_COMMANDS);
     }
 
-    public static PIDCoefficients LF_SERVO_ROTATION_PID = new PIDCoefficients(0.6, 0, 0);
-    public static PIDCoefficients LR_SERVO_ROTATION_PID = new PIDCoefficients(0.6, 0, 0);
-    public static PIDCoefficients RF_SERVO_ROTATION_PID = new PIDCoefficients(0.4, 0, 0);
-    public static PIDCoefficients RR_SERVO_ROTATION_PID = new PIDCoefficients(0.6, 0, 0);
+    public static PIDCoefficients LF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.6, 0, 0);
+    public static PIDCoefficients LR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.6, 0, 0);
+    public static PIDCoefficients RF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.4, 0, 0);
+    public static PIDCoefficients RR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.8, 0, 0);
 
 
     public ConfigurableSwerveDriveSubsystem(HardwareMap hardwareMap){
         this(
                 hardwareMap,
                 hardwareMap.get(BNO055IMU.class, "imu"),
-                new AnotherSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", LF_SERVO_ROTATION_PID),
-                new AnotherSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", LR_SERVO_ROTATION_PID),
-                new AnotherSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RF_SERVO_ROTATION_PID),
-                new AnotherSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", RR_SERVO_ROTATION_PID)
+                new AnotherSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", LF_SERVO_ROTATION_PID_COEF),
+                new AnotherSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", LR_SERVO_ROTATION_PID_COEF),
+                new AnotherSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RF_SERVO_ROTATION_PID_COEF),
+                new AnotherSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", RR_SERVO_ROTATION_PID_COEF)
         );
     }
 
@@ -470,11 +475,23 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         leftRearModule.enableMotor = this.enableMotor;
         rightRearModule.enableMotor = this.enableMotor;
         // TODO: figure out the order of the motors
+//        if (enableMotor){
+//            leftFrontModule.setMotorPower(v0 * LF_MOTOR_SCALAR);
+//            leftRearModule.setMotorPower(v1 * LR_MOTOR_SCALAR);
+//            rightFrontModule.setMotorPower(v2 * RF_MOTOR_SCALAR);
+//            rightRearModule.setMotorPower(v3 * RR_MOTOR_SCALAR);
+//        }
+//        leftFrontMotorPower = v0 * LF_MOTOR_SCALAR;
+//        leftRearMotorPower = v1 * LR_MOTOR_SCALAR;
+//        rightFrontMotorPower = v2 * RF_MOTOR_SCALAR;
+//        rightRearMotorPower = v3 * RR_MOTOR_SCALAR;
+
+
         if (enableMotor){
-            leftFrontModule.setMotorPower(v0);
-            leftRearModule.setMotorPower(v1);
-            rightFrontModule.setMotorPower(v2);
-            rightRearModule.setMotorPower(v3);
+            leftFrontModule.setMotorPower(v0 * 1);
+            leftRearModule.setMotorPower(v1 * 1);
+            rightFrontModule.setMotorPower(v2 * 1);
+            rightRearModule.setMotorPower(v3 * 1);
         }
         leftFrontMotorPower = v0;
         leftRearMotorPower = v1;
