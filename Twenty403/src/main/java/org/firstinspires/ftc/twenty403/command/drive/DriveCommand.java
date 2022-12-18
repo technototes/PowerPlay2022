@@ -16,6 +16,7 @@ import java.util.function.DoubleSupplier;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline;
+import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
 
 public class DriveCommand implements Command, Loggable {
 
@@ -63,7 +64,7 @@ public class DriveCommand implements Command, Loggable {
         if (straight == null || straight.getAsBoolean() == false) {
             // No straighten override: return the stick value
             // (with some adjustment...)
-            return -Math.pow(r.getAsDouble() * subsystem.speed, 3);
+            return -Math.pow(r.getAsDouble(), 3) * subsystem.speed;
         } else {
             // headingInRads is [0-2pi]
             double heading = -Math.toDegrees(headingInRads);
@@ -121,12 +122,10 @@ public class DriveCommand implements Command, Loggable {
             }
             double yDistance;
             double xDistance;
-            yDistance = camHeight / Math.tan(jy / (max_of_jy) * yEdgeAngle);
-            xDistance = yDistance * Math.tan(jx / (max_of_jx) * xEdgeAngle);
+            yDistance = camHeight / Math.tan((VisionSubsystem.VisionSubsystemConstants.HEIGHT - jy) / (VisionSubsystem.VisionSubsystemConstants.HEIGHT) * (3.14/4));
+            xDistance = yDistance * Math.tan(jx / (VisionSubsystem.VisionSubsystemConstants.WIDTH) * (3.14/4));
             // set the drive power to get us to that location
-            subsystem.setWeightedDrivePower(
-                    new Pose2d(xDistance, yDistance, getRotationClosest45(curHeading))
-            );
+            subsystem.requestTrajectoryMove(-xDistance, -yDistance, rotPower);
         }
     }
 
