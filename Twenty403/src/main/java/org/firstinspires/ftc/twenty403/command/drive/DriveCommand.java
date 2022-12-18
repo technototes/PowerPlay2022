@@ -10,8 +10,10 @@ import com.technototes.library.control.Stick;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.util.MathUtils;
 
+
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
+
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
@@ -30,12 +32,12 @@ public class DriveCommand implements Command, Loggable {
     public VisionPipeline visionPipeline;
 
     public DriveCommand(
-            DrivebaseSubsystem sub,
-            Stick stick1,
-            Stick stick2,
-            BooleanSupplier straighten,
-            BooleanSupplier watchAndAlign,
-            VisionPipeline vp
+                DrivebaseSubsystem sub,
+                Stick stick1,
+                Stick stick2,
+                BooleanSupplier straighten,
+                BooleanSupplier watchAndAlign,
+                VisionPipeline vp
     ) {
         addRequirements(sub, sub.odometry);
         subsystem = sub;
@@ -48,10 +50,10 @@ public class DriveCommand implements Command, Loggable {
     }
 
     public DriveCommand(
-            DrivebaseSubsystem sub,
-            Stick stick1,
-            Stick stick2,
-            BooleanSupplier straighten
+                DrivebaseSubsystem sub,
+                Stick stick1,
+                Stick stick2,
+                BooleanSupplier straighten
     ) {
         this(sub, stick1, stick2, straighten, null, null);
     }
