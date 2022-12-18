@@ -83,5 +83,9 @@ public class ControlsDriver {
     public void bindDriverLiftControls() {
         gamepad.leftTrigger.whenPressed(new LiftMoveUpOverrideCommand(robot.liftSubsystem));
         gamepad.rightTrigger.whenPressed(new LiftMoveDownOverrideCommand(robot.liftSubsystem));
+        gamepad.dpadLeft.whenPressed(new LiftLowPoleCommand(robot.liftSubsystem));
+        gamepad.dpadRight.whenPressed(new LiftMidPoleCommand(robot.liftSubsystem));
+        gamepad.dpadUp.whenPressed(new LiftHighPoleCommand(robot.liftSubsystem));
+        gamepad.dpadDown.whenPressed(new LiftFloorIntakeCommand(robot.liftSubsystem));
     }
 }
