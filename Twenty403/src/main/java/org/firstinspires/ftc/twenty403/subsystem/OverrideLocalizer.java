@@ -2,10 +2,12 @@ package org.firstinspires.ftc.twenty403.subsystem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.localization.Localizer;
 import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
+
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class OverrideLocalizer implements Localizer {
@@ -51,7 +53,7 @@ public class OverrideLocalizer implements Localizer {
             // Wall distance is good: Update x
             double newX = x;
             if (x < 0) {
-                newX = -65 + dist;
+                newX = -60 + dist;
             } else {
                 newX = 65 - dist;
             }
@@ -95,13 +97,17 @@ public class OverrideLocalizer implements Localizer {
             adjustment.append(String.format("Y: %f -> %f ", y, newY));
             y = newY;
         }
+        count++;
         if (adjustment.length() > 0) {
-            driveSubsys.locState = adjustment.toString();
+            driveSubsys.locState = String.format("%d: %s", count, adjustment.toString());
+            System.out.println("Gabriel:" + adjustment);
         } else {
-            driveSubsys.locState = "No odo adjustement";
+            driveSubsys.locState = String.format("%d: No odo adjustment", count);
         }
         return new Pose2d(x, y, h);
     }
+
+    public int count = 0;
 
     @NonNull
     @Override

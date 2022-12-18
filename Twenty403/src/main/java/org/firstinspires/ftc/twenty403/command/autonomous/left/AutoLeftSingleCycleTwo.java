@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.twenty403.command.autonomous.right;
+package org.firstinspires.ftc.twenty403.command.autonomous.left;
 
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.command.WaitCommand;
@@ -11,13 +11,12 @@ import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftCollectCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
 
-public class AutoRightSingleCycleTwo extends SequentialCommandGroup {
-
-    public AutoRightSingleCycleTwo(Robot r) {
+public class AutoLeftSingleCycleTwo extends SequentialCommandGroup {
+    public AutoLeftSingleCycleTwo(Robot r) {
         super(
                 new TrajectorySequenceCommand(
                         r.drivebaseSubsystem,
-                        AutoConstants.Right.W_JUNCTION_TO_STACK_TWO
+                        AutoConstants.Left.E_JUNCTION_TO_STACK_TWO
                 )
                         .alongWith(new SequentialCommandGroup(
                                 new WaitCommand(0.4),
@@ -25,7 +24,7 @@ public class AutoRightSingleCycleTwo extends SequentialCommandGroup {
                 new ClawCloseCommand(r.clawSubsystem),
                 new TrajectorySequenceCommand(
                         r.drivebaseSubsystem,
-                        AutoConstants.Right.STACK_TO_W_JUNCTION_TWO
+                        AutoConstants.Left.STACK_TO_E_JUNCTION_TWO
                 )
                         .alongWith(new LiftHighJunctionCommand(r.liftSubsystem)),
                 new ClawOpenCommand(r.clawSubsystem)
