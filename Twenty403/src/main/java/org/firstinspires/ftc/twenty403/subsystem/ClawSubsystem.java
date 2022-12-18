@@ -38,8 +38,6 @@ public class ClawSubsystem implements Subsystem, Loggable {
     private Alliance alliance;
     private LiftSubsystem liftSubsystem;
 
-
-
     // This indicates that we've actually explicitly closed the claw at some point
     // which means the servo motor is engaged...
     private boolean servoSet;
@@ -102,7 +100,10 @@ public class ClawSubsystem implements Subsystem, Loggable {
         return (
             servoSet &&
             //Math.abs(curPos - CLOSE_SERVO_POSITION) < Math.abs(curPos - OPEN_SERVO_POSITION)
-                    (curPos <= CLOSE_SERVO_POSITION + autoCloseDeadzone /*&& curPos >= CLOSE_SERVO_POSITION - autoCloseDeadzone*/)
+            (
+                curPos <= CLOSE_SERVO_POSITION + autoCloseDeadzone
+                /*&& curPos >= CLOSE_SERVO_POSITION - autoCloseDeadzone*/
+            )
         );
     }
 

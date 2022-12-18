@@ -41,13 +41,16 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
 
     @Config
     public static class VisionConstants {
+
         @Config
-        public static class SignalDetection{
+        public static class SignalDetection {
+
             public enum ParkingPosition {
                 LEFT,
                 CENTER,
                 RIGHT,
             }
+
             // Yellow is around 25 (50 degrees)
             public static double YELLOW = 30;
             // Aqua is at 100 (200 degrees)
@@ -74,8 +77,10 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
 
             public static Scalar RGB_HIGHLIGHT = new Scalar(255, 128, 255);
         }
+
         @Config
-        public static class JunctionDetection{
+        public static class JunctionDetection {
+
             public static double JYELLOW = 24;
             // Other yellow value?
             public static double JYELLOW2 = 28;
@@ -99,7 +104,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
             public static Scalar RGB_RED = new Scalar(255, 0, 0);
             public static int GREEN_RANGE = 30;
             public static Scalar RGB_GREEN = new Scalar(0, 255, 0);
-            public static Scalar RGB_BLACK = new Scalar(0,0,0);
+            public static Scalar RGB_BLACK = new Scalar(0, 0, 0);
             public static int BLUE_RANGE = 50;
             public static Scalar RGB_BLUE = new Scalar(0, 0, 255);
             public static int YELLOW_RANGE = 70;
@@ -114,21 +119,25 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
             public static Scalar RGB_WHITE = new Scalar(255, 255, 255);
 
             @Config
-            public static class OnlyXRight{
+            public static class OnlyXRight {
+
                 public static double RIGHT_CENTER = 220;
                 public static double RIGHT_RANGE = 60;
             }
+
             @Config
-            public static class OnlyXLeft{
+            public static class OnlyXLeft {
+
                 public static double LEFT_CENTER = 200;
                 public static double LEFT_RANGE = 80;
             }
+
             @Config
-            public static class OnlyYForward{
+            public static class OnlyYForward {
+
                 public static double FORWARD_CENTER = 220;
                 public static double FORWARD_RANGE = 70;
             }
-
         }
     }
 
@@ -184,7 +193,11 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                     // The color choice makes things stripey, which makes it easier to identify
                     if (VisionSubsystem.VisionSubsystemConstants.DEBUG_VIEW) {
                         double[] colorToDraw = ((j + i) & 3) != 0 ? edge1.val : edge2.val;
-                        img.put(j + VisionConstants.SignalDetection.Y, i + VisionConstants.SignalDetection.X, colorToDraw);
+                        img.put(
+                            j + VisionConstants.SignalDetection.Y,
+                            i + VisionConstants.SignalDetection.X,
+                            colorToDraw
+                        );
                     }
                 }
             }
@@ -225,7 +238,11 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         int y = Range.clip(VisionConstants.SignalDetection.Y - 1, 0, input.height() - 1);
         int w = Range.clip(VisionConstants.SignalDetection.WIDTH + 2, 1, input.width() - x);
         int h = Range.clip(VisionConstants.SignalDetection.HEIGHT + 2, 1, input.height() - y);
-        Imgproc.rectangle(input, new Rect(x, y, w, h), VisionConstants.SignalDetection.RGB_HIGHLIGHT);
+        Imgproc.rectangle(
+            input,
+            new Rect(x, y, w, h),
+            VisionConstants.SignalDetection.RGB_HIGHLIGHT
+        );
     }
 
     public void init(Mat firstFrame) {
@@ -244,7 +261,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
     private static boolean inRange(double[] color, double target) {
         return (
             color[0] <= target + VisionConstants.JunctionDetection.RANGE &&
-                    color[0] >= target - VisionConstants.JunctionDetection.RANGE
+            color[0] >= target - VisionConstants.JunctionDetection.RANGE
         );
     }
 
@@ -258,7 +275,10 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                 double[] color = customColorSpace.get(j, i);
                 if (
                     brightEnough(color) &&
-                    (inRange(color, VisionConstants.JunctionDetection.JYELLOW) || inRange(color, VisionConstants.JunctionDetection.JYELLOW2))
+                    (
+                        inRange(color, VisionConstants.JunctionDetection.JYELLOW) ||
+                        inRange(color, VisionConstants.JunctionDetection.JYELLOW2)
+                    )
                 ) {
                     if (startX == -1) {
                         startX = i;
@@ -271,8 +291,14 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
                     // if less than 20 for range after not seeing yellow than set both to -1 as not junction ypou are
                     // looking for
                 } else {
-                    if (startX != -1 && (Math.abs(startX - endX) < VisionConstants.JunctionDetection.JUNCTION_WIDTH) ||
-                            endX == -1) {
+                    if (
+                        startX != -1 &&
+                        (
+                            Math.abs(startX - endX) <
+                            VisionConstants.JunctionDetection.JUNCTION_WIDTH
+                        ) ||
+                        endX == -1
+                    ) {
                         startX = -1;
                         endX = -1;
                     }

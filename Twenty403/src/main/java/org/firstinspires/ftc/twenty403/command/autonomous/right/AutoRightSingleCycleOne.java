@@ -18,9 +18,12 @@ public class AutoRightSingleCycleOne extends SequentialCommandGroup {
                 r.drivebaseSubsystem,
                 AutoConstants.Right.W_JUNCTION_TO_STACK_ONE
             )
-                .alongWith(new SequentialCommandGroup(
+                .alongWith(
+                    new SequentialCommandGroup(
                         new WaitCommand(0.4),
-                new LiftCollectCommand(r.liftSubsystem))),
+                        new LiftCollectCommand(r.liftSubsystem)
+                    )
+                ),
             new ClawCloseCommand(r.clawSubsystem),
             new TrajectorySequenceCommand(
                 r.drivebaseSubsystem,

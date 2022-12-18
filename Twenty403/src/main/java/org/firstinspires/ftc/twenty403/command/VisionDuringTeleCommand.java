@@ -3,7 +3,6 @@ package org.firstinspires.ftc.twenty403.command;
 import com.technototes.library.command.Command;
 import java.util.function.BooleanSupplier;
 import java.util.function.BooleanSupplier;
-
 import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline;
 import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
 
@@ -24,7 +23,7 @@ public class VisionDuringTeleCommand implements Command {
 
     @Override
     public void execute() {
-        if (subsystem.visionPipeline.activeMode == VisionPipeline.Mode.Junction){
+        if (subsystem.visionPipeline.activeMode == VisionPipeline.Mode.Junction) {
             subsystem.pauseScanning();
         } else {
             subsystem.startJunctionScanning();

@@ -8,7 +8,6 @@ public class ClawAutoCloseToggleCommand implements Command {
 
     private ClawSubsystem subsystem;
 
-
     public ClawAutoCloseToggleCommand(ClawSubsystem s) {
         subsystem = s;
 
@@ -17,6 +16,6 @@ public class ClawAutoCloseToggleCommand implements Command {
 
     @Override
     public void execute() {
-        subsystem.toggleAutoClose() ;
+        subsystem.toggleAutoClose();
     }
 }

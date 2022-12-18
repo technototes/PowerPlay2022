@@ -9,12 +9,8 @@ import com.technototes.library.command.Command;
 import com.technototes.library.control.Stick;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.util.MathUtils;
-
-
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
-
-
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline;
@@ -22,7 +18,6 @@ import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline.VisionConstants.
 import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
 
 public class DriveCommand implements Command, Loggable {
-
 
     static double STRAIGHTEN_DEAD_ZONE = 0.08;
     public DrivebaseSubsystem subsystem;
@@ -32,12 +27,12 @@ public class DriveCommand implements Command, Loggable {
     public VisionPipeline visionPipeline;
 
     public DriveCommand(
-                DrivebaseSubsystem sub,
-                Stick stick1,
-                Stick stick2,
-                BooleanSupplier straighten,
-                BooleanSupplier watchAndAlign,
-                VisionPipeline vp
+        DrivebaseSubsystem sub,
+        Stick stick1,
+        Stick stick2,
+        BooleanSupplier straighten,
+        BooleanSupplier watchAndAlign,
+        VisionPipeline vp
     ) {
         addRequirements(sub, sub.odometry);
         subsystem = sub;
@@ -50,10 +45,10 @@ public class DriveCommand implements Command, Loggable {
     }
 
     public DriveCommand(
-                DrivebaseSubsystem sub,
-                Stick stick1,
-                Stick stick2,
-                BooleanSupplier straighten
+        DrivebaseSubsystem sub,
+        Stick stick1,
+        Stick stick2,
+        BooleanSupplier straighten
     ) {
         this(sub, stick1, stick2, straighten, null, null);
     }
@@ -124,24 +119,47 @@ public class DriveCommand implements Command, Loggable {
                 return;
             }
             if (jx > JunctionDetection.OnlyXRight.RIGHT_CENTER) {
-                subsystem.setWeightedDrivePower(new Pose2d(
+                subsystem.setWeightedDrivePower(
+                    new Pose2d(
                         // moving only x, to the right
-                        Range.clip((jx - JunctionDetection.OnlyXRight.RIGHT_CENTER) / JunctionDetection.OnlyXRight.
-                                RIGHT_RANGE, 0, 0.3),
+                        Range.clip(
+                            (jx - JunctionDetection.OnlyXRight.RIGHT_CENTER) /
+                            JunctionDetection.OnlyXRight.RIGHT_RANGE,
+                            0,
+                            0.3
+                        ),
                         0,
-                        0));
+                        0
+                    )
+                );
             } else if (jx < JunctionDetection.OnlyXLeft.LEFT_CENTER) {
-                subsystem.setWeightedDrivePower(new Pose2d(
+                subsystem.setWeightedDrivePower(
+                    new Pose2d(
                         // moving only x, to the left
-                        Range.clip((jx - JunctionDetection.OnlyXLeft.LEFT_CENTER) / JunctionDetection.OnlyXLeft.LEFT_RANGE, -0.3, 0),
+                        Range.clip(
+                            (jx - JunctionDetection.OnlyXLeft.LEFT_CENTER) /
+                            JunctionDetection.OnlyXLeft.LEFT_RANGE,
+                            -0.3,
+                            0
+                        ),
                         0,
-                        0));
+                        0
+                    )
+                );
             } else if (jy < JunctionDetection.OnlyYForward.FORWARD_CENTER && jy > 10) {
-                subsystem.setWeightedDrivePower(new Pose2d(
+                subsystem.setWeightedDrivePower(
+                    new Pose2d(
                         0,
                         // Moving y forward
-                        Range.clip((jy - JunctionDetection.OnlyYForward.FORWARD_CENTER) / JunctionDetection.OnlyYForward.FORWARD_RANGE, -0.3, 0),
-                        0));
+                        Range.clip(
+                            (jy - JunctionDetection.OnlyYForward.FORWARD_CENTER) /
+                            JunctionDetection.OnlyYForward.FORWARD_RANGE,
+                            -0.3,
+                            0
+                        ),
+                        0
+                    )
+                );
             }
         }
     }
@@ -159,12 +177,12 @@ public class DriveCommand implements Command, Loggable {
                 // The math & signs looks wonky, because this makes things field-relative
                 // (Recall that "3 O'Clock" is zero degrees)
                 Vector2d input = new Vector2d(
-                        -y.getAsDouble() * subsystem.speed,
-                        -x.getAsDouble() * subsystem.speed
+                    -y.getAsDouble() * subsystem.speed,
+                    -x.getAsDouble() * subsystem.speed
                 )
-                        .rotated(curHeading);
+                    .rotated(curHeading);
                 subsystem.setWeightedDrivePower(
-                        new Pose2d(input.getX(), input.getY(), getRotation(curHeading))
+                    new Pose2d(input.getX(), input.getY(), getRotation(curHeading))
                 );
             }
         }
