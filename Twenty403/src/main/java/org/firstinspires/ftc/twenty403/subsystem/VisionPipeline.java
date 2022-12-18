@@ -227,7 +227,8 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
 
     private static boolean inRange(double[] color, double target) {
         return (
-            color[0] <= target + VisionConstants.JunctionDetection.RANGE && color[0] >= target - VisionConstants.JunctionDetection.RANGE
+            color[0] <= target + VisionConstants.JunctionDetection.RANGE &&
+                    color[0] >= target - VisionConstants.JunctionDetection.RANGE
         );
     }
 
