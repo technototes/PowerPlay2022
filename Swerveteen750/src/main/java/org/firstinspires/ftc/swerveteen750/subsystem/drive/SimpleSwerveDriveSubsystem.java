@@ -24,9 +24,9 @@ public class SimpleSwerveDriveSubsystem implements Subsystem {
     public static boolean enableLocalizer = false;
 
     public static double LF_MOTOR_SCALAR = 1.00;
-    public static double LR_MOTOR_SCALAR = 0.81;
-    public static double RF_MOTOR_SCALAR = 0.94;
-    public static double RR_MOTOR_SCALAR = 0.83;
+    public static double LR_MOTOR_SCALAR = 0.85;
+    public static double RF_MOTOR_SCALAR = 0.86;
+    public static double RR_MOTOR_SCALAR = 1.00;
 
     // TODO: take IMU and calculate ExternalHeading
     public SimpleSwerveDriveSubsystem(AnotherSwerveModule leftFrontModule,
