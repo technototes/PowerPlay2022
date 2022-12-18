@@ -11,6 +11,7 @@ public class ResetSwerveGyroCommand implements Command {
 
     public ResetSwerveGyroCommand(ConfigurableSwerveDriveSubsystem s, CommandGamepad g) {
         swerveDriveSubsystem = s;
+        gamepad = g;
     }
 
     @Override
