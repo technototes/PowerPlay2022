@@ -2,6 +2,7 @@ package org.firstinspires.ftc.twenty403.subsystem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -23,40 +24,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import java.util.function.Supplier;
 
 public class DrivebaseSubsystem
-    extends MecanumDrivebaseSubsystem
-    implements Supplier<Pose2d>, Loggable {
-
-    public class OverriderLocalizer implements Localizer {
-
-        Localizer orig;
-
-        public OverriderLocalizer(Localizer original) {
-            orig = original;
-        }
-
-        @NonNull
-        @Override
-        public Pose2d getPoseEstimate() {
-            // TODO: If the sensors are in accurate range, use them instead of orig for the pose
-            return orig.getPoseEstimate();
-        }
-
-        @Override
-        public void setPoseEstimate(@NonNull Pose2d pose2d) {
-            orig.setPoseEstimate(pose2d);
-        }
-
-        @Nullable
-        @Override
-        public Pose2d getPoseVelocity() {
-            return orig.getPoseVelocity();
-        }
-
-        @Override
-        public void update() {
-            orig.update();
-        }
-    }
+        extends MecanumDrivebaseSubsystem
+        implements Supplier<Pose2d>, Loggable {
 
     // Notes from Kevin:
     // The 5203 motors when direct driven
@@ -80,10 +49,10 @@ public class DrivebaseSubsystem
 
         @MotorVeloPID
         public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(
-            20,
-            0,
-            3,
-            MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV)
+                20,
+                0,
+                3,
+                MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV)
         );
 
         @WheelRadius
@@ -100,7 +69,7 @@ public class DrivebaseSubsystem
 
         @KV
         public static double kV =
-            1.0 / MecanumConstants.rpmToVelocity(MAX_RPM, WHEEL_RADIUS, GEAR_RATIO);
+                1.0 / MecanumConstants.rpmToVelocity(MAX_RPM, WHEEL_RADIUS, GEAR_RATIO);
 
         @KA
         public static double kA = 0;
@@ -175,12 +144,12 @@ public class DrivebaseSubsystem
     public OdoSubsystem odometry;
 
     public DrivebaseSubsystem(
-        EncodedMotor<DcMotorEx> fl,
-        EncodedMotor<DcMotorEx> fr,
-        EncodedMotor<DcMotorEx> rl,
-        EncodedMotor<DcMotorEx> rr,
-        IMU i,
-        OdoSubsystem odo
+            EncodedMotor<DcMotorEx> fl,
+            EncodedMotor<DcMotorEx> fr,
+            EncodedMotor<DcMotorEx> rl,
+            EncodedMotor<DcMotorEx> rr,
+            IMU i,
+            OdoSubsystem odo
     ) {
         super(fl, fr, rl, rr, i, () -> DriveConstants.class);
         fl2 = fl;
@@ -217,14 +186,15 @@ public class DrivebaseSubsystem
 
     @Override
     public void periodic() {
-        if (ENABLE_POSE_DIAGNOSTICS && false) {
+        if (ENABLE_POSE_DIAGNOSTICS) {
             updatePoseEstimate();
             Pose2d pose = getPoseEstimate();
             Pose2d poseVelocity = getPoseVelocity();
             poseDisplay =
-                pose.toString() +
-                " : " +
-                (poseVelocity != null ? poseVelocity.toString() : "<null>");
+                    pose.toString() +
+                            " : " +
+                            (poseVelocity != null ? poseVelocity.toString() : "<null>");
+            poseDisplay = String.format("%s [%f]", poseDisplay, this.getExternalHeading());
             // System.out.println("Pose: " + poseDisplay);
         }
     }
@@ -250,24 +220,24 @@ public class DrivebaseSubsystem
             trajectoryAngleRadians = deltaAngleRadians;
             targetPose = new Pose2d(trajectoryX, trajectoryY, trajectoryAngleRadians);
             startNewTrajectory();
-        }
-        else {
-        queueTrajectory(deltaX, deltaY, deltaAngleRadians);
+        } else {
+            // queueTrajectory(deltaX, deltaY, deltaAngleRadians);
         }
 
     }
-    public void queueTrajectory(double deltaX, double deltaY, double deltaAngleRadians){
+
+    public void queueTrajectory(double deltaX, double deltaY, double deltaAngleRadians) {
         Pose2d curPose = getPoseEstimate();
-        xdifference = targetPose.getX()- curPose.getX();
+        xdifference = targetPose.getX() - curPose.getX();
         ydifference = targetPose.getY() - curPose.getY();
         newPose = new Pose2d(xdifference);
-        if (deltaX==0.0 && targetPose.getX()==0.0){
+        if (deltaX == 0.0 && targetPose.getX() == 0.0) {
             trajectoryX = 0;
             trajectoryY = ydifference + deltaY;
             trajectoryAngleRadians = deltaAngleRadians;
             startNewTrajectory();
         }
-        if (deltaY == 0.0 && targetPose.getY()==0.0){
+        if (deltaY == 0.0 && targetPose.getY() == 0.0) {
             trajectoryY = 0;
             trajectoryX = xdifference + deltaX;
             trajectoryAngleRadians = deltaAngleRadians;
@@ -275,31 +245,19 @@ public class DrivebaseSubsystem
         }
     }
 
-//    public void requestTrajectoryMove(double deltaX, double deltaY) {
-//        requestTrajectoryMove(deltaX,deltaY,0);
-//    }
-
-//    public boolean isTrajectoryRequested() {
-//        if (trajectoryX != 0 || trajectoryY != 0 || trajectoryAngleRadians != 0) {
-//            return true;
-//        }
-//        return false;
-//    }
-
     public void clearRequestedTrajectory() {
         trajectoryX = 0;
         trajectoryY = 0;
         trajectoryAngleRadians = 0;
     }
 
-
-    public void requestCancelled(){
+    public void requestCancelled() {
         this.stop();
     }
 
     public void startNewTrajectory() {
         Pose2d start = this.getPoseEstimate();
-        start = new Pose2d(start.getX()+.01, start.getY(), start.getHeading());
+        start = new Pose2d(start.getX() + .01, start.getY(), start.getHeading());
         double endX = start.getX() + this.trajectoryX;
         double endY = start.getY() + this.trajectoryY;
         double endHeading = AngleUnit.normalizeRadians(

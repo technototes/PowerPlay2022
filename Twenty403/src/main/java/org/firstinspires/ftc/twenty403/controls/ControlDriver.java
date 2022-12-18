@@ -101,12 +101,7 @@ public class ControlDriver {
     }
 
     public void bindVisionCommand() {
-        CommandScheduler
-            .getInstance()
-            .scheduleForState(
-                new VisionDuringTeleCommand(robot.visionSystem, gamepad.share),
-                CommandOpMode.OpModeState.RUN
-            );
+        gamepad.share.whenPressed(new VisionDuringTeleCommand(robot.visionSystem));
     }
 
     public void bindClawControls() {

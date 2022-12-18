@@ -16,6 +16,7 @@ import java.util.function.DoubleSupplier;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline;
+import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline.VisionConstants.JunctionDetection;
 import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
 
 public class DriveCommand implements Command, Loggable {
@@ -120,24 +121,39 @@ public class DriveCommand implements Command, Loggable {
             if (jx == 0.0 && jy == 0.0) {
                 return;
             }
-            double yDistance;
-            double xDistance;
-            yDistance = camHeight / Math.tan((VisionSubsystem.VisionSubsystemConstants.HEIGHT - jy) / (VisionSubsystem.VisionSubsystemConstants.HEIGHT) * (3.14/4));
-            xDistance = yDistance * Math.tan(jx / (VisionSubsystem.VisionSubsystemConstants.WIDTH) * (3.14/4));
-            // set the drive power to get us to that location
-            subsystem.requestTrajectoryMove(-xDistance, -yDistance, rotPower);
+            if (jx > JunctionDetection.OnlyXRight.RIGHT_CENTER) {
+                subsystem.setWeightedDrivePower(new Pose2d(
+                        // moving only x, to the right
+                        Range.clip((jx - JunctionDetection.OnlyXRight.RIGHT_CENTER) / JunctionDetection.OnlyXRight.
+                                RIGHT_RANGE, 0, 0.3),
+                        0,
+                        0));
+            } else if (jx < JunctionDetection.OnlyXLeft.LEFT_CENTER) {
+                subsystem.setWeightedDrivePower(new Pose2d(
+                        // moving only x, to the left
+                        Range.clip((jx - JunctionDetection.OnlyXLeft.LEFT_CENTER) / JunctionDetection.OnlyXLeft.LEFT_RANGE, -0.3, 0),
+                        0,
+                        0));
+            } else if (jy < JunctionDetection.OnlyYForward.FORWARD_CENTER && jy > 10) {
+                subsystem.setWeightedDrivePower(new Pose2d(
+                        0,
+                        // Moving y forward
+                        Range.clip((jy - JunctionDetection.OnlyYForward.FORWARD_CENTER) / JunctionDetection.OnlyYForward.FORWARD_RANGE, -0.3, 0),
+                        0));
+            }
         }
     }
 
     @Override
     public void execute() {
-       // If subsystem is busy it is running a trajectory.
+        // If subsystem is busy it is running a trajectory.
         if (!subsystem.isBusy()) {
             if (watchTrigger != null && watchTrigger.getAsBoolean()) {
                 // do the auto-align stuff
                 autoAlign45();
             } else {
                 double curHeading = -subsystem.getExternalHeading();
+
                 // The math & signs looks wonky, because this makes things field-relative
                 // (Recall that "3 O'Clock" is zero degrees)
                 Vector2d input = new Vector2d(
@@ -152,7 +168,6 @@ public class DriveCommand implements Command, Loggable {
         }
         subsystem.update();
     }
-
 
     @Override
     public boolean isFinished() {

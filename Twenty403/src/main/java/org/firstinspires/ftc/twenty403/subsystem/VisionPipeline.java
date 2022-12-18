@@ -76,20 +76,20 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         }
         @Config
         public static class JunctionDetection{
-            public static double JYELLOW = 10;
+            public static double JYELLOW = 24;
             // Other yellow value?
-            public static double JYELLOW2 = 15;
+            public static double JYELLOW2 = 28;
             // the width, in pixels, of a junction
             public static int JUNCTION_WIDTH = 10;
 
             public static double RANGE = 10;
 
             // The low saturation point for color identification
-            public static double lowS = 100;
+            public static double lowS = 60;
             // The high saturation point for color identification
             public static double highS = 255;
             // The low value for color ID
-            public static double lowV = 80;
+            public static double lowV = 120;
             // The high value for color ID
             public static double highV = 255;
 
@@ -112,6 +112,23 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
             public static Scalar RGB_PURPLE = new Scalar(128, 0, 128);
             public static int WHITE_RANGE = 150;
             public static Scalar RGB_WHITE = new Scalar(255, 255, 255);
+
+            @Config
+            public static class OnlyXRight{
+                public static double RIGHT_CENTER = 220;
+                public static double RIGHT_RANGE = 60;
+            }
+            @Config
+            public static class OnlyXLeft{
+                public static double LEFT_CENTER = 200;
+                public static double LEFT_RANGE = 80;
+            }
+            @Config
+            public static class OnlyYForward{
+                public static double FORWARD_CENTER = 220;
+                public static double FORWARD_RANGE = 70;
+            }
+
         }
     }
 
@@ -236,7 +253,7 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         Imgproc.cvtColor(frame, customColorSpace, Imgproc.COLOR_RGB2HSV);
         int startX = -1;
         int endX = -1;
-        for (int j = 0; j < customColorSpace.height(); j++) {
+        for (int j = customColorSpace.height() - 1; j >= 0; j--) {
             for (int i = 0; i < customColorSpace.width(); i++) {
                 double[] color = customColorSpace.get(j, i);
                 if (
