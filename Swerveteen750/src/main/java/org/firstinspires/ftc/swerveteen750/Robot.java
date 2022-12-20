@@ -1,15 +1,16 @@
 package org.firstinspires.ftc.swerveteen750;
 
 import org.firstinspires.ftc.swerveteen750.command.autonomous.StartingPosition;
-import org.firstinspires.ftc.swerveteen750.subsystem.ArmSubsystem;
 import org.firstinspires.ftc.swerveteen750.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.swerveteen750.subsystem.LiftSubsystem;
+import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.MecanumDriveSubsystem;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.SwerveDriveSubsystem;
 import org.firstinspires.ftc.swerveteen750.subsystem.VisionSubsystem;
 
 import com.acmerobotics.dashboard.config.Config;
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.util.Alliance;
 
@@ -17,27 +18,25 @@ public class Robot implements Loggable {
     @Config
     public static class RobotConstant {
         // The only purpose of RobotConstant is to enable/disable subsystem(s) in FTC-Dashboard for non-testing OpMode
-        public static boolean SWERVE_DRIVE_ENABLED = false;
+        public static boolean SWERVE_DRIVE_ENABLED = true;
         private static boolean TANK_DRIVE_ENABLED = false;
-        public static boolean MECANUM_DRIVE_ENABLED = true;
+        public static boolean MECANUM_DRIVE_ENABLED = false;
         public static boolean LIFT_ENABLED = true;
-        public static boolean ARM_ENABLED = true;
         public static boolean CLAW_ENABLED = true;
-        public static boolean CAMERA_ENABLED = true;
+        public static boolean CAMERA_ENABLED = false;
     }
 
-    public SwerveDriveSubsystem swerveDriveSubsystem;
+    public ConfigurableSwerveDriveSubsystem swerveDriveSubsystem;
     public MecanumDriveSubsystem mecanumDriveSubsystem;
     public LiftSubsystem liftSubsystem;
-    public ArmSubsystem armSubsystem;
     public ClawSubsystem clawSubsystem;
     public VisionSubsystem visionSubsystem;
 
-    public Robot(Hardware hardware,
+    public Robot(HardwareMap hardwareMap,
+                 Hardware hardware,
                  boolean enableSwerveDrive,
                  boolean enableMecanumDrive,
                  boolean enableLift,
-                 boolean enableArm,
                  boolean enableClaw,
                  boolean enableCamera,
                  Alliance alliance,
@@ -55,18 +54,13 @@ public class Robot implements Loggable {
         }
         else if (enableSwerveDrive) {
             // Hint: we never put the SwerveDriveSubsystem in the Robot class
+            swerveDriveSubsystem = new ConfigurableSwerveDriveSubsystem(hardwareMap); // much simpler
         }
 
         if (enableLift) {
             liftSubsystem = new LiftSubsystem(hardware.leftLiftMotor, hardware::getVoltage);
         } else {
             liftSubsystem = new LiftSubsystem(null);
-        }
-
-        if (enableArm) {
-            armSubsystem = new ArmSubsystem(hardware.flipperServo, hardware.elbowServo);
-        } else {
-            armSubsystem = new ArmSubsystem(null, null);
         }
 
         if (enableClaw) {
@@ -84,18 +78,19 @@ public class Robot implements Loggable {
         S_DRIVE_ONLY,
         M_DRIVE_ONLY,
         LIFT_ONLY,
-        ARM_CLAW_ONLY,
+        CLAW_ONLY,
         VISION_ONLY,
         VISION_M_DRIVE,
     }
 
-    public Robot(Hardware hardware, SubsystemCombo combo, Alliance team, StartingPosition whichSide) {
-        this(hardware,
+    public Robot(HardwareMap hardwareMap, Hardware hardware, SubsystemCombo combo, Alliance team, StartingPosition whichSide) {
+        this(
+                hardwareMap,
+                hardware,
                 combo == SubsystemCombo.DEFAULT ? RobotConstant.SWERVE_DRIVE_ENABLED : combo == SubsystemCombo.S_DRIVE_ONLY,
                 combo == SubsystemCombo.DEFAULT ? RobotConstant.MECANUM_DRIVE_ENABLED : combo == SubsystemCombo.M_DRIVE_ONLY || combo == SubsystemCombo.VISION_M_DRIVE,
                 combo == SubsystemCombo.DEFAULT ? RobotConstant.LIFT_ENABLED : combo == SubsystemCombo.LIFT_ONLY,
-                combo == SubsystemCombo.DEFAULT ? RobotConstant.ARM_ENABLED : combo == SubsystemCombo.ARM_CLAW_ONLY,
-                combo == SubsystemCombo.DEFAULT ? RobotConstant.CLAW_ENABLED : combo == SubsystemCombo.ARM_CLAW_ONLY,
+                combo == SubsystemCombo.DEFAULT ? RobotConstant.CLAW_ENABLED : combo == SubsystemCombo.CLAW_ONLY,
                 combo == SubsystemCombo.DEFAULT ? RobotConstant.CAMERA_ENABLED : combo == SubsystemCombo.VISION_ONLY || combo == SubsystemCombo.VISION_M_DRIVE,
                 team,
                 whichSide

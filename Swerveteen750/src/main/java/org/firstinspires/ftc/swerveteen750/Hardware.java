@@ -72,8 +72,6 @@ public class Hardware {
     public EncodedMotor<DcMotorEx> rightLiftMotor;
 
     public Servo clawServo;
-    public Servo flipperServo;
-    public Servo elbowServo;
     public DistanceSensor clawDistance;
 
     public Webcam camera;
@@ -86,7 +84,6 @@ public class Hardware {
                     boolean enableSwerve,
                     boolean enableMecanum,
                     boolean enableLift,
-                    boolean enableArm,
                     boolean enableClaw,
                     boolean enableCamera
     ) {
@@ -129,13 +126,8 @@ public class Hardware {
             }
         }
 
-        if (enableArm) {
-            flipperServo = new Servo(HardwareConstant.FLIPPER_SERVO);
-            elbowServo = new Servo(HardwareConstant.ELBOW_SERVO);
-        }
-
         if (enableClaw) {
-            clawServo = new Servo(HardwareConstant.CLAW_SERVO).invert();
+            clawServo = new Servo(HardwareConstant.CLAW_SERVO);
             // clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR); // not installed
         }
         if (enableCamera){
@@ -149,8 +141,7 @@ public class Hardware {
                 combo == Robot.SubsystemCombo.DEFAULT ? Robot.RobotConstant.SWERVE_DRIVE_ENABLED : combo == Robot.SubsystemCombo.S_DRIVE_ONLY,
                 combo == Robot.SubsystemCombo.DEFAULT ? Robot.RobotConstant.MECANUM_DRIVE_ENABLED : combo == Robot.SubsystemCombo.M_DRIVE_ONLY || combo == Robot.SubsystemCombo.VISION_M_DRIVE,
                 combo == Robot.SubsystemCombo.DEFAULT ? Robot.RobotConstant.LIFT_ENABLED : combo == Robot.SubsystemCombo.LIFT_ONLY,
-                combo == Robot.SubsystemCombo.DEFAULT ? Robot.RobotConstant.ARM_ENABLED : combo == Robot.SubsystemCombo.ARM_CLAW_ONLY,
-                combo == Robot.SubsystemCombo.DEFAULT ? Robot.RobotConstant.CLAW_ENABLED : combo == Robot.SubsystemCombo.ARM_CLAW_ONLY,
+                combo == Robot.SubsystemCombo.DEFAULT ? Robot.RobotConstant.CLAW_ENABLED : combo == Robot.SubsystemCombo.CLAW_ONLY,
                 combo == Robot.SubsystemCombo.DEFAULT ? Robot.RobotConstant.CAMERA_ENABLED : combo == Robot.SubsystemCombo.VISION_ONLY || combo == Robot.SubsystemCombo.VISION_M_DRIVE
         );
     }

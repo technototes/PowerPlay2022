@@ -1,5 +1,10 @@
 package org.firstinspires.ftc.swerveteen750.subsystem.drive;
 
+import static org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleSwerveDriveSubsystem.LF_MOTOR_SCALAR;
+import static org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleSwerveDriveSubsystem.LR_MOTOR_SCALAR;
+import static org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleSwerveDriveSubsystem.RF_MOTOR_SCALAR;
+import static org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleSwerveDriveSubsystem.RR_MOTOR_SCALAR;
+
 import androidx.annotation.GuardedBy;
 import androidx.annotation.NonNull;
 
@@ -56,6 +61,16 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public static double VY_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 1;
 
+
+    public static double STICK_X_SCALAR = 0.8;
+    public static double STICK_Y_SCALAR = 0.8;
+
+    public static double STICK_SCALAR_MAX = 1;
+    public static double STICK_SCALAR_HIGH = 0.8;
+    public static double STICK_SCALAR_MID = 0.6;
+    public static double STICK_SCALAR_LOW = 0.4;
+    public static double STICK_SCALAR_MIN = 0.25;
+
     public static int MAX_PARALLEL_COMMANDS = 8;
 
     private final TrajectorySequenceRunner trajectorySequenceRunner;
@@ -67,10 +82,10 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     private final TrajectoryFollower follower;
 
 //    public SwerveModule leftFrontModule, leftRearModule, rightRearModule, rightFrontModule;
-    AnotherSwerveModule leftFrontModule;
-    AnotherSwerveModule leftRearModule;
-    AnotherSwerveModule rightFrontModule;
-    AnotherSwerveModule rightRearModule;
+    public AnotherSwerveModule leftFrontModule;
+    public AnotherSwerveModule leftRearModule;
+    public AnotherSwerveModule rightFrontModule;
+    public AnotherSwerveModule rightRearModule;
     public List<AnotherSwerveModule> modules;
 
     private final VoltageSensor batteryVoltageSensor;
@@ -92,6 +107,7 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     // Extra logging
     public double leftFrontModuleTargetOrientation, rightFrontModuleTargetOrientation, leftRearModuleTargetOrientation, rightRearModuleTargetOrientation = 0;
     public double leftFrontModuleCurrentOrientation, rightFrontModuleCurrentOrientation, leftRearModuleCurrentOrientation, rightRearModuleCurrentOrientation = 0;
+    public double leftFrontMotorPower, rightFrontMotorPower, leftRearMotorPower, rightRearMotorPower = 0;
     private boolean debugTelemetryEnabled = false;
     private Telemetry telemetry;
     private boolean telemetryCallUpdate = false;
@@ -265,20 +281,20 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         PhotonCore.experimental.setMaximumParallelCommands(MAX_PARALLEL_COMMANDS);
     }
 
-    public static PIDCoefficients LF_SERVO_ROTATION_PID = new PIDCoefficients(0.6, 0, 0);
-    public static PIDCoefficients LR_SERVO_ROTATION_PID = new PIDCoefficients(0.6, 0, 0);
-    public static PIDCoefficients RF_SERVO_ROTATION_PID = new PIDCoefficients(0.4, 0, 0);
-    public static PIDCoefficients RR_SERVO_ROTATION_PID = new PIDCoefficients(0.6, 0, 0);
+    public static PIDCoefficients LF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.6, 0, 0);
+    public static PIDCoefficients LR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.6, 0, 0);
+    public static PIDCoefficients RF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.4, 0, 0);
+    public static PIDCoefficients RR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.8, 0, 0);
 
 
     public ConfigurableSwerveDriveSubsystem(HardwareMap hardwareMap){
         this(
                 hardwareMap,
                 hardwareMap.get(BNO055IMU.class, "imu"),
-                new AnotherSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", LF_SERVO_ROTATION_PID),
-                new AnotherSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", LR_SERVO_ROTATION_PID),
-                new AnotherSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RF_SERVO_ROTATION_PID),
-                new AnotherSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", RR_SERVO_ROTATION_PID)
+                new AnotherSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", LF_SERVO_ROTATION_PID_COEF),
+                new AnotherSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", LR_SERVO_ROTATION_PID_COEF),
+                new AnotherSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RF_SERVO_ROTATION_PID_COEF),
+                new AnotherSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", RR_SERVO_ROTATION_PID_COEF)
         );
     }
 
@@ -413,11 +429,15 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         for (AnotherSwerveModule m : modules) m.setPIDFCoefficients(runMode, compensatedCoefficients);
     }
 
-    public void setWeightedDrivePower(Pose2d drivePower) {
+    public void setWeightedDrivePower(@NonNull Pose2d drivePower) {
+        drivePower = new Pose2d(
+                drivePower.getX() * STICK_X_SCALAR,
+                drivePower.getY() * STICK_Y_SCALAR,
+                drivePower.getHeading()
+        );
         Pose2d vel = drivePower;
 
-        if (Math.abs(drivePower.getX()) + Math.abs(drivePower.getY())
-                + Math.abs(drivePower.getHeading()) > 1) {
+        if (Math.abs(drivePower.getX()) + Math.abs(drivePower.getY()) + Math.abs(drivePower.getHeading()) > 1) {
             // re-normalize the powers according to the weights
             double denom = VX_WEIGHT * Math.abs(drivePower.getX())
                     + VY_WEIGHT * Math.abs(drivePower.getY())
@@ -449,17 +469,45 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     }
 
     @Override
-    public void setMotorPowers(double v, double v1, double v2, double v3) {
+    public void setMotorPowers(double v0, double v1, double v2, double v3) {
         leftFrontModule.enableMotor = this.enableMotor;
         rightFrontModule.enableMotor = this.enableMotor;
         leftRearModule.enableMotor = this.enableMotor;
         rightRearModule.enableMotor = this.enableMotor;
+        // TODO: figure out the order of the motors
+//        if (enableMotor){
+//            leftFrontModule.setMotorPower(v0 * LF_MOTOR_SCALAR);
+//            leftRearModule.setMotorPower(v1 * LR_MOTOR_SCALAR);
+//            rightFrontModule.setMotorPower(v2 * RF_MOTOR_SCALAR);
+//            rightRearModule.setMotorPower(v3 * RR_MOTOR_SCALAR);
+//        }
+//        leftFrontMotorPower = v0 * LF_MOTOR_SCALAR;
+//        leftRearMotorPower = v1 * LR_MOTOR_SCALAR;
+//        rightFrontMotorPower = v2 * RF_MOTOR_SCALAR;
+//        rightRearMotorPower = v3 * RR_MOTOR_SCALAR;
+
+
+//        if (enableMotor){
+//            leftFrontModule.setMotorPower(v0 * 1);
+//            leftRearModule.setMotorPower(v1 * 1);
+//            rightFrontModule.setMotorPower(v2 * 1);
+//            rightRearModule.setMotorPower(v3 * 1);
+//        }
+//        leftFrontMotorPower = v0;
+//        leftRearMotorPower = v1;
+//        rightFrontMotorPower = v2;
+//        rightRearMotorPower = v3;
+
         if (enableMotor){
-            leftFrontModule.setMotorPower(v);
-            leftRearModule.setMotorPower(v1);
-            rightRearModule.setMotorPower(v2);
-            rightFrontModule.setMotorPower(v3);
+            leftFrontModule.setMotorVelocity(v0);
+            leftRearModule.setMotorVelocity(v1);
+            rightFrontModule.setMotorVelocity(v2);
+            rightRearModule.setMotorVelocity(v3);
         }
+        leftFrontMotorPower = v0;
+        leftRearMotorPower = v1;
+        rightFrontMotorPower = v2;
+        rightRearMotorPower = v3;
     }
 
     @Override
@@ -502,8 +550,8 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public void setModuleOrientations(double v0, double v1, double v2, double v3) {
         leftFrontModule.setTargetRotation(v0);
         leftRearModule.setTargetRotation(v1);
-        rightRearModule.setTargetRotation(v2);
-        rightFrontModule.setTargetRotation(v3);
+        rightFrontModule.setTargetRotation(v2);
+        rightRearModule.setTargetRotation(v3);
 
         leftFrontModuleTargetOrientation = leftFrontModule.getTargetRotation();
         leftRearModuleTargetOrientation = leftRearModule.getTargetRotation();

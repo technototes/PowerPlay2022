@@ -1,5 +1,10 @@
 package org.firstinspires.ftc.swerveteen750.subsystem.drive;
 
+import static org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleSwerveDriveSubsystem.LF_MOTOR_SCALAR;
+import static org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleSwerveDriveSubsystem.LR_MOTOR_SCALAR;
+import static org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleSwerveDriveSubsystem.RF_MOTOR_SCALAR;
+import static org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleSwerveDriveSubsystem.RR_MOTOR_SCALAR;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.technototes.library.hardware.motor.EncodedMotor;
@@ -93,10 +98,10 @@ public class SimpleMecanumDriveSubsystem {
     }
 
     public void goStraightForward(double power) {
-        leftFrontMotor.setSpeed(power);
-        leftRearMotor.setSpeed(power);
-        rightFrontMotor.setSpeed(-power);
-        rightRearMotor.setSpeed(-power);
+        leftFrontMotor.setSpeed(power * -LF_MOTOR_SCALAR);
+        leftRearMotor.setSpeed(power * LR_MOTOR_SCALAR);
+        rightFrontMotor.setSpeed(-power * RF_MOTOR_SCALAR);
+        rightRearMotor.setSpeed(-power * RR_MOTOR_SCALAR);
     }
 
     public void goStraightBackward(double power) {

@@ -1,20 +1,15 @@
-package org.firstinspires.ftc.swerveteen750.command.lift;
+package org.firstinspires.ftc.swerveteen750.command.drive;
 
 import com.technototes.library.command.Command;
 
-import org.firstinspires.ftc.swerveteen750.subsystem.LiftSubsystem;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
 
-public class LiftLowPoleCommand implements Command {
-    public LiftSubsystem liftSubsystem;
+public class SetSwerveHighSpeedCommand implements Command {
+    public SetSwerveHighSpeedCommand(){
 
-    public LiftLowPoleCommand(LiftSubsystem ls) {
-        liftSubsystem = ls;
     }
-
     @Override
     public void execute() {
-        liftSubsystem.gotoLowPole();
         ConfigurableSwerveDriveSubsystem.STICK_X_SCALAR = ConfigurableSwerveDriveSubsystem.STICK_SCALAR_HIGH;
         ConfigurableSwerveDriveSubsystem.STICK_Y_SCALAR = ConfigurableSwerveDriveSubsystem.STICK_SCALAR_HIGH;
     }
