@@ -9,8 +9,7 @@ import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
 import org.firstinspires.ftc.sixteen750.subsystem.drive.SimpleMecanumDriveSubsystem;
 
-@Disabled
-@TeleOp(group = "Mecanum")
+@TeleOp(group = "Mecanum", name = "Sketchy Mecanum")
 public class SketchyMecanumDriveMode extends LinearOpMode {
     public static double DEFAULT_POWER = 0.4;
 
