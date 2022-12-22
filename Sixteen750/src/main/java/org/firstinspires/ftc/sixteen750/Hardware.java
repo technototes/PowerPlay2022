@@ -10,6 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VoltageUnit;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.lynx.LynxModule;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -69,7 +70,7 @@ public class Hardware {
             rightFrontMotorT = new EncodedMotor<>(HardwareConstant.RF_MOTOR);
             rightRearMotorT = new EncodedMotor<>(HardwareConstant.RR_MOTOR);
 
-            imu = new IMU(HardwareConstant.IMU).remapAxes(AxesOrder.YXZ, IMU.AxesSigns.NNN); // TODO: figure the axes order
+            imu = new IMU(HardwareConstant.IMU, RevHubOrientationOnRobot.LogoFacingDirection.RIGHT, RevHubOrientationOnRobot.UsbFacingDirection.UP);
         }
 
         if (enableLift) {

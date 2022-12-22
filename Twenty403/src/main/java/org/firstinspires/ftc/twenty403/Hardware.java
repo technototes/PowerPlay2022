@@ -7,6 +7,7 @@ import com.outoftheboxrobotics.photoncore.Neutrino.Rev2MSensor.Rev2mDistanceSens
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -16,7 +17,9 @@ import com.technototes.library.hardware.sensor.IMU;
 import com.technototes.library.hardware.sensor.Rev2MDistanceSensor;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.vision.hardware.Webcam;
+
 import java.util.List;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.VoltageUnit;
 
@@ -74,7 +77,7 @@ public class Hardware {
             frDriveMotor = new EncodedMotor<>(HardwareConstant.FR_MOTOR);
             rlDriveMotor = new EncodedMotor<>(HardwareConstant.RL_MOTOR);
             rrDriveMotor = new EncodedMotor<>(HardwareConstant.RR_MOTOR);
-            imu = new IMU(HardwareConstant.IMU).remapAxes(AxesOrder.YXZ, IMU.AxesSigns.NNN);
+            imu = new IMU(HardwareConstant.IMU, RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.FORWARD).remapLegacyAxes(AxesOrder.YXZ, IMU.AxesSigns.NNN);
         }
         if (RobotConstant.CLAW_CONNECTED) {
             claw = new Servo(HardwareConstant.CLAW_SERVO);
