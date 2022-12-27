@@ -5,11 +5,11 @@ import com.technototes.library.control.CommandGamepad;
 
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.MecanumDriveSubsystem;
 
-public class ResetGyroCommand implements Command {
+public class ResetMecanumGyroCommand implements Command {
     public MecanumDriveSubsystem mecanumDriveSubsystem;
     public CommandGamepad gamepad;
 
-    public ResetGyroCommand(MecanumDriveSubsystem s, CommandGamepad g) {
+    public ResetMecanumGyroCommand(MecanumDriveSubsystem s, CommandGamepad g) {
         mecanumDriveSubsystem = s;
         gamepad = g;
     }

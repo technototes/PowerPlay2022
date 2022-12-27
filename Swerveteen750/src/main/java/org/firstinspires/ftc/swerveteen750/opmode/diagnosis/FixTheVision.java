@@ -11,7 +11,6 @@ import org.firstinspires.ftc.swerveteen750.Robot;
 import org.firstinspires.ftc.swerveteen750.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.swerveteen750.subsystem.VisionSubsystem;
 
-@Disabled
 @Autonomous()
 public class FixTheVision extends LinearOpMode {
     @Override

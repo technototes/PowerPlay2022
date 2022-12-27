@@ -5,7 +5,6 @@ import org.firstinspires.ftc.sixteen750.subsystem.ArmSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.drive.MecanumDriveSubsystem;
-import org.firstinspires.ftc.sixteen750.subsystem.drive.SwerveDriveSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.VisionSubsystem;
 
 import com.acmerobotics.dashboard.config.Config;
@@ -17,7 +16,6 @@ public class Robot implements Loggable {
     @Config
     public static class RobotConstant {
         // The only purpose of RobotConstant is to enable/disable subsystem(s) in FTC-Dashboard for non-testing OpMode
-        public static boolean SWERVE_DRIVE_ENABLED = false;
         private static boolean TANK_DRIVE_ENABLED = false;
         public static boolean MECANUM_DRIVE_ENABLED = true;
         public static boolean LIFT_ENABLED = true;
@@ -26,7 +24,6 @@ public class Robot implements Loggable {
         public static boolean CAMERA_ENABLED = true;
     }
 
-    public SwerveDriveSubsystem swerveDriveSubsystem;
     public MecanumDriveSubsystem mecanumDriveSubsystem;
     public LiftSubsystem liftSubsystem;
     public ArmSubsystem armSubsystem;
@@ -34,7 +31,6 @@ public class Robot implements Loggable {
     public VisionSubsystem visionSubsystem;
 
     public Robot(Hardware hardware,
-                 boolean enableSwerveDrive,
                  boolean enableMecanumDrive,
                  boolean enableLift,
                  boolean enableArm,
@@ -53,10 +49,6 @@ public class Robot implements Loggable {
                     hardware.imu
             );
         }
-        else if (enableSwerveDrive) {
-            // Hint: we never put the SwerveDriveSubsystem in the Robot class
-        }
-
         if (enableLift) {
             liftSubsystem = new LiftSubsystem(hardware.leftLiftMotor, hardware::getVoltage);
         } else {
@@ -91,7 +83,6 @@ public class Robot implements Loggable {
 
     public Robot(Hardware hardware, SubsystemCombo combo, Alliance team, StartingPosition whichSide) {
         this(hardware,
-                combo == SubsystemCombo.DEFAULT ? RobotConstant.SWERVE_DRIVE_ENABLED : combo == SubsystemCombo.S_DRIVE_ONLY,
                 combo == SubsystemCombo.DEFAULT ? RobotConstant.MECANUM_DRIVE_ENABLED : combo == SubsystemCombo.M_DRIVE_ONLY || combo == SubsystemCombo.VISION_M_DRIVE,
                 combo == SubsystemCombo.DEFAULT ? RobotConstant.LIFT_ENABLED : combo == SubsystemCombo.LIFT_ONLY,
                 combo == SubsystemCombo.DEFAULT ? RobotConstant.ARM_ENABLED : combo == SubsystemCombo.ARM_CLAW_ONLY,

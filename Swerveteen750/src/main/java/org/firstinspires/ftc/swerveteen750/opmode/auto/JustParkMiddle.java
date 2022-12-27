@@ -12,8 +12,8 @@ import org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleMecanumDriveSub
 @Config
 @Autonomous(name = "JustParkMiddle")
 public class JustParkMiddle extends LinearOpMode {
-    public static double DEFAULT_POWER = 0.3;
-    public static int goForwardTicks = 2100;
+    public static double DEFAULT_POWER = 0.5;
+    public static int goForwardTicks = 1000;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -26,18 +26,19 @@ public class JustParkMiddle extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-        while (!isStopRequested() && opModeIsActive() && drive.getAdjustedEncoderValues()[0] < goForwardTicks) {
+        while (!isStopRequested() && opModeIsActive() && Math.abs(drive.getAdjustedEncoderValues()[0]) < goForwardTicks) {
             drive.goStraightForward(DEFAULT_POWER);
 
+            telemetry.addData("Target Motor Power", DEFAULT_POWER);
             telemetry.addData("Left Front Encoder - Real", drive.getEncoderValues()[0]);
             telemetry.addData("Left Rear Encoder - Real", drive.getEncoderValues()[1]);
             telemetry.addData("Right Front Encoder - Real", drive.getEncoderValues()[2]);
             telemetry.addData("Right Rear Encoder - Real", drive.getEncoderValues()[3]);
 
-            telemetry.addData("Left Front Encoder", drive.getAdjustedEncoderValues()[0]);
-            telemetry.addData("Left Rear Encoder", drive.getAdjustedEncoderValues()[1]);
-            telemetry.addData("Right Front Encoder", drive.getAdjustedEncoderValues()[2]);
-            telemetry.addData("Right Rear Encoder", drive.getAdjustedEncoderValues()[3]);
+            telemetry.addData("Left Front Encoder - Adjusted", drive.getAdjustedEncoderValues()[0]);
+            telemetry.addData("Left Rear Encoder - Adjusted", drive.getAdjustedEncoderValues()[1]);
+            telemetry.addData("Right Front Encoder - Adjusted", drive.getAdjustedEncoderValues()[2]);
+            telemetry.addData("Right Rear Encoder  - Adjusted", drive.getAdjustedEncoderValues()[3]);
 
             telemetry.update();
         }
@@ -46,6 +47,7 @@ public class JustParkMiddle extends LinearOpMode {
         System.out.println("Forward Auto Finished");
 
         while (!isStopRequested() && opModeIsActive()) {
+            telemetry.addData("Target Motor Power", DEFAULT_POWER);
             telemetry.addData("Left Front Encoder - Real", drive.getEncoderValues()[0]);
             telemetry.addData("Left Rear Encoder - Real", drive.getEncoderValues()[1]);
             telemetry.addData("Right Front Encoder - Real", drive.getEncoderValues()[2]);

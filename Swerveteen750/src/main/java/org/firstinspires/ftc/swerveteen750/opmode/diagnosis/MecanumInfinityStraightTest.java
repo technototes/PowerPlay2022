@@ -27,7 +27,7 @@ public class MecanumInfinityStraightTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.M_DRIVE_ONLY);
-        Robot robot = new Robot(hardware, Robot.SubsystemCombo.M_DRIVE_ONLY, Alliance.NONE, StartingPosition.NEUTRAL);
+        Robot robot = new Robot(hardwareMap, hardware, Robot.SubsystemCombo.M_DRIVE_ONLY, Alliance.NONE, StartingPosition.NEUTRAL);
 
         TrajectorySequence backandFourthTrajectory = robot.mecanumDriveSubsystem
                 .trajectorySequenceBuilder(new Pose2d(0, 0, 0))

@@ -66,33 +66,44 @@ public class DriveServoTest extends CommandOpMode {
         telemetry.addLine("Visit 192.168.43.1:8080/dash to see the FTC-Dashboard");
         double loopSeconds = t.seconds();
 
-        if (this.gamepad1.dpad_left && isLeftSideConnected) {
-            leftFrontServo.setPower(servoPower);
-            isLeftFrontPressed = true;
-        } else {
-            leftFrontServo.setPower(servoStopPower);
-            isLeftFrontPressed = false;
+        if (isLeftSideConnected) {
+            if (this.gamepad1.dpad_left) {
+                leftFrontServo.setPower(servoPower);
+                isLeftFrontPressed = true;
+            } else {
+                leftFrontServo.setPower(servoStopPower);
+                isLeftFrontPressed = false;
+            }
+            if (this.gamepad1.dpad_down) {
+                leftRearServo.setPower(servoPower);
+                isLeftRearPressed = true;
+            } else {
+                leftRearServo.setPower(servoStopPower);
+                isLeftRearPressed = false;
+            }
         }
-        if (this.gamepad1.dpad_down && isLeftSideConnected) {
-            leftRearServo.setPower(servoPower);
-            isLeftRearPressed = true;
-        } else {
-            leftRearServo.setPower(servoStopPower);
-            isLeftRearPressed = false;
+        else {
+            telemetry.addLine("Left side is not connected");
         }
-        if (this.gamepad1.dpad_up && isRightSideConnected) {
-            rightRearServo.setPower(servoPower);
-            isRightRearPressed = true;
-        } else {
-            rightRearServo.setPower(servoStopPower);
-            isRightRearPressed = false;
+
+        if (isRightSideConnected) {
+            if (this.gamepad1.dpad_up) {
+                rightRearServo.setPower(servoPower);
+                isRightRearPressed = true;
+            } else {
+                rightRearServo.setPower(servoStopPower);
+                isRightRearPressed = false;
+            }
+            if (this.gamepad1.dpad_right) {
+                rightFrontServo.setPower(servoPower);
+                isRightFrontPressed = true;
+            } else {
+                rightFrontServo.setPower(servoStopPower);
+                isRightFrontPressed = false;
+            }
         }
-        if (this.gamepad1.dpad_right && isRightSideConnected) {
-            rightFrontServo.setPower(servoPower);
-            isRightFrontPressed = true;
-        } else {
-            rightFrontServo.setPower(servoStopPower);
-            isRightFrontPressed = false;
+        else {
+            telemetry.addLine("Right side is not connected");
         }
 
         t.reset();

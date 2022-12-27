@@ -9,6 +9,8 @@ import org.firstinspires.ftc.swerveteen750.swerve_util.AbsoluteAnalogEncoder;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.lynx.LynxModule;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot.LogoFacingDirection;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot.UsbFacingDirection;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -72,8 +74,6 @@ public class Hardware {
     public EncodedMotor<DcMotorEx> rightLiftMotor;
 
     public Servo clawServo;
-    public Servo flipperServo;
-    public Servo elbowServo;
     public DistanceSensor clawDistance;
 
     public Webcam camera;
@@ -86,7 +86,6 @@ public class Hardware {
                     boolean enableSwerve,
                     boolean enableMecanum,
                     boolean enableLift,
-                    boolean enableArm,
                     boolean enableClaw,
                     boolean enableCamera
     ) {
@@ -98,9 +97,9 @@ public class Hardware {
             rightFrontMotorT = new EncodedMotor<>(HardwareConstant.RF_MOTOR);
             rightRearMotorT = new EncodedMotor<>(HardwareConstant.RR_MOTOR);
 
-            imu = new IMU(HardwareConstant.IMU).remapAxes(AxesOrder.YXZ, IMU.AxesSigns.NNN); // TODO: figure the axes order
-        }
-        else if (enableSwerve) {
+            imu = new IMU(HardwareConstant.IMU, LogoFacingDirection.UP, UsbFacingDirection.RIGHT);
+            //.remapLegacyAxes(AxesOrder.YXZ, IMU.AxesSigns.NNN);
+        } else if (enableSwerve) {
             leftFrontMotorQ = hwMap.get(DcMotorEx.class, HardwareConstant.LF_MOTOR);
             leftRearMotorQ = hwMap.get(DcMotorEx.class, HardwareConstant.LR_MOTOR);
             rightFrontMotorQ = hwMap.get(DcMotorEx.class, HardwareConstant.RF_MOTOR);
@@ -129,16 +128,11 @@ public class Hardware {
             }
         }
 
-        if (enableArm) {
-            flipperServo = new Servo(HardwareConstant.FLIPPER_SERVO);
-            elbowServo = new Servo(HardwareConstant.ELBOW_SERVO);
-        }
-
         if (enableClaw) {
-            clawServo = new Servo(HardwareConstant.CLAW_SERVO).invert();
+            clawServo = new Servo(HardwareConstant.CLAW_SERVO);
             // clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR); // not installed
         }
-        if (enableCamera){
+        if (enableCamera) {
             camera = new Webcam(HardwareConstant.CAMERA);
         }
     }
@@ -149,8 +143,7 @@ public class Hardware {
                 combo == Robot.SubsystemCombo.DEFAULT ? Robot.RobotConstant.SWERVE_DRIVE_ENABLED : combo == Robot.SubsystemCombo.S_DRIVE_ONLY,
                 combo == Robot.SubsystemCombo.DEFAULT ? Robot.RobotConstant.MECANUM_DRIVE_ENABLED : combo == Robot.SubsystemCombo.M_DRIVE_ONLY || combo == Robot.SubsystemCombo.VISION_M_DRIVE,
                 combo == Robot.SubsystemCombo.DEFAULT ? Robot.RobotConstant.LIFT_ENABLED : combo == Robot.SubsystemCombo.LIFT_ONLY,
-                combo == Robot.SubsystemCombo.DEFAULT ? Robot.RobotConstant.ARM_ENABLED : combo == Robot.SubsystemCombo.ARM_CLAW_ONLY,
-                combo == Robot.SubsystemCombo.DEFAULT ? Robot.RobotConstant.CLAW_ENABLED : combo == Robot.SubsystemCombo.ARM_CLAW_ONLY,
+                combo == Robot.SubsystemCombo.DEFAULT ? Robot.RobotConstant.CLAW_ENABLED : combo == Robot.SubsystemCombo.CLAW_ONLY,
                 combo == Robot.SubsystemCombo.DEFAULT ? Robot.RobotConstant.CAMERA_ENABLED : combo == Robot.SubsystemCombo.VISION_ONLY || combo == Robot.SubsystemCombo.VISION_M_DRIVE
         );
     }
