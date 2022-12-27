@@ -41,7 +41,7 @@ dependencies {
     implementation 'com.github.technototes:TechnoLib:1.2.0' // TechnoLibLocal
 
     // RoadRunner:
-    implementation 'com.acmerobotics.roadrunner:core:0.5.5'
+    implementation 'com.acmerobotics.roadrunner:core:0.5.6'
     // EasyOpenCv:
     implementation 'org.openftc:easyopencv:1.5.2'
     // FTC Dashboard:
