@@ -32,14 +32,14 @@ public class AutoConstants {
         //x: 66, y: -16, 0
         public static ConfigurablePose LEFT = new ConfigurablePose(18, -18, toRadians(90));
         public static ConfigurablePose MIDDLE = new ConfigurablePose(41, -16, toRadians(90));
-        public static ConfigurablePose RIGHT = new ConfigurablePose(64, -17, toRadians(90));
-        public static ConfigurablePose W_JUNCTION_ONE = new ConfigurablePose(30, -11, 1.9);
+        public static ConfigurablePose RIGHT = new ConfigurablePose(61, -17, toRadians(90));
+        public static ConfigurablePose W_JUNCTION_ONE = new ConfigurablePose(29, -13, 1.9);
         public static ConfigurablePose W_JUNCTION_TWO = new ConfigurablePose(32, -10, 1.9);
         public static ConfigurablePose W_JUNCTION_THREE = new ConfigurablePose(37, -11, 2);
 
 
         //public static ConfigurablePose BETWEEN_START_W_jUNCTION_ONE = new ConfigurablePose(40, -48, toRadians(180));
-        public static ConfigurablePose BETWEEN_START_W_JUNCTION = new ConfigurablePose(41, -11, 3.8);
+        public static ConfigurablePose BETWEEN_START_W_JUNCTION = new ConfigurablePose(41, -11, 4);
         public static ConfigurablePose BETWEEN_START_W_JUNCTION_TWO = new ConfigurablePose(42, -11, 3.9);
         public static ConfigurablePose BETWEEN_W_JUNCTION_STACK = new ConfigurablePose(43, -19, 1.5);
         public static ConfigurablePose BETWEEN_STACK_W_JUNCTION = new ConfigurablePose(40, -15, 2.4);
@@ -160,8 +160,8 @@ public class AutoConstants {
     @Config
     public static class Left {
         public static ConfigurablePose START = new ConfigurablePose(-36, -66, toRadians(90));
-        public static ConfigurablePose E_JUNCTION = new ConfigurablePose(-28, -10, 1.1);
-        public static ConfigurablePose E_JUNCTION_2 = new ConfigurablePose(-30, -8, 1.1);
+        public static ConfigurablePose E_JUNCTION = new ConfigurablePose(-29, -10, 1.1);
+        public static ConfigurablePose E_JUNCTION_2 = new ConfigurablePose(-31, -8, 1.1);
         public static ConfigurablePose STACK = new ConfigurablePose(-62, -17, toRadians(180));
         public static ConfigurablePose STACK2 = new ConfigurablePose(-65, -17, toRadians(180));
         public static ConfigurablePose LEFT = new ConfigurablePose(-59, -20, toRadians(90));
