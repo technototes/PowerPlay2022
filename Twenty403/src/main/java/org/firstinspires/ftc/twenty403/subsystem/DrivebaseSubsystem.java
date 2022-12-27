@@ -5,9 +5,12 @@ import androidx.annotation.Nullable;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.localization.Localizer;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.util.Range;
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.sensor.IMU;
 import com.technototes.library.logger.Log;
@@ -15,42 +18,11 @@ import com.technototes.library.logger.Loggable;
 import com.technototes.path.subsystem.MecanumConstants;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 import java.util.function.Supplier;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class DrivebaseSubsystem
     extends MecanumDrivebaseSubsystem
     implements Supplier<Pose2d>, Loggable {
-
-    public class OverriderLocalizer implements Localizer {
-
-        Localizer orig;
-
-        public OverriderLocalizer(Localizer original) {
-            orig = original;
-        }
-
-        @NonNull
-        @Override
-        public Pose2d getPoseEstimate() {
-            // TODO: If the sensors are in accurate range, use them instead of orig for the pose
-            return orig.getPoseEstimate();
-        }
-
-        @Override
-        public void setPoseEstimate(@NonNull Pose2d pose2d) {
-            orig.setPoseEstimate(pose2d);
-        }
-
-        @Nullable
-        @Override
-        public Pose2d getPoseVelocity() {
-            return orig.getPoseVelocity();
-        }
-
-        @Override
-        public void update() {
-            orig.update();
-        }
-    }
 
     // Notes from Kevin:
     // The 5203 motors when direct driven
@@ -108,7 +80,7 @@ public class DrivebaseSubsystem
 
         // This was 35, which also felt a bit too fast. The bot controls more smoothly now
         @MaxAccel
-        public static double MAX_ACCEL = 35;
+        public static double MAX_ACCEL = 30; //30
 
         // This was 180 degrees
         @MaxAngleVelo
@@ -150,8 +122,6 @@ public class DrivebaseSubsystem
     }
 
     private static final boolean ENABLE_POSE_DIAGNOSTICS = true;
-
-    public double trajectoryX, trajectoryY, trajectoryAngleRadians;
 
     @Log(name = "Pose2d: ")
     public String poseDisplay = ENABLE_POSE_DIAGNOSTICS ? "" : null;
@@ -213,7 +183,7 @@ public class DrivebaseSubsystem
 
     @Override
     public void periodic() {
-        if (ENABLE_POSE_DIAGNOSTICS && false) {
+        if (ENABLE_POSE_DIAGNOSTICS) {
             updatePoseEstimate();
             Pose2d pose = getPoseEstimate();
             Pose2d poseVelocity = getPoseVelocity();
@@ -233,40 +203,83 @@ public class DrivebaseSubsystem
         rightFront.setPower(v3 * DriveConstants.AFR_SCALE);
     }
 
+    // Stuff below is used for tele-op trajectory motion
+
+    public double trajectoryX, trajectoryY, trajectoryAngleRadians;
+    public Pose2d targetPose, newPose;
+    public double xdifference, ydifference;
+
     public void requestTrajectoryMove(double deltaX, double deltaY, double deltaAngleRadians) {
-        trajectoryX = deltaX;
-        trajectoryY = deltaY;
-        trajectoryAngleRadians = deltaAngleRadians;
-    }
-
-    public void requestTrajectoryMove(double deltaX, double deltaY) {
-        trajectoryX = deltaX;
-        trajectoryY = deltaY;
-        trajectoryAngleRadians = 0.0;
-    }
-
-    public boolean isTrajectoryRequested() {
-        if (trajectoryX != 0 || trajectoryY != 0 || trajectoryAngleRadians != 0) {
-            return true;
+        if (!isBusy()) {
+            trajectoryX = deltaX;
+            trajectoryY = deltaY;
+            trajectoryAngleRadians = deltaAngleRadians;
+            targetPose = new Pose2d(trajectoryX, trajectoryY, trajectoryAngleRadians);
+            startNewTrajectory();
+        } else {
+            // queueTrajectory(deltaX, deltaY, deltaAngleRadians);
         }
-        return false;
+    }
+
+    public void queueTrajectory(double deltaX, double deltaY, double deltaAngleRadians) {
+        Pose2d curPose = getPoseEstimate();
+        xdifference = targetPose.getX() - curPose.getX();
+        ydifference = targetPose.getY() - curPose.getY();
+        newPose = new Pose2d(xdifference);
+        if (deltaX == 0.0 && targetPose.getX() == 0.0) {
+            trajectoryX = 0;
+            trajectoryY = ydifference + deltaY;
+            trajectoryAngleRadians = deltaAngleRadians;
+            startNewTrajectory();
+        }
+        if (deltaY == 0.0 && targetPose.getY() == 0.0) {
+            trajectoryY = 0;
+            trajectoryX = xdifference + deltaX;
+            trajectoryAngleRadians = deltaAngleRadians;
+            startNewTrajectory();
+        }
     }
 
     public void clearRequestedTrajectory() {
-        requestTrajectoryMove(0, 0, 0);
-    }
-
-    private boolean cancelled;
-
-    public boolean isTrajectoryCancelled() {
-        return cancelled;
+        trajectoryX = 0;
+        trajectoryY = 0;
+        trajectoryAngleRadians = 0;
     }
 
     public void requestCancelled() {
-        cancelled = true;
+        this.stop();
     }
 
-    public void clearCancelledRequest() {
-        cancelled = false;
+    public void startNewTrajectory() {
+        Pose2d start = this.getPoseEstimate();
+        start = new Pose2d(start.getX() + .01, start.getY(), start.getHeading());
+        double endX = start.getX() + this.trajectoryX;
+        double endY = start.getY() + this.trajectoryY;
+        double endHeading = AngleUnit.normalizeRadians(
+            start.getHeading() + this.trajectoryAngleRadians
+        );
+
+        this.poseDisplay =
+            String.format(
+                "%f, %f [%f] => %f, %f [%f]",
+                start.getX(),
+                start.getY(),
+                start.getHeading(),
+                endX,
+                endY,
+                endHeading
+            );
+        System.out.println(this.poseDisplay);
+        // lineToLinearHeading seems to mess things up, maybe? :/
+        Trajectory t;
+        if (Math.abs(this.trajectoryAngleRadians) > .01) {
+            Pose2d end = new Pose2d(endX, endY, endHeading);
+            t = this.trajectoryBuilder(start).lineToLinearHeading(end).build();
+        } else {
+            Vector2d end = new Vector2d(endX, endY);
+            t = this.trajectoryBuilder(start).lineTo(end).build();
+        }
+        this.followTrajectoryAsync(t);
+        this.clearRequestedTrajectory();
     }
 }

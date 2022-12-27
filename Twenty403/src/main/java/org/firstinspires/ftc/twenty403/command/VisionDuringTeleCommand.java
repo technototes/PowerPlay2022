@@ -3,17 +3,16 @@ package org.firstinspires.ftc.twenty403.command;
 import com.technototes.library.command.Command;
 import java.util.function.BooleanSupplier;
 import java.util.function.BooleanSupplier;
+import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline;
 import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
 
 public class VisionDuringTeleCommand implements Command {
 
     public VisionSubsystem subsystem;
-    public BooleanSupplier scanButton;
 
-    public VisionDuringTeleCommand(VisionSubsystem s, BooleanSupplier shouldScan) {
+    public VisionDuringTeleCommand(VisionSubsystem s) {
         subsystem = s;
         addRequirements(subsystem);
-        scanButton = shouldScan;
     }
 
     @Override
@@ -24,20 +23,10 @@ public class VisionDuringTeleCommand implements Command {
 
     @Override
     public void execute() {
-        if (scanButton.getAsBoolean() == true) {
-            subsystem.startJunctionScanning();
-        } else {
+        if (subsystem.visionPipeline.activeMode == VisionPipeline.Mode.Junction) {
             subsystem.pauseScanning();
+        } else {
+            subsystem.startJunctionScanning();
         }
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    @Override
-    public void end(boolean cancel) {
-        subsystem.stopVisionPipeline();
     }
 }

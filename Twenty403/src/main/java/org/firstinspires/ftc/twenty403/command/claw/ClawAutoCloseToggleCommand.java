@@ -2,6 +2,7 @@ package org.firstinspires.ftc.twenty403.command.claw;
 
 import com.technototes.library.command.Command;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
+import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 
 public class ClawAutoCloseToggleCommand implements Command {
 
@@ -9,6 +10,7 @@ public class ClawAutoCloseToggleCommand implements Command {
 
     public ClawAutoCloseToggleCommand(ClawSubsystem s) {
         subsystem = s;
+
         addRequirements(s);
     }
 

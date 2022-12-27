@@ -14,17 +14,10 @@ import java.util.function.DoubleSupplier;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline;
+import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline.VisionConstants.JunctionDetection;
 import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
 
 public class DriveCommand implements Command, Loggable {
-
-    public enum DriveState {
-        Normal,
-        TrajectoryStart,
-        TrajectoryRun,
-    }
-
-    TileMoving tile;
 
     static double STRAIGHTEN_DEAD_ZONE = 0.08;
     public DrivebaseSubsystem subsystem;
@@ -32,7 +25,6 @@ public class DriveCommand implements Command, Loggable {
     public BooleanSupplier straight;
     public BooleanSupplier watchTrigger;
     public VisionPipeline visionPipeline;
-    public DriveState currentDriveState;
 
     public DriveCommand(
         DrivebaseSubsystem sub,
@@ -50,7 +42,6 @@ public class DriveCommand implements Command, Loggable {
         straight = straighten;
         watchTrigger = watchAndAlign;
         visionPipeline = vp;
-        currentDriveState = DriveState.Normal;
     }
 
     public DriveCommand(
@@ -127,99 +118,75 @@ public class DriveCommand implements Command, Loggable {
             if (jx == 0.0 && jy == 0.0) {
                 return;
             }
-            double yDistance;
-            double xDistance;
-            yDistance = camHeight / Math.tan((VisionSubsystem.VisionSubsystemConstants.HEIGHT - jy) / (VisionSubsystem.VisionSubsystemConstants.HEIGHT) * (3.14/4));
-            xDistance = yDistance * Math.tan(jx / (VisionSubsystem.VisionSubsystemConstants.WIDTH) * (3.14/4));
-            // set the drive power to get us to that location
-            subsystem.requestTrajectoryMove(-xDistance, -yDistance,rotPower);
-
+            if (jx > JunctionDetection.OnlyXRight.RIGHT_CENTER) {
+                subsystem.setWeightedDrivePower(
+                    new Pose2d(
+                        // moving only x, to the right
+                        Range.clip(
+                            (jx - JunctionDetection.OnlyXRight.RIGHT_CENTER) /
+                            JunctionDetection.OnlyXRight.RIGHT_RANGE,
+                            0,
+                            0.3
+                        ),
+                        0,
+                        0
+                    )
+                );
+            } else if (jx < JunctionDetection.OnlyXLeft.LEFT_CENTER) {
+                subsystem.setWeightedDrivePower(
+                    new Pose2d(
+                        // moving only x, to the left
+                        Range.clip(
+                            (jx - JunctionDetection.OnlyXLeft.LEFT_CENTER) /
+                            JunctionDetection.OnlyXLeft.LEFT_RANGE,
+                            -0.3,
+                            0
+                        ),
+                        0,
+                        0
+                    )
+                );
+            } else if (jy < JunctionDetection.OnlyYForward.FORWARD_CENTER && jy > 10) {
+                subsystem.setWeightedDrivePower(
+                    new Pose2d(
+                        0,
+                        // Moving y forward
+                        Range.clip(
+                            (jy - JunctionDetection.OnlyYForward.FORWARD_CENTER) /
+                            JunctionDetection.OnlyYForward.FORWARD_RANGE,
+                            -0.3,
+                            0
+                        ),
+                        0
+                    )
+                );
+            }
         }
     }
 
     @Override
     public void execute() {
-        // For driving a trajectory:
-        // Check to see if we're running a trajectory sequence.
-        // Yes a TS is running:
-        //   Is there an override?
-        //     Yes: abandon the trajectory sequence, and resume manual control
-        //     No: Just update the subsystem and return
-        // TS is not running:
-        // Check to see if we're supposed to *start* a trajectory sequence
-        //   Yes: Start it
-        //   No: resume manual control
-        switch (currentDriveState) {
-            case Normal:
-                if (subsystem.isTrajectoryRequested()) {
-                    startNewTrajectory();
-                    currentDriveState = DriveState.TrajectoryRun;
-                } else {
-                    if (watchTrigger != null && watchTrigger.getAsBoolean()) {
-                        // do the auto-align stuff
-                        autoAlign45();
-                    } else {
-                        double curHeading = -subsystem.getExternalHeading();
-                        // The math & signs looks wonky, because this makes things field-relative
-                        // (Recall that "3 O'Clock" is zero degrees)
-                        Vector2d input = new Vector2d(
-                            -y.getAsDouble() * subsystem.speed,
-                            -x.getAsDouble() * subsystem.speed
-                        )
-                            .rotated(curHeading);
-                        subsystem.setWeightedDrivePower(
-                            new Pose2d(input.getX(), input.getY(), getRotation(curHeading))
-                        );
-                    }
-                }
-                break;
-            case TrajectoryRun:
-                if (!subsystem.isBusy()) {
-                    currentDriveState = DriveState.Normal;
-                    subsystem.poseDisplay += " (done)";
-                }
-                if (subsystem.isTrajectoryCancelled()) {
-                    subsystem.stop();
+        // If subsystem is busy it is running a trajectory.
+        if (!subsystem.isBusy()) {
+            if (watchTrigger != null && watchTrigger.getAsBoolean()) {
+                // do the auto-align stuff
+                autoAlign45();
+            } else {
+                double curHeading = -subsystem.getExternalHeading();
 
-                    subsystem.clearCancelledRequest();
-                }
-                // TODO: Add a "halt" button to watch?
-                break;
+                // The math & signs looks wonky, because this makes things field-relative
+                // (Recall that "3 O'Clock" is zero degrees)
+                Vector2d input = new Vector2d(
+                    -y.getAsDouble() * subsystem.speed,
+                    -x.getAsDouble() * subsystem.speed
+                )
+                    .rotated(curHeading);
+                subsystem.setWeightedDrivePower(
+                    new Pose2d(input.getX(), input.getY(), getRotation(curHeading))
+                );
+            }
         }
         subsystem.update();
-    }
-
-    //run when starting new trajectory
-    public void startNewTrajectory() {
-        Pose2d start = subsystem.getPoseEstimate();
-        double endX = Range.clip(start.getX() + subsystem.trajectoryX, -72, 72);
-        double endY = Range.clip(start.getY() + subsystem.trajectoryY, -72, 72);
-        double endHeading = AngleUnit.normalizeRadians(
-            start.getHeading() + subsystem.trajectoryAngleRadians
-        );
-
-        subsystem.poseDisplay =
-            String.format(
-                "%f, %f [%f] => %f, %f [%f]",
-                start.getX(),
-                start.getY(),
-                start.getHeading(),
-                endX,
-                endY,
-                endHeading
-            );
-        System.out.println(subsystem.poseDisplay);
-        // lineToLinearHeading seems to mess things up, maybe? :/
-        Trajectory t;
-        if (Math.abs(subsystem.trajectoryAngleRadians) > .01) {
-            Pose2d end = new Pose2d(endX, endY, endHeading);
-            t = subsystem.trajectoryBuilder(start).lineToLinearHeading(end).build();
-        } else {
-            Vector2d end = new Vector2d(endX, endY);
-            t = subsystem.trajectoryBuilder(start).lineTo(end).build();
-        }
-        subsystem.followTrajectoryAsync(t);
-        subsystem.clearRequestedTrajectory();
     }
 
     @Override

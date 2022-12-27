@@ -70,8 +70,6 @@ public class ControlDriver {
 
         driveStraight = gamepad.rightTrigger.getAsButton(0.5);
         clawToggleAutoCloseButton = gamepad.circle;
-
-
     }
 
     public void bindDriveControls() {
@@ -96,17 +94,10 @@ public class ControlDriver {
         tileUp.whenPressed(new TileMoveCommand(robot, TileMoving.Up));
         tileDown.whenPressed(new TileMoveCommand(robot, TileMoving.Down));
         tileAbort.whenPressed(new TileAbortCommand(robot));
-
-
     }
 
     public void bindVisionCommand() {
-        CommandScheduler
-            .getInstance()
-            .scheduleForState(
-                new VisionDuringTeleCommand(robot.visionSystem, gamepad.share),
-                CommandOpMode.OpModeState.RUN
-            );
+        gamepad.share.whenPressed(new VisionDuringTeleCommand(robot.visionSystem));
     }
 
     public void bindClawControls() {
