@@ -27,7 +27,17 @@
     "formatjs": "prettier --write *.json scripts/*.js",
     "formatall": "yarn format && yarn formatjs",
     "--_--": "This will toggle using TechnoLib locally or from Maven",
-    "libflip": "node scripts/libflip.js"
+    "libflip": "node scripts/libflip.js",
+		"_____": "Stuff for connecting/disconnecting from the bot",
+		"connect": "run-script-os",
+		"connect:win32": "TODO",
+		"connect:macos": "~/Library/Android/sdk/platform-tools/adb connect 192.168.43.1:5555",
+		"disconnect": "run-script-os",
+		"disconnect:win32": "TODO",
+		"disconnect:macos": "~/Library/Android/sdk/platform-tools/adb disconnect 192.168.43.1:5555",
+		"discall": "run-script-os",
+		"discall:win32": "TODO",
+		"discall:macos": "~/Library/Android/sdk/platform-tools/adb disconnect"
   },
   "dependencies": {
     "prettier": "^2.8.1",

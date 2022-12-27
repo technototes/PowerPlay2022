@@ -29,7 +29,6 @@ public class ControlsDriver {
 
     public ControlsDriver(CommandGamepad g,
                           Robot r,
-                          boolean enableSwerveDrive,
                           boolean enableMecanumDrive,
                           boolean enableLift,
                           boolean enableArm,
@@ -41,10 +40,6 @@ public class ControlsDriver {
         if (enableMecanumDrive) {
             bindMecanumDriveControls();
             System.out.println("Binding Mecanum Drive Controls for Driver");
-        }
-        else if (enableSwerveDrive) {
-            bindSwerveDriveControls();
-            System.out.println("Binding Swerve Drive Controls for Driver");
         }
         if (enableLift) {
             bindDriverLiftControls();
@@ -66,7 +61,6 @@ public class ControlsDriver {
         this(
                 g,
                 r,
-                combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.SWERVE_DRIVE_ENABLED : combo == Robot.SubsystemCombo.S_DRIVE_ONLY,
                 combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.MECANUM_DRIVE_ENABLED : combo == Robot.SubsystemCombo.M_DRIVE_ONLY || combo == Robot.SubsystemCombo.VISION_M_DRIVE,
                 combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.LIFT_ENABLED : combo == Robot.SubsystemCombo.LIFT_ONLY,
                 combo == Robot.SubsystemCombo.DEFAULT ? RobotConstant.ARM_ENABLED : combo == Robot.SubsystemCombo.ARM_CLAW_ONLY,
@@ -88,10 +82,6 @@ public class ControlsDriver {
         CommandScheduler
                 .getInstance()
                 .scheduleForState(new VisionDuringTeleCommand(robot.visionSubsystem, gamepad.share), CommandOpMode.OpModeState.RUN);
-    }
-
-    public void bindSwerveDriveControls(){
-        System.err.println("Swerve Drive Controls Not Implemented");
     }
 
     public void bindDriverClawControls() {

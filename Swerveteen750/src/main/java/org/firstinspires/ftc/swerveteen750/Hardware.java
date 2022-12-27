@@ -9,6 +9,8 @@ import org.firstinspires.ftc.swerveteen750.swerve_util.AbsoluteAnalogEncoder;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.lynx.LynxModule;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot.LogoFacingDirection;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot.UsbFacingDirection;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -95,9 +97,9 @@ public class Hardware {
             rightFrontMotorT = new EncodedMotor<>(HardwareConstant.RF_MOTOR);
             rightRearMotorT = new EncodedMotor<>(HardwareConstant.RR_MOTOR);
 
-            imu = new IMU(HardwareConstant.IMU).remapAxes(AxesOrder.YXZ, IMU.AxesSigns.NNN); // TODO: figure the axes order
-        }
-        else if (enableSwerve) {
+            imu = new IMU(HardwareConstant.IMU, LogoFacingDirection.UP, UsbFacingDirection.RIGHT);
+            //.remapLegacyAxes(AxesOrder.YXZ, IMU.AxesSigns.NNN);
+        } else if (enableSwerve) {
             leftFrontMotorQ = hwMap.get(DcMotorEx.class, HardwareConstant.LF_MOTOR);
             leftRearMotorQ = hwMap.get(DcMotorEx.class, HardwareConstant.LR_MOTOR);
             rightFrontMotorQ = hwMap.get(DcMotorEx.class, HardwareConstant.RF_MOTOR);
@@ -130,7 +132,7 @@ public class Hardware {
             clawServo = new Servo(HardwareConstant.CLAW_SERVO);
             // clawDistance = hwMap.get(DistanceSensor.class, HardwareConstant.CLAW_SENSOR); // not installed
         }
-        if (enableCamera){
+        if (enableCamera) {
             camera = new Webcam(HardwareConstant.CAMERA);
         }
     }
