@@ -81,7 +81,7 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
 
     private final TrajectoryFollower follower;
 
-//    public SwerveModule leftFrontModule, leftRearModule, rightRearModule, rightFrontModule;
+    // Made the public so easier for telemetry
     public AnotherSwerveModule leftFrontModule;
     public AnotherSwerveModule leftRearModule;
     public AnotherSwerveModule rightFrontModule;
@@ -105,8 +105,6 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public AngularVelocity imuAngularVelocity;
 
     // Extra logging
-    public double leftFrontModuleTargetOrientation, rightFrontModuleTargetOrientation, leftRearModuleTargetOrientation, rightRearModuleTargetOrientation = 0;
-    public double leftFrontModuleCurrentOrientation, rightFrontModuleCurrentOrientation, leftRearModuleCurrentOrientation, rightRearModuleCurrentOrientation = 0;
     public double leftFrontMotorPower, rightFrontMotorPower, leftRearMotorPower, rightRearMotorPower = 0;
     private boolean debugTelemetryEnabled = false;
     private Telemetry telemetry;
@@ -223,7 +221,10 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
             this.imu.initialize(parameters);
         }
 
-        // TODO: If the hub containing the IMU you are using is mounted so that the "REV" logo does not face up, remap the IMU axes so that the z-axis points upward (normal to the floor.)
+        // TODO: If the hub containing the IMU you are using is mounted so that the "REV" logo does not face up,
+        //  remap the IMU axes so that the z-axis points upward (normal to the floor.)
+        //
+        // Before SDK 8.1:
         //
         //             | +Z axis
         //             |
@@ -552,16 +553,6 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         leftRearModule.setTargetRotation(v1);
         rightFrontModule.setTargetRotation(v2);
         rightRearModule.setTargetRotation(v3);
-
-        leftFrontModuleTargetOrientation = leftFrontModule.getTargetRotation();
-        leftRearModuleTargetOrientation = leftRearModule.getTargetRotation();
-        rightRearModuleTargetOrientation = rightRearModule.getTargetRotation();
-        rightFrontModuleTargetOrientation = rightFrontModule.getTargetRotation();
-
-        leftFrontModuleCurrentOrientation = leftFrontModule.getModuleRotation();
-        leftRearModuleCurrentOrientation = leftRearModule.getModuleRotation();
-        rightRearModuleCurrentOrientation = rightRearModule.getModuleRotation();
-        rightFrontModuleCurrentOrientation = rightFrontModule.getModuleRotation();
     }
 
     public void setModuleVelocities(double v, double v1, double v2, double v3) {
@@ -579,14 +570,14 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
 
     public Integer modulesOrientationTelemetry(Telemetry telemetry, boolean callUpdate){
         if (telemetry != null){
-            telemetry.addData("LeftFrontTargetOrientation", this.leftFrontModuleTargetOrientation);
-            telemetry.addData("LeftFrontCurrentOrientation", this.leftFrontModuleCurrentOrientation);
-            telemetry.addData("LeftRearTargetOrientation", this.leftRearModuleTargetOrientation);
-            telemetry.addData("LeftRearCurrentOrientation", this.leftRearModuleCurrentOrientation);
-            telemetry.addData("RightFrontTargetOrientation", this.rightFrontModuleTargetOrientation);
-            telemetry.addData("RightFrontCurrentOrientation", this.rightFrontModuleCurrentOrientation);
-            telemetry.addData("RightRearTargetOrientation", this.rightRearModuleTargetOrientation);
-            telemetry.addData("RightRearCurrentOrientation", this.rightRearModuleCurrentOrientation);
+//            telemetry.addData("LeftFrontTargetOrientation", this.leftFrontModuleTargetOrientation);
+//            telemetry.addData("LeftFrontCurrentOrientation", this.leftFrontModuleCurrentOrientation);
+//            telemetry.addData("LeftRearTargetOrientation", this.leftRearModuleTargetOrientation);
+//            telemetry.addData("LeftRearCurrentOrientation", this.leftRearModuleCurrentOrientation);
+//            telemetry.addData("RightFrontTargetOrientation", this.rightFrontModuleTargetOrientation);
+//            telemetry.addData("RightFrontCurrentOrientation", this.rightFrontModuleCurrentOrientation);
+//            telemetry.addData("RightRearTargetOrientation", this.rightRearModuleTargetOrientation);
+//            telemetry.addData("RightRearCurrentOrientation", this.rightRearModuleCurrentOrientation);
             if (callUpdate){
                 telemetry.update();
             }
