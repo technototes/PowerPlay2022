@@ -51,7 +51,7 @@ public class AnotherSwerveModule {
 
     private boolean wheelFlipped = false;
 
-    public AnotherSwerveModule(DcMotorEx m, CRServo s, AbsoluteAnalogEncoder e, PIDCoefficients rotationPID) {
+    public AnotherSwerveModule(DcMotorEx m, CRServo s, AbsoluteAnalogEncoder e, PIDCoefficients rotationPID, PIDFCoefficients motorVelocityPID) {
         motor = m;
         MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
         motorConfigurationType.setAchieveableMaxRPMFraction(MAX_MOTOR_SPEED);
@@ -65,18 +65,29 @@ public class AnotherSwerveModule {
         e.setInverted(Encoder.Direction.REVERSE);
         rotationController = new PIDFController(rotationPID, 0, 0, K_STATIC, (p, v) -> lastMotorPower * K_MOTOR);
         rotationProfiler = new CRServoProfiler(servo, SERVO_CONSTRAINTS);
-        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         System.out.println("Rotation PID: " + rotationPID);
+
+
+        if (motorVelocityPID != null) {
+            System.out.println("Motor PID: " + motorVelocityPID);
+            motor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, motorVelocityPID);
+        }
+        else {
+            System.out.println("Current Motor PID: " + motor.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
+        }
     }
 
 
-    public AnotherSwerveModule(HardwareMap hardwareMap, String motorName, String servoName, String encoderName, PIDCoefficients rotationPID) {
+    public AnotherSwerveModule(HardwareMap hardwareMap, String motorName, String servoName, String encoderName, PIDCoefficients rotationPID, PIDFCoefficients motorVelocityPID) {
         this(
                 hardwareMap.get(DcMotorEx.class, motorName),
                 hardwareMap.get(CRServo.class, servoName),
                 new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, encoderName)),
-                rotationPID
+                rotationPID,
+                motorVelocityPID
         );
     }
 

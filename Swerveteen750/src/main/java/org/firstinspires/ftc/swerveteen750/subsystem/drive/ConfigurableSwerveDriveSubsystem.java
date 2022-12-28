@@ -287,15 +287,20 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public static PIDCoefficients RF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.4, 0, 0);
     public static PIDCoefficients RR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.8, 0, 0);
 
+    public static PIDFCoefficients LF_MOTOR_VELO_PID_COEF = new PIDFCoefficients(0.1, 0, 0, 0);
+    public static PIDFCoefficients LR_MOTOR_VELO_PID_COEF = new PIDFCoefficients(0.1, 0, 0, 0);
+    public static PIDFCoefficients RF_MOTOR_VELO_PID_COEF = new PIDFCoefficients(0.1, 0, 0, 0);
+    public static PIDFCoefficients RR_MOTOR_VELO_PID_COEF = new PIDFCoefficients(0.1, 0, 0, 0);
+
 
     public ConfigurableSwerveDriveSubsystem(HardwareMap hardwareMap){
         this(
                 hardwareMap,
                 hardwareMap.get(BNO055IMU.class, "imu"),
-                new AnotherSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", LF_SERVO_ROTATION_PID_COEF),
-                new AnotherSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", LR_SERVO_ROTATION_PID_COEF),
-                new AnotherSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RF_SERVO_ROTATION_PID_COEF),
-                new AnotherSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", RR_SERVO_ROTATION_PID_COEF)
+                new AnotherSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", LF_SERVO_ROTATION_PID_COEF, null),
+                new AnotherSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", LR_SERVO_ROTATION_PID_COEF, null),
+                new AnotherSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RF_SERVO_ROTATION_PID_COEF, null),
+                new AnotherSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", RR_SERVO_ROTATION_PID_COEF, null)
         );
     }
 
