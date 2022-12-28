@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.twenty403.command.autonomous.right;
 
 import com.technototes.library.command.SequentialCommandGroup;
+import com.technototes.library.command.WaitCommand;
 import com.technototes.path.command.TrajectorySequenceCommand;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftCollectCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
+import org.firstinspires.ftc.twenty403.command.lift.LiftIntakeCommand;
 
 public class AutoRightPreLoadLeft extends SequentialCommandGroup {
 
@@ -22,7 +24,12 @@ public class AutoRightPreLoadLeft extends SequentialCommandGroup {
                 r.drivebaseSubsystem,
                 AutoConstants.Right.W_JUNCTION_TO_LEFT_PARK
             )
-                .alongWith(new LiftCollectCommand(r.liftSubsystem))
+                .alongWith(
+                    new SequentialCommandGroup(
+                        new WaitCommand(0.6),
+                        new LiftIntakeCommand(r.liftSubsystem)
+                    )
+                )
         );
     }
 }

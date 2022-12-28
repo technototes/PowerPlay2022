@@ -15,12 +15,6 @@ public class AutoLeftParkLeft extends SequentialCommandGroup {
                 r.drivebaseSubsystem,
                 AutoConstants.Left.START_TO_LEFT_PARK
             ),
-            new TrajectorySequenceCommand(r.drivebaseSubsystem, AutoConstants.Left.LEFT_1_2),
-            new TrajectorySequenceCommand(r.drivebaseSubsystem, AutoConstants.Left.LEFT_1_2),
-            new TrajectorySequenceCommand(r.drivebaseSubsystem, AutoConstants.Left.LEFT_1_2),
-            new TrajectorySequenceCommand(r.drivebaseSubsystem, AutoConstants.Left.LEFT_1_2),
-            new TrajectorySequenceCommand(r.drivebaseSubsystem, AutoConstants.Left.LEFT_1_2),
-            new TrajectorySequenceCommand(r.drivebaseSubsystem, AutoConstants.Left.LEFT_1_2),
             CommandScheduler.getInstance()::terminateOpMode
         );
     }
