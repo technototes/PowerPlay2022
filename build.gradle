@@ -30,5 +30,11 @@ repositories {
 }
 
 task justAssembleDebug(type: GradleBuild) {
-    tasks = [':Twenty403:assembleDebug', ':Sixteen750:assembleDebug', ':Swerveteen750:assembleDebug']
+    tasks = [
+			':Twenty403:assembleDebug',
+// ':Sixteen750:assembleDebug',           // BUILD ALL BOTS
+// ':ForTeaching:assembleDebug',          // BUILD ALL BOTS
+// ':RoadRunnerQuickStart:assembleDebug', // BUILD ALL BOTS
+			':Swerveteen750:assembleDebug'
+		]
 }

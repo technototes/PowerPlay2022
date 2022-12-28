@@ -22,7 +22,7 @@ const libFiles = [
   'build.dependencies.gradle',
   'settings.gradle',
 ];
-const botFiles = ['settings.gradle'];
+const botFiles = ['settings.gradle', 'build.gradle'];
 
 // For any line that ends with '// TechnoLibLocal',
 // toggle the line comment 'status'
