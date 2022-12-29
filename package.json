@@ -25,6 +25,7 @@
     "format20": "prettier --write Twenty403/src/**",
     "formatsw": "prettier --write Swerveteen750/src/**",
     "formatjs": "prettier --write *.json scripts/*.js",
+    "formatft": "prettier --write ForTeaching/src/**",
     "formatall": "yarn format && yarn formatjs",
     "--_--": "This will toggle using TechnoLib locally or from Maven",
     "libflip": "node scripts/flip.js lib",
