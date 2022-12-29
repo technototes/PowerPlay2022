@@ -4,6 +4,7 @@ package org.firstinspires.ftc.forteaching.TechnoBot;
 // pieces of hardware on the robot
 
 import com.qualcomm.hardware.rev.RevColorSensorV3;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -68,7 +69,12 @@ public class Hardware {
             frontRightDriveMotor = new EncodedMotor<DcMotorEx>(DeviceNames.FRIGHT_MOTOR);
             rearLeftDriveMotor = new EncodedMotor<DcMotorEx>(DeviceNames.RLEFT_MOTOR);
             rearRightDriveMotor = new EncodedMotor<DcMotorEx>(DeviceNames.RRIGHT_MOTOR);
-            inertialMovementUnit = new IMU(DeviceNames.IMU);
+            inertialMovementUnit =
+                new IMU(
+                    DeviceNames.IMU,
+                    RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                    RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+                );
         }
         if (TheBot.Connected.Sensors) {
             distanceSensor = new Rev2MDistanceSensor(DeviceNames.REV2M_DIST);
