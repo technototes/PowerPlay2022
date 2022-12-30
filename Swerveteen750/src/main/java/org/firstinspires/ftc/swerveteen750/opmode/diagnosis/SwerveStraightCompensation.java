@@ -21,10 +21,10 @@ public class SwerveStraightCompensation extends LinearOpMode {
         HardwareBuilder.initMap(hardwareMap);
         Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.S_DRIVE_ONLY);
 
-        AnotherSwerveModule leftFrontModule = new AnotherSwerveModule(hardware.leftFrontMotorQ, hardware.leftFrontServo, hardware.leftFrontEncoder, ConfigurableSwerveDriveSubsystem.LF_SERVO_ROTATION_PID_COEF);
-        AnotherSwerveModule leftRearModule = new AnotherSwerveModule(hardware.leftRearMotorQ, hardware.leftRearServo, hardware.leftRearEncoder, ConfigurableSwerveDriveSubsystem.LR_SERVO_ROTATION_PID_COEF);
-        AnotherSwerveModule rightFrontModule = new AnotherSwerveModule(hardware.rightFrontMotorQ, hardware.rightFrontServo, hardware.rightFrontEncoder, ConfigurableSwerveDriveSubsystem.RF_SERVO_ROTATION_PID_COEF);
-        AnotherSwerveModule rightRearModule = new AnotherSwerveModule(hardware.rightRearMotorQ, hardware.rightRearServo, hardware.rightRearEncoder, ConfigurableSwerveDriveSubsystem.RR_SERVO_ROTATION_PID_COEF);
+        AnotherSwerveModule leftFrontModule = new AnotherSwerveModule(hardware.leftFrontMotorQ, hardware.leftFrontServo, hardware.leftFrontEncoder, ConfigurableSwerveDriveSubsystem.LF_SERVO_ROTATION_PID_COEF, null);
+        AnotherSwerveModule leftRearModule = new AnotherSwerveModule(hardware.leftRearMotorQ, hardware.leftRearServo, hardware.leftRearEncoder, ConfigurableSwerveDriveSubsystem.LR_SERVO_ROTATION_PID_COEF, null);
+        AnotherSwerveModule rightFrontModule = new AnotherSwerveModule(hardware.rightFrontMotorQ, hardware.rightFrontServo, hardware.rightFrontEncoder, ConfigurableSwerveDriveSubsystem.RF_SERVO_ROTATION_PID_COEF, null);
+        AnotherSwerveModule rightRearModule = new AnotherSwerveModule(hardware.rightRearMotorQ, hardware.rightRearServo, hardware.rightRearEncoder, ConfigurableSwerveDriveSubsystem.RR_SERVO_ROTATION_PID_COEF, null);
 
         SimpleSwerveDriveSubsystem drive = new SimpleSwerveDriveSubsystem(leftFrontModule, leftRearModule, rightFrontModule, rightRearModule);
         drive.setMotorEncoderZero();

@@ -15,7 +15,7 @@ public class RightRearSwerveModule extends AnotherSwerveModule {
     public static PIDCoefficients RR_ROTATION_PID = new PIDCoefficients(0.6, 0, 0);
 
     public RightRearSwerveModule(DcMotorEx m, CRServo s, AbsoluteAnalogEncoder e) {
-        super(m, s, e, RR_ROTATION_PID);
+        super(m, s, e, RR_ROTATION_PID, null);
     }
 
     public RightRearSwerveModule(HardwareMap hardwareMap, String motorName, String servoName, String encoderName){
@@ -31,7 +31,8 @@ public class RightRearSwerveModule extends AnotherSwerveModule {
                 hardwareMap.get(DcMotorEx.class, motorName),
                 hardwareMap.get(CRServo.class, servoName),
                 new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, encoderName)),
-                rotationPID
+                rotationPID,
+                null // TODO: add motor PID
         );
     }
 }
