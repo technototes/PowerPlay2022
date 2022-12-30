@@ -1,11 +1,17 @@
 /*
- * This script should invert all comment lines in the build system with a
- * '// TechnoLibLocal' comment at the end. This will let you add a subdirectory
- * "TechnoLib" (as a git subtree, submodule, or just a copy) that contains
- * TechnoLib instead of pulling down the latest release from jitpack.io through
- * Maven or whatever that remote repo is.
+ * This script inverts all comment lines in a set of files that end with
+ * '// FLIP: TechnoLibLocal' comment (The "TechnoLibLocal" is configurable).
+ * 
+ * For TechnoLibLocal, this lets you add a subdirectory "TechnoLib" (as a git
+ * subtree, submodule, or just a copy) that contains TechnoLib instead of
+ * pulling down the latest release from jitpack.io through Maven or whatever
+ * that remote repo is.
+ * 
+ * For BUILD ALL BOTS, it toggles including not just the competition bots, but
+ * the ForTeaching, RoadRunner Quick Start and any other 'bot' subdirs that we
+ * may not want to build in the heat of competition work.
  *
- * So, "yarn libflip" will, from a normal repo, enable you to build & link with
+ * "yarn libflip" will, from a normal repo, enable you to build & link with
  * a local copy of TechnoLib in <root>\TechnoLib. Once you're done, run
  * "yarn libflip" again, and it will restore the dependency on the publicly
  * released copy of TechnoLib
@@ -14,20 +20,34 @@
 const { readFile, writeFile } = require('fs/promises');
 const { argv } = require('process');
 
-const libFiles = [
-  'ForTeaching/build.gradle',
-  'Sixteen750/build.gradle',
-  'Swerveteen750/build.gradle',
-  'Twenty403/build.gradle',
-  'build.dependencies.gradle',
-  'settings.gradle',
-];
-const botFiles = ['settings.gradle', 'build.gradle'];
+// This is a map of keys (the argument to call flip.js with) to objects that
+// are a name (the tag at the end of the comment) and an array of files to
+// scan & process
+const fileList = new Map([
+  [
+    'lib',
+    {
+      name: 'TechnoLibLocal',
+      files: [
+        'ForTeaching/build.gradle',
+        'Sixteen750/build.gradle',
+        'Swerveteen750/build.gradle',
+        'Twenty403/build.gradle',
+        'build.dependencies.gradle',
+        'settings.gradle',
+      ],
+    },
+  ],
+  [
+    'bot',
+    { name: 'BUILD ALL BOTS', files: ['settings.gradle', 'build.gradle'] },
+  ],
+]);
 
-// For any line that ends with '// TechnoLibLocal',
+// For any line that ends with '// FLIP: id',
 // toggle the line comment 'status'
 function toggleLine(lineFull, str) {
-  const commentMarker = '// ' + str;
+  const commentMarker = '// FLIP: ' + str;
   const line = lineFull.trimEnd();
   // If the line doesn't end with the comment marker, don't change it at all
   if (!line.endsWith(commentMarker)) {
@@ -59,17 +79,11 @@ async function toggleFile(file, str) {
 }
 
 async function toggleLinesWithComments(arg) {
-  let files;
-  if (arg === 'lib') {
-    files = libFiles;
-    str = 'TechnoLibLocal';
-  } else if (arg === 'bot') {
-    files = botFiles;
-    str = 'BUILD ALL BOTS';
-  } else {
+	const elem = fileList.get(arg);
+	if (elem === undefined) {
     throw Error("Only use this script with the 'lib' or 'bot' argument");
-  }
-
+	}
+  let {name: str, files} = elem;
   for (let filename of files) {
     await toggleFile(filename, str);
   }
