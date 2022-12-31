@@ -2,15 +2,15 @@ include ':FtcRobotController'
 // Uncomment this to use TechnoLib from a subdirectory. You also need to uncomment
 // stuff in Sixteen750/
 // Or just try 'yarn libflip' to let the script do it for you...
-// include 'RobotLibrary'                                                   // TechnoLibLocal
-// project(':RobotLibrary').projectDir = new File('TechnoLib/RobotLibrary') // TechnoLibLocal
-// include 'Path'                                                           // TechnoLibLocal
-// project(':Path').projectDir = new File('TechnoLib/Path')                 // TechnoLibLocal
-// include 'Vision'                                                         // TechnoLibLocal
-// project(':Vision').projectDir = new File('TechnoLib/Vision')             // TechnoLibLocal
-// include ':Sixteen750'                                                    // BUILD ALL BOTS
+// include 'RobotLibrary'                                                   // FLIP: TechnoLibLocal
+// project(':RobotLibrary').projectDir = new File('TechnoLib/RobotLibrary') // FLIP: TechnoLibLocal
+// include 'Path'                                                           // FLIP: TechnoLibLocal
+// project(':Path').projectDir = new File('TechnoLib/Path')                 // FLIP: TechnoLibLocal
+// include 'Vision'                                                         // FLIP: TechnoLibLocal
+// project(':Vision').projectDir = new File('TechnoLib/Vision')             // FLIP: TechnoLibLocal
+// include ':Sixteen750'                                                    // FLIP: BUILD ALL BOTS
 include ':Swerveteen750'
 include ':Twenty403'
-// include ':RoadRunnerQuickStart'                                          // BUILD ALL BOTS
-// include ':ForTeaching'                                                   // BUILD ALL BOTS
-// include ':MeepMeepTesting'                                               // BUILD ALL BOTS
+// include ':RoadRunnerQuickStart'                                          // FLIP: BUILD ALL BOTS
+// include ':ForTeaching'                                                   // FLIP: BUILD ALL BOTS
+// include ':MeepMeepTesting'                                               // FLIP: BUILD ALL BOTS
