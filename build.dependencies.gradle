@@ -38,7 +38,7 @@ dependencies {
     implementation 'org.firstinspires.ftc:gameAssets-PowerPlay:1.0.0'
 
     // TechnoLib: Comment this *out* for TechnoLib local
-    implementation 'com.github.technototes:TechnoLib:1.2.0' // TechnoLibLocal
+    implementation 'com.github.technototes:TechnoLib:1.2.0' // FLIP: TechnoLibLocal
 
     // RoadRunner:
     implementation 'com.acmerobotics.roadrunner:core:0.5.6'

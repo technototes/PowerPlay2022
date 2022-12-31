@@ -32,9 +32,9 @@ repositories {
 task justAssembleDebug(type: GradleBuild) {
     tasks = [
 			':Twenty403:assembleDebug',
-// ':Sixteen750:assembleDebug',           // BUILD ALL BOTS
-// ':ForTeaching:assembleDebug',          // BUILD ALL BOTS
-// ':RoadRunnerQuickStart:assembleDebug', // BUILD ALL BOTS
+// ':Sixteen750:assembleDebug',           // FLIP: BUILD ALL BOTS
+// ':ForTeaching:assembleDebug',          // FLIP: BUILD ALL BOTS
+// ':RoadRunnerQuickStart:assembleDebug', // FLIP: BUILD ALL BOTS
 			':Swerveteen750:assembleDebug'
 		]
 }
