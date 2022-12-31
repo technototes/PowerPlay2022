@@ -19,6 +19,7 @@ import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 @Autonomous(name = "Rev Encoder Test")
 @SuppressWarnings("unused")
 public class RevEncoderTest extends LinearOpMode {
+
     public String REV_ENCODER = "revThruEnc";
 
     /*
