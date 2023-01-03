@@ -31,6 +31,8 @@ public class DrivebaseSubsystem
     @Config
     public abstract static class DriveConstants implements MecanumConstants {
 
+        public static double VEL_SCALE = 5.0;
+
         public static double SLOW_MOTOR_SPEED = 0.6;
         public static double FAST_MOTOR_SPEED = 1.0;
         public static double AUTO_MOTOR_SPEED = 0.9;
@@ -46,9 +48,9 @@ public class DrivebaseSubsystem
 
         @MotorVeloPID
         public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(
-            20,
+            18,
             0,
-            3,
+            1,
             MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV)
         );
 
@@ -156,7 +158,7 @@ public class DrivebaseSubsystem
         speed = DriveConstants.SLOW_MOTOR_SPEED;
         odometry = odo;
 
-        if (this.getLocalizer() != null) {
+        if (this.getLocalizer() != null && odo != null) {
             this.setLocalizer(new OverrideLocalizer(this.getLocalizer(), odo, this));
             locState = "created";
         } else {
@@ -197,10 +199,17 @@ public class DrivebaseSubsystem
 
     @Override
     public void setMotorPowers(double v, double v1, double v2, double v3) {
+        leftFront.setVelocity(v * DriveConstants.VEL_SCALE, AngleUnit.RADIANS);
+        leftRear.setVelocity(v1 * DriveConstants.VEL_SCALE, AngleUnit.RADIANS);
+        rightRear.setVelocity(v2 * DriveConstants.VEL_SCALE, AngleUnit.RADIANS);
+        rightFront.setVelocity(v3 * DriveConstants.VEL_SCALE, AngleUnit.RADIANS);
+        /*
         leftFront.setPower(v * DriveConstants.AFL_SCALE);
         leftRear.setPower(v1 * DriveConstants.ARL_SCALE);
         rightRear.setPower(v2 * DriveConstants.ARR_SCALE);
         rightFront.setPower(v3 * DriveConstants.AFR_SCALE);
+
+ */
     }
 
     // Stuff below is used for tele-op trajectory motion
