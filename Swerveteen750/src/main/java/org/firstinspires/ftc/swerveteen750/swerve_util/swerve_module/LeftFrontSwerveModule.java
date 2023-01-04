@@ -14,7 +14,7 @@ public class LeftFrontSwerveModule extends AnotherSwerveModule {
     public static PIDCoefficients LF_ROTATION_PID = new PIDCoefficients(0.6, 0, 0);
 
     public LeftFrontSwerveModule(DcMotorEx m, CRServo s, AbsoluteAnalogEncoder e) {
-        super(m, s, e, LF_ROTATION_PID);
+        super(m, s, e, LF_ROTATION_PID, null);
     }
 
     public LeftFrontSwerveModule(HardwareMap hardwareMap, String motorName, String servoName, String encoderName){
@@ -30,7 +30,8 @@ public class LeftFrontSwerveModule extends AnotherSwerveModule {
                 hardwareMap.get(DcMotorEx.class, motorName),
                 hardwareMap.get(CRServo.class, servoName),
                 new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, encoderName)),
-                rotationPID
+                rotationPID,
+                null // TODO: add motor PID
         );
     }
 }
