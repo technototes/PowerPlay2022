@@ -6,6 +6,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 import com.technototes.library.hardware.motor.EncodedMotor;
@@ -51,6 +52,13 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     private double currentVoltage = 0;
     private Supplier<Double> voltageGetter;
 
+
+    public static double SERVO_SCORING_POSITION = 0.5;
+    public static double SERVO_INTAKE_POSITION = 0;
+
+    public Servo handServo;
+
+    // TODO: add servo in the constructor
     public LiftSubsystem(EncodedMotor<DcMotorEx> leftMotor, Supplier<Double> voltageGetter) {
         this.voltageGetter = voltageGetter;
         this.currentVoltage = (this.voltageGetter == null) ? 0 : this.voltageGetter.get();
@@ -227,5 +235,19 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     public boolean isLiftMedium() {
         return getLeftPos() < L_EXTENDED_MEDIUM;
+    }
+
+    private void setClawServoPosition(double pos) {
+        if (this.handServo != null) {
+            this.handServo.setPosition(pos);
+        }
+    }
+
+    public void handServoScorePosition() {
+        setClawServoPosition(SERVO_SCORING_POSITION);
+    }
+
+    public void handServoIntakePosition() {
+        setClawServoPosition(SERVO_INTAKE_POSITION);
     }
 }
