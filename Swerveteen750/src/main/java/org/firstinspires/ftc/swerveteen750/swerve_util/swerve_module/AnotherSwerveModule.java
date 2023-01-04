@@ -76,7 +76,7 @@ public class AnotherSwerveModule {
             motor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, motorVelocityPID);
         }
         else {
-            System.out.println("Current Motor PID: " + motor.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
+            System.out.println("Current/Default Motor PID: " + motor.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
         }
     }
 
