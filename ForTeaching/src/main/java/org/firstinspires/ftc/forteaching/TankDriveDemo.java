@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.forteaching;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+
 import java.util.*;
 
 public class TankDriveDemo {
@@ -23,6 +24,17 @@ public class TankDriveDemo {
         motorR.setPower(power);
     }
 
+    public void driveStraight(double power) {
+        motorL.setPower(power);
+        motorR.setPower(power);
+    }
+
+    public void rotateRight(double power) {
+        motorL.setPower(power);
+        motorR.setPower(-power);
+    }
+
+    // public
     public DcMotorEx getMotorL() {
         return motorL;
     }

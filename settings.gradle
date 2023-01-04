@@ -8,9 +8,9 @@ include ':FtcRobotController'
 // project(':Path').projectDir = new File('TechnoLib/Path')                 // TechnoLibLocal
 // include 'Vision'                                                         // TechnoLibLocal
 // project(':Vision').projectDir = new File('TechnoLib/Vision')             // TechnoLibLocal
-// include ':Sixteen750'                                                    // BUILD ALL BOTS
+include ':Sixteen750'                                                    // BUILD ALL BOTS
 include ':Swerveteen750'
 include ':Twenty403'
-// include ':RoadRunnerQuickStart'                                          // BUILD ALL BOTS
-// include ':ForTeaching'                                                   // BUILD ALL BOTS
-// include ':MeepMeepTesting'                                               // BUILD ALL BOTS
+include ':RoadRunnerQuickStart'                                          // BUILD ALL BOTS
+include ':ForTeaching'                                                   // BUILD ALL BOTS
+include ':MeepMeepTesting'                                               // BUILD ALL BOTS
