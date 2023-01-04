@@ -18,9 +18,9 @@ import org.firstinspires.ftc.twenty403.helpers.ColorHelper;
 @Config
 public class ClawSubsystem implements Subsystem, Loggable {
 
-    // Correct numbers, tested 12/10/22
-    public static double OPEN_SERVO_POSITION = .38;
-    public static double CLOSE_SERVO_POSITION = .455; //.47;
+    // Correct numbers, tested 12/17/22 (Skipped a gear, fixed, and now need this :/ )
+    public static double OPEN_SERVO_POSITION = .37;
+    public static double CLOSE_SERVO_POSITION = .46;
 
     // # of CM distance before we auto-close the claw
     public static double CONE_IS_CLOSE_ENOUGH = 6.0;
@@ -117,12 +117,6 @@ public class ClawSubsystem implements Subsystem, Loggable {
                 liftSubsystem.canAutoClose() && !isClawClosed() && isAllianceCone() && isConeClose()
             ) {
                 close();
-                ///this.wait(.2);
-
-//                new WaitCommand(.2);
-//                new LiftUpCommand(liftSubsystem);
-                //CommandScheduler.getInstance().schedule(new ClawAutoCloseWithLift(this,liftSubsystem));
-                //CommandScheduler.getInstance().scheduleOnce(new ClawAutoCloseWithLift(this, liftSubsystem));
             }
         }
     }
