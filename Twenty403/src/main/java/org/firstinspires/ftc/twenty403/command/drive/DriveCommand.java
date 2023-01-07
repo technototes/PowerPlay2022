@@ -70,7 +70,7 @@ public class DriveCommand implements Command, Loggable {
             double close = MathUtils.closestTo(heading, 0, 90, 180, 270, 360);
             double offBy = close - heading;
             // Normalize the error to -1 to 1
-            double normalized = Math.max(Math.min(offBy / 45, 1.), -1.);
+            double normalized = Range.clip(offBy / 45, -1, 1);
             // Dead zone of 5 degreesLiftHighJunctionCommand(liftSubsystem)
             if (Math.abs(normalized) < STRAIGHTEN_DEAD_ZONE) {
                 return 0.0;
@@ -167,7 +167,7 @@ public class DriveCommand implements Command, Loggable {
     @Override
     public void execute() {
         // If subsystem is busy it is running a trajectory.
-        if (!subsystem.isBusy()) {
+        if (!subsystem.isBusy() && false) {
             if (watchTrigger != null && watchTrigger.getAsBoolean()) {
                 // do the auto-align stuff
                 autoAlign45();
@@ -185,6 +185,8 @@ public class DriveCommand implements Command, Loggable {
                     new Pose2d(input.getX(), input.getY(), getRotation(curHeading))
                 );
             }
+        } else {
+            subsystem.updateJoystickPosition(x.getAsDouble(), y.getAsDouble(), r.getAsDouble());
         }
         subsystem.update();
     }
