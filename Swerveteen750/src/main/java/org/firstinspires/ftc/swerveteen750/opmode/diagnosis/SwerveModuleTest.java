@@ -12,6 +12,7 @@ import org.firstinspires.ftc.swerveteen750.swerve_util.swerve_module.AnotherSwer
 
 @TeleOp(group = "Test-Hardware")
 public class SwerveModuleTest extends CommandOpMode {
+    /* DOES NOT WORK CURRENTLY! */
     Hardware hardware;
     AnotherSwerveModule leftFrontModule;
     AnotherSwerveModule leftRearModule;
@@ -41,22 +42,22 @@ public class SwerveModuleTest extends CommandOpMode {
 
     @Override
     public void runLoop() {
-        if (gamepad1.dpad_up) {
+        if (gamepad1.dpad_up || gamepad1.triangle) {
 //            leftFrontModuleTargetOrientationRadians = incrementOrientationRadians(leftFrontModuleTargetOrientationRadians);
             leftFrontModuleTargetOrientationRadians += 0.001;
-//            gamepad1.rumble(100);
+            gamepad1.rumble(100);
         }
-        else if (gamepad1.dpad_right) {
+        else if (gamepad1.dpad_right || gamepad1.circle) {
             leftRearTargetModuleOrientationRadians = incrementOrientationRadians(leftRearTargetModuleOrientationRadians);
-//            gamepad1.rumble(100);
+            gamepad1.rumble(100);
         }
-        else if (gamepad1.dpad_down) {
+        else if (gamepad1.dpad_down || gamepad1.cross) {
             rightRearModuleTargetOrientationRadians = incrementOrientationRadians(rightRearModuleTargetOrientationRadians);
-//            gamepad1.rumble(100);
+            gamepad1.rumble(100);
         }
-        else if (gamepad1.dpad_left) {
+        else if (gamepad1.dpad_left || gamepad1.square) {
             rightFrontModuleTargetOrientationRadians = incrementOrientationRadians(rightFrontModuleTargetOrientationRadians);
-//            gamepad1.rumble(100);
+            gamepad1.rumble(100);
         }
 
         leftFrontModule.setTargetRotation(leftFrontModuleTargetOrientationRadians);
@@ -69,7 +70,7 @@ public class SwerveModuleTest extends CommandOpMode {
         rightRearModule.update();
         rightFrontModule.update();
 
-        telemetry.addData("LF - Target", leftFrontModuleTargetOrientationRadians);
+        telemetry.addData("LF - Target", leftFrontModule.getTargetRotation());
         telemetry.addData("LF - Current", leftFrontModule.getModuleRotation());
 
         telemetry.addData("LR - Target", leftRearModule.getTargetRotation());

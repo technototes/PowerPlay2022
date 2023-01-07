@@ -12,6 +12,7 @@ import org.firstinspires.ftc.swerveteen750.swerve_util.swerve_module.AnotherSwer
 
 @TeleOp(group = "Test-Hardware")
 public class SwerveLampreyEncoderTest extends CommandOpMode {
+    /* DOES NOT WORK CURRENTLY! */
     Hardware hardware;
     AnotherSwerveModule leftFrontModule;
     AnotherSwerveModule leftRearModule;
@@ -28,6 +29,7 @@ public class SwerveLampreyEncoderTest extends CommandOpMode {
     public void uponInit() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.S_DRIVE_ONLY);
+
         leftFrontModule = new AnotherSwerveModule(hardware.leftFrontMotorQ, hardware.leftFrontServo, hardware.leftFrontEncoder, ConfigurableSwerveDriveSubsystem.LF_SERVO_ROTATION_PID_COEF, null);
         leftRearModule = new AnotherSwerveModule(hardware.leftRearMotorQ, hardware.leftRearServo, hardware.leftRearEncoder, ConfigurableSwerveDriveSubsystem.LR_SERVO_ROTATION_PID_COEF, null);
         rightFrontModule = new AnotherSwerveModule(hardware.rightFrontMotorQ, hardware.rightFrontServo, hardware.rightFrontEncoder, ConfigurableSwerveDriveSubsystem.RF_SERVO_ROTATION_PID_COEF, null);
