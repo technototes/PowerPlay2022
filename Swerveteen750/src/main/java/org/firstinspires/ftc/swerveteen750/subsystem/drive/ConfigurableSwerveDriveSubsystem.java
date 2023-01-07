@@ -1,10 +1,5 @@
 package org.firstinspires.ftc.swerveteen750.subsystem.drive;
 
-import static org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleSwerveDriveSubsystem.LF_MOTOR_SCALAR;
-import static org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleSwerveDriveSubsystem.LR_MOTOR_SCALAR;
-import static org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleSwerveDriveSubsystem.RF_MOTOR_SCALAR;
-import static org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleSwerveDriveSubsystem.RR_MOTOR_SCALAR;
-
 import androidx.annotation.GuardedBy;
 import androidx.annotation.NonNull;
 
@@ -287,20 +282,21 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public static PIDCoefficients RF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.4, 0, 0);
     public static PIDCoefficients RR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.8, 0, 0);
 
-    public static PIDFCoefficients LF_MOTOR_VELO_PID_COEF = new PIDFCoefficients(0.1, 0, 0, 0);
-    public static PIDFCoefficients LR_MOTOR_VELO_PID_COEF = new PIDFCoefficients(0.1, 0, 0, 0);
-    public static PIDFCoefficients RF_MOTOR_VELO_PID_COEF = new PIDFCoefficients(0.1, 0, 0, 0);
-    public static PIDFCoefficients RR_MOTOR_VELO_PID_COEF = new PIDFCoefficients(0.1, 0, 0, 0);
+    // the default value if PIDFCoefficients(p=10.000000 i=3.000000 d=0.000000 f=0.000000 alg=LegacyPID)
+    public static PIDFCoefficients LF_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(10, 3, 0, 0);
+    public static PIDFCoefficients LR_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(10, 3, 0, 0);
+    public static PIDFCoefficients RF_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(10, 3, 0, 0);
+    public static PIDFCoefficients RR_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(10, 3, 0, 0);
 
 
     public ConfigurableSwerveDriveSubsystem(HardwareMap hardwareMap){
         this(
                 hardwareMap,
                 hardwareMap.get(BNO055IMU.class, "imu"),
-                new AnotherSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", LF_SERVO_ROTATION_PID_COEF, null),
-                new AnotherSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", LR_SERVO_ROTATION_PID_COEF, null),
-                new AnotherSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RF_SERVO_ROTATION_PID_COEF, null),
-                new AnotherSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", RR_SERVO_ROTATION_PID_COEF, null)
+                new AnotherSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", LF_SERVO_ROTATION_PID_COEF, LF_MOTOR_VELO_PIDF_COEF),
+                new AnotherSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", LR_SERVO_ROTATION_PID_COEF, LR_MOTOR_VELO_PIDF_COEF),
+                new AnotherSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RF_SERVO_ROTATION_PID_COEF, RF_MOTOR_VELO_PIDF_COEF),
+                new AnotherSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", RR_SERVO_ROTATION_PID_COEF, RR_MOTOR_VELO_PIDF_COEF)
         );
     }
 
