@@ -277,9 +277,9 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         PhotonCore.experimental.setMaximumParallelCommands(MAX_PARALLEL_COMMANDS);
     }
 
-    public static PIDCoefficients LF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.6, 0, 0);
-    public static PIDCoefficients LR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.6, 0, 0);
-    public static PIDCoefficients RF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.4, 0, 0);
+    public static PIDCoefficients LF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(1.3, 0, 0);
+    public static PIDCoefficients LR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.5, 0, 0);
+    public static PIDCoefficients RF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(1.2, 0, 0);
     public static PIDCoefficients RR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.8, 0, 0);
 
     // the default value if PIDFCoefficients(p=10.000000 i=3.000000 d=0.000000 f=0.000000 alg=LegacyPID)

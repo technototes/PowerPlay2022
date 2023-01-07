@@ -43,14 +43,14 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
     }
 
     @Override
-    public void runLoop(){
+    public void runLoop() {
+        double y = Math.pow(gamepad1.left_stick_y, 3);
+        double x = Math.pow(gamepad1.left_stick_x, 3);
+        double r = Math.pow(gamepad1.right_stick_x, 3);
         drive.setWeightedDrivePower(
                 new Pose2d(
-                        new Vector2d(
-                                -gamepad1.left_stick_y,
-                                -gamepad1.left_stick_x
-                        ).rotated(-drive.getExternalHeading()),
-                        -gamepad1.right_stick_x * 0.5
+                        new Vector2d(-y, -x).rotated(-drive.getExternalHeading()),
+                        -r * 0.5
                 )
         );
         if (gamepad1.right_stick_button) drive.setExternalHeading(0);
@@ -82,11 +82,9 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
             telemetry.addData("is lift high", robot.liftSubsystem.isLiftHigh());
             if (robot.liftSubsystem.isLiftHigh()) {
 
-            }
-            else if (robot.liftSubsystem.isLiftMedium()){
+            } else if (robot.liftSubsystem.isLiftMedium()) {
 
-            }
-            else {
+            } else {
 
             }
         }
