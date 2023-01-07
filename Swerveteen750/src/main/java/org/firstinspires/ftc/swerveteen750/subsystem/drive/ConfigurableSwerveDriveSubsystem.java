@@ -571,10 +571,11 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
 
     public Integer modulesOrientationTelemetry(Telemetry telemetry, boolean callUpdate){
         if (telemetry != null){
-//            telemetry.addData("LeftFrontTargetOrientation", this.leftFrontModuleTargetOrientation);
+            telemetry.addData("LeftFrontTargetOrientation", leftFrontModule.getModuleRotation());
 //            telemetry.addData("LeftFrontCurrentOrientation", this.leftFrontModuleCurrentOrientation);
 //            telemetry.addData("LeftRearTargetOrientation", this.leftRearModuleTargetOrientation);
-//            telemetry.addData("LeftRearCurrentOrientation", this.leftRearModuleCurrentOrientation);
+//            telemetry.addData("LeftRearCurrentOrientation", this.leftRearModuleCurrentOrientatio
+//            ..........n);
 //            telemetry.addData("RightFrontTargetOrientation", this.rightFrontModuleTargetOrientation);
 //            telemetry.addData("RightFrontCurrentOrientation", this.rightFrontModuleCurrentOrientation);
 //            telemetry.addData("RightRearTargetOrientation", this.rightRearModuleTargetOrientation);
