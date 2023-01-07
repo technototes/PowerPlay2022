@@ -53,10 +53,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     private Supplier<Double> voltageGetter;
 
 
-    public static double SERVO_SCORING_POSITION = 0.5;
-    public static double SERVO_INTAKE_POSITION = 0;
+    public static double TURRET_SCORING_POSITION = 0.5;
+    public static double TURRET_INTAKE_POSITION = 0;
 
-    public Servo handServo;
+    public Servo turretServo;
 
     // TODO: add servo in the constructor
     public LiftSubsystem(EncodedMotor<DcMotorEx> leftMotor, Supplier<Double> voltageGetter) {
@@ -237,17 +237,17 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         return getLeftPos() < L_EXTENDED_MEDIUM;
     }
 
-    private void setClawServoPosition(double pos) {
-        if (this.handServo != null) {
-            this.handServo.setPosition(pos);
+    private void setTurretServoPosition(double pos) {
+        if (this.turretServo != null) {
+            this.turretServo.setPosition(pos);
         }
     }
 
-    public void handServoScorePosition() {
-        setClawServoPosition(SERVO_SCORING_POSITION);
+    public void turretServoScorePosition() {
+        setTurretServoPosition(TURRET_SCORING_POSITION);
     }
 
-    public void handServoIntakePosition() {
-        setClawServoPosition(SERVO_INTAKE_POSITION);
+    public void turretServoIntakePosition() {
+        setTurretServoPosition(TURRET_INTAKE_POSITION);
     }
 }
