@@ -32,8 +32,11 @@ public class DrivebaseSubsystem
     @Config
     public abstract static class DriveConstants implements MecanumConstants {
 
-        public static double HEADING_ADJUST_PER_SECOND = 1.0;
+        // This is still a little slow, but not terrible
+        public static double HEADING_ADJUST_PER_SECOND = 3.0;
+        // This probably needs to be a PID controller instead of this thing...
         public static double HEADING_ADJUST_COEFF = .3;
+
         public static double VEL_SCALE = 5.0;
 
         public static double SLOW_MOTOR_SPEED = 0.6;
@@ -172,6 +175,7 @@ public class DrivebaseSubsystem
             locState = "not created";
         }
         lastAdjust = new ElapsedTime();
+        // This causes the bot to immediately rotate CCW by about 90 degrees :/
         targetHeading = getExternalHeading();
         invalidateLastHeading();
     }
