@@ -53,8 +53,9 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     private Supplier<Double> voltageGetter;
 
 
-    public static double TURRET_SCORING_POSITION = 0.5;
-    public static double TURRET_INTAKE_POSITION = 0;
+    public static double TURRET_POSITION_SIDE = 0.2;
+    public static double TURRET_POSITION_REAR = 0.4;
+    public static double TURRET_POSITION_FRONT = 0;
 
     public Servo turretServo;
 
@@ -243,11 +244,15 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
     }
 
-    public void turretServoScorePosition() {
-        setTurretServoPosition(TURRET_SCORING_POSITION);
+    public void turretServoPositionSide() {
+        setTurretServoPosition(TURRET_POSITION_SIDE);
     }
 
-    public void turretServoIntakePosition() {
-        setTurretServoPosition(TURRET_INTAKE_POSITION);
+    public void turretServoPositionFront() {
+        setTurretServoPosition(TURRET_POSITION_FRONT);
+    }
+
+    public void turretServoPositionRear() {
+        setTurretServoPosition(TURRET_POSITION_REAR);
     }
 }
