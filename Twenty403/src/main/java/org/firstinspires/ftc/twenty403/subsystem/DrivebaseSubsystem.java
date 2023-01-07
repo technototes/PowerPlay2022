@@ -1,15 +1,14 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.localization.Localizer;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.acmerobotics.roadrunner.util.Angle;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.sensor.IMU;
@@ -17,12 +16,14 @@ import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.path.subsystem.MecanumConstants;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
+
 import java.util.function.Supplier;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class DrivebaseSubsystem
-    extends MecanumDrivebaseSubsystem
-    implements Supplier<Pose2d>, Loggable {
+        extends MecanumDrivebaseSubsystem
+        implements Supplier<Pose2d>, Loggable {
 
     // Notes from Kevin:
     // The 5203 motors when direct driven
@@ -31,6 +32,8 @@ public class DrivebaseSubsystem
     @Config
     public abstract static class DriveConstants implements MecanumConstants {
 
+        public static double HEADING_ADJUST_PER_SECOND = 1.0;
+        public static double HEADING_ADJUST_COEFF = .3;
         public static double VEL_SCALE = 5.0;
 
         public static double SLOW_MOTOR_SPEED = 0.6;
@@ -48,10 +51,10 @@ public class DrivebaseSubsystem
 
         @MotorVeloPID
         public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(
-            18,
-            0,
-            1,
-            MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV)
+                18,
+                0,
+                1,
+                MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV)
         );
 
         @WheelRadius
@@ -68,7 +71,7 @@ public class DrivebaseSubsystem
 
         @KV
         public static double kV =
-            1.0 / MecanumConstants.rpmToVelocity(MAX_RPM, WHEEL_RADIUS, GEAR_RATIO);
+                1.0 / MecanumConstants.rpmToVelocity(MAX_RPM, WHEEL_RADIUS, GEAR_RATIO);
 
         @KA
         public static double kA = 0;
@@ -125,7 +128,7 @@ public class DrivebaseSubsystem
 
     private static final boolean ENABLE_POSE_DIAGNOSTICS = true;
 
-    @Log(name = "Pose2d: ")
+    // @Log(name = "Pose2d: ")
     public String poseDisplay = ENABLE_POSE_DIAGNOSTICS ? "" : null;
 
     // @Log.Number(name = "FL")
@@ -138,17 +141,21 @@ public class DrivebaseSubsystem
     public EncodedMotor<DcMotorEx> rr2;
 
     @Log
+    public double targetHeading;
+    public ElapsedTime lastAdjust;
+
+    @Log
     public String locState = "none";
 
     public OdoSubsystem odometry;
 
     public DrivebaseSubsystem(
-        EncodedMotor<DcMotorEx> fl,
-        EncodedMotor<DcMotorEx> fr,
-        EncodedMotor<DcMotorEx> rl,
-        EncodedMotor<DcMotorEx> rr,
-        IMU i,
-        OdoSubsystem odo
+            EncodedMotor<DcMotorEx> fl,
+            EncodedMotor<DcMotorEx> fr,
+            EncodedMotor<DcMotorEx> rl,
+            EncodedMotor<DcMotorEx> rr,
+            IMU i,
+            OdoSubsystem odo
     ) {
         super(fl, fr, rl, rr, i, () -> DriveConstants.class);
         fl2 = fl;
@@ -164,6 +171,9 @@ public class DrivebaseSubsystem
         } else {
             locState = "not created";
         }
+        lastAdjust = new ElapsedTime();
+        targetHeading = getExternalHeading();
+        invalidateLastHeading();
     }
 
     public void fast() {
@@ -178,6 +188,51 @@ public class DrivebaseSubsystem
         speed = DriveConstants.AUTO_MOTOR_SPEED;
     }
 
+    private double getRotationPower(double curHeading) {
+        // Check to see which direction we want to turn:
+        double dir = AngleUnit.normalizeRadians(curHeading - targetHeading);
+        locState = String.format("Dir: %f", dir);
+        return Range.clip(dir, -1, 1) * DriveConstants.HEADING_ADJUST_COEFF;
+    }
+
+    private double lastHeading = -1000;
+
+    private void invalidateLastHeading() {
+        lastHeading = -1000;
+    }
+
+    private boolean isLastHeadingValid() {
+        return lastHeading > -8;
+    }
+
+    // This should be the 'joystick' values, which transloates to
+    // a movement vector (x,y) and a heading target adjustment
+    public void updateJoystickPosition(double x, double y, double r) {
+        // This is used to control how much we will rotate the target heading based
+        // on the amount of time the stick is held. Clip it to no more than .1 seconds,
+        // just to prevent crazy stuff from happening...
+        double timeSinceLastUpdate = Range.clip(lastAdjust.seconds(), 0.001, 0.1);
+        lastAdjust.reset();
+        double curHeading = -getExternalHeading();
+
+        if (Math.abs(r) > 1e-10) {
+            targetHeading += r * timeSinceLastUpdate * DriveConstants.HEADING_ADJUST_PER_SECOND;
+            // Now, instead of using *r* to decide which direction to turn, we should use
+            // the delta from target heading
+            // We save the current heading so that when the driver stops pushing the stick,
+            // the robot stops rotating whereever it's at
+            lastHeading = curHeading;
+        } else if (isLastHeadingValid()) {
+            targetHeading = lastHeading;
+            invalidateLastHeading();
+        }
+
+        // The math & signs looks wonky, because this makes things field-relative
+        // (Recall that "3 O'Clock" is zero degrees)
+        Vector2d input = new Vector2d(-y, -x).rotated(curHeading);
+        setWeightedDrivePower(new Pose2d(input.getX(), input.getY(), getRotationPower(curHeading)));
+    }
+
     @Override
     public Pose2d get() {
         return getPoseEstimate();
@@ -190,9 +245,9 @@ public class DrivebaseSubsystem
             Pose2d pose = getPoseEstimate();
             Pose2d poseVelocity = getPoseVelocity();
             poseDisplay =
-                pose.toString() +
-                " : " +
-                (poseVelocity != null ? poseVelocity.toString() : "<null>");
+                    pose.toString() +
+                            " : " +
+                            (poseVelocity != null ? poseVelocity.toString() : "<null>");
             // System.out.println("Pose: " + poseDisplay);
         }
     }
@@ -208,8 +263,7 @@ public class DrivebaseSubsystem
         leftRear.setPower(v1 * DriveConstants.ARL_SCALE);
         rightRear.setPower(v2 * DriveConstants.ARR_SCALE);
         rightFront.setPower(v3 * DriveConstants.AFR_SCALE);
-
- */
+        */
     }
 
     // Stuff below is used for tele-op trajectory motion
@@ -265,19 +319,19 @@ public class DrivebaseSubsystem
         double endX = start.getX() + this.trajectoryX;
         double endY = start.getY() + this.trajectoryY;
         double endHeading = AngleUnit.normalizeRadians(
-            start.getHeading() + this.trajectoryAngleRadians
+                start.getHeading() + this.trajectoryAngleRadians
         );
 
         this.poseDisplay =
-            String.format(
-                "%f, %f [%f] => %f, %f [%f]",
-                start.getX(),
-                start.getY(),
-                start.getHeading(),
-                endX,
-                endY,
-                endHeading
-            );
+                String.format(
+                        "%f, %f [%f] => %f, %f [%f]",
+                        start.getX(),
+                        start.getY(),
+                        start.getHeading(),
+                        endX,
+                        endY,
+                        endHeading
+                );
         System.out.println(this.poseDisplay);
         // lineToLinearHeading seems to mess things up, maybe? :/
         Trajectory t;
