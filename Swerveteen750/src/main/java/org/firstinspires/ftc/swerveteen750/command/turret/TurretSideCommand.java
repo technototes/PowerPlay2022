@@ -14,6 +14,6 @@ public class TurretSideCommand implements Command {
 
     @Override
     public void execute() {
-        subsystem.turretServoPositionRear();
+        subsystem.turretServoPositionSide();
     }
 }
