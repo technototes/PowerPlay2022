@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -26,7 +27,7 @@ public class DriveMotorTest extends CommandOpMode {
     boolean isLeftFrontPressed, isLeftRearPressed, isRightRearPressed, isRightFrontPressed = false;
 
     // 0.1 is too little, the motor trying to move but not enough to move the robot; 0.2 is slightly better
-    public static double motorSpeed = 0.3;
+    public static double motorSpeed = 1000;
     public static double motorStopSpeed = 0.0;
 
     boolean isLeftSideConnected = true;
@@ -40,6 +41,8 @@ public class DriveMotorTest extends CommandOpMode {
         try {
             leftFrontMotor = new EncodedMotor<>(Hardware.HardwareConstant.LF_MOTOR);
             leftRearMotor = new EncodedMotor<>(Hardware.HardwareConstant.LR_MOTOR);
+            leftFrontMotor.setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            leftRearMotor.setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
         } catch (Exception e) {
             isLeftSideConnected = false;
         }
@@ -47,6 +50,8 @@ public class DriveMotorTest extends CommandOpMode {
         try {
             rightFrontMotor = new EncodedMotor<>(Hardware.HardwareConstant.RF_MOTOR);
             rightRearMotor = new EncodedMotor<>(Hardware.HardwareConstant.RR_MOTOR);
+            rightFrontMotor.setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightRearMotor.setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
         } catch (Exception e) {
             isRightSideConnected = false;
         }
@@ -60,35 +65,35 @@ public class DriveMotorTest extends CommandOpMode {
     @Override
     public void runLoop() {
         double loopSeconds = t.seconds();
-        if (isLeftSideConnected){
+        if (isLeftSideConnected) {
             if (this.gamepad1.dpad_left) {
-                leftFrontMotor.setSpeed(motorSpeed);
+                leftFrontMotor.setVelocity(motorSpeed);
                 isLeftFrontPressed = true;
             } else {
-                leftFrontMotor.setSpeed(motorStopSpeed);
+                leftFrontMotor.setVelocity(motorStopSpeed);
                 isLeftFrontPressed = false;
             }
             if (this.gamepad1.dpad_down) {
-                leftRearMotor.setSpeed(motorSpeed);
+                leftRearMotor.setVelocity(motorSpeed);
                 isLeftRearPressed = true;
             } else {
-                leftRearMotor.setSpeed(motorStopSpeed);
+                leftRearMotor.setVelocity(motorStopSpeed);
                 isLeftRearPressed = false;
             }
         }
-        if (isRightSideConnected){
+        if (isRightSideConnected) {
             if (this.gamepad1.dpad_up) {
-                rightRearMotor.setSpeed(motorSpeed);
+                rightRearMotor.setVelocity(motorSpeed);
                 isRightRearPressed = true;
             } else {
-                rightRearMotor.setSpeed(motorStopSpeed);
+                rightRearMotor.setVelocity(motorStopSpeed);
                 isRightRearPressed = false;
             }
             if (this.gamepad1.dpad_right) {
-                rightFrontMotor.setSpeed(motorSpeed);
+                rightFrontMotor.setVelocity(motorSpeed);
                 isRightFrontPressed = true;
             } else {
-                rightFrontMotor.setSpeed(motorStopSpeed);
+                rightFrontMotor.setVelocity(motorStopSpeed);
                 isRightFrontPressed = false;
             }
         }
@@ -101,6 +106,10 @@ public class DriveMotorTest extends CommandOpMode {
                     "LeftFront - Motor - Encoder", leftFrontMotor.getEncoder().getPosition());
             telemetry.addData(
                     "LeftRear - Motor - Encoder", leftRearMotor.getEncoder().getPosition());
+            telemetry.addData(
+                    "LeftFront - Motor - Velocity", leftFrontMotor.getDevice().getVelocity());
+            telemetry.addData(
+                    "LeftRear - Motor - Velocity", leftRearMotor.getDevice().getVelocity());
         } else {
             telemetry.addLine("WARNING: Left Disconnected");
         }
@@ -109,6 +118,10 @@ public class DriveMotorTest extends CommandOpMode {
                     "RightRear - Motor - Encoder", rightRearMotor.getEncoder().getPosition());
             telemetry.addData(
                     "RightFront - Motor - Encoder", rightFrontMotor.getEncoder().getPosition());
+            telemetry.addData(
+                    "RightRear - Motor - Velocity", rightRearMotor.getDevice().getVelocity());
+            telemetry.addData(
+                    "RightFront - Motor - Velocity", rightFrontMotor.getDevice().getVelocity());
         } else {
             telemetry.addLine("WARNING: Right Disconnected");
         }
