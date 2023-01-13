@@ -33,9 +33,8 @@ public class DrivebaseSubsystem
     public abstract static class DriveConstants implements MecanumConstants {
 
         // This is still a little slow, but not terrible
-        public static double HEADING_ADJUST_PER_SECOND = 3.0;
-        // This probably needs to be a PID controller instead of this thing...
-        public static double HEADING_ADJUST_COEFF = .3;
+        public static double HEADING_ADJUST_PER_SECOND = 30;
+        public static double HEADING_ADJUST_COEFF = 1.0;
 
         public static double VEL_SCALE = 5.0;
 
@@ -175,7 +174,6 @@ public class DrivebaseSubsystem
             locState = "not created";
         }
         lastAdjust = new ElapsedTime();
-        // This causes the bot to immediately rotate CCW by about 90 degrees :/
         targetHeading = getExternalHeading();
         invalidateLastHeading();
     }
@@ -199,14 +197,15 @@ public class DrivebaseSubsystem
         return Range.clip(dir, -1, 1) * DriveConstants.HEADING_ADJUST_COEFF;
     }
 
-    private double lastHeading = -1000;
+    private final double INVALID_HEADING = -1000;
+    private double lastHeading = INVALID_HEADING;
 
     private void invalidateLastHeading() {
-        lastHeading = -1000;
+        lastHeading = INVALID_HEADING;
     }
 
     private boolean isLastHeadingValid() {
-        return lastHeading > -8;
+        return lastHeading != INVALID_HEADING;
     }
 
     // This should be the 'joystick' values, which transloates to
@@ -217,17 +216,25 @@ public class DrivebaseSubsystem
         // just to prevent crazy stuff from happening...
         double timeSinceLastUpdate = Range.clip(lastAdjust.seconds(), 0.001, 0.1);
         lastAdjust.reset();
-        double curHeading = -getExternalHeading();
+        double curHeading = getExternalHeading();
 
         if (Math.abs(r) > 1e-10) {
-            targetHeading += r * timeSinceLastUpdate * DriveConstants.HEADING_ADJUST_PER_SECOND;
+            double headingChange = r * timeSinceLastUpdate * DriveConstants.HEADING_ADJUST_PER_SECOND;
+            if (isLastHeadingValid()) {
+                targetHeading = lastHeading + headingChange;
+            } else {
+                targetHeading = curHeading + headingChange;
+            }
+
             // Now, instead of using *r* to decide which direction to turn, we should use
             // the delta from target heading
             // We save the current heading so that when the driver stops pushing the stick,
             // the robot stops rotating whereever it's at
             lastHeading = curHeading;
         } else if (isLastHeadingValid()) {
-            targetHeading = lastHeading;
+            // If we're stopping from a user-requested rotation
+            // just set the target to the current
+            targetHeading = curHeading;
             invalidateLastHeading();
         }
 
@@ -284,7 +291,8 @@ public class DrivebaseSubsystem
             targetPose = new Pose2d(trajectoryX, trajectoryY, trajectoryAngleRadians);
             startNewTrajectory();
         } else {
-            // queueTrajectory(deltaX, deltaY, deltaAngleRadians);
+             // queueTrajectory(deltaX, deltaY, deltaAngleRadians);
+
         }
     }
 
