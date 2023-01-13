@@ -97,11 +97,12 @@ public class OverrideLocalizer implements Localizer {
         }
         count++;
         if (adjustment.length() > 0) {
-            driveSubsys.locState = String.format("%d: %s", count, adjustment.toString());
+            // driveSubsys.locState = String.format("%d: %s", count, adjustment.toString());
             System.out.println("Gabriel:" + adjustment);
-        } else {
-            driveSubsys.locState = String.format("%d: No odo adjustment", count);
         }
+        // else {
+        //     driveSubsys.locState = String.format("%d: No odo adjustment", count);
+        // }
         return new Pose2d(x, y, h);
     }
 

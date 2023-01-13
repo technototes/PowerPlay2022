@@ -32,8 +32,13 @@ public class DrivebaseSubsystem
     @Config
     public abstract static class DriveConstants implements MecanumConstants {
 
-        // This is still a little slow, but not terrible
+        // We could use a PID controller for the heading, but that seems messy...
+
+        // This controls how far the controller pushes the robot's heading.
         public static double HEADING_ADJUST_PER_SECOND = 30;
+        // Adjust this toward zero if the bot over-turns, then turns back too often
+        // Adjust this away from zero if the bot doesn't turn fast enough for your liking
+        // Nothing higher than 1.0 (or lower than -1.0) is sensible
         public static double HEADING_ADJUST_COEFF = 1.0;
 
         public static double VEL_SCALE = 5.0;
@@ -142,12 +147,11 @@ public class DrivebaseSubsystem
     // @Log.Number(name = "RR")
     public EncodedMotor<DcMotorEx> rr2;
 
-    @Log
     public double targetHeading;
     public ElapsedTime lastAdjust;
 
     @Log
-    public String locState = "none";
+    public String driveInfo = "none";
 
     public OdoSubsystem odometry;
 
@@ -169,9 +173,6 @@ public class DrivebaseSubsystem
 
         if (this.getLocalizer() != null && odo != null) {
             this.setLocalizer(new OverrideLocalizer(this.getLocalizer(), odo, this));
-            locState = "created";
-        } else {
-            locState = "not created";
         }
         lastAdjust = new ElapsedTime();
         targetHeading = getExternalHeading();
@@ -192,20 +193,26 @@ public class DrivebaseSubsystem
 
     private double getRotationPower(double curHeading) {
         // Check to see which direction we want to turn:
-        double dir = AngleUnit.normalizeRadians(curHeading - targetHeading);
-        locState = String.format("Dir: %f", dir);
+        double dir = AngleUnit.normalizeRadians(targetHeading - curHeading);
+        driveInfo = String.format("Dir: %f (t: %f, c: %f)", dir, targetHeading, curHeading);
         return Range.clip(dir, -1, 1) * DriveConstants.HEADING_ADJUST_COEFF;
     }
 
-    private final double INVALID_HEADING = -1000;
-    private double lastHeading = INVALID_HEADING;
+    private final double INVALID_HEADING = 1024.0;
+    private final double INITIAL_HEADING = -1024.0;
+
+    private double lastHeading = INITIAL_HEADING;
 
     private void invalidateLastHeading() {
         lastHeading = INVALID_HEADING;
     }
 
     private boolean isLastHeadingValid() {
-        return lastHeading != INVALID_HEADING;
+        return lastHeading != INVALID_HEADING && !isInitialHeading();
+    }
+
+    private boolean isInitialHeading() {
+        return lastHeading == INITIAL_HEADING;
     }
 
     // This should be the 'joystick' values, which transloates to
@@ -216,10 +223,16 @@ public class DrivebaseSubsystem
         // just to prevent crazy stuff from happening...
         double timeSinceLastUpdate = Range.clip(lastAdjust.seconds(), 0.001, 0.1);
         lastAdjust.reset();
+
         double curHeading = getExternalHeading();
+        // Deal with "we just started" so we don't want the bot to move until the driver says so
+        if (isInitialHeading()) {
+            targetHeading = curHeading;
+            lastHeading = curHeading;
+        }
 
         if (Math.abs(r) > 1e-10) {
-            double headingChange = r * timeSinceLastUpdate * DriveConstants.HEADING_ADJUST_PER_SECOND;
+            double headingChange = -r * timeSinceLastUpdate * DriveConstants.HEADING_ADJUST_PER_SECOND;
             if (isLastHeadingValid()) {
                 targetHeading = lastHeading + headingChange;
             } else {
@@ -241,7 +254,9 @@ public class DrivebaseSubsystem
         // The math & signs looks wonky, because this makes things field-relative
         // (Recall that "3 O'Clock" is zero degrees)
         Vector2d input = new Vector2d(-y, -x).rotated(curHeading);
-        setWeightedDrivePower(new Pose2d(input.getX(), input.getY(), getRotationPower(curHeading)));
+        double rotationPower = getRotationPower(curHeading);
+        setWeightedDrivePower(new Pose2d(input.getX(), input.getY(), rotationPower));
+
     }
 
     @Override
