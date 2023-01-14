@@ -131,7 +131,7 @@ public class SwerveDriveSubsystem extends SwerveDrive {
          * convenience. Make sure to exclude any gear ratio included in MOTOR_CONFIG from GEAR_RATIO.
          */
         public static double WHEEL_RADIUS = 1.4; // in
-        public static double GEAR_RATIO = 1/(3.5*1.5*2); // output (wheel) speed / input (motor) speed
+        public static double GEAR_RATIO = 1 / (3.5 * 1.5 * 2); // output (wheel) speed / input (motor) speed
         public static double TRACK_WIDTH = 9; // in
 
         /*
@@ -263,7 +263,7 @@ public class SwerveDriveSubsystem extends SwerveDrive {
         PhotonCore.experimental.setMaximumParallelCommands(MAX_PARALLEL_COMMANDS);
     }
 
-    public SwerveDriveSubsystem(HardwareMap hardwareMap){
+    public SwerveDriveSubsystem(HardwareMap hardwareMap) {
         // For to be compatible with the old code
         this(
                 hardwareMap,
@@ -308,6 +308,7 @@ public class SwerveDriveSubsystem extends SwerveDrive {
                 SwerveDriveConstant.MAX_ANG_VEL, SwerveDriveConstant.MAX_ANG_ACCEL
         );
     }
+
     public static TrajectorySequenceBuilder trajectorySequenceBuilder(Pose2d startPose, double startHeading) {
         return new TrajectorySequenceBuilder(
                 startPose,
@@ -316,6 +317,7 @@ public class SwerveDriveSubsystem extends SwerveDrive {
                 SwerveDriveConstant.MAX_ANG_VEL, SwerveDriveConstant.MAX_ANG_ACCEL
         );
     }
+
     public void turnAsync(double angle) {
         trajectorySequenceRunner.followTrajectorySequenceAsync(
                 trajectorySequenceBuilder(getPoseEstimate())
@@ -355,7 +357,7 @@ public class SwerveDriveSubsystem extends SwerveDrive {
         return trajectorySequenceRunner.getLastPoseError();
     }
 
-    public void updateModules(){
+    public void updateModules() {
         for (SwerveModule m : modules) m.update();
         PhotonCore.CONTROL_HUB.clearBulkCache();
     }
@@ -365,10 +367,10 @@ public class SwerveDriveSubsystem extends SwerveDrive {
         updatePoseEstimate();
         DriveSignal signal = trajectorySequenceRunner.update(getPoseEstimate(), getPoseVelocity());
         if (signal != null) setDriveSignal(signal);
-        if (debugTelemetryEnabled){
+        if (debugTelemetryEnabled) {
             modulesOrientationTelemetry(this.telemetry, this.telemetryCallUpdate);
         }
-        if (this.updateCallback != null){
+        if (this.updateCallback != null) {
             this.updateCallback.apply(this);
         }
     }
@@ -503,14 +505,14 @@ public class SwerveDriveSubsystem extends SwerveDrive {
         rightFrontModule.setServoPower(v3);
     }
 
-    public void enableDiagnoseTelemetry(Telemetry telemetry, boolean callUpdate){
+    public void enableDiagnoseTelemetry(Telemetry telemetry, boolean callUpdate) {
         this.telemetry = telemetry;
         this.debugTelemetryEnabled = true;
         this.telemetryCallUpdate = callUpdate;
     }
 
-    public Integer modulesOrientationTelemetry(Telemetry telemetry, boolean callUpdate){
-        if (telemetry != null){
+    public Integer modulesOrientationTelemetry(Telemetry telemetry, boolean callUpdate) {
+        if (telemetry != null) {
             telemetry.addData("LeftFrontTargetOrientation", this.leftFrontModuleTargetOrientation);
             telemetry.addData("LeftFrontCurrentOrientation", this.leftFrontModuleCurrentOrientation);
             telemetry.addData("LeftRearTargetOrientation", this.leftRearModuleTargetOrientation);
@@ -519,7 +521,7 @@ public class SwerveDriveSubsystem extends SwerveDrive {
             telemetry.addData("RightFrontCurrentOrientation", this.rightFrontModuleCurrentOrientation);
             telemetry.addData("RightRearTargetOrientation", this.rightRearModuleTargetOrientation);
             telemetry.addData("RightRearCurrentOrientation", this.rightRearModuleCurrentOrientation);
-            if (callUpdate){
+            if (callUpdate) {
                 telemetry.update();
             }
         }
@@ -528,16 +530,19 @@ public class SwerveDriveSubsystem extends SwerveDrive {
 
     private double trackWidth, wheelBase;
 
-    public double[] calculateModuleOrientation(Pose2d joystick){
+    //r is between 0 to 1 and measures the speed it is rotating
+    //for swerve we take the joystick input of the x direction - rotational speed * the distance between the front part of the wheel to the back
+    public double[] calculateModuleOrientation(Pose2d joystick) {
         double x = joystick.getX();
         double y = joystick.getY();
         double r = joystick.getHeading();
         double a = x - r * (wheelBase / 2);
+
         double b = x + r * (wheelBase / 2);
         double c = y - r * (trackWidth / 2);
         double d = y + r * (trackWidth / 2);
         return new double[]{
-                Math.toDegrees(Math.atan2(b, c)),
+                Math.toDegrees(Math.atan2(b, c)), //arctan^2(
                 Math.toDegrees(Math.atan2(b, d)),
                 Math.toDegrees(Math.atan2(a, d)),
                 Math.toDegrees(Math.atan2(a, c))

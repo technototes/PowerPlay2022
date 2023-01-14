@@ -6,7 +6,6 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.structure.CommandOpMode;
 
@@ -14,8 +13,7 @@ import org.firstinspires.ftc.swerveteen750.Hardware;
 
 @Config
 @TeleOp(group = "Test-Hardware")
-@SuppressWarnings("unused")
-public class DriveMotorTest extends CommandOpMode {
+public class SwerveDriveMotorTestVelocity extends CommandOpMode {
     ElapsedTime t;
 
     EncodedMotor<DcMotorEx> leftFrontMotor;
@@ -26,8 +24,8 @@ public class DriveMotorTest extends CommandOpMode {
     boolean isLeftFrontPressed, isLeftRearPressed, isRightRearPressed, isRightFrontPressed = false;
 
     // 0.1 is too little, the motor trying to move but not enough to move the robot; 0.2 is slightly better
-    public static double motorSpeed = 0.3;
-    public static double motorStopSpeed = 0.0;
+    public static double motorVelocity = 0.3;
+    public static double motorStopVelocity = 0.0;
 
     boolean isLeftSideConnected = true;
     boolean isRightSideConnected = true;
@@ -60,33 +58,33 @@ public class DriveMotorTest extends CommandOpMode {
     @Override
     public void runLoop() {
         double loopSeconds = t.seconds();
-        if (isLeftSideConnected){
+        if (isLeftSideConnected) {
             if (this.gamepad1.dpad_left) {
-                leftFrontMotor.setSpeed(motorSpeed);
+                leftFrontMotor.setVelocity(motorVelocity);
                 isLeftFrontPressed = true;
 
-                leftRearMotor.setSpeed(motorSpeed);
+                leftRearMotor.setVelocity(motorVelocity);
                 isLeftRearPressed = true;
             } else {
-                leftFrontMotor.setSpeed(motorStopSpeed);
+                leftFrontMotor.setVelocity(motorStopVelocity);
                 isLeftFrontPressed = false;
 
-                leftRearMotor.setSpeed(motorStopSpeed);
+                leftRearMotor.setVelocity(motorStopVelocity);
                 isLeftRearPressed = false;
             }
         }
-        if (isRightSideConnected){
+        if (isRightSideConnected) {
             if (this.gamepad1.dpad_right) {
-                rightRearMotor.setSpeed(motorSpeed);
+                rightRearMotor.setVelocity(motorVelocity);
                 isRightRearPressed = true;
 
-                rightFrontMotor.setSpeed(motorSpeed);
+                rightFrontMotor.setVelocity(motorVelocity);
                 isRightFrontPressed = true;
             } else {
-                rightRearMotor.setSpeed(motorStopSpeed);
+                rightRearMotor.setVelocity(motorStopVelocity);
                 isRightRearPressed = false;
 
-                rightFrontMotor.setSpeed(motorStopSpeed);
+                rightFrontMotor.setVelocity(motorStopVelocity);
                 isRightFrontPressed = false;
             }
         }

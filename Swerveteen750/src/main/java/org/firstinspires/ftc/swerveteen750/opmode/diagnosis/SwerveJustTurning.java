@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.technototes.library.structure.CommandOpMode;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
 
 @TeleOp(group = "Swerve")
@@ -29,8 +30,10 @@ public class SwerveJustTurning extends CommandOpMode {
         drive.startIMUThread(this);
     }
 
+    public double curAngle = 0.0;
     @Override
     public void runLoop(){
+        /*
         drive.setWeightedDrivePower(
                 new Pose2d(
                         new Vector2d(
@@ -40,6 +43,13 @@ public class SwerveJustTurning extends CommandOpMode {
                         -gamepad1.right_stick_x
                 )
         );
+        */
+        double value = curAngle > 2 * Math.PI ? (4 * Math.PI - curAngle) : curAngle;
+        drive.setWeightedDrivePower(new Pose2d(Math.cos(value), Math.sin(value)));
+        curAngle = curAngle + .1;
+        if (curAngle > 4 * Math.PI) {
+            curAngle = 0;
+        }
         if (gamepad1.right_stick_button) drive.setExternalHeading(0);
 
         drive.update();
@@ -50,6 +60,10 @@ public class SwerveJustTurning extends CommandOpMode {
         telemetry.addData("y", poseEstimate.getY());
         telemetry.addData("LeftStick-X", gamepad1.left_stick_x);
         telemetry.addData("LeftStick-Y", gamepad1.left_stick_y);
+        telemetry.addData("lf", drive.leftFrontModule.getModuleRotation() % Math.PI);
+        telemetry.addData("lr", drive.leftRearModule.getModuleRotation() % Math.PI);
+        telemetry.addData("rf", drive.rightFrontModule.getModuleRotation() % Math.PI);
+        telemetry.addData("rr", drive.rightRearModule.getModuleRotation() % Math.PI);
         telemetry.update();
     }
 }
