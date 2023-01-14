@@ -15,6 +15,7 @@ import org.firstinspires.ftc.swerveteen750.Hardware;
 import org.firstinspires.ftc.swerveteen750.Robot;
 import org.firstinspires.ftc.swerveteen750.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
+import org.firstinspires.ftc.swerveteen750.subsystem.drive.SwerveDriveSubsystem;
 
 @TeleOp(group = "Swerve")
 @SuppressWarnings("unused")
@@ -78,6 +79,7 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         telemetry.addData("RR - Wheel Velocity", Math.toDegrees(robot.swerveDriveSubsystem.rightRearModule.getWheelVelocity()));
         telemetry.addData("STICK_X_SCALAR", ConfigurableSwerveDriveSubsystem.STICK_X_SCALAR);
         telemetry.addData("STICK_Y_SCALAR", ConfigurableSwerveDriveSubsystem.STICK_Y_SCALAR);
+
         if (robot.liftSubsystem != null) {
             telemetry.addData("is lift high", robot.liftSubsystem.isLiftHigh());
             if (robot.liftSubsystem.isLiftHigh()) {
