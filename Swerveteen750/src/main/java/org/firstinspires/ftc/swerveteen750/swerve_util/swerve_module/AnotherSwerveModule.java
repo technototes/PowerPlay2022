@@ -47,7 +47,7 @@ public class AnotherSwerveModule {
     private DcMotorEx motor;
     private CRServo servo;
     private AbsoluteAnalogEncoder encoder;
-    private PIDFController rotationController;
+    public PIDFController rotationController;
     private CRServoProfiler rotationProfiler;
 
     private boolean wheelFlipped = false;
@@ -133,6 +133,8 @@ public class AnotherSwerveModule {
     public void setPIDFCoefficients(DcMotor.RunMode runMode, PIDFCoefficients coefficients) {
         motor.setPIDFCoefficients(runMode, coefficients);
     }
+
+    public
 
     double lastMotorPower = 0;
 
