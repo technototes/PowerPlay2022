@@ -47,6 +47,8 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(4, 0, 0);
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(4, 0, 0);
 
+    public static double MAX_SPEED = 1;
+
     public static double FL_STATIC = 0.2;
     public static double FR_STATIC = 0.2;
     public static double RL_STATIC = 0.2;
@@ -558,6 +560,9 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         rightFrontModule.setTargetRotation(v2);
         rightRearModule.setTargetRotation(v3);
     }
+    public void setLFModuleOrientations(double v0){
+        leftFrontModule.setTargetRotation((v0));
+    }
 
     public void setModuleVelocities(double v, double v1, double v2, double v3) {
         leftFrontModule.setServoPower(v);
@@ -593,4 +598,20 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public static double getTicksFromInches(double distance) {
         return Math.PI * SwerveDriveConstant.WHEEL_RADIUS * distance;
     }
+    public double getLFModuleRotationOrientation(){
+        return leftFrontModule.getModuleRotation();
+    }
+    public double getLRRotationOrientation(){
+        return leftRearModule.getModuleRotation();
+    }
+    public double getRFRotationOrientation(){
+        return rightFrontModule.getModuleRotation();
+    }
+    public double getRRRotationOrientation(){
+        return rightRearModule.getModuleRotation();
+    }
+
+
+
+
 }
