@@ -150,6 +150,7 @@ public class AnotherSwerveModule {
         motor.setPower(power);
     }
 
+    /// this can be direct substitution for setMotorPower as it will do the conversion
     public void setMotorVelocity(double velocity) {
         lastMotorPower = velocity;
 

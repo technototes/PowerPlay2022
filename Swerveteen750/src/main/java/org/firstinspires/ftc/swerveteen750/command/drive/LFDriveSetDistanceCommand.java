@@ -10,12 +10,14 @@ public class LFDriveSetDistanceCommand implements Command {
     private double ticksPerdistance;
     private double startingEncoderValue;
 
+    // TODO: take AnotherSwerveModule in constructor instead of entire drive subsystem
     public LFDriveSetDistanceCommand(ConfigurableSwerveDriveSubsystem s, double d) {
         subsystem = s;
         ticksPerdistance = ConfigurableSwerveDriveSubsystem.getTicksFromInches(d);
         startingEncoderValue = s.leftFrontModule.getWheelPosition();
     }
 
+    // TODO: use setMotorVelocity instead of setMotorPower
     @Override
     public void execute() {
         while (subsystem.leftFrontModule.getWheelPosition() - startingEncoderValue < ticksPerdistance) {
