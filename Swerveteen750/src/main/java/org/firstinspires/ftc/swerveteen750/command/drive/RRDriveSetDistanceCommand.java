@@ -3,24 +3,34 @@ package org.firstinspires.ftc.swerveteen750.command.drive;
 import com.technototes.library.command.Command;
 
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
+import org.firstinspires.ftc.swerveteen750.swerve_util.swerve_module.AnotherSwerveModule;
 
 public class RRDriveSetDistanceCommand implements Command {
-    private ConfigurableSwerveDriveSubsystem subsystem;
+
     private double ticksPerdistance;
     private double startingEncoderValue;
+    private AnotherSwerveModule module;
 
-    public RRDriveSetDistanceCommand(ConfigurableSwerveDriveSubsystem s, double d) {
-        subsystem = s;
+    public RRDriveSetDistanceCommand(AnotherSwerveModule m, double d) {
+        module = m;
         ticksPerdistance = ConfigurableSwerveDriveSubsystem.getTicksFromInches(d);
-        startingEncoderValue = s.rightRearModule.getWheelPosition();
+        startingEncoderValue = module.getWheelPosition();
     }
+
 
     @Override
     public void execute() {
-        while (subsystem.rightRearModule.getWheelPosition() - startingEncoderValue < ticksPerdistance) {
-            subsystem.rightRearModule.setMotorPower(1);
+        module.setMotorVelocity(1);
+    }
+
+    @Override
+    public boolean isFinished() {
+        if (module.getWheelPosition() - startingEncoderValue < ticksPerdistance) {
+            return false;
+        } else {
+            module.setMotorVelocity(0);
+            return true;
         }
-        subsystem.rightRearModule.setMotorPower(0);
     }
 
 }
