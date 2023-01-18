@@ -4,26 +4,35 @@ import com.qualcomm.robotcore.util.Range;
 import com.technototes.library.command.Command;
 
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
+import org.firstinspires.ftc.swerveteen750.swerve_util.swerve_module.AnotherSwerveModule;
 
 public class LFDriveSetDistanceCommand implements Command {
-    private ConfigurableSwerveDriveSubsystem subsystem;
+
     private double ticksPerdistance;
     private double startingEncoderValue;
+    private AnotherSwerveModule module;
 
-    // TODO: take AnotherSwerveModule in constructor instead of entire drive subsystem
-    public LFDriveSetDistanceCommand(ConfigurableSwerveDriveSubsystem s, double d) {
-        subsystem = s;
+
+    public LFDriveSetDistanceCommand(AnotherSwerveModule m, double d) {
+        module = m;
         ticksPerdistance = ConfigurableSwerveDriveSubsystem.getTicksFromInches(d);
-        startingEncoderValue = s.leftFrontModule.getWheelPosition();
+        startingEncoderValue = module.getWheelPosition();
     }
 
-    // TODO: use setMotorVelocity instead of setMotorPower
+
     @Override
     public void execute() {
-        while (subsystem.leftFrontModule.getWheelPosition() - startingEncoderValue < ticksPerdistance) {
-            subsystem.leftFrontModule.setMotorPower(1);
-        }
-        subsystem.leftFrontModule.setMotorPower(0);
+        module.setMotorVelocity(1);
     }
 
+    @Override
+    public boolean isFinished() {
+
+        if (module.getWheelPosition() - startingEncoderValue < ticksPerdistance) {
+            return false;
+        } else {
+            module.setMotorVelocity(0);
+            return true;
+        }
+    }
 }
