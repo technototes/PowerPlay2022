@@ -6,14 +6,15 @@ import com.technototes.library.command.Command;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
 import org.firstinspires.ftc.swerveteen750.swerve_util.swerve_module.AnotherSwerveModule;
 
-public class LFDriveSetDistanceCommand implements Command {
+public class SwerveDriveSetDistanceCommand implements Command {
 
     private double ticksPerdistance;
     private double startingEncoderValue;
     private AnotherSwerveModule module;
 
 
-    public LFDriveSetDistanceCommand(AnotherSwerveModule m, double d) {
+
+    public SwerveDriveSetDistanceCommand(AnotherSwerveModule m, double d) {
         module = m;
         ticksPerdistance = ConfigurableSwerveDriveSubsystem.getTicksFromInches(d);
         startingEncoderValue = module.getWheelPosition();

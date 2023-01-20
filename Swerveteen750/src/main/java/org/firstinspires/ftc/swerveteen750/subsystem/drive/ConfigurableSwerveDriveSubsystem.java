@@ -285,10 +285,10 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public static PIDCoefficients RR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.8, 0, 0);
 
     // the default value if PIDFCoefficients(p=10.000000 i=3.000000 d=0.000000 f=0.000000 alg=LegacyPID)
-    public static PIDFCoefficients LF_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(10, 3, 0, 0);
-    public static PIDFCoefficients LR_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(10, 3, 0, 0);
-    public static PIDFCoefficients RF_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(10, 3, 0, 0);
-    public static PIDFCoefficients RR_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(10, 3, 0, 0);
+    public static PIDFCoefficients LF_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(2, 0, 0, 15);
+    public static PIDFCoefficients LR_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(2, 0, 0, 12);
+    public static PIDFCoefficients RF_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(0.2, 0, 0, 13.3);
+    public static PIDFCoefficients RR_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(2, 3, 0, 13.4);
 
 
     public ConfigurableSwerveDriveSubsystem(HardwareMap hardwareMap) {
