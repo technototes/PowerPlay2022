@@ -10,6 +10,7 @@ import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.structure.CommandOpMode;
 
 import org.firstinspires.ftc.swerveteen750.Hardware;
+import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
 
 @Config
 @TeleOp(group = "Test-Hardware")
@@ -37,14 +38,18 @@ public class SwerveDriveMotorTestVelocity extends CommandOpMode {
         /// Note: here is using the hardware from TechnoLib
         try {
             leftFrontMotor = new EncodedMotor<>(Hardware.HardwareConstant.LF_MOTOR);
+            leftFrontMotor.setPIDFCoeffecients(ConfigurableSwerveDriveSubsystem.LF_MOTOR_VELO_PIDF_COEF);
             leftRearMotor = new EncodedMotor<>(Hardware.HardwareConstant.LR_MOTOR);
+            leftRearMotor.setPIDFCoeffecients(ConfigurableSwerveDriveSubsystem.LR_MOTOR_VELO_PIDF_COEF);
         } catch (Exception e) {
             isLeftSideConnected = false;
         }
 
         try {
             rightFrontMotor = new EncodedMotor<>(Hardware.HardwareConstant.RF_MOTOR);
+            rightFrontMotor.setPIDFCoeffecients(ConfigurableSwerveDriveSubsystem.RF_MOTOR_VELO_PIDF_COEF);
             rightRearMotor = new EncodedMotor<>(Hardware.HardwareConstant.RR_MOTOR);
+            rightRearMotor.setPIDFCoeffecients(ConfigurableSwerveDriveSubsystem.RR_MOTOR_VELO_PIDF_COEF);
         } catch (Exception e) {
             isRightSideConnected = false;
         }
@@ -94,17 +99,18 @@ public class SwerveDriveMotorTestVelocity extends CommandOpMode {
 
         if (isLeftSideConnected) {
             telemetry.addData(
-                    "LeftFront - Motor - Encoder", leftFrontMotor.getEncoder().getPosition());
+                    "LeftFront - Motor - Velocity", leftFrontMotor.getDevice().getVelocity());
             telemetry.addData(
-                    "LeftRear - Motor - Encoder", leftRearMotor.getEncoder().getPosition());
+                    "LeftRear - Motor - Velocity", leftRearMotor.getDevice().getVelocity());
         } else {
             telemetry.addLine("WARNING: Left Disconnected");
         }
         if (isRightSideConnected) {
             telemetry.addData(
-                    "RightRear - Motor - Encoder", rightRearMotor.getEncoder().getPosition());
+                    "RightRear - Motor - Velocity", rightRearMotor.getDevice().getVelocity());
             telemetry.addData(
-                    "RightFront - Motor - Encoder", rightFrontMotor.getEncoder().getPosition());
+                    "RightFront - Motor - Velocity++" +
+                            "]", rightFrontMotor.getDevice().getVelocity());
         } else {
             telemetry.addLine("WARNING: Right Disconnected");
         }

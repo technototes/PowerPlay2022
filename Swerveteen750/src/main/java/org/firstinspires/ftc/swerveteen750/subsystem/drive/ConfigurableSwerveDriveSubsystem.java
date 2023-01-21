@@ -47,6 +47,8 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(4, 0, 0);
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(4, 0, 0);
 
+    public static double MAX_SPEED = 1;
+
     public static double FL_STATIC = 0.2;
     public static double FR_STATIC = 0.2;
     public static double RL_STATIC = 0.2;
@@ -146,7 +148,7 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
          * convenience. Make sure to exclude any gear ratio included in MOTOR_CONFIG from GEAR_RATIO.
          */
         public static double WHEEL_RADIUS = 1.4; // in
-        public static double GEAR_RATIO = 1/(3.5*1.5*2); // output (wheel) speed / input (motor) speed
+        public static double GEAR_RATIO = 1 / (3.5 * 1.5 * 2); // output (wheel) speed / input (motor) speed
         public static double TRACK_WIDTH = 9; // in
 
         /*
@@ -283,20 +285,20 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public static PIDCoefficients RR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.8, 0, 0);
 
     // the default value if PIDFCoefficients(p=10.000000 i=3.000000 d=0.000000 f=0.000000 alg=LegacyPID)
-    public static PIDFCoefficients LF_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(10, 3, 0, 0);
-    public static PIDFCoefficients LR_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(10, 3, 0, 0);
-    public static PIDFCoefficients RF_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(10, 3, 0, 0);
-    public static PIDFCoefficients RR_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(10, 3, 0, 0);
+    public static PIDFCoefficients LF_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(2, 0, 0, 15);
+    public static PIDFCoefficients LR_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(2, 0, 0, 12);
+    public static PIDFCoefficients RF_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(0.2, 0, 0, 13.5);
+    public static PIDFCoefficients RR_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(2, 0, 0, 13.4);
 
 
-    public ConfigurableSwerveDriveSubsystem(HardwareMap hardwareMap){
+    public ConfigurableSwerveDriveSubsystem(HardwareMap hardwareMap) {
         this(
                 hardwareMap,
                 hardwareMap.get(BNO055IMU.class, "imu"),
                 new AnotherSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", LF_SERVO_ROTATION_PID_COEF, LF_MOTOR_VELO_PIDF_COEF),
                 new AnotherSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", LR_SERVO_ROTATION_PID_COEF, LR_MOTOR_VELO_PIDF_COEF),
-                new AnotherSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RF_SERVO_ROTATION_PID_COEF, RF_MOTOR_VELO_PIDF_COEF),
-                new AnotherSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", RR_SERVO_ROTATION_PID_COEF, RR_MOTOR_VELO_PIDF_COEF)
+                new AnotherSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RR_SERVO_ROTATION_PID_COEF, RR_MOTOR_VELO_PIDF_COEF),
+                new AnotherSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", RF_SERVO_ROTATION_PID_COEF, RF_MOTOR_VELO_PIDF_COEF)
         );
     }
 
@@ -334,6 +336,7 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
                 SwerveDriveConstant.MAX_ANG_VEL, SwerveDriveConstant.MAX_ANG_ACCEL
         );
     }
+
     public static TrajectorySequenceBuilder trajectorySequenceBuilder(Pose2d startPose, double startHeading) {
         return new TrajectorySequenceBuilder(
                 startPose,
@@ -342,6 +345,7 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
                 SwerveDriveConstant.MAX_ANG_VEL, SwerveDriveConstant.MAX_ANG_ACCEL
         );
     }
+
     public void turnAsync(double angle) {
         trajectorySequenceRunner.followTrajectorySequenceAsync(
                 trajectorySequenceBuilder(getPoseEstimate())
@@ -381,7 +385,7 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         return trajectorySequenceRunner.getLastPoseError();
     }
 
-    public void updateModules(){
+    public void updateModules() {
         StringBuilder logLine = new StringBuilder();
         logLine.append("Modules: ");
         for (AnotherSwerveModule m : modules) {
@@ -397,10 +401,10 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         updatePoseEstimate();
         DriveSignal signal = trajectorySequenceRunner.update(getPoseEstimate(), getPoseVelocity());
         if (signal != null) setDriveSignal(signal);
-        if (debugTelemetryEnabled){
+        if (debugTelemetryEnabled) {
             modulesOrientationTelemetry(this.telemetry, this.telemetryCallUpdate);
         }
-        if (this.updateCallback != null){
+        if (this.updateCallback != null) {
             this.updateCallback.apply(this);
         }
     }
@@ -428,7 +432,8 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
                 coefficients.f * 12 / batteryVoltageSensor.getVoltage()
         );
 
-        for (AnotherSwerveModule m : modules) m.setPIDFCoefficients(runMode, compensatedCoefficients);
+        for (AnotherSwerveModule m : modules)
+            m.setPIDFCoefficients(runMode, compensatedCoefficients);
     }
 
     public void setWeightedDrivePower(@NonNull Pose2d drivePower) {
@@ -500,7 +505,7 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
 //        rightFrontMotorPower = v2;
 //        rightRearMotorPower = v3;
 
-        if (enableMotor){
+        if (enableMotor) {
             leftFrontModule.setMotorVelocity(v0);
             leftRearModule.setMotorVelocity(v1);
             rightFrontModule.setMotorVelocity(v2);
@@ -555,6 +560,9 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         rightFrontModule.setTargetRotation(v2);
         rightRearModule.setTargetRotation(v3);
     }
+    public void setLFModuleOrientations(double v0){
+        leftFrontModule.setTargetRotation((v0));
+    }
 
     public void setModuleVelocities(double v, double v1, double v2, double v3) {
         leftFrontModule.setServoPower(v);
@@ -563,14 +571,14 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         rightFrontModule.setServoPower(v3);
     }
 
-    public void enableDiagnoseTelemetry(Telemetry telemetry, boolean callUpdate){
+    public void enableDiagnoseTelemetry(Telemetry telemetry, boolean callUpdate) {
         this.telemetry = telemetry;
         this.debugTelemetryEnabled = true;
         this.telemetryCallUpdate = callUpdate;
     }
 
-    public Integer modulesOrientationTelemetry(Telemetry telemetry, boolean callUpdate){
-        if (telemetry != null){
+    public Integer modulesOrientationTelemetry(Telemetry telemetry, boolean callUpdate) {
+        if (telemetry != null) {
             telemetry.addData("LeftFrontTargetOrientation", leftFrontModule.getModuleRotation());
 //            telemetry.addData("LeftFrontCurrentOrientation", this.leftFrontModuleCurrentOrientation);
 //            telemetry.addData("LeftRearTargetOrientation", this.leftRearModuleTargetOrientation);
@@ -580,10 +588,30 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
 //            telemetry.addData("RightFrontCurrentOrientation", this.rightFrontModuleCurrentOrientation);
 //            telemetry.addData("RightRearTargetOrientation", this.rightRearModuleTargetOrientation);
 //            telemetry.addData("RightRearCurrentOrientation", this.rightRearModuleCurrentOrientation);
-            if (callUpdate){
+            if (callUpdate) {
                 telemetry.update();
             }
         }
         return 0;
     }
+
+    public static double getTicksFromInches(double distance) {
+        return Math.PI * SwerveDriveConstant.WHEEL_RADIUS * distance;
+    }
+    public double getLFModuleRotationOrientation(){
+        return leftFrontModule.getModuleRotation();
+    }
+    public double getLRRotationOrientation(){
+        return leftRearModule.getModuleRotation();
+    }
+    public double getRFRotationOrientation(){
+        return rightFrontModule.getModuleRotation();
+    }
+    public double getRRRotationOrientation(){
+        return rightRearModule.getModuleRotation();
+    }
+
+
+
+
 }

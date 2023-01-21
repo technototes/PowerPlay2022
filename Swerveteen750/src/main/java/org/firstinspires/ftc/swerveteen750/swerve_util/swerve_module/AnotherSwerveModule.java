@@ -47,7 +47,7 @@ public class AnotherSwerveModule {
     private DcMotorEx motor;
     private CRServo servo;
     private AbsoluteAnalogEncoder encoder;
-    private PIDFController rotationController;
+    public PIDFController rotationController;
     private CRServoProfiler rotationProfiler;
 
     private boolean wheelFlipped = false;
@@ -134,6 +134,8 @@ public class AnotherSwerveModule {
         motor.setPIDFCoefficients(runMode, coefficients);
     }
 
+    public
+
     double lastMotorPower = 0;
 
     public void setMotorPower(double power) {
@@ -148,6 +150,7 @@ public class AnotherSwerveModule {
         motor.setPower(power);
     }
 
+    /// this can be direct substitution for setMotorPower as it will do the conversion
     public void setMotorVelocity(double velocity) {
         lastMotorPower = velocity;
 
