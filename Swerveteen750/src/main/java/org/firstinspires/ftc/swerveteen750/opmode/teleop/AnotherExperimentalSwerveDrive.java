@@ -2,6 +2,8 @@ package org.firstinspires.ftc.swerveteen750.opmode.teleop;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.roadrunner.control.PIDCoefficients;
+import com.acmerobotics.roadrunner.control.PIDFController;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -25,17 +27,23 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
     ConfigurableSwerveDriveSubsystem drive;
     ControlsDriver driverControls;
     ControlsCoDriver coDriverControls;
+    private double desiredRotation = 0;
+    private PIDFController rotationController;
+    public static PIDCoefficients rotationCoefficients = new PIDCoefficients(.5, 0, 0);
+    private boolean useAutoRotation = false;
 
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DEFAULT);
         robot = new Robot(hardwareMap, hardware, Robot.SubsystemCombo.DEFAULT, Alliance.NONE, StartingPosition.NEUTRAL);
+        rotationController = new PIDFController(rotationCoefficients);
         drive = robot.swerveDriveSubsystem;
         drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         drive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         driverControls = new ControlsDriver(driverGamepad, robot, Robot.SubsystemCombo.DEFAULT);
         coDriverControls = new ControlsCoDriver(codriverGamepad, robot, Robot.SubsystemCombo.DEFAULT);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
     }
 
     @Override
@@ -48,6 +56,21 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         double y = Math.pow(gamepad1.left_stick_y, 3);
         double x = Math.pow(gamepad1.left_stick_x, 3);
         double r = Math.pow(gamepad1.right_stick_x, 3);
+        if (Math.abs(r) < 0.1){
+            double curHeading = drive.getExternalHeading();
+            if (!useAutoRotation){
+                desiredRotation = curHeading;
+                rotationController.reset();
+                rotationController.setTargetPosition(desiredRotation);
+                useAutoRotation = true;
+            }
+            r = rotationController.update(curHeading);
+        }
+        else{
+            useAutoRotation = false;
+
+        }
+
         drive.setWeightedDrivePower(
                 new Pose2d(
                         new Vector2d(-y, -x).rotated(-drive.getExternalHeading()),
