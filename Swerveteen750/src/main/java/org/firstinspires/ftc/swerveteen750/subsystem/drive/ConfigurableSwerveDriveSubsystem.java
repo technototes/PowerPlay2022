@@ -292,13 +292,22 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
 
 
     public ConfigurableSwerveDriveSubsystem(HardwareMap hardwareMap) {
+//        this(
+//                hardwareMap,
+//                hardwareMap.get(BNO055IMU.class, "imu"),
+//                new AnotherSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", LF_SERVO_ROTATION_PID_COEF, LF_MOTOR_VELO_PIDF_COEF),
+//                new AnotherSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", LR_SERVO_ROTATION_PID_COEF, LR_MOTOR_VELO_PIDF_COEF),
+//                new AnotherSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", RF_SERVO_ROTATION_PID_COEF, RF_MOTOR_VELO_PIDF_COEF),
+//                new AnotherSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RR_SERVO_ROTATION_PID_COEF, RR_MOTOR_VELO_PIDF_COEF)
+//        );
+        // TODO:revert this
         this(
                 hardwareMap,
                 hardwareMap.get(BNO055IMU.class, "imu"),
                 new AnotherSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", LF_SERVO_ROTATION_PID_COEF, LF_MOTOR_VELO_PIDF_COEF),
                 new AnotherSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", LR_SERVO_ROTATION_PID_COEF, LR_MOTOR_VELO_PIDF_COEF),
-                new AnotherSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", RF_SERVO_ROTATION_PID_COEF, RF_MOTOR_VELO_PIDF_COEF),
-                new AnotherSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RR_SERVO_ROTATION_PID_COEF, RR_MOTOR_VELO_PIDF_COEF)
+                new AnotherSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RR_SERVO_ROTATION_PID_COEF, RR_MOTOR_VELO_PIDF_COEF),
+                new AnotherSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", RF_SERVO_ROTATION_PID_COEF, RF_MOTOR_VELO_PIDF_COEF)
         );
     }
 
