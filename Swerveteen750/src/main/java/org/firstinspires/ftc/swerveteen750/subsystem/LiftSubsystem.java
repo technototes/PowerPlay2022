@@ -22,7 +22,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double L_GROUND_JUNCTION = 1.75 * TICKS_PER_INCH;
     public static double L_LOW_JUNCTION = 14.5 * TICKS_PER_INCH;
     public static double L_MEDIUM_JUNCTION = 25 * TICKS_PER_INCH;
-    public static double L_HIGH_JUNCTION = 36 * TICKS_PER_INCH;
+    public static double L_HIGH_JUNCTION = 34.5 * TICKS_PER_INCH;
     public static double L_ABSOLUTE_MIN_HEIGHT = 0;
     public static double L_ABSOLUTE_MAX_HEIGHT = 38 * TICKS_PER_INCH; // 4510
     public static double L_MAX_MOTOR_SPEED = 0.8;
@@ -54,7 +54,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
 
     public static double TURRET_POSITION_SIDE = 0.4;
-    public static double TURRET_POSITION_REAR = 0.99;
+    public static double TURRET_POSITION_REAR = 0.99 + 0.01;
     public static double TURRET_POSITION_FRONT = 0;
 
     public Servo turretServo;

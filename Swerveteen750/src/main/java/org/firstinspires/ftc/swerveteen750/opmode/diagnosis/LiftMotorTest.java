@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.swerveteen750.opmode.diagnosis;
 
+import org.firstinspires.ftc.swerveteen750.ControlsCoDriver;
 import org.firstinspires.ftc.swerveteen750.ControlsDriver;
 import org.firstinspires.ftc.swerveteen750.ControlsOperator;
 import org.firstinspires.ftc.swerveteen750.Hardware;
@@ -18,7 +19,7 @@ import com.technototes.library.util.Alliance;
 public class LiftMotorTest extends CommandOpMode {
     public Robot robot;
     public ControlsDriver controlsDriver;
-    public ControlsOperator operatorControls;
+    public ControlsCoDriver controlsCoDriver;
     public Hardware hardware;
 
     @Override
@@ -28,7 +29,7 @@ public class LiftMotorTest extends CommandOpMode {
 
         robot = new Robot(hardwareMap, hardware, Robot.SubsystemCombo.LIFT_ONLY, Alliance.NONE, StartingPosition.NEUTRAL);
         controlsDriver = new ControlsDriver(driverGamepad, robot, Robot.SubsystemCombo.LIFT_ONLY);
-        operatorControls = new ControlsOperator(codriverGamepad, robot, Robot.SubsystemCombo.LIFT_ONLY);
+        controlsCoDriver = new ControlsCoDriver(codriverGamepad, robot, Robot.SubsystemCombo.LIFT_ONLY);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
