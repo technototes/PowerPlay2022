@@ -1,16 +1,12 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.localization.Localizer;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
-import com.qualcomm.robotcore.util.Range;
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.sensor.IMU;
 import com.technototes.library.logger.Log;
@@ -19,6 +15,7 @@ import com.technototes.path.subsystem.MecanumConstants;
 import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
 import java.util.function.Supplier;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.twenty403.helpers.TwoWheelLocalizer;
 
 public class DrivebaseSubsystem
     extends MecanumDrivebaseSubsystem
@@ -120,7 +117,7 @@ public class DrivebaseSubsystem
         public static double ARR_SCALE = 0.74;
         public static double ARL_SCALE = 1;
     }
-
+    private TwoWheelLocalizer localizer;
     private static final boolean ENABLE_POSE_DIAGNOSTICS = true;
 
     @Log(name = "Pose2d: ")
@@ -146,7 +143,9 @@ public class DrivebaseSubsystem
         EncodedMotor<DcMotorEx> rl,
         EncodedMotor<DcMotorEx> rr,
         IMU i,
-        OdoSubsystem odo
+        OdoSubsystem odo,
+        DcMotorEx parallel,
+        DcMotorEx perpendicular
     ) {
         super(fl, fr, rl, rr, i, () -> DriveConstants.class);
         fl2 = fl;
@@ -156,7 +155,11 @@ public class DrivebaseSubsystem
         speed = DriveConstants.SLOW_MOTOR_SPEED;
         odometry = odo;
 
-        if (this.getLocalizer() != null) {
+        this.localizer = new TwoWheelLocalizer(parallel, perpendicular, this);
+        if (this.localizer != null) {
+            this.setLocalizer(new OverrideLocalizer(this.localizer, odo, this));
+            locState = "created";
+        } else if (this.getLocalizer() != null) {
             this.setLocalizer(new OverrideLocalizer(this.getLocalizer(), odo, this));
             locState = "created";
         } else {

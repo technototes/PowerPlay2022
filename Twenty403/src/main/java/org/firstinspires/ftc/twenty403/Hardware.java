@@ -55,6 +55,8 @@ public class Hardware {
     public EncodedMotor<DcMotorEx> rlDriveMotor;
     public EncodedMotor<DcMotorEx> rrDriveMotor;
     public IMU imu;
+    public DcMotorEx parallel;
+    public DcMotorEx perpendicular;
 
     public EncodedMotor<DcMotorEx> LiftLeftMotor;
     public EncodedMotor<DcMotorEx> LiftRightMotor;
@@ -77,6 +79,8 @@ public class Hardware {
             rlDriveMotor = new EncodedMotor<>(HardwareConstant.RL_MOTOR);
             rrDriveMotor = new EncodedMotor<>(HardwareConstant.RR_MOTOR);
             imu = new IMU(HardwareConstant.IMU, LogoFacingDirection.LEFT, UsbFacingDirection.UP);
+            perpendicular = hwmap.get(DcMotorEx.class, "perpendicularEncoder");
+            parallel = hwmap.get(DcMotorEx.class, "parallelEncoder");
         }
         if (RobotConstant.CLAW_CONNECTED) {
             claw = new Servo(HardwareConstant.CLAW_SERVO);

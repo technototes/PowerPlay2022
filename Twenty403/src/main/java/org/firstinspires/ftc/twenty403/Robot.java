@@ -55,7 +55,8 @@ public class Robot implements Loggable {
                     hardware.rlDriveMotor,
                     hardware.rrDriveMotor,
                     hardware.imu,
-                    odoSubsystem
+                    odoSubsystem, hardware.parallel, hardware.perpendicular
+
                 );
         }
         if (RobotConstant.LIFT_CONNECTED) {
