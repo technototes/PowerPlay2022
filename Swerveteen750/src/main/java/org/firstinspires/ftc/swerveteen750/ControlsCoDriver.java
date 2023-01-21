@@ -11,6 +11,8 @@ import org.firstinspires.ftc.swerveteen750.command.lift.LiftLowPoleCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftMidPoleCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftMoveDownOverrideCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftMoveUpOverrideCommand;
+import org.firstinspires.ftc.swerveteen750.command.turret.IncrementTurretDownCommand;
+import org.firstinspires.ftc.swerveteen750.command.turret.IncrementTurretUpCommand;
 import org.firstinspires.ftc.swerveteen750.command.turret.TurretFrontCommand;
 import org.firstinspires.ftc.swerveteen750.command.turret.TurretRearCommand;
 import org.firstinspires.ftc.swerveteen750.command.turret.TurretSideCommand;
@@ -47,8 +49,8 @@ public class ControlsCoDriver {
     }
 
     public void bindCoDriverClawControls() {
-        gamepad.leftBumper.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-        gamepad.rightBumper.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
+//        gamepad.leftBumper.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
+//        gamepad.rightBumper.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
         gamepad.rightStickButton.whenPressed(new ClawFlatCommand(robot.clawSubsystem));
     }
 
@@ -62,5 +64,8 @@ public class ControlsCoDriver {
         gamepad.cross.whenPressed(new TurretRearCommand(robot.liftSubsystem));
         gamepad.triangle.whenPressed(new TurretSideCommand(robot.liftSubsystem));
         gamepad.circle.whenPressed(new TurretFrontCommand(robot.liftSubsystem));
+
+        gamepad.leftBumper.whenPressed(new IncrementTurretUpCommand(robot.liftSubsystem));
+        gamepad.rightBumper.whenPressed(new IncrementTurretDownCommand(robot.liftSubsystem));
     }
 }

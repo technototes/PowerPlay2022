@@ -44,7 +44,7 @@ public class LiftMotorTest extends CommandOpMode {
             robot.liftSubsystem.turretServoPositionSide();
         }
         if (gamepad1.right_bumper) {
-            robot.liftSubsystem.turretIncrament();
+            robot.liftSubsystem.turretIncrementUp();
         }
         telemetry.addData("Left Lift Motor Target Position", robot.liftSubsystem.getLeftTargetPos());
         telemetry.addData("Left Lift Motor Current Position", robot.liftSubsystem.getLeftPos());

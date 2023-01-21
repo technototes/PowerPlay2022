@@ -27,7 +27,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double L_ABSOLUTE_MAX_HEIGHT = 38 * TICKS_PER_INCH; // 4510
     public static double L_MAX_MOTOR_SPEED = 0.8;
     public static double L_MIN_MOTOR_SPEED = -0.4; //  Gravity
-    public static double L_REGULAR_MOVE = 1.0 * TICKS_PER_INCH;
+    public static double L_REGULAR_MOVE = 0.8 * TICKS_PER_INCH;
     public static double L_TINY_MOVE = 0.5 * TICKS_PER_INCH; // When close to the upper limit
     public static double L_EXTENDED_HIGH = 30 * TICKS_PER_INCH; // To indicate the lift is high
     public static double L_EXTENDED_MEDIUM = 20 * TICKS_PER_INCH; // To indicate the lift is medium
@@ -263,7 +263,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         setTurretServoPosition(TURRET_POSITION_REAR);
     }
 
-    public void turretIncrament() {
-        setTurretServoPosition(getTurretPosition() + 0.1);
+    public void turretIncrementUp() {
+        setTurretServoPosition(getTurretPosition() + 0.05);
+    }
+
+    public void turretIncrementDown() {
+        setTurretServoPosition(getTurretPosition() - 0.05);
     }
 }
