@@ -37,7 +37,7 @@ public class AnotherSwerveModule {
 
     public static double ALLOWED_COS_ERROR = Math.toRadians(2);
 
-    public static double ALLOWED_BB_ERROR = Math.toRadians(5);
+    public static double ALLOWED_BB_ERROR = Math.toRadians(3);
 
     public static boolean MOTOR_FLIPPING = true;
 

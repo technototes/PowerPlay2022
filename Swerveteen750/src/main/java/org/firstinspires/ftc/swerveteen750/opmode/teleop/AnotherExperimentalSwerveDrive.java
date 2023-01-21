@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.swerveteen750.opmode.teleop;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
@@ -19,6 +20,7 @@ import org.firstinspires.ftc.swerveteen750.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.SwerveDriveSubsystem;
 
+@Config
 @TeleOp(group = "Swerve")
 @SuppressWarnings("unused")
 public class AnotherExperimentalSwerveDrive extends CommandOpMode {
@@ -57,14 +59,14 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         double x = Math.pow(gamepad1.left_stick_x, 3);
         double r = Math.pow(gamepad1.right_stick_x, 3);
         if (Math.abs(r) < 0.1){
-            double curHeading = drive.getExternalHeading();
-            if (!useAutoRotation){
-                desiredRotation = curHeading;
-                rotationController.reset();
-                rotationController.setTargetPosition(desiredRotation);
-                useAutoRotation = true;
-            }
-            r = rotationController.update(curHeading);
+//            double curHeading = drive.getExternalHeading();
+//            if (!useAutoRotation){
+//                desiredRotation = curHeading;
+//                rotationController.reset();
+//                rotationController.setTargetPosition(desiredRotation);
+//                useAutoRotation = true;
+//            }
+//            r = -rotationController.update(curHeading);
         }
         else{
             useAutoRotation = false;
@@ -103,6 +105,14 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         telemetry.addData("RR - Wheel Velocity", Math.toDegrees(robot.swerveDriveSubsystem.rightRearModule.getWheelVelocity()));
         telemetry.addData("STICK_X_SCALAR", ConfigurableSwerveDriveSubsystem.STICK_X_SCALAR);
         telemetry.addData("STICK_Y_SCALAR", ConfigurableSwerveDriveSubsystem.STICK_Y_SCALAR);
+        telemetry.addData("LR - Servo Power", robot.swerveDriveSubsystem.leftRearModule.getServoPower());
+        telemetry.addData("LF - Servo Power", robot.swerveDriveSubsystem.leftFrontModule.getServoPower());
+        telemetry.addData("RR - Servo Power", robot.swerveDriveSubsystem.rightRearModule.getServoPower());
+        telemetry.addData("RF - Servo Power", robot.swerveDriveSubsystem.rightFrontModule.getServoPower());
+        telemetry.addData("LF - Heading", robot.swerveDriveSubsystem.leftFrontModule.getEncoderVoltage());
+        telemetry.addData("LR - Heading", robot.swerveDriveSubsystem.leftRearModule.getEncoderVoltage());
+        telemetry.addData("RF - Heading", robot.swerveDriveSubsystem.rightFrontModule.getEncoderVoltage());
+        telemetry.addData("RR - Heading", robot.swerveDriveSubsystem.rightRearModule.getEncoderVoltage());
 
         if (robot.liftSubsystem != null) {
             telemetry.addData("is lift high", robot.liftSubsystem.isLiftHigh());
