@@ -6,10 +6,10 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 import com.technototes.library.hardware.motor.EncodedMotor;
+import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 
@@ -53,29 +53,32 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     private Supplier<Double> voltageGetter;
 
 
-    public static double TURRET_POSITION_SIDE = 0.2;
-    public static double TURRET_POSITION_REAR = 0.4;
+    public static double TURRET_POSITION_SIDE = 0.4;
+    public static double TURRET_POSITION_REAR = 0.99;
     public static double TURRET_POSITION_FRONT = 0;
 
     public Servo turretServo;
 
     // TODO: add servo in the constructor
-    public LiftSubsystem(EncodedMotor<DcMotorEx> leftMotor, Supplier<Double> voltageGetter) {
+    public LiftSubsystem(EncodedMotor<DcMotorEx> leftMotor, Servo turretServo, Supplier<Double> voltageGetter) {
         this.voltageGetter = voltageGetter;
         this.currentVoltage = (this.voltageGetter == null) ? 0 : this.voltageGetter.get();
         if (leftMotor != null) {
             this.leftMotor = leftMotor;
             this.leftPidController = new PIDFController(L_PID, 0, 0, 0, (x, y) -> 0.1);
             this.isLeftConnected = true;
+            this.leftMotor.getEncoder().zeroEncoder();
             System.out.println("Left Lift Motor Connected");
         } else {
             this.isLeftConnected = false;
             System.out.println("Left motor is not connected!");
         }
+        this.turretServo = turretServo;
+
     }
 
-    public LiftSubsystem(EncodedMotor<DcMotorEx> leftMotor) {
-        this(leftMotor, () -> 12.0);
+    public LiftSubsystem(EncodedMotor<DcMotorEx> leftMotor, Servo turretServo) {
+        this(leftMotor, turretServo, () -> 12.0);
     }
 
     private void setTargetPosition(double leftTargetPos) {
@@ -244,6 +247,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
     }
 
+    public double getTurretPosition() {
+        return turretServo.getPosition();
+    }
+
     public void turretServoPositionSide() {
         setTurretServoPosition(TURRET_POSITION_SIDE);
     }
@@ -254,5 +261,9 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     public void turretServoPositionRear() {
         setTurretServoPosition(TURRET_POSITION_REAR);
+    }
+
+    public void turretIncrament() {
+        setTurretServoPosition(getTurretPosition() + 0.1);
     }
 }

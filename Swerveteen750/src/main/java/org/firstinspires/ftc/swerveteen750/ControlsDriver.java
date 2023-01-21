@@ -16,6 +16,9 @@ import org.firstinspires.ftc.swerveteen750.command.lift.LiftMoveDownOverrideComm
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftLowPoleCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftMidPoleCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftMoveUpOverrideCommand;
+import org.firstinspires.ftc.swerveteen750.command.turret.TurretFrontCommand;
+import org.firstinspires.ftc.swerveteen750.command.turret.TurretRearCommand;
+import org.firstinspires.ftc.swerveteen750.command.turret.TurretSideCommand;
 
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.control.CommandGamepad;
@@ -77,8 +80,8 @@ public class ControlsDriver {
 
     public void bindSwerveDriveControls(){
         gamepad.leftStickButton.whenPressed(new ResetSwerveGyroCommand(robot.swerveDriveSubsystem, gamepad));
-        gamepad.triangle.whenPressed(new SetSwerveHighSpeedCommand());
-//        gamepad.square.whenPressed(new SetSwerveMidSpeedCommand());
+        //    gamepad.triangle.whenPressed(new SetSwerveHighSpeedCommand());
+        //  gamepad.square.whenPressed(new SetSwerveMidSpeedCommand());
         gamepad.circle.whenPressed(new SetSwerveLowSpeedCommand());
     }
 
@@ -95,5 +98,8 @@ public class ControlsDriver {
         gamepad.dpadRight.whenPressed(new LiftMidPoleCommand(robot.liftSubsystem));
         gamepad.dpadUp.whenPressed(new LiftHighPoleCommand(robot.liftSubsystem));
         gamepad.dpadDown.whenPressed(new LiftFloorIntakeCommand(robot.liftSubsystem));
+        gamepad.cross.whenPressed(new TurretRearCommand(robot.liftSubsystem));
+        gamepad.square.whenPressed(new TurretSideCommand(robot.liftSubsystem));
+        gamepad.triangle.whenPressed(new TurretFrontCommand(robot.liftSubsystem));
     }
 }

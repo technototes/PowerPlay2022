@@ -23,7 +23,9 @@ public class LiftMotorTest extends CommandOpMode {
 
     @Override
     public void uponInit() {
+
         hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.LIFT_ONLY);
+
         robot = new Robot(hardwareMap, hardware, Robot.SubsystemCombo.LIFT_ONLY, Alliance.NONE, StartingPosition.NEUTRAL);
         controlsDriver = new ControlsDriver(driverGamepad, robot, Robot.SubsystemCombo.LIFT_ONLY);
         operatorControls = new ControlsOperator(codriverGamepad, robot, Robot.SubsystemCombo.LIFT_ONLY);
@@ -32,6 +34,18 @@ public class LiftMotorTest extends CommandOpMode {
 
     @Override
     public void runLoop() {
+        if (gamepad1.circle) {
+            robot.liftSubsystem.turretServoPositionRear();
+        }
+        if (gamepad1.square) {
+            robot.liftSubsystem.turretServoPositionFront();
+        }
+        if (gamepad1.cross) {
+            robot.liftSubsystem.turretServoPositionSide();
+        }
+        if (gamepad1.right_bumper) {
+            robot.liftSubsystem.turretIncrament();
+        }
         telemetry.addData("Left Lift Motor Target Position", robot.liftSubsystem.getLeftTargetPos());
         telemetry.addData("Left Lift Motor Current Position", robot.liftSubsystem.getLeftPos());
         telemetry.addData("Left lift Motor Encoder", hardware.leftLiftMotor.getDevice().getCurrentPosition());

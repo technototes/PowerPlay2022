@@ -51,22 +51,21 @@ public class Robot implements Loggable {
                     hardware.rightRearMotorT,
                     hardware.imu
             );
-        }
-        else if (enableSwerveDrive) {
+        } else if (enableSwerveDrive) {
             // Hint: we never put the SwerveDriveSubsystem in the Robot class
             swerveDriveSubsystem = new ConfigurableSwerveDriveSubsystem(hardwareMap); // much simpler
         }
 
         if (enableLift) {
-            liftSubsystem = new LiftSubsystem(hardware.leftLiftMotor, hardware::getVoltage);
+            liftSubsystem = new LiftSubsystem(hardware.leftLiftMotor, hardware.turretServo, hardware::getVoltage);
         } else {
-            liftSubsystem = new LiftSubsystem(null);
+            liftSubsystem = new LiftSubsystem(null, null);
         }
 
         if (enableClaw) {
-            clawSubsystem = new ClawSubsystem(hardware.clawServo, null);
+            clawSubsystem = new ClawSubsystem(hardware.clawServo);
         } else {
-            clawSubsystem = new ClawSubsystem(null, null);
+            clawSubsystem = new ClawSubsystem(null);
         }
         if (enableCamera) {
             visionSubsystem = new VisionSubsystem(hardware.camera, alliance, whichSide);

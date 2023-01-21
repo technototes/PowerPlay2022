@@ -22,6 +22,10 @@ public class ClawSubsystem implements Subsystem {
         this.distanceSensor = distanceSensor;
     }
 
+    public ClawSubsystem(Servo clawServo) {
+        this.clawServo = clawServo;
+    }
+
     public double getClawPosition() {
         return (this.clawServo != null) ? this.clawServo.getPosition() : 0;
     }
