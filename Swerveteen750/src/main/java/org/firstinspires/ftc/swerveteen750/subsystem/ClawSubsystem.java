@@ -10,9 +10,9 @@ import com.technototes.library.subsystem.Subsystem;
 
 @Config
 public class ClawSubsystem implements Subsystem {
-    public static double CLAW_OPEN = 0.45; // UnVerified
-    public static double CLAW_CLOSE = 0.2; // UnVerified
-    public static double CLAW_FLAT = 0.60; // UnVerified
+    public static double CLAW_OPEN = 0.5; //
+    public static double CLAW_CLOSE = 0.375; //
+    public static double CLAW_FLAT = 0.6; //
 
     private Servo clawServo;
     private DistanceSensor distanceSensor; // not on the bot currently
