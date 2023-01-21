@@ -12,7 +12,7 @@ public class RightParkingSelectionCommandJustPark extends ChoiceCommand {
             VisionSubsystem visionSubsystem, MecanumDriveSubsystem driveSubsystem) {
         super(
                 new Pair<>(visionSubsystem.visionPipeline::left, new RightJustParkLeft(driveSubsystem)),
-                new Pair<>(visionSubsystem.visionPipeline::middle, new RightJustParkMiddle(driveSubsystem)),
+                //new Pair<>(visionSubsystem.visionPipeline::middle, new RightJustParkMiddle(driveSubsystem)),
                 new Pair<>(visionSubsystem.visionPipeline::right, new RightJustParkRight(driveSubsystem)));
     }
 }

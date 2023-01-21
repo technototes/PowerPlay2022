@@ -23,13 +23,13 @@ public class SwerveDriveSetDistanceCommand implements Command {
 
     @Override
     public void execute() {
-        module.setMotorVelocity(1);
+        module.setMotorVelocity(.5);
     }
 
     @Override
     public boolean isFinished() {
 
-        if (module.getWheelPosition() - startingEncoderValue < ticksPerdistance) {
+        if (Math.abs(module.getWheelPosition() - startingEncoderValue)  < ticksPerdistance) {
             return false;
         } else {
             module.setMotorVelocity(0);
