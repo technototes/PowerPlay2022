@@ -6,6 +6,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 import com.technototes.library.hardware.motor.EncodedMotor;
@@ -51,6 +52,14 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     private double currentVoltage = 0;
     private Supplier<Double> voltageGetter;
 
+
+    public static double TURRET_POSITION_SIDE = 0.2;
+    public static double TURRET_POSITION_REAR = 0.4;
+    public static double TURRET_POSITION_FRONT = 0;
+
+    public Servo turretServo;
+
+    // TODO: add servo in the constructor
     public LiftSubsystem(EncodedMotor<DcMotorEx> leftMotor, Supplier<Double> voltageGetter) {
         this.voltageGetter = voltageGetter;
         this.currentVoltage = (this.voltageGetter == null) ? 0 : this.voltageGetter.get();
@@ -227,5 +236,23 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     public boolean isLiftMedium() {
         return getLeftPos() < L_EXTENDED_MEDIUM;
+    }
+
+    private void setTurretServoPosition(double pos) {
+        if (this.turretServo != null) {
+            this.turretServo.setPosition(pos);
+        }
+    }
+
+    public void turretServoPositionSide() {
+        setTurretServoPosition(TURRET_POSITION_SIDE);
+    }
+
+    public void turretServoPositionFront() {
+        setTurretServoPosition(TURRET_POSITION_FRONT);
+    }
+
+    public void turretServoPositionRear() {
+        setTurretServoPosition(TURRET_POSITION_REAR);
     }
 }
