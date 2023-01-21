@@ -61,9 +61,10 @@ public class ControlsCoDriver {
         gamepad.dpadRight.whenPressed(new LiftMidPoleCommand(robot.liftSubsystem));
         gamepad.dpadUp.whenPressed(new LiftHighPoleCommand(robot.liftSubsystem));
         gamepad.dpadDown.whenPressed(new LiftFloorIntakeCommand(robot.liftSubsystem));
+
+        gamepad.triangle.whenPressed(new TurretFrontCommand(robot.liftSubsystem));
+        gamepad.square.whenPressed(new TurretSideCommand(robot.liftSubsystem));
         gamepad.cross.whenPressed(new TurretRearCommand(robot.liftSubsystem));
-        gamepad.triangle.whenPressed(new TurretSideCommand(robot.liftSubsystem));
-        gamepad.circle.whenPressed(new TurretFrontCommand(robot.liftSubsystem));
 
         gamepad.leftBumper.whenPressed(new IncrementTurretUpCommand(robot.liftSubsystem));
         gamepad.rightBumper.whenPressed(new IncrementTurretDownCommand(robot.liftSubsystem));
