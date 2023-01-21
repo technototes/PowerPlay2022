@@ -82,6 +82,7 @@ public class ControlsDriver {
         gamepad.leftStickButton.whenPressed(new ResetSwerveGyroCommand(robot.swerveDriveSubsystem, gamepad));
         //    gamepad.triangle.whenPressed(new SetSwerveHighSpeedCommand());
         //  gamepad.square.whenPressed(new SetSwerveMidSpeedCommand());
+        gamepad.rightStickButton.whenPressed(new SetSwerveMidSpeedCommand());
         gamepad.circle.whenPressed(new SetSwerveLowSpeedCommand());
     }
 
