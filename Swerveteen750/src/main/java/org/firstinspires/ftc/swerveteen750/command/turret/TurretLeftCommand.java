@@ -4,10 +4,10 @@ import com.technototes.library.command.Command;
 
 import org.firstinspires.ftc.swerveteen750.subsystem.LiftSubsystem;
 
-public class TurretSideCommand implements Command {
+public class TurretLeftCommand implements Command {
     private LiftSubsystem subsystem;
 
-    public TurretSideCommand(LiftSubsystem s) {
+    public TurretLeftCommand(LiftSubsystem s) {
         subsystem = s;
         addRequirements(s);
     }
