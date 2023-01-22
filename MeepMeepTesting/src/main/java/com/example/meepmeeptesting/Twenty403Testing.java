@@ -15,10 +15,10 @@ public class Twenty403Testing {
             .followTrajectorySequence(drive ->
                 drive
                     .trajectorySequenceBuilder(AutoConstantsRed.Away.START)
-                    .addTrajectory(AutoConstantsRed.Away.START_TO_W_JUNCTION.get())
-                    .addTrajectory(AutoConstantsRed.Away.W_JUNCTION_TO_STACK.get())
-                    .addTrajectory(AutoConstantsRed.Away.STACK_TO_W_JUNCTION.get())
-                    .addTrajectory(AutoConstantsRed.Away.W_JUNCTION_TO_PARK_LEFT.get())
+                    .addTrajectory(AutoConstantsRed.Away.START_TO_LEFT_LOW.get())
+                    //.addTrajectory(AutoConstantsRed.Away.START_TO_RIGHT_LOW.get())
+                    .addTrajectory(AutoConstantsRed.Away.LEFT_LOW_TO_BETWEEN_LEFT.get())
+                    .addTrajectory(AutoConstantsRed.Away.BETWEEN_TO_PARK_LEFT.get())
                     .build()
             );
 
