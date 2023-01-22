@@ -109,8 +109,7 @@ public class SwerveDriveMotorTestVelocity extends CommandOpMode {
             telemetry.addData(
                     "RightRear - Motor - Velocity", rightRearMotor.getDevice().getVelocity());
             telemetry.addData(
-                    "RightFront - Motor - Velocity++" +
-                            "]", rightFrontMotor.getDevice().getVelocity());
+                    "RightFront - Motor - Velocity", rightFrontMotor.getDevice().getVelocity());
         } else {
             telemetry.addLine("WARNING: Right Disconnected");
         }
