@@ -52,7 +52,6 @@ public class ClawServoTest extends CommandOpMode {
             hardware.clawServo.setPosition(CLAW_OPEN);
         }
 
-
         telemetry.addData("Claw Servo Position", robot.clawSubsystem.getClawPosition());
         telemetry.update();
     }
