@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.Range;
 
 import com.technototes.library.hardware.motor.EncodedMotor;
+import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.subsystem.Subsystem;
 
@@ -21,12 +22,12 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double L_GROUND_JUNCTION = 1.75 * TICKS_PER_INCH;
     public static double L_LOW_JUNCTION = 14.5 * TICKS_PER_INCH;
     public static double L_MEDIUM_JUNCTION = 25 * TICKS_PER_INCH;
-    public static double L_HIGH_JUNCTION = 36 * TICKS_PER_INCH;
+    public static double L_HIGH_JUNCTION = 35 * TICKS_PER_INCH;
     public static double L_ABSOLUTE_MIN_HEIGHT = 0;
     public static double L_ABSOLUTE_MAX_HEIGHT = 38 * TICKS_PER_INCH; // 4510
     public static double L_MAX_MOTOR_SPEED = 0.8;
     public static double L_MIN_MOTOR_SPEED = -0.4; //  Gravity
-    public static double L_REGULAR_MOVE = 1.0 * TICKS_PER_INCH;
+    public static double L_REGULAR_MOVE = 0.8 * TICKS_PER_INCH;
     public static double L_TINY_MOVE = 0.5 * TICKS_PER_INCH; // When close to the upper limit
     public static double L_EXTENDED_HIGH = 30 * TICKS_PER_INCH; // To indicate the lift is high
     public static double L_EXTENDED_MEDIUM = 20 * TICKS_PER_INCH; // To indicate the lift is medium
@@ -51,22 +52,32 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     private double currentVoltage = 0;
     private Supplier<Double> voltageGetter;
 
-    public LiftSubsystem(EncodedMotor<DcMotorEx> leftMotor, Supplier<Double> voltageGetter) {
+
+    public static double TURRET_POSITION_SIDE = 0.4;
+    public static double TURRET_POSITION_REAR = 0.99 + 0.01;
+    public static double TURRET_POSITION_FRONT = 0;
+
+    public Servo turretServo;
+
+    // TODO: add servo in the constructor
+    public LiftSubsystem(EncodedMotor<DcMotorEx> leftMotor, Servo turretServo, Supplier<Double> voltageGetter) {
         this.voltageGetter = voltageGetter;
         this.currentVoltage = (this.voltageGetter == null) ? 0 : this.voltageGetter.get();
         if (leftMotor != null) {
             this.leftMotor = leftMotor;
             this.leftPidController = new PIDFController(L_PID, 0, 0, 0, (x, y) -> 0.1);
             this.isLeftConnected = true;
+            this.leftMotor.getEncoder().zeroEncoder();
             System.out.println("Left Lift Motor Connected");
         } else {
             this.isLeftConnected = false;
             System.out.println("Left motor is not connected!");
         }
+        this.turretServo = turretServo;
     }
 
-    public LiftSubsystem(EncodedMotor<DcMotorEx> leftMotor) {
-        this(leftMotor, () -> 12.0);
+    public LiftSubsystem(EncodedMotor<DcMotorEx> leftMotor, Servo turretServo) {
+        this(leftMotor, turretServo, () -> 12.0);
     }
 
     private void setTargetPosition(double leftTargetPos) {
@@ -227,5 +238,35 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     public boolean isLiftMedium() {
         return getLeftPos() < L_EXTENDED_MEDIUM;
+    }
+
+    private void setTurretServoPosition(double pos) {
+        if (this.turretServo != null) {
+            this.turretServo.setPosition(pos);
+        }
+    }
+
+    public double getTurretPosition() {
+        return turretServo.getPosition();
+    }
+
+    public void turretServoPositionSide() {
+        setTurretServoPosition(TURRET_POSITION_SIDE);
+    }
+
+    public void turretServoPositionFront() {
+        setTurretServoPosition(TURRET_POSITION_FRONT);
+    }
+
+    public void turretServoPositionRear() {
+        setTurretServoPosition(TURRET_POSITION_REAR);
+    }
+
+    public void turretIncrementUp() {
+        setTurretServoPosition(getTurretPosition() + 0.05);
+    }
+
+    public void turretIncrementDown() {
+        setTurretServoPosition(getTurretPosition() - 0.05);
     }
 }

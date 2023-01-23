@@ -11,7 +11,7 @@ import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDri
 import org.firstinspires.ftc.swerveteen750.swerve_util.swerve_module.AnotherSwerveModule;
 
 @TeleOp(group = "Test-Hardware")
-public class SwerveModuleTest extends CommandOpMode {
+public class SwerveLampreyEncoderTest extends CommandOpMode {
     /* DOES NOT WORK CURRENTLY! */
     Hardware hardware;
     AnotherSwerveModule leftFrontModule;
@@ -29,6 +29,7 @@ public class SwerveModuleTest extends CommandOpMode {
     public void uponInit() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.S_DRIVE_ONLY);
+
         leftFrontModule = new AnotherSwerveModule(hardware.leftFrontMotorQ, hardware.leftFrontServo, hardware.leftFrontEncoder, ConfigurableSwerveDriveSubsystem.LF_SERVO_ROTATION_PID_COEF, null);
         leftRearModule = new AnotherSwerveModule(hardware.leftRearMotorQ, hardware.leftRearServo, hardware.leftRearEncoder, ConfigurableSwerveDriveSubsystem.LR_SERVO_ROTATION_PID_COEF, null);
         rightFrontModule = new AnotherSwerveModule(hardware.rightFrontMotorQ, hardware.rightFrontServo, hardware.rightFrontEncoder, ConfigurableSwerveDriveSubsystem.RF_SERVO_ROTATION_PID_COEF, null);
@@ -42,23 +43,25 @@ public class SwerveModuleTest extends CommandOpMode {
 
     @Override
     public void runLoop() {
-        if (gamepad1.dpad_up || gamepad1.triangle) {
+        if (gamepad1.dpad_up) {
 //            leftFrontModuleTargetOrientationRadians = incrementOrientationRadians(leftFrontModuleTargetOrientationRadians);
-            leftFrontModuleTargetOrientationRadians += 0.001;
-            gamepad1.rumble(100);
+            leftFrontModuleTargetOrientationRadians += incrementOrientationRadians(leftFrontModuleTargetOrientationRadians);
+//            gamepad1.rumble(100);
+
         }
-        else if (gamepad1.dpad_right || gamepad1.circle) {
+        if (gamepad1.dpad_right) {
             leftRearTargetModuleOrientationRadians = incrementOrientationRadians(leftRearTargetModuleOrientationRadians);
-            gamepad1.rumble(100);
+//            gamepad1.rumble(100);
         }
-        else if (gamepad1.dpad_down || gamepad1.cross) {
+        if (gamepad1.dpad_down) {
             rightRearModuleTargetOrientationRadians = incrementOrientationRadians(rightRearModuleTargetOrientationRadians);
-            gamepad1.rumble(100);
+//            gamepad1.rumble(100);
         }
-        else if (gamepad1.dpad_left || gamepad1.square) {
+        if (gamepad1.dpad_left) {
             rightFrontModuleTargetOrientationRadians = incrementOrientationRadians(rightFrontModuleTargetOrientationRadians);
-            gamepad1.rumble(100);
+//            gamepad1.rumble(100);
         }
+
 
         leftFrontModule.setTargetRotation(leftFrontModuleTargetOrientationRadians);
         leftRearModule.setTargetRotation(leftRearTargetModuleOrientationRadians);
@@ -70,7 +73,7 @@ public class SwerveModuleTest extends CommandOpMode {
         rightRearModule.update();
         rightFrontModule.update();
 
-        telemetry.addData("LF - Target", leftFrontModule.getTargetRotation());
+        telemetry.addData("LF - Target", leftFrontModuleTargetOrientationRadians);
         telemetry.addData("LF - Current", leftFrontModule.getModuleRotation());
 
         telemetry.addData("LR - Target", leftRearModule.getTargetRotation());

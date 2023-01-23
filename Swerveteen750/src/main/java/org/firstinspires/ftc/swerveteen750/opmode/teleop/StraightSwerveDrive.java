@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.swerveteen750.opmode.teleop;
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
@@ -18,34 +17,32 @@ import org.firstinspires.ftc.swerveteen750.Hardware;
 import org.firstinspires.ftc.swerveteen750.Robot;
 import org.firstinspires.ftc.swerveteen750.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
-import org.firstinspires.ftc.swerveteen750.subsystem.drive.SwerveDriveSubsystem;
 
-@Config
 @TeleOp(group = "Swerve")
 @SuppressWarnings("unused")
-public class AnotherExperimentalSwerveDrive extends CommandOpMode {
+public class StraightSwerveDrive extends CommandOpMode {
     Robot robot;
     Hardware hardware;
     ConfigurableSwerveDriveSubsystem drive;
     ControlsDriver driverControls;
     ControlsCoDriver coDriverControls;
-    private double desiredRotation = 0;
-    private PIDFController rotationController;
-    public static PIDCoefficients rotationCoefficients = new PIDCoefficients(.5, 0, 0);
-    private boolean useAutoRotation = false;
+    PIDFController headingCorrectionController;
+    public static PIDCoefficients headingCorrectionControllerCoef = new PIDCoefficients(0.1, 0, 0);
+
+    double driverIntendedHeading = 0;
 
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DEFAULT);
         robot = new Robot(hardwareMap, hardware, Robot.SubsystemCombo.DEFAULT, Alliance.NONE, StartingPosition.NEUTRAL);
-        rotationController = new PIDFController(rotationCoefficients);
         drive = robot.swerveDriveSubsystem;
         drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         drive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         driverControls = new ControlsDriver(driverGamepad, robot, Robot.SubsystemCombo.DEFAULT);
         coDriverControls = new ControlsCoDriver(codriverGamepad, robot, Robot.SubsystemCombo.DEFAULT);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-
+        headingCorrectionController = new PIDFController(headingCorrectionControllerCoef);
+        driverIntendedHeading = drive.getExternalHeading();
     }
 
     @Override
@@ -55,23 +52,14 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
 
     @Override
     public void runLoop() {
-        double y = Math.pow(gamepad1.left_stick_y, 3);
-        double x = Math.pow(gamepad1.left_stick_x, 3);
-        double r = Math.pow(gamepad1.right_stick_x, 3);
-        if (Math.abs(r) < 0.1){
-//            double curHeading = drive.getExternalHeading();
-//            if (!useAutoRotation){
-//                desiredRotation = curHeading;
-//                rotationController.reset();
-//                rotationController.setTargetPosition(desiredRotation);
-//                useAutoRotation = true;
-//            }
-//            r = -rotationController.update(curHeading);
-        }
-        else{
-            useAutoRotation = false;
+        // TODO: check for button binding conflict
+        if (gamepad1.square) {
+            driverIntendedHeading = drive.getExternalHeading();
         }
 
+        double y = Math.pow(gamepad1.left_stick_y, 3);
+        double x = Math.pow(gamepad1.left_stick_x, 3);
+        double r = 0;
         drive.setWeightedDrivePower(
                 new Pose2d(
                         new Vector2d(-y, -x).rotated(-drive.getExternalHeading()),
@@ -104,14 +92,7 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         telemetry.addData("RR - Wheel Velocity", Math.toDegrees(robot.swerveDriveSubsystem.rightRearModule.getWheelVelocity()));
         telemetry.addData("STICK_X_SCALAR", ConfigurableSwerveDriveSubsystem.STICK_X_SCALAR);
         telemetry.addData("STICK_Y_SCALAR", ConfigurableSwerveDriveSubsystem.STICK_Y_SCALAR);
-        telemetry.addData("LR - Servo Power", robot.swerveDriveSubsystem.leftRearModule.getServoPower());
-        telemetry.addData("LF - Servo Power", robot.swerveDriveSubsystem.leftFrontModule.getServoPower());
-        telemetry.addData("RR - Servo Power", robot.swerveDriveSubsystem.rightRearModule.getServoPower());
-        telemetry.addData("RF - Servo Power", robot.swerveDriveSubsystem.rightFrontModule.getServoPower());
-        telemetry.addData("LF - Heading", robot.swerveDriveSubsystem.leftFrontModule.getEncoderVoltage());
-        telemetry.addData("LR - Heading", robot.swerveDriveSubsystem.leftRearModule.getEncoderVoltage());
-        telemetry.addData("RF - Heading", robot.swerveDriveSubsystem.rightFrontModule.getEncoderVoltage());
-        telemetry.addData("RR - Heading", robot.swerveDriveSubsystem.rightRearModule.getEncoderVoltage());
+        telemetry.addData("Driver Intended Heading", driverIntendedHeading);
 
         if (robot.liftSubsystem != null) {
             telemetry.addData("is lift high", robot.liftSubsystem.isLiftHigh());

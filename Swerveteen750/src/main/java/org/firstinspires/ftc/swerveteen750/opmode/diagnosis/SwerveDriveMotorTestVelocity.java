@@ -6,16 +6,15 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.structure.CommandOpMode;
 
 import org.firstinspires.ftc.swerveteen750.Hardware;
+import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
 
 @Config
 @TeleOp(group = "Test-Hardware")
-@SuppressWarnings("unused")
-public class DriveMotorTest extends CommandOpMode {
+public class SwerveDriveMotorTestVelocity extends CommandOpMode {
     ElapsedTime t;
 
     EncodedMotor<DcMotorEx> leftFrontMotor;
@@ -26,8 +25,8 @@ public class DriveMotorTest extends CommandOpMode {
     boolean isLeftFrontPressed, isLeftRearPressed, isRightRearPressed, isRightFrontPressed = false;
 
     // 0.1 is too little, the motor trying to move but not enough to move the robot; 0.2 is slightly better
-    public static double motorSpeed = 0.3;
-    public static double motorStopSpeed = 0.0;
+    public static double motorVelocity = 0.3;
+    public static double motorStopVelocity = 0.0;
 
     boolean isLeftSideConnected = true;
     boolean isRightSideConnected = true;
@@ -39,14 +38,18 @@ public class DriveMotorTest extends CommandOpMode {
         /// Note: here is using the hardware from TechnoLib
         try {
             leftFrontMotor = new EncodedMotor<>(Hardware.HardwareConstant.LF_MOTOR);
+            leftFrontMotor.setPIDFCoeffecients(ConfigurableSwerveDriveSubsystem.LF_MOTOR_VELO_PIDF_COEF);
             leftRearMotor = new EncodedMotor<>(Hardware.HardwareConstant.LR_MOTOR);
+            leftRearMotor.setPIDFCoeffecients(ConfigurableSwerveDriveSubsystem.LR_MOTOR_VELO_PIDF_COEF);
         } catch (Exception e) {
             isLeftSideConnected = false;
         }
 
         try {
             rightFrontMotor = new EncodedMotor<>(Hardware.HardwareConstant.RF_MOTOR);
+            rightFrontMotor.setPIDFCoeffecients(ConfigurableSwerveDriveSubsystem.RF_MOTOR_VELO_PIDF_COEF);
             rightRearMotor = new EncodedMotor<>(Hardware.HardwareConstant.RR_MOTOR);
+            rightRearMotor.setPIDFCoeffecients(ConfigurableSwerveDriveSubsystem.RR_MOTOR_VELO_PIDF_COEF);
         } catch (Exception e) {
             isRightSideConnected = false;
         }
@@ -60,33 +63,33 @@ public class DriveMotorTest extends CommandOpMode {
     @Override
     public void runLoop() {
         double loopSeconds = t.seconds();
-        if (isLeftSideConnected){
+        if (isLeftSideConnected) {
             if (this.gamepad1.dpad_left) {
-                leftFrontMotor.setSpeed(motorSpeed);
+                leftFrontMotor.setVelocity(motorVelocity);
                 isLeftFrontPressed = true;
 
-                leftRearMotor.setSpeed(motorSpeed);
+                leftRearMotor.setVelocity(motorVelocity);
                 isLeftRearPressed = true;
             } else {
-                leftFrontMotor.setSpeed(motorStopSpeed);
+                leftFrontMotor.setVelocity(motorStopVelocity);
                 isLeftFrontPressed = false;
 
-                leftRearMotor.setSpeed(motorStopSpeed);
+                leftRearMotor.setVelocity(motorStopVelocity);
                 isLeftRearPressed = false;
             }
         }
-        if (isRightSideConnected){
+        if (isRightSideConnected) {
             if (this.gamepad1.dpad_right) {
-                rightRearMotor.setSpeed(motorSpeed);
+                rightRearMotor.setVelocity(motorVelocity);
                 isRightRearPressed = true;
 
-                rightFrontMotor.setSpeed(motorSpeed);
+                rightFrontMotor.setVelocity(motorVelocity);
                 isRightFrontPressed = true;
             } else {
-                rightRearMotor.setSpeed(motorStopSpeed);
+                rightRearMotor.setVelocity(motorStopVelocity);
                 isRightRearPressed = false;
 
-                rightFrontMotor.setSpeed(motorStopSpeed);
+                rightFrontMotor.setVelocity(motorStopVelocity);
                 isRightFrontPressed = false;
             }
         }
@@ -96,17 +99,17 @@ public class DriveMotorTest extends CommandOpMode {
 
         if (isLeftSideConnected) {
             telemetry.addData(
-                    "LeftFront - Motor - Encoder", leftFrontMotor.getEncoder().getPosition());
+                    "LeftFront - Motor - Velocity", leftFrontMotor.getDevice().getVelocity());
             telemetry.addData(
-                    "LeftRear - Motor - Encoder", leftRearMotor.getEncoder().getPosition());
+                    "LeftRear - Motor - Velocity", leftRearMotor.getDevice().getVelocity());
         } else {
             telemetry.addLine("WARNING: Left Disconnected");
         }
         if (isRightSideConnected) {
             telemetry.addData(
-                    "RightRear - Motor - Encoder", rightRearMotor.getEncoder().getPosition());
+                    "RightRear - Motor - Velocity", rightRearMotor.getDevice().getVelocity());
             telemetry.addData(
-                    "RightFront - Motor - Encoder", rightFrontMotor.getEncoder().getPosition());
+                    "RightFront - Motor - Velocity", rightFrontMotor.getDevice().getVelocity());
         } else {
             telemetry.addLine("WARNING: Right Disconnected");
         }
