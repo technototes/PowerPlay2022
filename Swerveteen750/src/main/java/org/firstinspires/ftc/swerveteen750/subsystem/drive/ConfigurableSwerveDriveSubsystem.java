@@ -619,9 +619,4 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public double getRRRotationOrientation(){
         return rightRearModule.getModuleRotation();
     }
-
-
-
-
-
 }

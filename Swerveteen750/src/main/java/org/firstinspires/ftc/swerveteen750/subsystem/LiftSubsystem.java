@@ -74,7 +74,6 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
             System.out.println("Left motor is not connected!");
         }
         this.turretServo = turretServo;
-
     }
 
     public LiftSubsystem(EncodedMotor<DcMotorEx> leftMotor, Servo turretServo) {

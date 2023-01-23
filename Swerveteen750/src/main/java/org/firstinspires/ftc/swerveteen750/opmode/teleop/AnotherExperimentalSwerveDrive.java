@@ -70,7 +70,6 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         }
         else{
             useAutoRotation = false;
-
         }
 
         drive.setWeightedDrivePower(
