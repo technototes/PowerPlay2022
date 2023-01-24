@@ -55,9 +55,10 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
 
     @Override
     public void runLoop() {
-        double y = Math.pow(gamepad1.left_stick_y, 3);
-        double x = Math.pow(gamepad1.left_stick_x, 3);
+        double x = Math.pow(Math.abs(gamepad1.left_stick_x) > 0.03 ? gamepad1.left_stick_x : 0, 3);
+        double y = Math.pow(Math.abs(gamepad1.left_stick_y) > 0.03 ? gamepad1.left_stick_y : 0, 3);
         double r = Math.pow(gamepad1.right_stick_x, 3);
+
         if (Math.abs(r) < 0.1){
 //            double curHeading = drive.getExternalHeading();
 //            if (!useAutoRotation){
