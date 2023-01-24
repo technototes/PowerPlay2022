@@ -83,12 +83,31 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
 
         drive.update();
 
+        double possibleTurretPosition = 0;
+        double actualTurretPosition = 0;
+        if (gamepad2.left_stick_button){
+//            if (gamepad2.left_stick_x < 0 || gamepad2.left_stick_y != 0) {
+//                possibleTurretPosition = Math.toDegrees(Math.atan2(gamepad2.left_stick_y, gamepad2.left_stick_x));
+//                possibleTurretPosition += 90;
+////            possibleTurretPosition = -possibleTurretPosition;
+//            }
+            possibleTurretPosition = Math.toDegrees(Math.atan2(gamepad2.left_stick_y, gamepad2.left_stick_x));
+            possibleTurretPosition += 90;
+            actualTurretPosition = robot.liftSubsystem.controlTurretByDegrees(possibleTurretPosition);
+        }
+        // use gamepad2.left_stick_x and gamepad2.left_stick_y to control the turret
+
+
         Pose2d poseEstimate = drive.getPoseEstimate();
 
         telemetry.addData("x", poseEstimate.getX());
         telemetry.addData("y", poseEstimate.getY());
         telemetry.addData("LeftStick-X", gamepad1.left_stick_x);
         telemetry.addData("LeftStick-Y", gamepad1.left_stick_y);
+        telemetry.addData("CoDriverStick-X", gamepad2.left_stick_x);
+        telemetry.addData("CoDriverStick-Y", gamepad2.left_stick_y);
+        telemetry.addData("Possible Turret Position", possibleTurretPosition);
+        telemetry.addData("Actual Turret Position", actualTurretPosition);
         telemetry.addData("RightStick-R", r);
         telemetry.addData("ExternalHeading", robot.swerveDriveSubsystem.getExternalHeading());
 //        telemetry.addData("LF - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.leftFrontModuleTargetOrientation));

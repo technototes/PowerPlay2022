@@ -269,4 +269,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public void turretIncrementDown() {
         setTurretServoPosition(getTurretPosition() - 0.05);
     }
+
+    public double controlTurretByDegrees(double degrees) {
+        double turretPosition = degrees / 180.0;
+        setTurretServoPosition(turretPosition);
+        return turretPosition;
+    }
 }
