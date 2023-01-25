@@ -18,7 +18,6 @@ import org.firstinspires.ftc.swerveteen750.Hardware;
 import org.firstinspires.ftc.swerveteen750.Robot;
 import org.firstinspires.ftc.swerveteen750.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
-import org.firstinspires.ftc.swerveteen750.subsystem.drive.SwerveDriveSubsystem;
 
 @Config
 @TeleOp(group = "Swerve")
@@ -33,8 +32,9 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
     private PIDFController rotationController;
     public static PIDCoefficients rotationCoefficients = new PIDCoefficients(.5, 0, 0);
     private boolean useAutoRotation = false;
+    public static double STICK_DIRECTIONAL_DEAD_ZONE = 0.03;
     public static double GAS_PADDLE_BASE_SPEED = 0.2;
-    public static double GAS_PADDLE_BASE_MULTIPLIER = 0.5;
+    public static double GAS_PADDLE_MULTIPLIER = 0.5;
 
     @Override
     public void uponInit() {
@@ -47,7 +47,6 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         driverControls = new ControlsDriver(driverGamepad, robot, Robot.SubsystemCombo.DEFAULT);
         coDriverControls = new ControlsCoDriver(codriverGamepad, robot, Robot.SubsystemCombo.DEFAULT);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-
     }
 
     @Override
@@ -57,10 +56,10 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
 
     @Override
     public void runLoop() {
-        double x = Math.pow(Math.abs(gamepad1.left_stick_x) > 0.03 ? gamepad1.left_stick_x : 0, 3);
-        double y = Math.pow(Math.abs(gamepad1.left_stick_y) > 0.03 ? gamepad1.left_stick_y : 0, 3);
+        double x = Math.pow(Math.abs(gamepad1.left_stick_x) > STICK_DIRECTIONAL_DEAD_ZONE ? gamepad1.left_stick_x : 0, 3);
+        double y = Math.pow(Math.abs(gamepad1.left_stick_y) > STICK_DIRECTIONAL_DEAD_ZONE ? gamepad1.left_stick_y : 0, 3);
         double r = Math.pow(gamepad1.right_stick_x, 3);
-        double gasPaddle = gamepad1.right_trigger * GAS_PADDLE_BASE_MULTIPLIER;
+        double gasPaddle = gamepad1.right_trigger * GAS_PADDLE_MULTIPLIER;
         x *= GAS_PADDLE_BASE_SPEED + gasPaddle;
         y *= GAS_PADDLE_BASE_SPEED + gasPaddle;
         r *= GAS_PADDLE_BASE_SPEED + gasPaddle;
