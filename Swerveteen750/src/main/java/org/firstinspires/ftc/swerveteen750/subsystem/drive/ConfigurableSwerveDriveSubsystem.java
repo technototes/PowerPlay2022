@@ -447,8 +447,8 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
 
     public void setWeightedDrivePower(@NonNull Pose2d drivePower) {
         drivePower = new Pose2d(
-                drivePower.getX() * STICK_X_SCALAR,
-                drivePower.getY() * STICK_Y_SCALAR,
+                drivePower.getX(),
+                drivePower.getY(),
                 drivePower.getHeading()
         );
         Pose2d vel = drivePower;

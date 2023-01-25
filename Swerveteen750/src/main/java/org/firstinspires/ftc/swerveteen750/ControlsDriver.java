@@ -79,20 +79,20 @@ public class ControlsDriver {
 
     public void bindSwerveDriveControls(){
         gamepad.rightStickButton.whenPressed(new ResetSwerveGyroCommand(robot.swerveDriveSubsystem, gamepad));
-        gamepad.triangle.whenPressed(new SetSwerveHighSpeedCommand());
-        gamepad.square.whenPressed(new SetSwerveMidSpeedCommand());
-        gamepad.x.whenPressed(new SetSwerveLowSpeedCommand());
+//        gamepad.triangle.whenPressed(new SetSwerveHighSpeedCommand());
+//        gamepad.square.whenPressed(new SetSwerveMidSpeedCommand());
+//        gamepad.x.whenPressed(new SetSwerveLowSpeedCommand());
     }
 
     public void bindDriverClawControls() {
-        gamepad.leftBumper.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-        gamepad.rightBumper.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
+//        gamepad.leftBumper.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
+//        gamepad.rightBumper.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
         //gamepad.rightStickButton.whenPressed(new ClawFlatCommand(robot.clawSubsystem));
     }
 
     public void bindDriverLiftControls() {
-        gamepad.leftTrigger.whenPressed(new LiftMoveUpOverrideCommand(robot.liftSubsystem));
-        gamepad.rightTrigger.whenPressed(new LiftMoveDownOverrideCommand(robot.liftSubsystem));
+        gamepad.leftBumper.whenPressed(new LiftMoveDownOverrideCommand(robot.liftSubsystem));
+        gamepad.rightBumper.whenPressed(new LiftMoveUpOverrideCommand(robot.liftSubsystem));
 
         gamepad.dpadLeft.whenPressed(new LiftLowPoleCommand(robot.liftSubsystem));
         gamepad.dpadRight.whenPressed(new LiftMidPoleCommand(robot.liftSubsystem));

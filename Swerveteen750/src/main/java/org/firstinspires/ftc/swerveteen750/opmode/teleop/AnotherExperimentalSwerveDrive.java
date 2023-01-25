@@ -33,6 +33,8 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
     private PIDFController rotationController;
     public static PIDCoefficients rotationCoefficients = new PIDCoefficients(.5, 0, 0);
     private boolean useAutoRotation = false;
+    public static double GAS_PADDLE_BASE_SPEED = 0.2;
+    public static double GAS_PADDLE_BASE_MULTIPLIER = 0.5;
 
     @Override
     public void uponInit() {
@@ -58,6 +60,10 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         double x = Math.pow(Math.abs(gamepad1.left_stick_x) > 0.03 ? gamepad1.left_stick_x : 0, 3);
         double y = Math.pow(Math.abs(gamepad1.left_stick_y) > 0.03 ? gamepad1.left_stick_y : 0, 3);
         double r = Math.pow(gamepad1.right_stick_x, 3);
+        double gasPaddle = gamepad1.right_trigger * GAS_PADDLE_BASE_MULTIPLIER;
+        x *= GAS_PADDLE_BASE_SPEED + gasPaddle;
+        y *= GAS_PADDLE_BASE_SPEED + gasPaddle;
+        r *= GAS_PADDLE_BASE_SPEED + gasPaddle;
 
         if (Math.abs(r) < 0.1){
 //            double curHeading = drive.getExternalHeading();
@@ -76,7 +82,7 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         drive.setWeightedDrivePower(
                 new Pose2d(
                         new Vector2d(-y, -x).rotated(-drive.getExternalHeading()),
-                        -r * 0.5
+                        -r
                 )
         );
         if (gamepad1.right_stick_button) drive.setExternalHeading(0);
@@ -100,12 +106,14 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
 
         Pose2d poseEstimate = drive.getPoseEstimate();
 
-        telemetry.addData("x", poseEstimate.getX());
-        telemetry.addData("y", poseEstimate.getY());
+        telemetry.addData("X Coordinate", poseEstimate.getX());
+        telemetry.addData("Y Coordinate", poseEstimate.getY());
         telemetry.addData("LeftStick-X", gamepad1.left_stick_x);
         telemetry.addData("LeftStick-Y", gamepad1.left_stick_y);
         telemetry.addData("CoDriverStick-X", gamepad2.left_stick_x);
         telemetry.addData("CoDriverStick-Y", gamepad2.left_stick_y);
+        telemetry.addData("Weighted X", x);
+        telemetry.addData("Weighted Y", y);
         telemetry.addData("Possible Turret Position", possibleTurretPosition);
         telemetry.addData("Actual Turret Position", actualTurretPosition);
         telemetry.addData("RightStick-R", r);
@@ -132,6 +140,7 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         telemetry.addData("LR - Heading", robot.swerveDriveSubsystem.leftRearModule.getEncoderVoltage());
         telemetry.addData("RF - Heading", robot.swerveDriveSubsystem.rightFrontModule.getEncoderVoltage());
         telemetry.addData("RR - Heading", robot.swerveDriveSubsystem.rightRearModule.getEncoderVoltage());
+        telemetry.addData("Drive Speed Multiplier", GAS_PADDLE_BASE_SPEED + gasPaddle);
 
         if (robot.liftSubsystem != null) {
             telemetry.addData("is lift high", robot.liftSubsystem.isLiftHigh());

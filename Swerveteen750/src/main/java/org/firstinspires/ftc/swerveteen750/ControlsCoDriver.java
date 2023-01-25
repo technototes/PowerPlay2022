@@ -2,7 +2,9 @@ package org.firstinspires.ftc.swerveteen750;
 
 import com.technototes.library.control.CommandGamepad;
 
+import org.firstinspires.ftc.swerveteen750.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.swerveteen750.command.claw.ClawFlatCommand;
+import org.firstinspires.ftc.swerveteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftFloorIntakeCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftHighPoleCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftLowPoleCommand;
@@ -47,8 +49,8 @@ public class ControlsCoDriver {
     }
 
     public void bindCoDriverClawControls() {
-//        gamepad.leftBumper.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-//        gamepad.rightBumper.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
+        gamepad.leftBumper.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
+        gamepad.rightBumper.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
         gamepad.rightStickButton.whenPressed(new ClawFlatCommand(robot.clawSubsystem));
     }
 
@@ -64,7 +66,8 @@ public class ControlsCoDriver {
         gamepad.square.whenPressed(new TurretLeftCommand(robot.liftSubsystem));
         gamepad.cross.whenPressed(new TurretRearCommand(robot.liftSubsystem));
 
-        gamepad.leftBumper.whenPressed(new IncrementTurretDownCommand(robot.liftSubsystem));
-        gamepad.rightBumper.whenPressed(new IncrementTurretUpCommand(robot.liftSubsystem));
+        // using left stick for turret control instead
+//        gamepad.leftBumper.whenPressed(new IncrementTurretDownCommand(robot.liftSubsystem));
+//        gamepad.rightBumper.whenPressed(new IncrementTurretUpCommand(robot.liftSubsystem));
     }
 }
