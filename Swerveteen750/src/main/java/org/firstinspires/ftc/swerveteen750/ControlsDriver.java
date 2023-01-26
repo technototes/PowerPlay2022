@@ -82,6 +82,7 @@ public class ControlsDriver {
 //        gamepad.triangle.whenPressed(new SetSwerveHighSpeedCommand());
 //        gamepad.square.whenPressed(new SetSwerveMidSpeedCommand());
 //        gamepad.x.whenPressed(new SetSwerveLowSpeedCommand());
+        //gamepad.dpadUp.whenPressed(new )
     }
 
     public void bindDriverClawControls() {
@@ -94,10 +95,10 @@ public class ControlsDriver {
         gamepad.leftBumper.whenPressed(new LiftMoveDownOverrideCommand(robot.liftSubsystem));
         gamepad.rightBumper.whenPressed(new LiftMoveUpOverrideCommand(robot.liftSubsystem));
 
-        gamepad.dpadLeft.whenPressed(new LiftLowPoleCommand(robot.liftSubsystem));
-        gamepad.dpadRight.whenPressed(new LiftMidPoleCommand(robot.liftSubsystem));
-        gamepad.dpadUp.whenPressed(new LiftHighPoleCommand(robot.liftSubsystem));
-        gamepad.dpadDown.whenPressed(new LiftFloorIntakeCommand(robot.liftSubsystem));
+  //      gamepad.dpadLeft.whenPressed(new LiftLowPoleCommand(robot.liftSubsystem));
+    //    gamepad.dpadRight.whenPressed(new LiftMidPoleCommand(robot.liftSubsystem));
+     //   gamepad.dpadUp.whenPressed(new LiftHighPoleCommand(robot.liftSubsystem));
+      //  gamepad.dpadDown.whenPressed(new LiftFloorIntakeCommand(robot.liftSubsystem));
 
 //        gamepad.triangle.whenPressed(new TurretFrontCommand(robot.liftSubsystem));
 //        gamepad.square.whenPressed(new TurretLeftCommand(robot.liftSubsystem));
