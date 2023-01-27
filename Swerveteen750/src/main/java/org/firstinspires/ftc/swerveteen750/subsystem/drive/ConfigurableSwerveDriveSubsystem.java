@@ -628,10 +628,10 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
 
     public double[] getAdjustedMotorEncoderValue() {
         return new double[]{
-                leftFrontModule.getUnadjustedWheelInchPosition(),
-                leftRearModule.getUnadjustedWheelInchPosition(),
-                rightFrontModule.getUnadjustedWheelInchPosition(),
-                rightRearModule.getUnadjustedWheelInchPosition()
+                leftFrontModule.getAdjustedWheelInchPosition(),
+                leftRearModule.getAdjustedWheelInchPosition(),
+                rightFrontModule.getAdjustedWheelInchPosition(),
+                rightRearModule.getAdjustedWheelInchPosition()
         };
     }
 

@@ -182,10 +182,10 @@ public class AnotherSwerveModule {
     public boolean enableMotor = true;
 
     public void setTargetRotation(double target) {
-        if (enableMotor && Math.abs(lastMotorPower) < MIN_MOTOR_TO_TURN) {
-            //add stuff like X-ing preAlign
-            return;
-        }
+//        if (enableMotor && Math.abs(lastMotorPower) < MIN_MOTOR_TO_TURN) {
+//            //add stuff like X-ing preAlign
+//            return;
+//        }
         double current = getModuleRotation();
         //normalize for wraparound
         if (current - target > Math.PI) current -= (2 * Math.PI);
