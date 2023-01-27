@@ -25,22 +25,22 @@ public class AnotherPathSegment {
     }
 
     // TURN
-    public double[] targetOrientations;
+    public double[] targetOrientationsRadians;
 
-    public AnotherPathSegment(SegmentType type, double[] targetOrientations) {
+    public AnotherPathSegment(SegmentType type, double[] targetOrientationsRadians) {
         this.type = type;
-        this.targetOrientations = targetOrientations;
+        this.targetOrientationsRadians = targetOrientationsRadians;
     }
 
     // MOVE
     public double[] motorVelocity;
     public WhichModule measureFrom;
-    public double distanceDifference;
+    public double targetDistanceFakeInch;
 
-    public AnotherPathSegment(SegmentType type, double[] motorVelocity, WhichModule measureFrom, double distanceDifference) {
+    public AnotherPathSegment(SegmentType type, double[] motorVelocity, WhichModule measureFrom, double targetDistanceFakeInch) {
         this.type = type;
         this.motorVelocity = motorVelocity;
         this.measureFrom = measureFrom;
-        this.distanceDifference = distanceDifference;
+        this.targetDistanceFakeInch = targetDistanceFakeInch;
     }
 }

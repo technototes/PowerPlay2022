@@ -10,9 +10,11 @@ import com.technototes.library.hardware2.HardwareBuilder;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.AnotherPathSegment;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
 
+import java.util.ArrayList;
+
 @Autonomous(group = "Simple")
 public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
-    public AnotherPathSegment[] segments;
+    public ArrayList<AnotherPathSegment> segments;
     public ElapsedTime timer = new ElapsedTime();
 
     public void safeSleep(long duration) {
@@ -25,6 +27,10 @@ public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
 
     public boolean shouldContinue() {
         return !isStopRequested() && opModeIsActive();
+    }
+
+    public void setSegments(ArrayList<AnotherPathSegment> segments) {
+        this.segments = segments;
     }
 
     @Override
@@ -41,18 +47,28 @@ public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
             switch (segment.type){
                 case WAIT:
                     timer.reset();
+                    telemetry.addData("Current State", "WAIT");
+                    telemetry.addData("Waiting", segment.waitDuration);
+                    telemetry.update();
                     while (shouldContinue() && timer.milliseconds() < segment.waitDuration) {
                         drive.update();
                     }
                     break;
                 case TURN:
-                    drive.setModuleOrientations(segment.targetOrientations[0], segment.targetOrientations[1], segment.targetOrientations[2], segment.targetOrientations[3]);
+                    telemetry.addData("Current State", "TURN");
+                    telemetry.addData("Target Orientations", segment.targetOrientationsRadians);
+                    telemetry.update();
+                    drive.setModuleOrientations(segment.targetOrientationsRadians[0], segment.targetOrientationsRadians[1], segment.targetOrientationsRadians[2], segment.targetOrientationsRadians[3]);
                     timer.reset();
                     while (shouldContinue() && timer.milliseconds() < 500) {
                         drive.update();
                     }
                     break;
                 case MOVE:
+                    telemetry.addData("Current State", "MOVE");
+                    telemetry.addData("Target Distances", segment.targetDistanceFakeInch);
+                    telemetry.addData("Target Velocities", segment.motorVelocity);
+                    telemetry.update();
                     double startingPosition = 0;
                     switch (segment.measureFrom){
                         case LEFT_FRONT:
@@ -88,7 +104,11 @@ public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
                                 currentPosition = drive.rightRearModule.getUnadjustedWheelInchPosition();
                                 break;
                         }
-                    } while (shouldContinue() && Math.abs(currentPosition - startingPosition) < segment.distanceDifference);
+                        telemetry.addData("Current State", "MOVE");
+                        telemetry.addData("Target Distances", segment.targetDistanceFakeInch);
+                        telemetry.addData("Current Distances", Math.abs(currentPosition - startingPosition));
+                        telemetry.update();
+                    } while (shouldContinue() && Math.abs(currentPosition - startingPosition) < segment.targetDistanceFakeInch);
                     drive.setModuleVelocities(0, 0, 0, 0);
                 default:
                     break;
