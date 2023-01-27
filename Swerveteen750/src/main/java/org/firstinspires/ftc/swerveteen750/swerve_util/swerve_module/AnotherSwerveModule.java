@@ -16,7 +16,6 @@ import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.SwerveDriveSubsystem;
 import org.firstinspires.ftc.swerveteen750.swerve_util.AbsoluteAnalogEncoder;
 import org.firstinspires.ftc.swerveteen750.swerve_util.CRServoProfiler;
@@ -42,6 +41,8 @@ public class AnotherSwerveModule {
     public static boolean MOTOR_FLIPPING = true;
 
     public static double FLIP_BIAS = Math.toRadians(0);
+
+    public double motorEncoderZero = 0;
 
 
     private DcMotorEx motor;
@@ -110,8 +111,16 @@ public class AnotherSwerveModule {
         return encoder.getCurrentPosition();
     }
 
-    public double getWheelPosition() {
+    public double getUnadjustedWheelInchPosition() {
         return SwerveDriveSubsystem.SwerveDriveConstant.encoderTicksToInches(motor.getCurrentPosition());
+    }
+
+    public double getAdjustedWheelInchPosition() {
+        return SwerveDriveSubsystem.SwerveDriveConstant.encoderTicksToInches(motor.getCurrentPosition() - motorEncoderZero);
+    }
+
+    public void setMotorEncoderZero() {
+        this.motorEncoderZero = motor.getCurrentPosition();
     }
 
     public int flipModifier() {
@@ -209,7 +218,7 @@ public class AnotherSwerveModule {
         }
 
         public SwerveModuleState update() {
-            return setState(-module.getWheelPosition(), module.getModuleRotation());
+            return setState(-module.getUnadjustedWheelInchPosition(), module.getModuleRotation());
         }
 
         public SwerveModuleState setState(double wheel, double pod) {

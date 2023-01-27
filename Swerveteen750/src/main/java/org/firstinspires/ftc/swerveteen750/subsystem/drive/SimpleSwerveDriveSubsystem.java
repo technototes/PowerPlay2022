@@ -43,29 +43,25 @@ public class SimpleSwerveDriveSubsystem implements Subsystem {
         if (leftFrontModule != null) {
             this.modules.add(leftFrontModule);
             leftFrontModule.setTargetRotation(0);
-        }
-        else {
+        } else {
             System.err.println("Left Front Module is null");
         }
         if (leftRearModule != null) {
             this.modules.add(leftRearModule);
             leftRearModule.setTargetRotation(0);
-        }
-        else {
+        } else {
             System.err.println("Left Rear Module is null");
         }
         if (rightFrontModule != null) {
             this.modules.add(rightFrontModule);
             rightFrontModule.setTargetRotation(0);
-        }
-        else {
+        } else {
             System.err.println("Right Front Module is null");
         }
         if (rightRearModule != null) {
             this.modules.add(rightRearModule);
             rightRearModule.setTargetRotation(0);
-        }
-        else {
+        } else {
             System.err.println("Right Rear Module is null");
         }
 
@@ -84,7 +80,7 @@ public class SimpleSwerveDriveSubsystem implements Subsystem {
             localizer.update();
         }
 
-        if (spammyDebug){
+        if (spammyDebug) {
             if (enableLocalizer) {
                 System.out.println(localizer.get());
             }
@@ -131,19 +127,19 @@ public class SimpleSwerveDriveSubsystem implements Subsystem {
     double rightFrontMotorEncoderZero = 0;
     double rightRearMotorEncoderZero = 0;
 
-    public void setMotorEncoderZero(){
-        leftFrontMotorEncoderZero = leftFrontModule.getWheelPosition();
-        leftRearMotorEncoderZero = leftRearModule.getWheelPosition();
-        rightFrontMotorEncoderZero = rightFrontModule.getWheelPosition();
-        rightRearMotorEncoderZero = rightRearModule.getWheelPosition();
+    public void setMotorEncoderZero() {
+        leftFrontMotorEncoderZero = leftFrontModule.getUnadjustedWheelInchPosition();
+        leftRearMotorEncoderZero = leftRearModule.getUnadjustedWheelInchPosition();
+        rightFrontMotorEncoderZero = rightFrontModule.getUnadjustedWheelInchPosition();
+        rightRearMotorEncoderZero = rightRearModule.getUnadjustedWheelInchPosition();
     }
 
-    public double[] getAdjustedMotorEncoderValues(){
+    public double[] getAdjustedMotorEncoderValues() {
         return new double[]{
-                leftFrontModule.getWheelPosition() - leftFrontMotorEncoderZero,
-                leftRearModule.getWheelPosition() - leftRearMotorEncoderZero,
-                rightFrontModule.getWheelPosition() - rightFrontMotorEncoderZero,
-                rightRearModule.getWheelPosition() - rightRearMotorEncoderZero
+                leftFrontModule.getUnadjustedWheelInchPosition() - leftFrontMotorEncoderZero,
+                leftRearModule.getUnadjustedWheelInchPosition() - leftRearMotorEncoderZero,
+                rightFrontModule.getUnadjustedWheelInchPosition() - rightFrontMotorEncoderZero,
+                rightRearModule.getUnadjustedWheelInchPosition() - rightRearMotorEncoderZero
         };
     }
 }

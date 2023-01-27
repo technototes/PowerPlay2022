@@ -1,64 +1,42 @@
 package org.firstinspires.ftc.swerveteen750.opmode.auto;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.technototes.library.hardware2.HardwareBuilder;
 
 import org.firstinspires.ftc.swerveteen750.Hardware;
 import org.firstinspires.ftc.swerveteen750.Robot;
-import org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleMecanumDriveSubsystem;
+import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
 
-@Config
-@Autonomous(name = "JustParkMiddle")
+@Autonomous(group = "Will Not Work")
 public class JustParkMiddle extends LinearOpMode {
-    public static double DEFAULT_POWER = 0.5;
-    public static int goForwardTicks = 1000;
+    public static double DEFAULT_POWER = 0.3;
+
+    public void safeSleep(long duration) {
+        try {
+            Thread.sleep(duration);
+        } catch (InterruptedException e) {
+            System.out.println(e.toString());
+        }
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {
         HardwareBuilder.initMap(hardwareMap);
-        Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.M_DRIVE_ONLY);
-        SimpleMecanumDriveSubsystem drive = new SimpleMecanumDriveSubsystem(hardware);
-        drive.setEncoderZero();
+//        Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.S_DRIVE_ONLY);
+        ConfigurableSwerveDriveSubsystem drive = new ConfigurableSwerveDriveSubsystem(hardwareMap);
+        drive.setSwerveMotorEncoderZero();
 
-        waitForStart();
+        drive.setModuleOrientations(0, 0, 0, 0);
+
+        safeSleep(1000 * 1);
+
+        while (!isStopRequested() && opModeIsActive() && Math.abs(drive.getAdjustedMotorEncoderValue()[0]) < 10) {
+            drive.setPowerForAllMotor(DEFAULT_POWER);
+        }
 
         if (isStopRequested()) return;
 
-        while (!isStopRequested() && opModeIsActive() && Math.abs(drive.getAdjustedEncoderValues()[0]) < goForwardTicks) {
-            drive.goStraightForward(DEFAULT_POWER);
-
-            telemetry.addData("Target Motor Power", DEFAULT_POWER);
-            telemetry.addData("Left Front Encoder - Real", drive.getEncoderValues()[0]);
-            telemetry.addData("Left Rear Encoder - Real", drive.getEncoderValues()[1]);
-            telemetry.addData("Right Front Encoder - Real", drive.getEncoderValues()[2]);
-            telemetry.addData("Right Rear Encoder - Real", drive.getEncoderValues()[3]);
-
-            telemetry.addData("Left Front Encoder - Adjusted", drive.getAdjustedEncoderValues()[0]);
-            telemetry.addData("Left Rear Encoder - Adjusted", drive.getAdjustedEncoderValues()[1]);
-            telemetry.addData("Right Front Encoder - Adjusted", drive.getAdjustedEncoderValues()[2]);
-            telemetry.addData("Right Rear Encoder  - Adjusted", drive.getAdjustedEncoderValues()[3]);
-
-            telemetry.update();
-        }
-
-        drive.stop();
-        System.out.println("Forward Auto Finished");
-
-        while (!isStopRequested() && opModeIsActive()) {
-            telemetry.addData("Target Motor Power", DEFAULT_POWER);
-            telemetry.addData("Left Front Encoder - Real", drive.getEncoderValues()[0]);
-            telemetry.addData("Left Rear Encoder - Real", drive.getEncoderValues()[1]);
-            telemetry.addData("Right Front Encoder - Real", drive.getEncoderValues()[2]);
-            telemetry.addData("Right Rear Encoder - Real", drive.getEncoderValues()[3]);
-
-            telemetry.addData("Left Front Encoder", drive.getAdjustedEncoderValues()[0]);
-            telemetry.addData("Left Rear Encoder", drive.getAdjustedEncoderValues()[1]);
-            telemetry.addData("Right Front Encoder", drive.getAdjustedEncoderValues()[2]);
-            telemetry.addData("Right Rear Encoder", drive.getAdjustedEncoderValues()[3]);
-
-            telemetry.update();
-        }
+        drive.stopAndWait(1000 * 1);
     }
 }

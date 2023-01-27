@@ -473,7 +473,8 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     @Override
     public List<Double> getWheelPositions() {
         List<Double> wheelPositions = new ArrayList<>();
-        for (AnotherSwerveModule m : modules) wheelPositions.add(m.getWheelPosition());
+        for (AnotherSwerveModule m : modules)
+            wheelPositions.add(m.getUnadjustedWheelInchPosition());
         return wheelPositions;
     }
 
@@ -569,7 +570,8 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         rightFrontModule.setTargetRotation(v2);
         rightRearModule.setTargetRotation(v3);
     }
-    public void setLFModuleOrientations(double v0){
+
+    public void setLFModuleOrientations(double v0) {
         leftFrontModule.setTargetRotation((v0));
     }
 
@@ -607,16 +609,52 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public static double getTicksFromInches(double distance) {
         return Math.PI * SwerveDriveConstant.WHEEL_RADIUS * distance;
     }
-    public double getLFModuleRotationOrientation(){
+
+    public double getLFModuleRotationOrientation() {
         return leftFrontModule.getModuleRotation();
     }
-    public double getLRRotationOrientation(){
+
+    public double getLRRotationOrientation() {
         return leftRearModule.getModuleRotation();
     }
-    public double getRFRotationOrientation(){
+
+    public double getRFRotationOrientation() {
         return rightFrontModule.getModuleRotation();
     }
-    public double getRRRotationOrientation(){
+
+    public double getRRRotationOrientation() {
         return rightRearModule.getModuleRotation();
+    }
+
+    public double[] getAdjustedMotorEncoderValue() {
+        return new double[]{
+                leftFrontModule.getUnadjustedWheelInchPosition(),
+                leftRearModule.getUnadjustedWheelInchPosition(),
+                rightFrontModule.getUnadjustedWheelInchPosition(),
+                rightRearModule.getUnadjustedWheelInchPosition()
+        };
+    }
+
+    public void setPowerForAllMotor(double power) {
+        leftFrontModule.setMotorVelocity(power);
+        leftRearModule.setMotorVelocity(power);
+        rightFrontModule.setMotorVelocity(power);
+        rightRearModule.setMotorVelocity(power);
+    }
+
+    public void stopAndWait(long waitTime) {
+        setModuleVelocities(0, 0, 0, 0);
+        try {
+            Thread.sleep(waitTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setSwerveMotorEncoderZero() {
+        leftFrontModule.setMotorEncoderZero();
+        leftRearModule.setMotorEncoderZero();
+        rightFrontModule.setMotorEncoderZero();
+        rightRearModule.setMotorEncoderZero();
     }
 }
