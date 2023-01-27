@@ -131,7 +131,8 @@ public class SwerveDriveSubsystem extends SwerveDrive {
          * convenience. Make sure to exclude any gear ratio included in MOTOR_CONFIG from GEAR_RATIO.
          */
         public static double WHEEL_RADIUS = 1.4; // in
-        public static double GEAR_RATIO = 1 / (3.5 * 1.5 * 2); // output (wheel) speed / input (motor) speed
+//        public static double GEAR_RATIO = 1 / (3.5 * 1.5 * 2); // output (wheel) speed / input (motor) speed
+        public static double GEAR_RATIO = 1 / (2.9375 * 1.5 * 2); // output (wheel) speed / input (motor) speed
         public static double TRACK_WIDTH = 9; // in
 
         /*

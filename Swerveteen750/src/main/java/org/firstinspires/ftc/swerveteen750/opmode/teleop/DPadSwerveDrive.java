@@ -22,7 +22,7 @@ import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDri
 @Config
 @TeleOp(group = "Swerve")
 @SuppressWarnings("unused")
-public class AnotherExperimentalSwerveDrive extends CommandOpMode {
+public class DPadSwerveDrive extends CommandOpMode {
     Robot robot;
     Hardware hardware;
     ConfigurableSwerveDriveSubsystem drive;
@@ -35,6 +35,7 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
     public static double STICK_DIRECTIONAL_DEAD_ZONE = 0.03;
     public static double GAS_PADDLE_BASE_SPEED = 0.2;
     public static double GAS_PADDLE_MULTIPLIER = 0.5;
+    public static boolean DPAD_DRIVE = true;
 
 
     @Override
@@ -57,8 +58,16 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
 
     @Override
     public void runLoop() {
-        double x = Math.pow(Math.abs(gamepad1.left_stick_x) > STICK_DIRECTIONAL_DEAD_ZONE ? gamepad1.left_stick_x : 0, 3);
-        double y = Math.pow(Math.abs(gamepad1.left_stick_y) > STICK_DIRECTIONAL_DEAD_ZONE ? gamepad1.left_stick_y : 0, 3);
+        double x;
+        double y;
+        if (DPAD_DRIVE){
+            x = gamepad1.dpad_left ? -.5 : gamepad1.dpad_right ? .5 : 0;
+            y = gamepad1.dpad_up ? .5 : gamepad1.dpad_down ? -.5 : 0;
+        }
+        else{
+            x = Math.pow(Math.abs(gamepad1.left_stick_x) > STICK_DIRECTIONAL_DEAD_ZONE ? gamepad1.left_stick_x : 0, 3);
+            y = Math.pow(Math.abs(gamepad1.left_stick_y) > STICK_DIRECTIONAL_DEAD_ZONE ? gamepad1.left_stick_y : 0, 3);
+        }
 
         double r = Math.pow(gamepad1.right_stick_x, 3);
         double gasPaddle = gamepad1.right_trigger * GAS_PADDLE_MULTIPLIER;
