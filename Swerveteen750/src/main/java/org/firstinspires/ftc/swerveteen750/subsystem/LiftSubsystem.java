@@ -132,6 +132,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         return 0.0;
     }
 
+    public boolean canAutoClose() {
+        return Math.abs(getLeftPos() - L_INTAKE_FLOOR) < TOLERANCE_ZONE;
+    }
+
+
     public double getLeftTargetPos() {
         if (isLeftConnected) {
             return leftPidController.getTargetPosition();
