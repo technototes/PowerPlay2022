@@ -102,7 +102,7 @@ public class AnotherSwerveModule {
 
     public void update() {
         double current = getModuleRotation();
-        double error = AngleUnit.normalizeRadians(currentTargetPosition - current);
+        double error = AngleUnit.normalizeRadians(current - currentTargetPosition);
         double power = Range.clip(rotationController.update(error), -MAX_SERVO_SPEED, MAX_SERVO_SPEED);
         if (Double.isNaN(power)) power = 0;
         servo.setPower(power + (Math.abs(power) > ALLOWED_BB_ERROR ? (kStatic * Math.signum(power)): 0));
