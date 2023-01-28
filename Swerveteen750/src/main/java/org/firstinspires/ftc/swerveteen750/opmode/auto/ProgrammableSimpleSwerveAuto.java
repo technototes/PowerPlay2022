@@ -152,6 +152,7 @@ public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
                         telemetry.update();
                     } while (shouldContinue() && Math.abs(currentPosition - startingPosition) < segment.targetDistanceFakeInch);
                     drive.setSwerveMotorVelocities(new double[]{0, 0, 0, 0});
+                    break;
                 case LOGIC:
                     telemetry.addData("Current State", "LOGIC");
                     telemetry.update();
