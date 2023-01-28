@@ -22,6 +22,7 @@ public class AnotherVisionPark extends ProgrammableSimpleSwerveAuto {
     @Override
     public void beforeStart() {
         vision = new VisionSubsystem(new Webcam(Hardware.HardwareConstant.CAMERA), Alliance.BLUE, StartingPosition.AWAY);
+        vision.startVisionPipeline();
     }
 
     @Override
