@@ -4,7 +4,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.swerveteen750.helpers.ColorHelper;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.hardware.servo.Servo;
@@ -19,28 +18,25 @@ public class ClawSubsystem implements Subsystem {
 
     private Servo clawServo;
     private ColorDistanceSensor colorDistanceSensor; // not on the bot currently
-    public double CLAW_SERVO_POS = 0.35;
-    public static double autoCloseDeadzone = 0;
-    private boolean servoSet;
+    public static double CLAW_TOLERANCE_ZONE = 0;
 
+    public static boolean CLAW_AUTO_CLOSE = true;
     public static int FAKE_RGB_VALUE = 0x008000;
     public static double FAKE_DISTANCE = 3.0;
-    private boolean isHardware;
     private Alliance alliance;
-    private boolean autoClose;
-    private LiftSubsystem liftSubsystem;
+    public LiftSubsystem liftSubsystem;
 
-    public ClawSubsystem(Servo clawServo, ColorDistanceSensor colorDistanceSensor) {
+    public ClawSubsystem(Servo clawServo, ColorDistanceSensor colorDistanceSensor, Alliance alliance) {
         this.clawServo = clawServo;
         this.colorDistanceSensor = colorDistanceSensor;
-        servoSet = true;
+        this.alliance = alliance;
     }
 
     public ClawSubsystem(Servo clawServo) {
-        this.clawServo = clawServo;
+        this(clawServo, null, Alliance.NONE);
     }
 
-    public double getClawPosition() {
+    public double getClawServoPosition() {
         return (this.clawServo != null) ? this.clawServo.getPosition() : 0;
     }
 
@@ -50,16 +46,26 @@ public class ClawSubsystem implements Subsystem {
         }
     }
 
-    public void clawOpen() {
+    public void openClaw() {
         setClawServoPosition(CLAW_OPEN);
     }
 
-    public void clawClose() {
+    public void closeClaw() {
         setClawServoPosition(CLAW_CLOSE);
     }
 
-    public void clawFlat() {
+    public void flattenClaw() {
         setClawServoPosition(CLAW_FLAT);
+    }
+
+    @Override
+    public void periodic() {
+        if (clawServo != null && CLAW_AUTO_CLOSE) {
+            // TODO: null check for the lift subsystem
+            if (liftSubsystem.canAutoCloseClaw() && !isClawAlreadyClosed() && isAllianceCone() && isConeClose()) {
+                closeClaw();
+            }
+        }
     }
 
     public boolean isConeClose() {
@@ -67,20 +73,6 @@ public class ClawSubsystem implements Subsystem {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public void periodic() {
-        if (isHardware && autoClose) {
-            if (
-                    liftSubsystem.canAutoClose() && !isClawClose() && isAllianceCone() && isConeClose()
-            ) {
-                clawClose();
-                ///this.wait(.2);
-                //CommandScheduler.getInstance().schedule(new ClawAutoCloseWithLift(this,liftSubsystem));
-                //CommandScheduler.getInstance().scheduleOnce(new ClawAutoCloseWithLift(this, liftSubsystem));
-            }
-        }
     }
 
     public boolean isAllianceCone() {
@@ -99,34 +91,15 @@ public class ClawSubsystem implements Subsystem {
         }
     }
 
-    public boolean isClawClose() {
-        double curPos = readServo();
+    public boolean isClawAlreadyClosed() {
         // This is going to say the claw is closed, just because we squeeze the jaws together
         // manually, so we need to check to see if the servo has had it's position explicitly set
         // instead of just checking the servo's position...
-        return (
-                servoSet &&
-                        //Math.abs(curPos - CLOSE_SERVO_POSITION) < Math.abs(curPos - OPEN_SERVO_POSITION)
-                        (
-                                curPos <= CLAW_CLOSE + autoCloseDeadzone
-                                /*&& curPos >= CLOSE_SERVO_POSITION - autoCloseDeadzone*/
-                        )
-        );
+        return clawServo != null && (getClawServoPosition() <= CLAW_CLOSE + CLAW_TOLERANCE_ZONE);
     }
-
-    private double readServo() {
-        if (isHardware) {
-            double pos = clawServo.getPosition();
-            CLAW_SERVO_POS = pos;
-            return pos;
-        } else {
-            return CLAW_SERVO_POS;
-        }
-    }
-
 
     private double readSensor() {
-        if (isHardware) {
+        if (colorDistanceSensor != null) {
             return colorDistanceSensor.getDistance(DistanceUnit.CM);
         } else {
             return FAKE_DISTANCE;
@@ -134,7 +107,7 @@ public class ClawSubsystem implements Subsystem {
     }
 
     private int readRgb() {
-        if (isHardware) {
+        if (colorDistanceSensor != null) {
             return colorDistanceSensor.rgb();
         } else {
             return FAKE_RGB_VALUE;

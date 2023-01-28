@@ -13,8 +13,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import com.qualcomm.robotcore.util.Range;
-import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
@@ -52,7 +50,7 @@ public class ClawServoTest extends CommandOpMode {
             hardware.clawServo.setPosition(CLAW_OPEN);
         }
 
-        telemetry.addData("Claw Servo Position", robot.clawSubsystem.getClawPosition());
+        telemetry.addData("Claw Servo Position", robot.clawSubsystem.getClawServoPosition());
         telemetry.update();
     }
 }

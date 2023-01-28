@@ -12,6 +12,6 @@ public class ClawFlatCommand implements Command {
 
     @Override
     public void execute() {
-        clawSubsystem.clawFlat();
+        clawSubsystem.flattenClaw();
     }
 }

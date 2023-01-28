@@ -63,7 +63,10 @@ public class Robot implements Loggable {
         }
 
         if (enableClaw) {
-            clawSubsystem = new ClawSubsystem(hardware.clawServo);
+            clawSubsystem = new ClawSubsystem(hardware.clawServo, null, alliance);
+            if (enableLift) {
+                clawSubsystem.liftSubsystem = liftSubsystem;
+            }
         } else {
             clawSubsystem = new ClawSubsystem(null);
         }
