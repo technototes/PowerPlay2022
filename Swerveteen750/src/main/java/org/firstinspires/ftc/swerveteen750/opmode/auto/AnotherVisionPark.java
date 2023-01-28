@@ -2,6 +2,7 @@ package org.firstinspires.ftc.swerveteen750.opmode.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.technototes.library.util.Alliance;
+import com.technototes.vision.hardware.Webcam;
 
 import org.firstinspires.ftc.swerveteen750.Hardware;
 import org.firstinspires.ftc.swerveteen750.Robot;
@@ -16,16 +17,11 @@ public class AnotherVisionPark extends ProgrammableSimpleSwerveAuto {
     boolean parkMiddle = false;
     boolean parkRight = false;
 
-    Hardware hardware;
-    Robot robot;
     VisionSubsystem vision;
-
 
     @Override
     public void beforeStart() {
-        hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.VISION_ONLY);
-        robot = new Robot(hardwareMap, hardware, Robot.SubsystemCombo.VISION_ONLY, Alliance.NONE, StartingPosition.AWAY);
-        vision = robot.visionSubsystem;
+        vision = new VisionSubsystem(new Webcam(Hardware.HardwareConstant.CAMERA), Alliance.BLUE, StartingPosition.AWAY);
     }
 
     @Override
