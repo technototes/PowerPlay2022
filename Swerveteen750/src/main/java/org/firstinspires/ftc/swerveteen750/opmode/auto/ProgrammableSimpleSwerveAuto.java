@@ -14,7 +14,8 @@ import java.util.ArrayList;
 
 @Autonomous(group = "Simple")
 public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
-    public ArrayList<AnotherPathSegment> segments;
+    public ArrayList<AnotherPathSegment> preStartSegments; // for running vision, but will not move
+    public ArrayList<AnotherPathSegment> inGameSegments; // full support for types of segments
     public ElapsedTime timer = new ElapsedTime();
 
     public void safeSleep(long duration) {
@@ -29,8 +30,16 @@ public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
         return !isStopRequested() && opModeIsActive();
     }
 
-    public void setSegments(ArrayList<AnotherPathSegment> segments) {
-        this.segments = segments;
+    public void setInGameSegments() {
+
+    }
+
+    public void setPreStartSegments() {
+
+    }
+
+    public void beforeStart() {
+
     }
 
     @Override
@@ -41,9 +50,38 @@ public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
         ConfigurableSwerveDriveSubsystem drive = new ConfigurableSwerveDriveSubsystem(hardwareMap);
         drive.setSwerveMotorEncoderZero();
 
+        setInGameSegments();
+        setPreStartSegments();
+
+        beforeStart();
+
+        while (!isStarted()) {
+            for (AnotherPathSegment segment : preStartSegments) {
+                switch (segment.type) {
+                    case LOGIC:
+                        telemetry.addData("Current State", "LOGIC");
+                        telemetry.update();
+                        segment.logic.run();
+                        break;
+                    case WAIT:
+                        // probably not a good idea here since we want to listen to isStarted()
+                        timer.reset();
+                        telemetry.addData("Current State", "WAIT");
+                        telemetry.addData("Waiting", segment.waitDuration);
+                        telemetry.update();
+                        while (shouldContinue() && timer.milliseconds() < segment.waitDuration) {
+                            drive.update();
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
         waitForStart();
 
-        for (AnotherPathSegment segment : segments) {
+        for (AnotherPathSegment segment : inGameSegments) {
             switch (segment.type){
                 case WAIT:
                     timer.reset();
@@ -110,6 +148,11 @@ public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
                         telemetry.update();
                     } while (shouldContinue() && Math.abs(currentPosition - startingPosition) < segment.targetDistanceFakeInch);
                     drive.setModuleVelocities(0, 0, 0, 0);
+                case LOGIC:
+                    telemetry.addData("Current State", "LOGIC");
+                    telemetry.update();
+                    segment.logic.run();
+                    break;
                 default:
                     break;
             }
