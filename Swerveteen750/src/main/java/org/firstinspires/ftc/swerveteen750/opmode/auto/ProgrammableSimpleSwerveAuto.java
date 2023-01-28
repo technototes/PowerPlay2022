@@ -44,6 +44,10 @@ public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
 
     }
 
+    public void visionLoop() {
+
+    }
+
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -56,6 +60,10 @@ public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
         setPreStartSegments();
 
         beforeStart();
+
+        while (!isStarted()) {
+            visionLoop();
+        }
 
         while (!isStarted()) {
             for (AnotherPathSegment segment : preStartSegments) {
