@@ -278,16 +278,16 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         PhotonCore.experimental.setMaximumParallelCommands(MAX_PARALLEL_COMMANDS);
     }
     public static double kStatic = 0.04;
-    public static PIDCoefficients LF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.8, 0, 0);
-    public static PIDCoefficients LR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.8, 0, 0);
-    public static PIDCoefficients RF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.8, 0, 0);
-    public static PIDCoefficients RR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.8, 0, 0);
+    public static PIDCoefficients LF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.5, 0.1, 0.05);
+    public static PIDCoefficients LR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.5, 0.1, 0.05);
+    public static PIDCoefficients RF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.4, 0.05, 0.02);
+    public static PIDCoefficients RR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.4, 0.05, 0.02);
 
     // the default value if PIDFCoefficients(p=10.000000 i=3.000000 d=0.000000 f=0.000000 alg=LegacyPID)
     public static PIDFCoefficients LF_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(2, 0, 0, 15);
     public static PIDFCoefficients LR_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(2, 0, 0, 12.5);
     public static PIDFCoefficients RF_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(0.2, 0, 0, 14);
-    public static PIDFCoefficients RR_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(2, 0, 0, 13.4);
+    public static PIDFCoefficients RR_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(0.5, 0, 0, 13.4);
 
 
     public ConfigurableSwerveDriveSubsystem(HardwareMap hardwareMap) {

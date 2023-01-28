@@ -71,21 +71,29 @@ public class SwerveModuleTest extends CommandOpMode {
         leftRearModule.update();
         rightRearModule.update();
         rightFrontModule.update();
-
+        
         telemetry.addData("LF - Target", leftFrontModule.getTargetRotation());
         telemetry.addData("LF - Current", leftFrontModule.getModuleRotation());
+        telemetry.addData("LF - RotationError", leftFrontModule.getLastRotationError());
+        telemetry.addData("LF - ServoPower", leftFrontModule.getLastServoPower());
         telemetry.addData("LF - Inch", leftFrontModule.getAdjustedWheelInchPosition());
 
         telemetry.addData("LR - Target", leftRearModule.getTargetRotation());
         telemetry.addData("LR - Current", leftRearModule.getModuleRotation());
+        telemetry.addData("LR - RotationError", leftRearModule.getLastRotationError());
+        telemetry.addData("LR - ServoPower", leftRearModule.getLastServoPower());
         telemetry.addData("LR - Inch", leftRearModule.getAdjustedWheelInchPosition());
 
         telemetry.addData("RF - Target", rightFrontModule.getTargetRotation());
         telemetry.addData("RF - Current", rightFrontModule.getModuleRotation());
+        telemetry.addData("RF - RotationError", rightFrontModule.getLastRotationError());
+        telemetry.addData("RF - ServoPower", rightFrontModule.getLastServoPower());
         telemetry.addData("RF - Inch", rightFrontModule.getAdjustedWheelInchPosition());
 
         telemetry.addData("RR - Target", rightRearModule.getTargetRotation());
         telemetry.addData("RR - Current", rightRearModule.getModuleRotation());
+        telemetry.addData("RR - RotationError", rightRearModule.getLastRotationError());
+        telemetry.addData("RR - ServoPower", rightRearModule.getLastServoPower());
         telemetry.addData("RR - Inch", rightRearModule.getAdjustedWheelInchPosition());
     }
 

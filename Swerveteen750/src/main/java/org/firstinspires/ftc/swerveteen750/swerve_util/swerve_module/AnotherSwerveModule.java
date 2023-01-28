@@ -47,8 +47,6 @@ public class AnotherSwerveModule {
 
     public double motorEncoderZero = 0;
 
-    public double currentTargetPosition = 0;
-
 
     private DcMotorEx motor;
     private CRServo servo;
@@ -57,6 +55,9 @@ public class AnotherSwerveModule {
     private CRServoProfiler rotationProfiler;
 
     private boolean wheelFlipped = false;
+    private double currentTargetPosition = 0;
+    private double lastRotationError = 0;
+    private double lastServoPower = 0;
 
     public AnotherSwerveModule(DcMotorEx m, CRServo s, AbsoluteAnalogEncoder e, PIDCoefficients rotationPID, PIDFCoefficients motorVelocityPID, double rotationStatic) {
         motor = m;
@@ -103,9 +104,12 @@ public class AnotherSwerveModule {
     public void update() {
         double current = getModuleRotation();
         double error = AngleUnit.normalizeRadians(current - currentTargetPosition);
+        lastRotationError = error;
         double power = Range.clip(rotationController.update(error), -MAX_SERVO_SPEED, MAX_SERVO_SPEED);
         if (Double.isNaN(power)) power = 0;
-        servo.setPower(power + (Math.abs(power) > ALLOWED_BB_ERROR ? (kStatic * Math.signum(power)): 0));
+        power = power + (Math.abs(power) > ALLOWED_BB_ERROR ? (kStatic * Math.signum(power)): 0);
+        servo.setPower(power);
+        lastServoPower = power;
         //System.out.println("Target: " + Math.toDegrees(target) + " Current: " + Math.toDegrees(current) + " Power: " + power + ", " + rotationController.getTargetPosition() +", " + rotationController.getTargetVelocity() + ", " + rotationController.getTargetAcceleration());
     }
 
@@ -117,6 +121,14 @@ public class AnotherSwerveModule {
         return encoder.getCurrentPosition();
     }
 
+    public double getLastRotationError() {
+        return lastRotationError;
+    }
+
+    public double getLastServoPower() {
+        return lastServoPower;
+
+    }
     public double getUnadjustedWheelInchPosition() {
         return SwerveDriveSubsystem.SwerveDriveConstant.encoderTicksToInches(motor.getCurrentPosition());
     }
