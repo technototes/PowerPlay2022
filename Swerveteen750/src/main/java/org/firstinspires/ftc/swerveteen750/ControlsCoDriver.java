@@ -11,6 +11,7 @@ import org.firstinspires.ftc.swerveteen750.command.lift.LiftLowPoleCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftMidPoleCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftMoveDownOverrideCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftMoveUpOverrideCommand;
+import org.firstinspires.ftc.swerveteen750.command.lift.ResetLiftZeroCommand;
 import org.firstinspires.ftc.swerveteen750.command.turret.IncrementTurretDownCommand;
 import org.firstinspires.ftc.swerveteen750.command.turret.IncrementTurretUpCommand;
 import org.firstinspires.ftc.swerveteen750.command.turret.TurretFrontCommand;
@@ -63,6 +64,8 @@ public class ControlsCoDriver {
         gamepad.dpadRight.whenPressed(new LiftMidPoleCommand(robot.liftSubsystem));
         gamepad.dpadUp.whenPressed(new LiftHighPoleCommand(robot.liftSubsystem));
         gamepad.dpadDown.whenPressed(new LiftFloorIntakeCommand(robot.liftSubsystem));
+
+        gamepad.rightStickButton.whenPressed(new ResetLiftZeroCommand(robot.liftSubsystem, gamepad));
 
         gamepad.triangle.whenPressed(new TurretFrontCommand(robot.liftSubsystem));
         gamepad.square.whenPressed(new TurretLeftCommand(robot.liftSubsystem));

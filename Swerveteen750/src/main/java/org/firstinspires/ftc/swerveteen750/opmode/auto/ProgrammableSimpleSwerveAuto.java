@@ -10,12 +10,14 @@ import com.technototes.library.hardware2.HardwareBuilder;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.AnotherPathSegment;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @Autonomous(group = "Simple")
 public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
-    public ArrayList<AnotherPathSegment> preStartSegments; // for running vision, but will not move
-    public ArrayList<AnotherPathSegment> inGameSegments; // full support for types of segments
+    public ArrayList<AnotherPathSegment> preStartSegments = new ArrayList<>(); // for running vision, but will not move
+    public ArrayList<AnotherPathSegment> inGameSegments = new ArrayList<>(); // full support for types of segments
     public ElapsedTime timer = new ElapsedTime();
 
     public void safeSleep(long duration) {
@@ -42,6 +44,10 @@ public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
 
     }
 
+    public void visionLoop() {
+
+    }
+
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -50,10 +56,13 @@ public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
         ConfigurableSwerveDriveSubsystem drive = new ConfigurableSwerveDriveSubsystem(hardwareMap);
         drive.setSwerveMotorEncoderZero();
 
-        setInGameSegments();
         setPreStartSegments();
 
         beforeStart();
+
+        while (!isStarted()) {
+            visionLoop();
+        }
 
         while (!isStarted()) {
             for (AnotherPathSegment segment : preStartSegments) {
@@ -80,6 +89,8 @@ public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
         }
 
         waitForStart();
+
+        setInGameSegments();
 
         for (AnotherPathSegment segment : inGameSegments) {
             switch (segment.type){
@@ -108,7 +119,7 @@ public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
                     telemetry.addData("Target Velocities", segment.motorVelocity);
                     telemetry.update();
                     double startingPosition = 0;
-                    switch (segment.measureFrom){
+                    switch (segment.measureDistanceFrom){
                         case LEFT_FRONT:
                             startingPosition = drive.leftFrontModule.getUnadjustedWheelInchPosition();
                             break;
@@ -124,11 +135,12 @@ public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
                     }
 
                     double currentPosition = 0;
-                    drive.setModuleVelocities(segment.motorVelocity[0], segment.motorVelocity[1], segment.motorVelocity[2], segment.motorVelocity[3]);
+                    drive.setSwerveMotorVelocities(segment.motorVelocity);
+                    System.out.println("Velocity Set: " + Arrays.toString(segment.motorVelocity));
 
                     do {
                         drive.update();
-                        switch (segment.measureFrom){
+                        switch (segment.measureDistanceFrom){
                             case LEFT_FRONT:
                                 currentPosition = drive.leftFrontModule.getUnadjustedWheelInchPosition();
                                 break;
@@ -145,9 +157,11 @@ public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
                         telemetry.addData("Current State", "MOVE");
                         telemetry.addData("Target Distances", segment.targetDistanceFakeInch);
                         telemetry.addData("Current Distances", Math.abs(currentPosition - startingPosition));
+                        telemetry.addData("Current Velocities", "%f %f %f %f", drive.leftFrontModule.getWheelVelocity(), drive.leftRearModule.getWheelVelocity(), drive.rightFrontModule.getWheelVelocity(), drive.rightRearModule.getWheelVelocity());
                         telemetry.update();
                     } while (shouldContinue() && Math.abs(currentPosition - startingPosition) < segment.targetDistanceFakeInch);
-                    drive.setModuleVelocities(0, 0, 0, 0);
+                    drive.setSwerveMotorVelocities(new double[]{0, 0, 0, 0});
+                    break;
                 case LOGIC:
                     telemetry.addData("Current State", "LOGIC");
                     telemetry.update();

@@ -60,7 +60,5 @@ public class JustParkMiddle extends LinearOpMode {
         }
 
         if (isStopRequested()) return;
-
-        drive.stopAndWait(1000 * 1);
     }
 }

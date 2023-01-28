@@ -74,15 +74,19 @@ public class SwerveModuleTest extends CommandOpMode {
 
         telemetry.addData("LF - Target", leftFrontModule.getTargetRotation());
         telemetry.addData("LF - Current", leftFrontModule.getModuleRotation());
+        telemetry.addData("LF - Inch", leftFrontModule.getAdjustedWheelInchPosition());
 
         telemetry.addData("LR - Target", leftRearModule.getTargetRotation());
         telemetry.addData("LR - Current", leftRearModule.getModuleRotation());
+        telemetry.addData("LR - Inch", leftRearModule.getAdjustedWheelInchPosition());
 
         telemetry.addData("RF - Target", rightFrontModule.getTargetRotation());
         telemetry.addData("RF - Current", rightFrontModule.getModuleRotation());
+        telemetry.addData("RF - Inch", rightFrontModule.getAdjustedWheelInchPosition());
 
         telemetry.addData("RR - Target", rightRearModule.getTargetRotation());
         telemetry.addData("RR - Current", rightRearModule.getModuleRotation());
+        telemetry.addData("RR - Inch", rightRearModule.getAdjustedWheelInchPosition());
     }
 
     public double incrementOrientationRadians(double o){

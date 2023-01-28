@@ -35,14 +35,14 @@ public class AnotherPathSegment {
 
     // MOVE
     public double[] motorVelocity;
-    public WhichModule measureFrom;
+    public WhichModule measureDistanceFrom;
     public double targetDistanceFakeInch;
 
 
     public AnotherPathSegment(SegmentType type, double[] motorVelocity, WhichModule measureFrom, double targetDistanceFakeInch) {
         this.type = type;
         this.motorVelocity = motorVelocity;
-        this.measureFrom = measureFrom;
+        this.measureDistanceFrom = measureFrom;
         this.targetDistanceFakeInch = targetDistanceFakeInch;
     }
 
