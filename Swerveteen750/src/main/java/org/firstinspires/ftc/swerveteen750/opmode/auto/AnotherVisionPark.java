@@ -42,7 +42,7 @@ public class AnotherVisionPark extends ProgrammableSimpleSwerveAuto {
         this.inGameSegments.add(new AnotherPathSegment(AnotherPathSegment.SegmentType.LOGIC, () -> System.out.println("Hello World!")));
         this.inGameSegments.add(new AnotherPathSegment(AnotherPathSegment.SegmentType.TURN, new double[]{0, 0, 0, 0}));
         this.inGameSegments.add(new AnotherPathSegment(AnotherPathSegment.SegmentType.WAIT, 1000));
-        this.inGameSegments.add(new AnotherPathSegment(AnotherPathSegment.SegmentType.MOVE, new double[]{0.3, 0.3, 0.3, 0.3}, AnotherPathSegment.WhichModule.RIGHT_FRONT, 10));
+        this.inGameSegments.add(new AnotherPathSegment(AnotherPathSegment.SegmentType.MOVE, new double[]{0.3, 0.3, 0.3, 0.3}, AnotherPathSegment.WhichModule.RIGHT_FRONT, 30));
         if (parkRight) {
             this.inGameSegments.add(new AnotherPathSegment(AnotherPathSegment.SegmentType.TURN, new double[]{Math.PI * 2 / 4 * 3, Math.PI * 2 / 4 * 3, Math.PI * 2 / 4 * 3, Math.PI * 2 / 4 * 3}));
             this.inGameSegments.add(new AnotherPathSegment(AnotherPathSegment.SegmentType.MOVE, new double[]{0.3, 0.3, 0.3, 0.3}, AnotherPathSegment.WhichModule.RIGHT_FRONT, 24));

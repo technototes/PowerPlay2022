@@ -56,7 +56,6 @@ public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
         ConfigurableSwerveDriveSubsystem drive = new ConfigurableSwerveDriveSubsystem(hardwareMap);
         drive.setSwerveMotorEncoderZero();
 
-        setInGameSegments();
         setPreStartSegments();
 
         beforeStart();
@@ -90,6 +89,8 @@ public class ProgrammableSimpleSwerveAuto extends LinearOpMode {
         }
 
         waitForStart();
+
+        setInGameSegments();
 
         for (AnotherPathSegment segment : inGameSegments) {
             switch (segment.type){
