@@ -58,18 +58,18 @@ public class ClawSubsystem implements Subsystem {
         setClawServoPosition(CLAW_FLAT);
     }
 
-    @Override
-    public void periodic() {
-        if (clawServo != null && CLAW_AUTO_CLOSE) {
-            // TODO: null check for the lift subsystem
-            if (liftSubsystem.canAutoCloseClaw() && !isClawAlreadyClosed() && isAllianceCone() && isConeClose()) {
-                closeClaw();
-            }
-        }
-    }
+//    @Override
+//    public void periodic() {
+//        if (clawServo != null && CLAW_AUTO_CLOSE) {
+//            // TODO: null check for the lift subsystem
+//            if (liftSubsystem.canAutoCloseClaw() && !isClawAlreadyClosed() && isAllianceCone() && isConeClose()) {
+//                closeClaw();
+//            }
+//        }
+//    }
 
     public boolean isConeClose() {
-        if (colorDistanceSensor.getDistance(DistanceUnit.CM) <= 4.0) {
+        if (colorDistanceSensor != null && colorDistanceSensor.getDistance(DistanceUnit.CM) <= 4.0) {
             return true;
         }
         return false;

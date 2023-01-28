@@ -107,7 +107,7 @@ public class AnotherSwerveModule {
         lastRotationError = error;
         double power = Range.clip(rotationController.update(error), -MAX_SERVO_SPEED, MAX_SERVO_SPEED);
         if (Double.isNaN(power)) power = 0;
-        power = power + (Math.abs(power) > ALLOWED_BB_ERROR ? (kStatic * Math.signum(power)): 0);
+        power = Math.abs(power) < ALLOWED_BB_ERROR ? 0: (kStatic * Math.signum(power)) + power*(1-kStatic);
         servo.setPower(power);
         lastServoPower = power;
         //System.out.println("Target: " + Math.toDegrees(target) + " Current: " + Math.toDegrees(current) + " Power: " + power + ", " + rotationController.getTargetPosition() +", " + rotationController.getTargetVelocity() + ", " + rotationController.getTargetAcceleration());
