@@ -142,16 +142,6 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         telemetry.addData("Drive Speed Multiplier", GAS_PADDLE_BASE_SPEED + gasPaddle);
         telemetry.addData("Lift Position", robot.liftSubsystem.getLeftPos());
 
-        if (robot.liftSubsystem != null) {
-            telemetry.addData("is lift high", robot.liftSubsystem.isLiftHigh());
-            if (robot.liftSubsystem.isLiftHigh()) {
-
-            } else if (robot.liftSubsystem.isLiftMedium()) {
-
-            } else {
-
-            }
-        }
         telemetry.update();
     }
 }
