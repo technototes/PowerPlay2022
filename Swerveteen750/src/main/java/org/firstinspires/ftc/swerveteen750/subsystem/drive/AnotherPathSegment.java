@@ -4,7 +4,8 @@ public class AnotherPathSegment {
     public enum SegmentType {
         WAIT,
         TURN,
-        MOVE
+        MOVE,
+        LOGIC
     }
 
     public enum WhichModule {
@@ -37,10 +38,18 @@ public class AnotherPathSegment {
     public WhichModule measureFrom;
     public double targetDistanceFakeInch;
 
+
     public AnotherPathSegment(SegmentType type, double[] motorVelocity, WhichModule measureFrom, double targetDistanceFakeInch) {
         this.type = type;
         this.motorVelocity = motorVelocity;
         this.measureFrom = measureFrom;
         this.targetDistanceFakeInch = targetDistanceFakeInch;
+    }
+
+    // LOGIC
+    public Runnable logic;
+    public AnotherPathSegment(SegmentType type, Runnable logic) {
+        this.type = type;
+        this.logic = logic;
     }
 }
