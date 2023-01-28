@@ -576,13 +576,6 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         leftFrontModule.setTargetRotation((v0));
     }
 
-    public void setModuleVelocities(double v, double v1, double v2, double v3) {
-        leftFrontModule.setServoPower(v);
-        leftRearModule.setServoPower(v1);
-        rightRearModule.setServoPower(v2);
-        rightFrontModule.setServoPower(v3);
-    }
-
     public void enableDiagnoseTelemetry(Telemetry telemetry, boolean callUpdate) {
         this.telemetry = telemetry;
         this.debugTelemetryEnabled = true;
@@ -643,19 +636,17 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         rightRearModule.setMotorVelocity(power);
     }
 
-    public void stopAndWait(long waitTime) {
-        setModuleVelocities(0, 0, 0, 0);
-        try {
-            Thread.sleep(waitTime);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void setSwerveMotorEncoderZero() {
         leftFrontModule.setMotorEncoderZero();
         leftRearModule.setMotorEncoderZero();
         rightFrontModule.setMotorEncoderZero();
         rightRearModule.setMotorEncoderZero();
+    }
+
+    public void setSwerveMotorVelocities(double[] velocities){
+        leftFrontModule.setMotorVelocity(velocities[0]);
+        leftRearModule.setMotorVelocity(velocities[1]);
+        rightFrontModule.setMotorVelocity(velocities[2]);
+        rightRearModule.setMotorVelocity(velocities[3]);
     }
 }
