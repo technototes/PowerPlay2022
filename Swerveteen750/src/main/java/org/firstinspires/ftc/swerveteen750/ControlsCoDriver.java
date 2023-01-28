@@ -52,7 +52,7 @@ public class ControlsCoDriver {
     public void bindCoDriverClawControls() {
         gamepad.rightBumper.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
         gamepad.leftBumper.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
-        gamepad.rightStickButton.whenPressed(new ClawFlatCommand(robot.clawSubsystem));
+//        gamepad.rightStickButton.whenPressed(new ClawFlatCommand(robot.clawSubsystem));
     }
 
     // Using left trigger to lower the lift after align with the pole, then use right bumper to open the claw
