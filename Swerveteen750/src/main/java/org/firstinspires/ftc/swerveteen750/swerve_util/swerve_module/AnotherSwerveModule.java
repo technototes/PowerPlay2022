@@ -31,12 +31,14 @@ public class AnotherSwerveModule {
 
     public static double MAX_SERVO_SPEED = 1, MAX_MOTOR_SPEED = 1;
 
+    private double kStatic;
+
     //EXPERIMENTAL FEATURES
     public static boolean WAIT_FOR_TARGET = false;
 
     public static double ALLOWED_COS_ERROR = Math.toRadians(2);
 
-    public static double ALLOWED_BB_ERROR = Math.toRadians(2);
+    public static double ALLOWED_BB_ERROR = .02;
 
     public static boolean MOTOR_FLIPPING = true;
 
@@ -53,7 +55,7 @@ public class AnotherSwerveModule {
 
     private boolean wheelFlipped = false;
 
-    public AnotherSwerveModule(DcMotorEx m, CRServo s, AbsoluteAnalogEncoder e, PIDCoefficients rotationPID, PIDFCoefficients motorVelocityPID) {
+    public AnotherSwerveModule(DcMotorEx m, CRServo s, AbsoluteAnalogEncoder e, PIDCoefficients rotationPID, PIDFCoefficients motorVelocityPID, double rotationStatic) {
         motor = m;
         MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
         motorConfigurationType.setAchieveableMaxRPMFraction(MAX_MOTOR_SPEED);
@@ -79,16 +81,18 @@ public class AnotherSwerveModule {
         } else {
             System.out.println("Current/Default Motor PID: " + motor.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
         }
+        kStatic = rotationStatic;
     }
 
 
-    public AnotherSwerveModule(HardwareMap hardwareMap, String motorName, String servoName, String encoderName, PIDCoefficients rotationPID, PIDFCoefficients motorVelocityPID) {
+    public AnotherSwerveModule(HardwareMap hardwareMap, String motorName, String servoName, String encoderName, PIDCoefficients rotationPID, PIDFCoefficients motorVelocityPID, double rotationalStatic) {
         this(
                 hardwareMap.get(DcMotorEx.class, motorName),
                 hardwareMap.get(CRServo.class, servoName),
                 new AbsoluteAnalogEncoder(hardwareMap.get(AnalogInput.class, encoderName)),
                 rotationPID,
-                motorVelocityPID
+                motorVelocityPID,
+                rotationalStatic
         );
     }
 
@@ -99,7 +103,7 @@ public class AnotherSwerveModule {
         else if (target - current > Math.PI) current += (2 * Math.PI);
         double power = Range.clip(rotationController.update(current), -MAX_SERVO_SPEED, MAX_SERVO_SPEED);
         if (Double.isNaN(power)) power = 0;
-        servo.setPower(Math.abs(rotationController.getLastError()) > ALLOWED_BB_ERROR ? power : 0);
+        servo.setPower(power + (Math.abs(power) > ALLOWED_BB_ERROR ? (kStatic * Math.signum(power)): 0));
         //System.out.println("Target: " + Math.toDegrees(target) + " Current: " + Math.toDegrees(current) + " Power: " + power + ", " + rotationController.getTargetPosition() +", " + rotationController.getTargetVelocity() + ", " + rotationController.getTargetAcceleration());
     }
 

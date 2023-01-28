@@ -59,6 +59,7 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public static double OMEGA_WEIGHT = 1;
 
 
+
     public static double STICK_X_SCALAR = 0.8;
     public static double STICK_Y_SCALAR = 0.8;
 
@@ -278,7 +279,7 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         PhotonCore.CONTROL_HUB.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
         PhotonCore.experimental.setMaximumParallelCommands(MAX_PARALLEL_COMMANDS);
     }
-
+    public static double kStatic = 0.04;
     public static PIDCoefficients LF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.8, 0, 0);
     public static PIDCoefficients LR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.8, 0, 0);
     public static PIDCoefficients RF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.8, 0, 0);
@@ -304,10 +305,10 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         this(
                 hardwareMap,
                 hardwareMap.get(BNO055IMU.class, "imu"),
-                new AnotherSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", LF_SERVO_ROTATION_PID_COEF, LF_MOTOR_VELO_PIDF_COEF),
-                new AnotherSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", LR_SERVO_ROTATION_PID_COEF, LR_MOTOR_VELO_PIDF_COEF),
-                new AnotherSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RR_SERVO_ROTATION_PID_COEF, RR_MOTOR_VELO_PIDF_COEF),
-                new AnotherSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", RF_SERVO_ROTATION_PID_COEF, RF_MOTOR_VELO_PIDF_COEF)
+                new AnotherSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", LF_SERVO_ROTATION_PID_COEF, LF_MOTOR_VELO_PIDF_COEF, kStatic),
+                new AnotherSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", LR_SERVO_ROTATION_PID_COEF, LR_MOTOR_VELO_PIDF_COEF, kStatic),
+                new AnotherSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RR_SERVO_ROTATION_PID_COEF, RR_MOTOR_VELO_PIDF_COEF, kStatic),
+                new AnotherSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", RF_SERVO_ROTATION_PID_COEF, RF_MOTOR_VELO_PIDF_COEF, kStatic)
         );
     }
 

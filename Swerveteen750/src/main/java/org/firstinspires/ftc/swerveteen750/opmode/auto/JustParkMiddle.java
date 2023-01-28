@@ -37,12 +37,15 @@ public class JustParkMiddle extends LinearOpMode {
         ElapsedTime timer = new ElapsedTime();
         while (timer.milliseconds() < 1000 * 1) {
             drive.update();
+            telemetry.addData("LF Encoder Voltage ", drive.leftFrontModule.getEncoderVoltage());
+            telemetry.addData("power ", drive.leftFrontModule.getServoPower());
+            telemetry.update();
         }
 
 
         safeSleep(1000 * 1);
 
-        while (!isStopRequested() && opModeIsActive() && Math.abs(drive.getAdjustedMotorEncoderValue()[2]) < 10) {
+        while (!isStopRequested() && opModeIsActive() && Math.abs(drive.getAdjustedMotorEncoderValue()[2]) < 30) {
             drive.setPowerForAllMotor(DEFAULT_POWER);
             drive.update();
 
@@ -50,6 +53,9 @@ public class JustParkMiddle extends LinearOpMode {
             telemetry.addData("Left Rear Encoder", drive.getAdjustedMotorEncoderValue()[1]);
             telemetry.addData("Right Front Encoder", drive.getAdjustedMotorEncoderValue()[2]);
             telemetry.addData("Right Rear Encoder", drive.getAdjustedMotorEncoderValue()[3]);
+            telemetry.addData("LF Encoder Voltage ", drive.leftFrontModule.getEncoderVoltage());
+            telemetry.addData("power ", drive.leftFrontModule.getServoPower());
+
             telemetry.update();
         }
 
