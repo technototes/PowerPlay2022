@@ -33,7 +33,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double L_EXTENDED_MEDIUM = 20 * TICKS_PER_INCH; // To indicate the lift is medium
 
     // Don't change these: They're used for user-redefining the 'zero' location during gameplay
-    public static double L_ACTUAL_ZERO = 10;
+    public static double L_ACTUAL_ZERO = 0;
 
     public static PIDCoefficients L_PID = new PIDCoefficients(0.006, 0, 0);
 
@@ -81,7 +81,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     }
 
     private void setTargetPosition(double leftTargetPos) {
-        setTargetPositionOverride(Range.clip(leftTargetPos + L_ACTUAL_ZERO, L_ABSOLUTE_MIN_HEIGHT, L_ABSOLUTE_MAX_HEIGHT));
+        setTargetPositionOverride(Range.clip(leftTargetPos - L_ACTUAL_ZERO, L_ABSOLUTE_MIN_HEIGHT, L_ABSOLUTE_MAX_HEIGHT));
     }
 
     private void setTargetPositionOverride(double leftTargetPos) {
@@ -171,7 +171,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
     }
 
-    private void setNewZero() {
+    public void setNewZero() {
         if (isLeftConnected) {
             L_ACTUAL_ZERO = leftMotor.get();
         }
