@@ -16,6 +16,7 @@ import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.SwerveDriveSubsystem;
 import org.firstinspires.ftc.swerveteen750.swerve_util.AbsoluteAnalogEncoder;
 import org.firstinspires.ftc.swerveteen750.swerve_util.CRServoProfiler;
@@ -45,6 +46,8 @@ public class AnotherSwerveModule {
     public static double FLIP_BIAS = Math.toRadians(0);
 
     public double motorEncoderZero = 0;
+
+    public double currentTargetPosition = 0;
 
 
     private DcMotorEx motor;
@@ -98,17 +101,16 @@ public class AnotherSwerveModule {
 
 
     public void update() {
-        double target = getTargetRotation(), current = getModuleRotation();
-        if (current - target > Math.PI) current -= (2 * Math.PI);
-        else if (target - current > Math.PI) current += (2 * Math.PI);
-        double power = Range.clip(rotationController.update(current), -MAX_SERVO_SPEED, MAX_SERVO_SPEED);
+        double current = getModuleRotation();
+        double error = AngleUnit.normalizeRadians(current - currentTargetPosition);
+        double power = Range.clip(rotationController.update(error), -MAX_SERVO_SPEED, MAX_SERVO_SPEED);
         if (Double.isNaN(power)) power = 0;
         servo.setPower(power + (Math.abs(power) > ALLOWED_BB_ERROR ? (kStatic * Math.signum(power)): 0));
         //System.out.println("Target: " + Math.toDegrees(target) + " Current: " + Math.toDegrees(current) + " Power: " + power + ", " + rotationController.getTargetPosition() +", " + rotationController.getTargetVelocity() + ", " + rotationController.getTargetAcceleration());
     }
 
     public double getTargetRotation() {
-        return rotationController.getTargetPosition();
+        return currentTargetPosition;
     }
 
     public double getModuleRotation() {
@@ -200,7 +202,7 @@ public class AnotherSwerveModule {
             wheelFlipped = Math.abs(current - target) > (Math.PI / 2 - flipModifier() * FLIP_BIAS);
             if (wheelFlipped) target = Angle.norm(target + Math.PI);
         }
-        rotationController.setTargetPosition(target);
+        currentTargetPosition = target;
     }
 
     public SwerveModuleState asState() {

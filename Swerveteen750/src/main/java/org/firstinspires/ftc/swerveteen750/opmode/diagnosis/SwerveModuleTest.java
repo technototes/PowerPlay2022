@@ -22,10 +22,10 @@ public class SwerveModuleTest extends CommandOpMode {
     AnotherSwerveModule rightRearModule;
 
 
-    public double leftFrontModuleTargetOrientationRadians = 0;
-    public double leftRearTargetModuleOrientationRadians = 0;
-    public double rightRearModuleTargetOrientationRadians = 0;
-    public double rightFrontModuleTargetOrientationRadians = 0;
+    public static double leftFrontModuleTargetOrientationRadians = 0;
+    public static double leftRearTargetModuleOrientationRadians = 0;
+    public static double rightRearModuleTargetOrientationRadians = 0;
+    public static double rightFrontModuleTargetOrientationRadians = 0;
 
     @Override
     public void uponInit() {
