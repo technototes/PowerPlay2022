@@ -3,6 +3,7 @@ package org.firstinspires.ftc.swerveteen750.opmode.auto;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.technototes.library.hardware2.HardwareBuilder;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.swerveteen750.Hardware;
 import org.firstinspires.ftc.swerveteen750.Robot;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
 
+@Disabled
 @Autonomous(group = "Will Not Work")
 public class JustParkMiddle extends LinearOpMode {
     public static double DEFAULT_POWER = 0.3;
