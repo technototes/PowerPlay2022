@@ -60,9 +60,9 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         public static double highV = 255;
 
         // In the 240x320 bitmap, where are we looking?
-        public static int X = 205;
+        public static int X = 130;
         public static int Y = 120;
-        public static int WIDTH = 45;
+        public static int WIDTH = 100;
         public static int HEIGHT = 70;
 
         // What color should we draw the outlining rectangle?
