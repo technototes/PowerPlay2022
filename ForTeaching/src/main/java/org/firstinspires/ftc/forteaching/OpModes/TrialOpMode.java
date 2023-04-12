@@ -4,17 +4,17 @@ import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@TeleOp(name = "Sree's Trial Op Mode")
+@TeleOp(name = "Two Motor Driving")
 public class TrialOpMode extends LinearOpMode {
 
     private DcMotorEx motorL;
     private DcMotorEx motorR;
-    private RevTouchSensor bump;
-    private Rev2mDistanceSensor distance;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -24,43 +24,56 @@ public class TrialOpMode extends LinearOpMode {
         motorL = hardwareMap.get(DcMotorEx.class, "motorL");
         motorR = hardwareMap.get(DcMotorEx.class, "motorR");
         motorR.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorL.setPower(0.0);
         motorR.setPower(0.0);
-
-        // Initialize Sensors
-        bump = hardwareMap.get(RevTouchSensor.class, "touch7");
-        distance = hardwareMap.get(Rev2mDistanceSensor.class, "distance2m");
 
         waitForStart();
         // User has hit "start"
-
-        while (opModeIsActive()) {
+        int startL = motorL.getCurrentPosition();
+        int startR = motorR.getCurrentPosition();
+        motorL.setPower(1.0);
+        motorR.setPower(1.0);
+        int mode = 0;
+        int dist = 5000;
+        int dead = 100;
+        ElapsedTime total = new ElapsedTime();
+        while (opModeIsActive() && mode != 2) {
             // user hasn't hit "stop" yet
-
-            // If our bump sensor is bumped, turn off the motors!
-            if (bump.isPressed()) {
-                motorR.setPower(0.0);
-                motorL.setPower(0.0);
-            } else if (distance.getDistance(DistanceUnit.MM) < 200) {
-                double left = this.gamepad1.left_stick_y;
-                double right = this.gamepad1.right_stick_y;
-                if (left > 0 && right > 0) {
-                    motorL.setPower(left);
-                    motorR.setPower(right);
-                } else {
-                    motorR.setPower(0.0);
+            if (
+                mode == 0 &&
+                (
+                    Math.abs(motorL.getCurrentPosition() - startL) > dist ||
+                    Math.abs(motorR.getCurrentPosition() - startR) > dist
+                )
+            ) {
+                mode = 1;
+                ElapsedTime t = new ElapsedTime();
+                while (t.milliseconds() < 1000) {
                     motorL.setPower(0.0);
+                    motorR.setPower(0.0);
                 }
-            } else {
-                // Bump sensor isn't bumped: Let the user push the sticks
-                // to control the motors
-                double left = this.gamepad1.left_stick_y;
-                double right = this.gamepad1.right_stick_y;
-                motorL.setPower(left);
-                motorR.setPower(right);
+                motorL.setPower(-1);
+                motorR.setPower(-1);
+            } else if (
+                mode == 1 &&
+                (
+                    Math.abs(motorL.getCurrentPosition() - startL) <= dead ||
+                    Math.abs(motorR.getCurrentPosition() - startR) <= dead
+                )
+            ) {
+                mode = 2;
             }
         }
-        motorL.setPower(0.0);
-        motorR.setPower(0.0);
+        ElapsedTime t = new ElapsedTime();
+        while (t.milliseconds() < 1000) {
+            motorL.setPower(0.0);
+            motorR.setPower(0.0);
+        }
+        telemetry.addData("Total Time: ", total.seconds());
+        telemetry.update();
+        ElapsedTime t2 = new ElapsedTime();
+        while (t2.milliseconds() < 10000) {}
     }
 }
