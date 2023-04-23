@@ -22,7 +22,7 @@ import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDri
 @Config
 @TeleOp(group = "Swerve")
 @SuppressWarnings("unused")
-public class AnotherExperimentalSwerveDrive extends CommandOpMode {
+public class DPadSwerveDrive extends CommandOpMode {
     Robot robot;
     Hardware hardware;
     ConfigurableSwerveDriveSubsystem drive;
@@ -35,6 +35,7 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
     public static double STICK_DIRECTIONAL_DEAD_ZONE = 0.03;
     public static double GAS_PADDLE_BASE_SPEED = 0.2;
     public static double GAS_PADDLE_MULTIPLIER = 0.5;
+    public static boolean DPAD_DRIVE = true;
 
 
     @Override
@@ -57,8 +58,16 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
 
     @Override
     public void runLoop() {
-        double x = Math.pow(Math.abs(gamepad1.left_stick_x) > STICK_DIRECTIONAL_DEAD_ZONE ? gamepad1.left_stick_x : 0, 3);
-        double y = Math.pow(Math.abs(gamepad1.left_stick_y) > STICK_DIRECTIONAL_DEAD_ZONE ? gamepad1.left_stick_y : 0, 3);
+        double x;
+        double y;
+        if (DPAD_DRIVE){
+            x = gamepad1.dpad_left ? -.5 : gamepad1.dpad_right ? .5 : 0;
+            y = gamepad1.dpad_up ? .5 : gamepad1.dpad_down ? -.5 : 0;
+        }
+        else{
+            x = Math.pow(Math.abs(gamepad1.left_stick_x) > STICK_DIRECTIONAL_DEAD_ZONE ? gamepad1.left_stick_x : 0, 3);
+            y = Math.pow(Math.abs(gamepad1.left_stick_y) > STICK_DIRECTIONAL_DEAD_ZONE ? gamepad1.left_stick_y : 0, 3);
+        }
 
         double r = Math.pow(gamepad1.right_stick_x, 3);
         double gasPaddle = gamepad1.right_trigger * GAS_PADDLE_MULTIPLIER;
@@ -107,8 +116,8 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
 
         Pose2d poseEstimate = drive.getPoseEstimate();
 
-//        telemetry.addData("X Coordinate", poseEstimate.getX());
-//        telemetry.addData("Y Coordinate", poseEstimate.getY());
+        telemetry.addData("X Coordinate", poseEstimate.getX());
+        telemetry.addData("Y Coordinate", poseEstimate.getY());
         telemetry.addData("LeftStick-X", gamepad1.left_stick_x);
         telemetry.addData("LeftStick-Y", gamepad1.left_stick_y);
         telemetry.addData("CoDriverStick-X", gamepad2.left_stick_x);
@@ -131,6 +140,8 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         telemetry.addData("LR - Wheel Velocity", Math.toDegrees(robot.swerveDriveSubsystem.leftRearModule.getWheelVelocity()));
         telemetry.addData("RF - Wheel Velocity", Math.toDegrees(robot.swerveDriveSubsystem.rightFrontModule.getWheelVelocity()));
         telemetry.addData("RR - Wheel Velocity", Math.toDegrees(robot.swerveDriveSubsystem.rightRearModule.getWheelVelocity()));
+        telemetry.addData("STICK_X_SCALAR", ConfigurableSwerveDriveSubsystem.STICK_X_SCALAR);
+        telemetry.addData("STICK_Y_SCALAR", ConfigurableSwerveDriveSubsystem.STICK_Y_SCALAR);
         telemetry.addData("LR - Servo Power", robot.swerveDriveSubsystem.leftRearModule.getServoPower());
         telemetry.addData("LF - Servo Power", robot.swerveDriveSubsystem.leftFrontModule.getServoPower());
         telemetry.addData("RR - Servo Power", robot.swerveDriveSubsystem.rightRearModule.getServoPower());
@@ -140,8 +151,17 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         telemetry.addData("RF - Heading", robot.swerveDriveSubsystem.rightFrontModule.getEncoderVoltage());
         telemetry.addData("RR - Heading", robot.swerveDriveSubsystem.rightRearModule.getEncoderVoltage());
         telemetry.addData("Drive Speed Multiplier", GAS_PADDLE_BASE_SPEED + gasPaddle);
-        telemetry.addData("Lift Position", robot.liftSubsystem.getLeftPos());
 
+        if (robot.liftSubsystem != null) {
+            telemetry.addData("is lift high", robot.liftSubsystem.isLiftHigh());
+            if (robot.liftSubsystem.isLiftHigh()) {
+
+            } else if (robot.liftSubsystem.isLiftMedium()) {
+
+            } else {
+
+            }
+        }
         telemetry.update();
     }
 }

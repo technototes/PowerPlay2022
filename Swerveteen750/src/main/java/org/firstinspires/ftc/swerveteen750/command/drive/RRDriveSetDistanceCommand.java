@@ -14,7 +14,7 @@ public class RRDriveSetDistanceCommand implements Command {
     public RRDriveSetDistanceCommand(AnotherSwerveModule m, double d) {
         module = m;
         ticksPerdistance = ConfigurableSwerveDriveSubsystem.getTicksFromInches(d);
-        startingEncoderValue = module.getWheelPosition();
+        startingEncoderValue = module.getUnadjustedWheelInchPosition();
     }
 
 
@@ -25,7 +25,7 @@ public class RRDriveSetDistanceCommand implements Command {
 
     @Override
     public boolean isFinished() {
-        if (module.getWheelPosition() - startingEncoderValue < ticksPerdistance) {
+        if (module.getUnadjustedWheelInchPosition() - startingEncoderValue < ticksPerdistance) {
             return false;
         } else {
             module.setMotorVelocity(0);

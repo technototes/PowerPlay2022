@@ -59,11 +59,11 @@ public class VisionPipeline extends OpenCvPipeline implements Supplier<Integer>,
         // The high value for color ID
         public static double highV = 255;
 
-        // In the 160x120 bitmap, where are we looking?
-        public static int X = 120;
-        public static int Y = 65;
-        public static int WIDTH = 45;
-        public static int HEIGHT = 60;
+        // In the 240x320 bitmap, where are we looking?
+        public static int X = 132;
+        public static int Y = 50;
+        public static int WIDTH = 86;
+        public static int HEIGHT = 50;
 
         // What color should we draw the outlining rectangle?
         public static Scalar HIGHLIGHT = new Scalar(255, 0, 255);

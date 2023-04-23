@@ -5,6 +5,7 @@ import org.firstinspires.ftc.swerveteen750.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.swerveteen750.command.drive.ApplyTurboModeCommand;
 import org.firstinspires.ftc.swerveteen750.command.drive.MecanumDriveCommand;
 import org.firstinspires.ftc.swerveteen750.command.drive.ResetSwerveGyroCommand;
+import org.firstinspires.ftc.swerveteen750.command.drive.SetSwerveHighSpeedCommand;
 import org.firstinspires.ftc.swerveteen750.command.drive.SetSwerveLowSpeedCommand;
 import org.firstinspires.ftc.swerveteen750.command.drive.SetSwerveMidSpeedCommand;
 import org.firstinspires.ftc.swerveteen750.command.lift.LiftFloorIntakeCommand;
@@ -77,30 +78,30 @@ public class ControlsDriver {
     }
 
     public void bindSwerveDriveControls(){
-        gamepad.leftStickButton.whenPressed(new ResetSwerveGyroCommand(robot.swerveDriveSubsystem, gamepad));
-        //    gamepad.triangle.whenPressed(new SetSwerveHighSpeedCommand());
-        //  gamepad.square.whenPressed(new SetSwerveMidSpeedCommand());
-        gamepad.rightStickButton.whenPressed(new SetSwerveMidSpeedCommand());
-        gamepad.circle.whenPressed(new SetSwerveLowSpeedCommand());
+        gamepad.rightStickButton.whenPressed(new ResetSwerveGyroCommand(robot.swerveDriveSubsystem, gamepad));
+//        gamepad.triangle.whenPressed(new SetSwerveHighSpeedCommand());
+//        gamepad.square.whenPressed(new SetSwerveMidSpeedCommand());
+//        gamepad.x.whenPressed(new SetSwerveLowSpeedCommand());
+        //gamepad.dpadUp.whenPressed(new )
     }
 
     public void bindDriverClawControls() {
-        gamepad.leftBumper.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-        gamepad.rightBumper.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
+//        gamepad.leftBumper.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
+//        gamepad.rightBumper.whenPressed(new ClawCloseCommand(robot.clawSubsystem));
         //gamepad.rightStickButton.whenPressed(new ClawFlatCommand(robot.clawSubsystem));
     }
 
     public void bindDriverLiftControls() {
-        gamepad.leftTrigger.whenPressed(new LiftMoveUpOverrideCommand(robot.liftSubsystem));
-        gamepad.rightTrigger.whenPressed(new LiftMoveDownOverrideCommand(robot.liftSubsystem));
+        gamepad.leftBumper.whenPressed(new LiftMoveDownOverrideCommand(robot.liftSubsystem));
+        gamepad.rightBumper.whenPressed(new LiftMoveUpOverrideCommand(robot.liftSubsystem));
 
-        gamepad.dpadLeft.whenPressed(new LiftLowPoleCommand(robot.liftSubsystem));
-        gamepad.dpadRight.whenPressed(new LiftMidPoleCommand(robot.liftSubsystem));
-        gamepad.dpadUp.whenPressed(new LiftHighPoleCommand(robot.liftSubsystem));
-        gamepad.dpadDown.whenPressed(new LiftFloorIntakeCommand(robot.liftSubsystem));
+  //      gamepad.dpadLeft.whenPressed(new LiftLowPoleCommand(robot.liftSubsystem));
+    //    gamepad.dpadRight.whenPressed(new LiftMidPoleCommand(robot.liftSubsystem));
+     //   gamepad.dpadUp.whenPressed(new LiftHighPoleCommand(robot.liftSubsystem));
+      //  gamepad.dpadDown.whenPressed(new LiftFloorIntakeCommand(robot.liftSubsystem));
 
-        gamepad.triangle.whenPressed(new TurretFrontCommand(robot.liftSubsystem));
-        gamepad.square.whenPressed(new TurretLeftCommand(robot.liftSubsystem));
-        gamepad.cross.whenPressed(new TurretRearCommand(robot.liftSubsystem));
+//        gamepad.triangle.whenPressed(new TurretFrontCommand(robot.liftSubsystem));
+//        gamepad.square.whenPressed(new TurretLeftCommand(robot.liftSubsystem));
+//        gamepad.cross.whenPressed(new TurretRearCommand(robot.liftSubsystem));
     }
 }

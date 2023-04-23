@@ -3,8 +3,6 @@ package org.firstinspires.ftc.swerveteen750.opmode.teleop;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.acmerobotics.roadrunner.control.PIDCoefficients;
-import com.acmerobotics.roadrunner.control.PIDFController;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -20,28 +18,21 @@ import org.firstinspires.ftc.swerveteen750.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.ConfigurableSwerveDriveSubsystem;
 
 @Config
-@TeleOp(group = "Swerve")
-@SuppressWarnings("unused")
-public class AnotherExperimentalSwerveDrive extends CommandOpMode {
+public abstract class AnotherBaseSwerveDrive extends CommandOpMode {
     Robot robot;
     Hardware hardware;
     ConfigurableSwerveDriveSubsystem drive;
     ControlsDriver driverControls;
     ControlsCoDriver coDriverControls;
-    private double desiredRotation = 0;
-    private PIDFController rotationController;
-    public static PIDCoefficients rotationCoefficients = new PIDCoefficients(.5, 0, 0);
-    private boolean useAutoRotation = false;
     public static double STICK_DIRECTIONAL_DEAD_ZONE = 0.03;
-    public static double GAS_PADDLE_BASE_SPEED = 0.2;
-    public static double GAS_PADDLE_MULTIPLIER = 0.5;
+    public static double THROTTLE_BASE_SPEED = 0.2;
+    public static double THROTTLE_MULTIPLIER = 0.5;
 
 
     @Override
     public void uponInit() {
         hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DEFAULT);
-        robot = new Robot(hardwareMap, hardware, Robot.SubsystemCombo.DEFAULT, Alliance.NONE, StartingPosition.NEUTRAL);
-        rotationController = new PIDFController(rotationCoefficients);
+        robot = new Robot(hardwareMap, hardware, Robot.SubsystemCombo.DEFAULT, Alliance.get(getClass()), StartingPosition.NEUTRAL);
         drive = robot.swerveDriveSubsystem;
         drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         drive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -61,24 +52,10 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         double y = Math.pow(Math.abs(gamepad1.left_stick_y) > STICK_DIRECTIONAL_DEAD_ZONE ? gamepad1.left_stick_y : 0, 3);
 
         double r = Math.pow(gamepad1.right_stick_x, 3);
-        double gasPaddle = gamepad1.right_trigger * GAS_PADDLE_MULTIPLIER;
-        x *= GAS_PADDLE_BASE_SPEED + gasPaddle;
-        y *= GAS_PADDLE_BASE_SPEED + gasPaddle;
-        r *= GAS_PADDLE_BASE_SPEED + gasPaddle;
-
-        if (Math.abs(r) < 0.1){
-//            double curHeading = drive.getExternalHeading();
-//            if (!useAutoRotation){
-//                desiredRotation = curHeading;
-//                rotationController.reset();
-//                rotationController.setTargetPosition(desiredRotation);
-//                useAutoRotation = true;
-//            }
-//            r = -rotationController.update(curHeading);
-        }
-        else{
-            useAutoRotation = false;
-        }
+        double throttle = gamepad1.right_trigger * THROTTLE_MULTIPLIER;
+        x *= THROTTLE_BASE_SPEED + throttle;
+        y *= THROTTLE_BASE_SPEED + throttle;
+        r *= THROTTLE_BASE_SPEED + throttle;
 
         drive.setWeightedDrivePower(
                 new Pose2d(
@@ -93,11 +70,6 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         double possibleTurretPosition = 0;
         double actualTurretPosition = 0;
         if (gamepad2.left_stick_button){
-//            if (gamepad2.left_stick_x < 0 || gamepad2.left_stick_y != 0) {
-//                possibleTurretPosition = Math.toDegrees(Math.atan2(gamepad2.left_stick_y, gamepad2.left_stick_x));
-//                possibleTurretPosition += 90;
-////            possibleTurretPosition = -possibleTurretPosition;
-//            }
             possibleTurretPosition = Math.toDegrees(Math.atan2(gamepad2.left_stick_y, gamepad2.left_stick_x));
             possibleTurretPosition += 90;
             actualTurretPosition = robot.liftSubsystem.controlTurretByDegrees(possibleTurretPosition);
@@ -105,10 +77,6 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         // use gamepad2.left_stick_x and gamepad2.left_stick_y to control the turret
 
 
-        Pose2d poseEstimate = drive.getPoseEstimate();
-
-//        telemetry.addData("X Coordinate", poseEstimate.getX());
-//        telemetry.addData("Y Coordinate", poseEstimate.getY());
         telemetry.addData("LeftStick-X", gamepad1.left_stick_x);
         telemetry.addData("LeftStick-Y", gamepad1.left_stick_y);
         telemetry.addData("CoDriverStick-X", gamepad2.left_stick_x);
@@ -119,10 +87,6 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         telemetry.addData("Actual Turret Position", actualTurretPosition);
         telemetry.addData("RightStick-R", r);
         telemetry.addData("ExternalHeading", robot.swerveDriveSubsystem.getExternalHeading());
-//        telemetry.addData("LF - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.leftFrontModuleTargetOrientation));
-//        telemetry.addData("LR - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.leftRearModuleTargetOrientation));
-//        telemetry.addData("RF - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.rightFrontModuleTargetOrientation));
-//        telemetry.addData("RR - Target Orientation", Math.toDegrees(robot.swerveDriveSubsystem.rightRearModuleTargetOrientation));
         telemetry.addData("LF - Motor Power", Math.toDegrees(robot.swerveDriveSubsystem.leftFrontMotorPower));
         telemetry.addData("LR - Motor Power", Math.toDegrees(robot.swerveDriveSubsystem.leftRearMotorPower));
         telemetry.addData("RF - Motor Power", Math.toDegrees(robot.swerveDriveSubsystem.rightFrontMotorPower));
@@ -139,9 +103,17 @@ public class AnotherExperimentalSwerveDrive extends CommandOpMode {
         telemetry.addData("LR - Heading", robot.swerveDriveSubsystem.leftRearModule.getEncoderVoltage());
         telemetry.addData("RF - Heading", robot.swerveDriveSubsystem.rightFrontModule.getEncoderVoltage());
         telemetry.addData("RR - Heading", robot.swerveDriveSubsystem.rightRearModule.getEncoderVoltage());
-        telemetry.addData("Drive Speed Multiplier", GAS_PADDLE_BASE_SPEED + gasPaddle);
+        telemetry.addData("Drive Speed Multiplier", THROTTLE_BASE_SPEED + throttle);
         telemetry.addData("Lift Position", robot.liftSubsystem.getLeftPos());
 
         telemetry.update();
     }
+
+    @TeleOp(group = "Swerve")
+    @Alliance.Red
+    public static class AnotherRedSwerveDrive extends AnotherBaseSwerveDrive {}
+
+    @TeleOp(group = "Swerve")
+    @Alliance.Blue
+    public static class AnotherBlueSwerveDrive extends AnotherBaseSwerveDrive {}
 }

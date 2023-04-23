@@ -18,11 +18,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     // Assuming the 0 position for both lift motor might be different?
     // The LiftSubsystem should be able to any of the motor combination
     public static double TICKS_PER_INCH = 118; // might not be the best value, but it works
-    public static double L_INTAKE_FLOOR = 0.1 * TICKS_PER_INCH;
+    public static double L_INTAKE_FLOOR = 0 * TICKS_PER_INCH;
     public static double L_GROUND_JUNCTION = 1.75 * TICKS_PER_INCH;
     public static double L_LOW_JUNCTION = 14.5 * TICKS_PER_INCH;
     public static double L_MEDIUM_JUNCTION = 25 * TICKS_PER_INCH;
-    public static double L_HIGH_JUNCTION = 35 * TICKS_PER_INCH;
+    public static double L_HIGH_JUNCTION = 34.5 * TICKS_PER_INCH;
     public static double L_ABSOLUTE_MIN_HEIGHT = 0;
     public static double L_ABSOLUTE_MAX_HEIGHT = 38 * TICKS_PER_INCH; // 4510
     public static double L_MAX_MOTOR_SPEED = 0.8;
@@ -33,7 +33,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     public static double L_EXTENDED_MEDIUM = 20 * TICKS_PER_INCH; // To indicate the lift is medium
 
     // Don't change these: They're used for user-redefining the 'zero' location during gameplay
-    public static double L_ACTUAL_ZERO = 10;
+    public static double L_ACTUAL_ZERO = 0;
 
     public static PIDCoefficients L_PID = new PIDCoefficients(0.006, 0, 0);
 
@@ -81,7 +81,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     }
 
     private void setTargetPosition(double leftTargetPos) {
-        setTargetPositionOverride(Range.clip(leftTargetPos + L_ACTUAL_ZERO, L_ABSOLUTE_MIN_HEIGHT, L_ABSOLUTE_MAX_HEIGHT));
+        setTargetPositionOverride(Range.clip(leftTargetPos - L_ACTUAL_ZERO, L_ABSOLUTE_MIN_HEIGHT, L_ABSOLUTE_MAX_HEIGHT));
     }
 
     private void setTargetPositionOverride(double leftTargetPos) {
@@ -132,6 +132,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         return 0.0;
     }
 
+    public boolean canAutoCloseClaw() {
+        return Math.abs(getLeftPos() - L_INTAKE_FLOOR) < TOLERANCE_ZONE;
+    }
+
+
     public double getLeftTargetPos() {
         if (isLeftConnected) {
             return leftPidController.getTargetPosition();
@@ -166,7 +171,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         }
     }
 
-    private void setNewZero() {
+    public void setNewZero() {
         if (isLeftConnected) {
             L_ACTUAL_ZERO = leftMotor.get();
         }
@@ -268,5 +273,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     public void turretIncrementDown() {
         setTurretServoPosition(getTurretPosition() - 0.05);
+    }
+
+    public double controlTurretByDegrees(double degrees) {
+        double turretPosition = degrees / 180.0;
+        setTurretServoPosition(Math.max(turretPosition - 0.05, 0.0));
+        return turretPosition;
     }
 }

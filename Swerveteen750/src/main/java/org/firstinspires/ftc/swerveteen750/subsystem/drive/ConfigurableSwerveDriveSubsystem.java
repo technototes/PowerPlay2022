@@ -58,7 +58,6 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public static double VY_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 1;
 
-
     public static double STICK_X_SCALAR = 0.8;
     public static double STICK_Y_SCALAR = 0.8;
 
@@ -278,17 +277,20 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         PhotonCore.CONTROL_HUB.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
         PhotonCore.experimental.setMaximumParallelCommands(MAX_PARALLEL_COMMANDS);
     }
-
-    public static PIDCoefficients LF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.8, 0, 0);
-    public static PIDCoefficients LR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.8, 0, 0);
-    public static PIDCoefficients RF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.8, 0, 0);
-    public static PIDCoefficients RR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.8, 0, 0);
+    public static double LFkStatic = 0.07;
+    public static double LRkStatic = 0.06;
+    public static double RFkStatic = 0.14;
+    public static double RRkStatic = 0.14;
+    public static PIDCoefficients LF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.4, 0, 0.05);
+    public static PIDCoefficients LR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.4, 0, 0.05);
+    public static PIDCoefficients RF_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.4, 0, 0.02);
+    public static PIDCoefficients RR_SERVO_ROTATION_PID_COEF = new PIDCoefficients(0.4, 0, 0.02);
 
     // the default value if PIDFCoefficients(p=10.000000 i=3.000000 d=0.000000 f=0.000000 alg=LegacyPID)
     public static PIDFCoefficients LF_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(2, 0, 0, 15);
-    public static PIDFCoefficients LR_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(2, 0, 0, 12);
-    public static PIDFCoefficients RF_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(0.2, 0, 0, 13.5);
-    public static PIDFCoefficients RR_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(2, 0, 0, 13.4);
+    public static PIDFCoefficients LR_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(2, 0, 0, 12.5);
+    public static PIDFCoefficients RF_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(0.2, 0, 0, 14);
+    public static PIDFCoefficients RR_MOTOR_VELO_PIDF_COEF = new PIDFCoefficients(0.5, 0, 0, 13.4);
 
 
     public ConfigurableSwerveDriveSubsystem(HardwareMap hardwareMap) {
@@ -304,10 +306,10 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         this(
                 hardwareMap,
                 hardwareMap.get(BNO055IMU.class, "imu"),
-                new AnotherSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", LF_SERVO_ROTATION_PID_COEF, LF_MOTOR_VELO_PIDF_COEF),
-                new AnotherSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", LR_SERVO_ROTATION_PID_COEF, LR_MOTOR_VELO_PIDF_COEF),
-                new AnotherSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RR_SERVO_ROTATION_PID_COEF, RR_MOTOR_VELO_PIDF_COEF),
-                new AnotherSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", RF_SERVO_ROTATION_PID_COEF, RF_MOTOR_VELO_PIDF_COEF)
+                new AnotherSwerveModule(hardwareMap, "leftFrontMotor", "leftFrontServo", "leftFrontEncoder", LF_SERVO_ROTATION_PID_COEF, LF_MOTOR_VELO_PIDF_COEF, LFkStatic),
+                new AnotherSwerveModule(hardwareMap, "leftRearMotor", "leftRearServo", "leftRearEncoder", LR_SERVO_ROTATION_PID_COEF, LR_MOTOR_VELO_PIDF_COEF, LRkStatic),
+                new AnotherSwerveModule(hardwareMap, "rightRearMotor", "rightRearServo", "rightRearEncoder", RR_SERVO_ROTATION_PID_COEF, RR_MOTOR_VELO_PIDF_COEF, RRkStatic),
+                new AnotherSwerveModule(hardwareMap, "rightFrontMotor", "rightFrontServo", "rightFrontEncoder", RF_SERVO_ROTATION_PID_COEF, RF_MOTOR_VELO_PIDF_COEF, RFkStatic)
         );
     }
 
@@ -447,8 +449,8 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
 
     public void setWeightedDrivePower(@NonNull Pose2d drivePower) {
         drivePower = new Pose2d(
-                drivePower.getX() * STICK_X_SCALAR,
-                drivePower.getY() * STICK_Y_SCALAR,
+                drivePower.getX(),
+                drivePower.getY(),
                 drivePower.getHeading()
         );
         Pose2d vel = drivePower;
@@ -473,7 +475,8 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     @Override
     public List<Double> getWheelPositions() {
         List<Double> wheelPositions = new ArrayList<>();
-        for (AnotherSwerveModule m : modules) wheelPositions.add(m.getWheelPosition());
+        for (AnotherSwerveModule m : modules)
+            wheelPositions.add(m.getUnadjustedWheelInchPosition());
         return wheelPositions;
     }
 
@@ -569,15 +572,9 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         rightFrontModule.setTargetRotation(v2);
         rightRearModule.setTargetRotation(v3);
     }
-    public void setLFModuleOrientations(double v0){
-        leftFrontModule.setTargetRotation((v0));
-    }
 
-    public void setModuleVelocities(double v, double v1, double v2, double v3) {
-        leftFrontModule.setServoPower(v);
-        leftRearModule.setServoPower(v1);
-        rightRearModule.setServoPower(v2);
-        rightFrontModule.setServoPower(v3);
+    public void setLFModuleOrientations(double v0) {
+        leftFrontModule.setTargetRotation((v0));
     }
 
     public void enableDiagnoseTelemetry(Telemetry telemetry, boolean callUpdate) {
@@ -607,16 +604,50 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
     public static double getTicksFromInches(double distance) {
         return Math.PI * SwerveDriveConstant.WHEEL_RADIUS * distance;
     }
-    public double getLFModuleRotationOrientation(){
+
+    public double getLFModuleRotationOrientation() {
         return leftFrontModule.getModuleRotation();
     }
-    public double getLRRotationOrientation(){
+
+    public double getLRRotationOrientation() {
         return leftRearModule.getModuleRotation();
     }
-    public double getRFRotationOrientation(){
+
+    public double getRFRotationOrientation() {
         return rightFrontModule.getModuleRotation();
     }
-    public double getRRRotationOrientation(){
+
+    public double getRRRotationOrientation() {
         return rightRearModule.getModuleRotation();
+    }
+
+    public double[] getAdjustedMotorEncoderValue() {
+        return new double[]{
+                leftFrontModule.getAdjustedWheelInchPosition(),
+                leftRearModule.getAdjustedWheelInchPosition(),
+                rightFrontModule.getAdjustedWheelInchPosition(),
+                rightRearModule.getAdjustedWheelInchPosition()
+        };
+    }
+
+    public void setPowerForAllMotor(double power) {
+        leftFrontModule.setMotorVelocity(power);
+        leftRearModule.setMotorVelocity(power);
+        rightFrontModule.setMotorVelocity(power);
+        rightRearModule.setMotorVelocity(power);
+    }
+
+    public void setSwerveMotorEncoderZero() {
+        leftFrontModule.setMotorEncoderZero();
+        leftRearModule.setMotorEncoderZero();
+        rightFrontModule.setMotorEncoderZero();
+        rightRearModule.setMotorEncoderZero();
+    }
+
+    public void setSwerveMotorVelocities(double[] velocities){
+        leftFrontModule.setMotorVelocity(velocities[0]);
+        leftRearModule.setMotorVelocity(velocities[1]);
+        rightFrontModule.setMotorVelocity(velocities[2]);
+        rightRearModule.setMotorVelocity(velocities[3]);
     }
 }

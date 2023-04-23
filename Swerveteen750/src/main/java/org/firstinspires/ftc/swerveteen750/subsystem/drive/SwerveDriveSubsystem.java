@@ -131,7 +131,8 @@ public class SwerveDriveSubsystem extends SwerveDrive {
          * convenience. Make sure to exclude any gear ratio included in MOTOR_CONFIG from GEAR_RATIO.
          */
         public static double WHEEL_RADIUS = 1.4; // in
-        public static double GEAR_RATIO = 1 / (3.5 * 1.5 * 2); // output (wheel) speed / input (motor) speed
+//        public static double GEAR_RATIO = 1 / (3.5 * 1.5 * 2); // output (wheel) speed / input (motor) speed
+        public static double GEAR_RATIO = 1 / (2.9375 * 1.5 * 2); // output (wheel) speed / input (motor) speed
         public static double TRACK_WIDTH = 9; // in
 
         /*
@@ -535,17 +536,18 @@ public class SwerveDriveSubsystem extends SwerveDrive {
     public double[] calculateModuleOrientation(Pose2d joystick) {
         double x = joystick.getX();
         double y = joystick.getY();
-        double r = joystick.getHeading();
-        double a = x - r * (wheelBase / 2);
+        double r = joystick.getHeading(); // how fast do we want to rotate
 
+        double a = x - r * (wheelBase / 2);
         double b = x + r * (wheelBase / 2);
         double c = y - r * (trackWidth / 2);
         double d = y + r * (trackWidth / 2);
+
         return new double[]{
-                Math.toDegrees(Math.atan2(b, c)), //arctan^2(
-                Math.toDegrees(Math.atan2(b, d)),
-                Math.toDegrees(Math.atan2(a, d)),
-                Math.toDegrees(Math.atan2(a, c))
+                Math.toDegrees(Math.atan2(b, c)), // Left Front
+                Math.toDegrees(Math.atan2(b, d)), // Left Rear
+                Math.toDegrees(Math.atan2(a, d)), // Right Front
+                Math.toDegrees(Math.atan2(a, c))  // Right Rear
         };
     }
 }
