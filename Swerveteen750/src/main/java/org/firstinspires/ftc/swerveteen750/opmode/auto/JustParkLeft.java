@@ -2,6 +2,7 @@ package org.firstinspires.ftc.swerveteen750.opmode.auto;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.technototes.library.hardware2.HardwareBuilder;
 
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.swerveteen750.Hardware;
 import org.firstinspires.ftc.swerveteen750.Robot;
 import org.firstinspires.ftc.swerveteen750.subsystem.drive.SimpleMecanumDriveSubsystem;
 
+@Disabled
 @Config
 @Autonomous(name = "JustParkLeft")
 public class JustParkLeft extends LinearOpMode {

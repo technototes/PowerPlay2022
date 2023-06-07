@@ -14,7 +14,7 @@ public class ClawOpenCommand implements Command {
 
     @Override
     public void execute() {
-        this.subsystem.clawOpen();
+        this.subsystem.openClaw();
     }
 
     //    @Override

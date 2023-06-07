@@ -40,6 +40,7 @@ public class Hardware {
         public static String IMU = "imu";
 
         public static String CLAW_SERVO = "clawServo";
+        public static String TURRET_SERVO = "turretServo";
         public static String FLIPPER_SERVO = "flipperServo";
         public static String ELBOW_SERVO = "elbowServo";
         public static String CLAW_SENSOR = "clawSensor";
@@ -75,6 +76,7 @@ public class Hardware {
 
     public Servo clawServo;
     public DistanceSensor clawDistance;
+    public Servo turretServo;
 
     public Webcam camera;
 
@@ -126,6 +128,7 @@ public class Hardware {
                 leftLiftMotor = null;
                 hardwareWarnings.add("Left Lift Motor not found");
             }
+            turretServo = new Servo(HardwareConstant.TURRET_SERVO);
         }
 
         if (enableClaw) {

@@ -1,12 +1,12 @@
 /*
  * This script inverts all comment lines in a set of files that end with
  * '// FLIP: TechnoLibLocal' comment (The "TechnoLibLocal" is configurable).
- * 
+ *
  * For TechnoLibLocal, this lets you add a subdirectory "TechnoLib" (as a git
  * subtree, submodule, or just a copy) that contains TechnoLib instead of
  * pulling down the latest release from jitpack.io through Maven or whatever
  * that remote repo is.
- * 
+ *
  * For BUILD ALL BOTS, it toggles including not just the competition bots, but
  * the ForTeaching, RoadRunner Quick Start and any other 'bot' subdirs that we
  * may not want to build in the heat of competition work.
@@ -79,11 +79,11 @@ async function toggleFile(file, str) {
 }
 
 async function toggleLinesWithComments(arg) {
-	const elem = fileList.get(arg);
-	if (elem === undefined) {
+  const elem = fileList.get(arg);
+  if (elem === undefined) {
     throw Error("Only use this script with the 'lib' or 'bot' argument");
-	}
-  let {name: str, files} = elem;
+  }
+  let { name: str, files } = elem;
   for (let filename of files) {
     await toggleFile(filename, str);
   }
