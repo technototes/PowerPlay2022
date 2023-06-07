@@ -3,6 +3,7 @@ package org.firstinspires.ftc.twenty403;
 import com.acmerobotics.dashboard.config.Config;
 import com.technototes.library.logger.Loggable;
 import com.technototes.library.util.Alliance;
+
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
@@ -16,15 +17,15 @@ public class Robot implements Loggable {
     public static class RobotConstant {
 
         public static boolean DRIVE_CONNECTED = true;
-        public static boolean CLAW_CONNECTED = true;
-        public static boolean LIFT_CONNECTED = true;
-        public static boolean LIFT_MOVE_MOTORS = true;
-        public static boolean ODO_SENSORS_CONNECTED = true;
+        public static boolean CLAW_CONNECTED = false;
+        public static boolean LIFT_CONNECTED = false;
+        public static boolean LIFT_MOVE_MOTORS = false;
+        public static boolean ODO_SENSORS_CONNECTED = false;
 
-        public static boolean CAMERA_CONNECTED = true;
+        public static boolean CAMERA_CONNECTED = false;
 
         // Are we using 1 or 2 motors?
-        public static boolean DUAL_LIFT_SETUP = true;
+        public static boolean DUAL_LIFT_SETUP = false;
     }
 
     public DrivebaseSubsystem drivebaseSubsystem;
@@ -37,35 +38,35 @@ public class Robot implements Loggable {
     public Robot(Hardware hardware, Alliance team, StartingPosition whichSide) {
         if (RobotConstant.ODO_SENSORS_CONNECTED) {
             odoSubsystem =
-                new OdoSubsystem(
-                    hardware.leftdis,
-                    hardware.rightdis,
-                    hardware.colorleft,
-                    hardware.colorcenter,
-                    hardware.colorright
-                );
+                    new OdoSubsystem(
+                            hardware.leftdis,
+                            hardware.rightdis,
+                            hardware.colorleft,
+                            hardware.colorcenter,
+                            hardware.colorright
+                    );
         } else {
             odoSubsystem = new OdoSubsystem();
         }
         if (RobotConstant.DRIVE_CONNECTED) {
             drivebaseSubsystem =
-                new DrivebaseSubsystem(
-                    hardware.flDriveMotor,
-                    hardware.frDriveMotor,
-                    hardware.rlDriveMotor,
-                    hardware.rrDriveMotor,
-                    hardware.imu,
-                    odoSubsystem
-                );
+                    new DrivebaseSubsystem(
+                            hardware.flDriveMotor,
+                            hardware.frDriveMotor,
+                            hardware.rlDriveMotor,
+                            hardware.rrDriveMotor,
+                            hardware.imu,
+                            odoSubsystem
+                    );
         }
         if (RobotConstant.LIFT_CONNECTED) {
             if (RobotConstant.DUAL_LIFT_SETUP) {
                 liftSubsystem =
-                    new LiftSubsystem(
-                        hardware.LiftLeftMotor,
-                        hardware.LiftRightMotor,
-                        initialVoltage
-                    );
+                        new LiftSubsystem(
+                                hardware.LiftLeftMotor,
+                                hardware.LiftRightMotor,
+                                initialVoltage
+                        );
             } else {
                 liftSubsystem = new LiftSubsystem(hardware.LiftLeftMotor, initialVoltage);
             }
@@ -74,7 +75,7 @@ public class Robot implements Loggable {
         }
         if (RobotConstant.CLAW_CONNECTED) {
             clawSubsystem =
-                new ClawSubsystem(liftSubsystem, hardware.claw, hardware.clawDistance, team);
+                    new ClawSubsystem(liftSubsystem, hardware.claw, hardware.clawDistance, team);
         } else {
             clawSubsystem = new ClawSubsystem();
         }
