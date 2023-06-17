@@ -9,6 +9,7 @@ import org.firstinspires.ftc.edmundbot.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.edmundbot.subsystem.DrivebaseSubsystem;
 import org.firstinspires.ftc.edmundbot.subsystem.LiftSubsystem;
 import org.firstinspires.ftc.edmundbot.subsystem.OdoSubsystem;
+import org.firstinspires.ftc.edmundbot.subsystem.ShooterSubsystem;
 import org.firstinspires.ftc.edmundbot.subsystem.VisionSubsystem;
 
 public class Robot implements Loggable {
@@ -20,6 +21,8 @@ public class Robot implements Loggable {
         public static boolean CLAW_CONNECTED = false;
         public static boolean LIFT_CONNECTED = false;
         public static boolean LIFT_MOVE_MOTORS = false;
+
+        public static boolean SHOOTER_CONNECTED = true;
         public static boolean ODO_SENSORS_CONNECTED = false;
 
         public static boolean CAMERA_CONNECTED = false;
@@ -31,6 +34,7 @@ public class Robot implements Loggable {
     public DrivebaseSubsystem drivebaseSubsystem;
     public ClawSubsystem clawSubsystem;
     public LiftSubsystem liftSubsystem;
+    public ShooterSubsystem shooterSubsystem;
     public VisionSubsystem visionSystem;
     public OdoSubsystem odoSubsystem;
     public double initialVoltage;
@@ -81,6 +85,15 @@ public class Robot implements Loggable {
         }
         if (RobotConstant.CAMERA_CONNECTED) {
             visionSystem = new VisionSubsystem(hardware.camera, team, whichSide);
+        }
+        if (RobotConstant.SHOOTER_CONNECTED) {
+            shooterSubsystem =
+                    new ShooterSubsystem(
+                            hardware.leftShooterMotor,
+                            hardware.rightShooterMotor
+                    );
+        } else {
+            shooterSubsystem = new ShooterSubsystem(null, null);
         }
         // Read the voltage
         initialVoltage = hardware.voltage();

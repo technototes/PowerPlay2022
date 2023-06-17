@@ -37,6 +37,9 @@ public class Hardware {
         public static String LIFT_LEFT_MOTOR = "LLIFT";
         public static String LIFT_RIGHT_MOTOR = "RLIFT";
 
+        public static String LEFT_SHOOTER_MOTOR = "leftShooterMotor";
+        public static String RIGHT_SHOOTER_MOTOR = "rightShooterMotor";
+
         public static String DISTANCE_SENSOR_LEFT = "LeftDis";
         public static String DISTANCE_SENSOR_RIGHT = "RightDis";
         public static String COLOR_SENSOR_LEFT = "ColorLeft";
@@ -56,6 +59,9 @@ public class Hardware {
     public EncodedMotor<DcMotorEx> LiftRightMotor;
     public Servo claw;
     public ColorDistanceSensor clawDistance;
+
+    public EncodedMotor<DcMotorEx> leftShooterMotor;
+    public EncodedMotor<DcMotorEx> rightShooterMotor;
 
     public Rev2MDistanceSensor leftdis;
     public Rev2MDistanceSensor rightdis;
