@@ -12,7 +12,6 @@ import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.hardware.sensor.IMU;
 import com.technototes.library.hardware.sensor.Rev2MDistanceSensor;
-import com.technototes.library.hardware.servo.Servo;
 import com.technototes.vision.hardware.Webcam;
 import java.util.List;
 
@@ -31,12 +30,6 @@ public class Hardware {
 
         public static String CAMERA = "Webcam";
 
-        public static String CLAW_SERVO = "claw";
-        public static String CLAW_SENSOR = "colorS";
-
-        public static String LIFT_LEFT_MOTOR = "LLIFT";
-        public static String LIFT_RIGHT_MOTOR = "RLIFT";
-
         public static String LEFT_SHOOTER_MOTOR = "leftShooterMotor";
         public static String RIGHT_SHOOTER_MOTOR = "rightShooterMotor";
 
@@ -54,11 +47,6 @@ public class Hardware {
     public EncodedMotor<DcMotorEx> rlDriveMotor;
     public EncodedMotor<DcMotorEx> rrDriveMotor;
     public IMU imu;
-
-    public EncodedMotor<DcMotorEx> LiftLeftMotor;
-    public EncodedMotor<DcMotorEx> LiftRightMotor;
-    public Servo claw;
-    public ColorDistanceSensor clawDistance;
 
     public EncodedMotor<DcMotorEx> leftShooterMotor;
     public EncodedMotor<DcMotorEx> rightShooterMotor;
@@ -80,16 +68,7 @@ public class Hardware {
             rrDriveMotor = new EncodedMotor<>(HardwareConstant.RR_MOTOR);
             imu = new IMU(HardwareConstant.IMU, LogoFacingDirection.LEFT, UsbFacingDirection.UP);
         }
-        if (RobotConstant.CLAW_CONNECTED) {
-            claw = new Servo(HardwareConstant.CLAW_SERVO);
-            clawDistance = new ColorDistanceSensor(HardwareConstant.CLAW_SENSOR);
-        }
-        if (RobotConstant.LIFT_CONNECTED) {
-            LiftLeftMotor = new EncodedMotor<>(HardwareConstant.LIFT_LEFT_MOTOR);
-            if (RobotConstant.DUAL_LIFT_SETUP) {
-                LiftRightMotor = new EncodedMotor<>(HardwareConstant.LIFT_RIGHT_MOTOR);
-            }
-        }
+
         if (RobotConstant.CAMERA_CONNECTED) {
             camera = new Webcam(HardwareConstant.CAMERA);
         }
@@ -99,6 +78,11 @@ public class Hardware {
             colorleft = new ColorDistanceSensor(HardwareConstant.COLOR_SENSOR_LEFT);
             colorright = new ColorDistanceSensor(HardwareConstant.COLOR_SENSOR_RIGHT);
             colorcenter = new ColorDistanceSensor(HardwareConstant.COLOR_SENSOR_CENTER);
+        }
+
+        if (RobotConstant.SHOOTER_CONNECTED) {
+            leftShooterMotor = new EncodedMotor<>(HardwareConstant.LEFT_SHOOTER_MOTOR);
+            rightShooterMotor = new EncodedMotor<>(HardwareConstant.RIGHT_SHOOTER_MOTOR);
         }
     }
 

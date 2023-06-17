@@ -12,28 +12,25 @@ import org.firstinspires.ftc.edmundbot.Robot;
 import org.firstinspires.ftc.edmundbot.command.autonomous.AutoConstants;
 import org.firstinspires.ftc.edmundbot.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.edmundbot.command.drive.ResetGyroCommand;
-import org.firstinspires.ftc.edmundbot.controls.ControlDriver;
-import org.firstinspires.ftc.edmundbot.controls.ControlOperator;
+import org.firstinspires.ftc.edmundbot.controls.NewControl;
 
-@TeleOp(name = "Dual Blue")
+@TeleOp(name = "Outreach")
 @SuppressWarnings("unused")
-public class DualBlue extends CommandOpMode {
-
+public class OutreachMode extends CommandOpMode {
     public Robot robot;
-    public ControlDriver controlsDriver;
-    public ControlOperator controlsOperator;
     public Hardware hardware;
+
+    public NewControl controls;
 
     @Override
     public void uponInit() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware, Alliance.BLUE, StartingPosition.NEUTRAL);
-        controlsDriver = new ControlDriver(driverGamepad, robot);
-        controlsOperator = new ControlOperator(codriverGamepad, robot);
+        controls = new NewControl(robot, driverGamepad, true, true);
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Right.TELESTART.toPose());
         CommandScheduler
-            .getInstance()
-            .scheduleForState(new ResetGyroCommand(robot.drivebaseSubsystem), OpModeState.INIT);
+                .getInstance()
+                .scheduleForState(new ResetGyroCommand(robot.drivebaseSubsystem), OpModeState.INIT);
     }
 }
