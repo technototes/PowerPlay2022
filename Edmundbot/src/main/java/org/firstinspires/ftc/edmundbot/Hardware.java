@@ -32,6 +32,7 @@ public class Hardware {
 
         public static String LEFT_SHOOTER_MOTOR = "leftShooterMotor";
         public static String RIGHT_SHOOTER_MOTOR = "rightShooterMotor";
+        public static String INTAKE_MOTOR = "intakeMotor";
 
         public static String DISTANCE_SENSOR_LEFT = "LeftDis";
         public static String DISTANCE_SENSOR_RIGHT = "RightDis";
@@ -50,6 +51,7 @@ public class Hardware {
 
     public EncodedMotor<DcMotorEx> leftShooterMotor;
     public EncodedMotor<DcMotorEx> rightShooterMotor;
+    public EncodedMotor<DcMotorEx> intakeMotor;
 
     public Rev2MDistanceSensor leftdis;
     public Rev2MDistanceSensor rightdis;
@@ -83,6 +85,7 @@ public class Hardware {
         if (RobotConstant.SHOOTER_CONNECTED) {
             leftShooterMotor = new EncodedMotor<>(HardwareConstant.LEFT_SHOOTER_MOTOR);
             rightShooterMotor = new EncodedMotor<>(HardwareConstant.RIGHT_SHOOTER_MOTOR);
+            intakeMotor = new EncodedMotor<>(HardwareConstant.INTAKE_MOTOR);
         }
     }
 

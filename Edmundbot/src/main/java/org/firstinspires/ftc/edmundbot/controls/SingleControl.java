@@ -6,17 +6,18 @@ import com.technototes.library.control.CommandGamepad;
 import org.firstinspires.ftc.edmundbot.Robot;
 import org.firstinspires.ftc.edmundbot.command.drive.DriveCommand;
 import org.firstinspires.ftc.edmundbot.command.drive.ResetGyroCommand;
+import org.firstinspires.ftc.edmundbot.command.shooter.StartIntakeCommand;
 import org.firstinspires.ftc.edmundbot.command.shooter.StartShooterCommand;
 import org.firstinspires.ftc.edmundbot.command.shooter.StopShooterCommand;
 
-public class NewControl {
+public class SingleControl {
     public Robot robot;
     public CommandGamepad gamepad;
 
-    public NewControl(Robot r,
-                      CommandGamepad gp,
-                      boolean enableDrive,
-                      boolean enableShooter
+    public SingleControl(Robot r,
+                         CommandGamepad gp,
+                         boolean enableDrive,
+                         boolean enableShooter
     ) {
         robot = r;
         gamepad = gp;
@@ -50,5 +51,8 @@ public class NewControl {
     public void bindShooterControls() {
         gamepad.leftTrigger.whenPressed(new StartShooterCommand(robot.shooterSubsystem));
         gamepad.rightTrigger.whenPressed(new StopShooterCommand(robot.shooterSubsystem));
+
+        gamepad.leftBumper.whenPressed(new StartIntakeCommand(robot.shooterSubsystem));
+        gamepad.rightBumper.whenPressed(new StopShooterCommand(robot.shooterSubsystem));
     }
 }

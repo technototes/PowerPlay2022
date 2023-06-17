@@ -12,7 +12,7 @@ import org.firstinspires.ftc.edmundbot.Robot;
 import org.firstinspires.ftc.edmundbot.command.autonomous.AutoConstants;
 import org.firstinspires.ftc.edmundbot.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.edmundbot.command.drive.ResetGyroCommand;
-import org.firstinspires.ftc.edmundbot.controls.NewControl;
+import org.firstinspires.ftc.edmundbot.controls.SingleControl;
 
 @TeleOp(name = "Outreach")
 @SuppressWarnings("unused")
@@ -20,14 +20,14 @@ public class OutreachMode extends CommandOpMode {
     public Robot robot;
     public Hardware hardware;
 
-    public NewControl controls;
+    public SingleControl controls;
 
     @Override
     public void uponInit() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware, Alliance.BLUE, StartingPosition.NEUTRAL);
-        controls = new NewControl(robot, driverGamepad, true, true);
+        controls = new SingleControl(robot, driverGamepad, true, true);
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Right.TELESTART.toPose());
         CommandScheduler
                 .getInstance()

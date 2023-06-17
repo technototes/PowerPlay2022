@@ -59,10 +59,11 @@ public class Robot implements Loggable {
             shooterSubsystem =
                     new ShooterSubsystem(
                             hardware.leftShooterMotor,
-                            hardware.rightShooterMotor
+                            hardware.rightShooterMotor,
+                            hardware.intakeMotor
                     );
         } else {
-            shooterSubsystem = new ShooterSubsystem(null, null);
+            shooterSubsystem = new ShooterSubsystem(null, null, null);
         }
         // Read the voltage
         initialVoltage = hardware.voltage();
