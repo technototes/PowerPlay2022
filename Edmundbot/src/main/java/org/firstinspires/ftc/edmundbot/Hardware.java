@@ -18,14 +18,13 @@ import java.util.List;
 import org.firstinspires.ftc.robotcore.external.navigation.VoltageUnit;
 
 public class Hardware {
-
     @Config
     public static class HardwareConstant {
 
-        public static String FL_MOTOR = "FLMOTOR";
-        public static String FR_MOTOR = "FRMOTOR";
-        public static String RL_MOTOR = "RLMOTOR"; // bad
-        public static String RR_MOTOR = "RRMOTOR";
+        public static String LF_MOTOR = "leftFrontMotor";
+        public static String LR_MOTOR = "leftRearMotor";
+        public static String RF_MOTOR = "rightFrontMotor";
+        public static String RR_MOTOR = "rightRearMotor";
         public static String IMU = "imu";
 
         public static String CAMERA = "Webcam";
@@ -64,9 +63,9 @@ public class Hardware {
     public Hardware(HardwareMap hwmap) {
         hubs = hwmap.getAll(LynxModule.class);
         if (RobotConstant.DRIVE_CONNECTED) {
-            flDriveMotor = new EncodedMotor<>(HardwareConstant.FL_MOTOR);
-            frDriveMotor = new EncodedMotor<>(HardwareConstant.FR_MOTOR);
-            rlDriveMotor = new EncodedMotor<>(HardwareConstant.RL_MOTOR);
+            flDriveMotor = new EncodedMotor<>(HardwareConstant.LF_MOTOR);
+            frDriveMotor = new EncodedMotor<>(HardwareConstant.RF_MOTOR);
+            rlDriveMotor = new EncodedMotor<>(HardwareConstant.LR_MOTOR);
             rrDriveMotor = new EncodedMotor<>(HardwareConstant.RR_MOTOR);
             imu = new IMU(HardwareConstant.IMU, LogoFacingDirection.LEFT, UsbFacingDirection.UP);
         }
