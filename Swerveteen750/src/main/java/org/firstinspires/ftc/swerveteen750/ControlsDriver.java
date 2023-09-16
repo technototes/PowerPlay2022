@@ -74,7 +74,7 @@ public class ControlsDriver {
                 .scheduleJoystick(new MecanumDriveCommand(robot.mecanumDriveSubsystem, gamepad.leftStick, gamepad.rightStick));
         gamepad.leftStickButton.whenPressed(new ApplyTurboModeCommand(robot.mecanumDriveSubsystem));
         gamepad.rightStickButton.whenPressed(new ApplyTurboModeCommand(robot.mecanumDriveSubsystem));
-        gamepad.x.whenPressed(new ResetMecanumGyroCommand(robot.mecanumDriveSubsystem, gamepad));
+        gamepad.xbox_x.whenPressed(new ResetMecanumGyroCommand(robot.mecanumDriveSubsystem, gamepad));
     }
 
     public void bindSwerveDriveControls(){

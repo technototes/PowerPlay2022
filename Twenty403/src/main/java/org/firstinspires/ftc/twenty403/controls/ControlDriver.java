@@ -65,11 +65,11 @@ public class ControlDriver {
         tileLeft = gamepad.dpadLeft;
         tileRight = gamepad.dpadRight;
         tileAbort = gamepad.leftBumper;
-        turboButton = gamepad.triangle;
-        autoAlign = gamepad.square;
+        turboButton = gamepad.ps_triangle;
+        autoAlign = gamepad.ps_square;
 
         driveStraight = gamepad.rightTrigger.getAsButton(0.5);
-        clawToggleAutoCloseButton = gamepad.circle;
+        clawToggleAutoCloseButton = gamepad.ps_circle;
     }
 
     public void bindDriveControls() {
@@ -97,7 +97,7 @@ public class ControlDriver {
     }
 
     public void bindVisionCommand() {
-        gamepad.share.whenPressed(new VisionDuringTeleCommand(robot.visionSystem));
+        gamepad.ps_share.whenPressed(new VisionDuringTeleCommand(robot.visionSystem));
     }
 
     public void bindClawControls() {
