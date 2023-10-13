@@ -10,11 +10,11 @@ import com.technototes.library.hardware.sensor.IMU;
 import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
 import com.technototes.path.subsystem.MecanumConstants;
-import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
+import com.technototes.path.subsystem.PathingMecanumDrivebaseSubsystem;
 import java.util.function.Supplier;
 
 public class DrivebaseSubsystem
-    extends MecanumDrivebaseSubsystem
+    extends PathingMecanumDrivebaseSubsystem
     implements Supplier<Pose2d>, Loggable {
 
     // Notes from Kevin:

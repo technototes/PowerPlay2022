@@ -58,7 +58,7 @@ public class Controls {
 
         leftMecDriveStick = gpad.leftStick;
         rightMecDriveStick = gpad.rightStick;
-        snapToAngle = gpad.cross;
+        snapToAngle = gpad.ps_cross;
 
         servoTestUp = gpad.dpadUp;
         servoTestDown = gpad.dpadDown;
@@ -66,14 +66,14 @@ public class Controls {
         encMotorTestUp = gpad.dpadLeft;
         encMotorTestDown = gpad.dpadRight;
 
-        motorTestUp = gpad.triangle;
-        motorTestDown = gpad.cross;
+        motorTestUp = gpad.ps_triangle;
+        motorTestDown = gpad.ps_cross;
 
         stop = gpad.rightBumper;
         halt = gpad.leftBumper;
 
-        openClaw = gpad.circle;
-        closeClaw = gpad.triangle;
+        openClaw = gpad.ps_circle;
+        closeClaw = gpad.ps_triangle;
         liftDown = gpad.dpadDown;
         liftUp = gpad.dpadUp;
 

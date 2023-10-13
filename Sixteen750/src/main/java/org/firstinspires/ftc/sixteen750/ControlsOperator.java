@@ -65,8 +65,8 @@ public class ControlsOperator {
         gamepad.dpadDown.whenPressed(new ElbowServoIncrementalDownCommand(robot.armSubsystem));
         gamepad.dpadUp.whenPressed(new ElbowServoIncrementalUpCommand(robot.armSubsystem));
 
-        gamepad.square.whenPressed(new ArmScoreCommand(robot.armSubsystem));
-        gamepad.triangle.whenPressed(new ArmUpwardCommand(robot.armSubsystem));
-        gamepad.circle.whenPressed(new ArmIntakeCommand(robot.armSubsystem));
+        gamepad.ps_square.whenPressed(new ArmScoreCommand(robot.armSubsystem));
+        gamepad.ps_triangle.whenPressed(new ArmUpwardCommand(robot.armSubsystem));
+        gamepad.ps_circle.whenPressed(new ArmIntakeCommand(robot.armSubsystem));
     }
 }
