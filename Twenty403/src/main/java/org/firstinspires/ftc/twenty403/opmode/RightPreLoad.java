@@ -31,17 +31,16 @@ public class RightPreLoad extends CommandOpMode {
         robot = new Robot(hardware, Alliance.NONE, StartingPosition.RIGHT);
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Right.START.toPose());
         CommandScheduler
-            .getInstance()
             .scheduleForState(
                 new SequentialCommandGroup(
                     new ClawCloseCommand(robot.clawSubsystem),
                     new AutoRightParkingSelectionPreLoadCommand(robot),
-                    CommandScheduler.getInstance()::terminateOpMode
+                    CommandScheduler::terminateOpMode
                 ),
                 CommandOpMode.OpModeState.RUN
             );
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
-            CommandScheduler.getInstance().scheduleInit(new VisionCommand(robot.visionSystem));
+            CommandScheduler.scheduleInit(new VisionCommand(robot.visionSystem));
         }
     }
 }

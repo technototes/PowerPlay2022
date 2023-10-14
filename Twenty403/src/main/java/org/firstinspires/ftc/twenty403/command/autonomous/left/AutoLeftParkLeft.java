@@ -15,7 +15,7 @@ public class AutoLeftParkLeft extends SequentialCommandGroup {
                 r.drivebaseSubsystem,
                 AutoConstants.Left.START_TO_LEFT_PARK
             ),
-            CommandScheduler.getInstance()::terminateOpMode
+            CommandScheduler::terminateOpMode
         );
     }
 }

@@ -106,7 +106,7 @@ public class Controls {
     // Joysticks require a "scheduleJoystick" thing, so the commands are invoked all the time
     private void bindDrivebaseControls() {
         CommandScheduler
-            .getInstance()
+
             .scheduleJoystick(
                 // new TankDriveCommand(robot.tankDriveBase, leftTankStick, rightTankStick, snapToAngle)
                 new MecDriveCommand(robot.mecanumDrivebase, leftMecDriveStick, rightMecDriveStick)

@@ -25,7 +25,7 @@ public class TechnoManualControl extends CommandOpMode {
         controls = new Controls(driverGamepad, robot, Alliance.RED);
 
         if (TheBot.Connected.Camera) CommandScheduler
-            .getInstance()
+
             .scheduleInit(new VisionCommand(robot.visionSystem, Alliance.RED));
     }
 }

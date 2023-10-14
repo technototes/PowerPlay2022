@@ -119,8 +119,8 @@ public class ClawSubsystem implements Subsystem, Loggable {
             ) {
                 close();
                 ///this.wait(.2);
-                //CommandScheduler.getInstance().schedule(new ClawAutoCloseWithLift(this,liftSubsystem));
-                //CommandScheduler.getInstance().scheduleOnce(new ClawAutoCloseWithLift(this, liftSubsystem));
+                //CommandScheduler.schedule(new ClawAutoCloseWithLift(this,liftSubsystem));
+                //CommandScheduler.scheduleOnce(new ClawAutoCloseWithLift(this, liftSubsystem));
             }
         }
     }

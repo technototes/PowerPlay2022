@@ -71,7 +71,7 @@ public class ControlsDriver {
     public void bindMecanumDriveControls() {
         // Probably not a good idea to bind the drive controls to more than one gamepad
         CommandScheduler
-                .getInstance()
+
                 .scheduleJoystick(new MecanumDriveCommand(robot.mecanumDriveSubsystem, gamepad.leftStick, gamepad.rightStick));
         gamepad.leftStickButton.whenPressed(new ApplyTurboModeCommand(robot.mecanumDriveSubsystem));
         gamepad.rightStickButton.whenPressed(new ApplyTurboModeCommand(robot.mecanumDriveSubsystem));
@@ -80,7 +80,7 @@ public class ControlsDriver {
 
     public void bindVisionCommand(){
         CommandScheduler
-                .getInstance()
+
                 .scheduleForState(new VisionDuringTeleCommand(robot.visionSubsystem, gamepad.ps_share), CommandOpMode.OpModeState.RUN);
     }
 

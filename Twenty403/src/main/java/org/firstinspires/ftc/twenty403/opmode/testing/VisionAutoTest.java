@@ -20,7 +20,7 @@ public class VisionAutoTest extends CommandOpMode {
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware, Alliance.NONE, StartingPosition.LEFT);
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
-            CommandScheduler.getInstance().scheduleInit(new VisionCommand(robot.visionSystem));
+            CommandScheduler.scheduleInit(new VisionCommand(robot.visionSystem));
         }
     }
 }

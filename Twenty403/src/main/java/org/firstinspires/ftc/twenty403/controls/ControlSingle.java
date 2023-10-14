@@ -83,7 +83,6 @@ public class ControlSingle {
 
     public void bindDriveControls() {
         CommandScheduler
-            .getInstance()
             .scheduleJoystick(
                 new DriveCommand(
                     robot.drivebaseSubsystem,
