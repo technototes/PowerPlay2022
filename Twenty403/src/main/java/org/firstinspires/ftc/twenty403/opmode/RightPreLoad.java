@@ -13,7 +13,6 @@ import org.firstinspires.ftc.twenty403.command.VisionCommand;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.twenty403.command.autonomous.right.AutoRightParkingSelectionPreLoadCommand;
-import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.controls.ControlSingle;
 
 @Autonomous(name = "Right PreLoad")
@@ -33,7 +32,7 @@ public class RightPreLoad extends CommandOpMode {
         CommandScheduler
             .scheduleForState(
                 new SequentialCommandGroup(
-                    new ClawCloseCommand(robot.clawSubsystem),
+                    robot.clawSubsystem.closeCommand,
                     new AutoRightParkingSelectionPreLoadCommand(robot),
                     CommandScheduler::terminateOpMode
                 ),

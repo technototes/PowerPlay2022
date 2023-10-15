@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.technototes.library.command.Command;
+import com.technototes.library.command.SimpleRequiredCommand;
 import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.logger.Log;
@@ -44,6 +46,10 @@ public class ClawSubsystem implements Subsystem, Loggable {
     // Should we automatically close the claw if we detect a cone?
     private boolean autoClose;
 
+    // Commands we're going to reuse a whole bunch:
+    public SimpleRequiredCommand<ClawSubsystem> openCommand;
+    public SimpleRequiredCommand<ClawSubsystem> closeCommand;
+
     public ClawSubsystem(LiftSubsystem lift, Servo claw, ColorDistanceSensor s, Alliance a) {
         liftSubsystem = lift;
         _clawServo = claw;
@@ -52,6 +58,8 @@ public class ClawSubsystem implements Subsystem, Loggable {
         isHardware = true;
         autoClose = true;
         servoSet = false;
+        openCommand = new SimpleRequiredCommand<>(this, ClawSubsystem::open);
+        closeCommand = new SimpleRequiredCommand<>(this, ClawSubsystem::close);
     }
 
     // Non-functional subsystem constructor

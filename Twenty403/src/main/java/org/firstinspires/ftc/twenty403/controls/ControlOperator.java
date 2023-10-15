@@ -6,9 +6,6 @@ import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
 import org.firstinspires.ftc.twenty403.Robot;
-import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
-import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftIntakeCommand;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 
@@ -53,14 +50,14 @@ public class ControlOperator {
     }
 
     public void bindClawControls() {
-        clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-        clawCloseButton.whenReleased(new ClawCloseCommand(robot.clawSubsystem));
+        clawOpenButton.whenPressed(robot.clawSubsystem.openCommand);
+        clawCloseButton.whenReleased(robot.clawSubsystem.closeCommand);
     }
 
     public void bindLiftControls() {
         liftUpButton.whenPressed(robot.liftSubsystem, LiftSubsystem::moveUp);
         liftDownButton.whenPressed(robot.liftSubsystem, LiftSubsystem::moveDown);
-        liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));
+        liftIntakePos.whenPressed(robot.liftSubsystem.intakeCommand);
         liftHighOrOverrideZero.whenPressed(
             new ConditionalCommand(
                 override,

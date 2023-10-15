@@ -7,11 +7,7 @@ import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
 import org.firstinspires.ftc.twenty403.Robot;
-import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
-import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
 import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftIntakeCommand;
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 
 public class ControlSingle {
@@ -92,15 +88,15 @@ public class ControlSingle {
 
     public void bindClawControls() {
         // TODO: Name & Bind claw controls
-        clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-        clawCloseButton.whenReleased(new ClawCloseCommand(robot.clawSubsystem));
+        clawOpenButton.whenPressed(robot.clawSubsystem.openCommand);
+        clawCloseButton.whenReleased(robot.clawSubsystem.closeCommand);
     }
 
     public void bindLiftControls() {
         // TODO: Name & Bind lift controls
         liftUpButton.whenPressed(robot.liftSubsystem, LiftSubsystem::moveUp);
         liftDownButton.whenPressed(robot.liftSubsystem, LiftSubsystem::moveDown);
-        liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));
+        liftIntakePos.whenPressed(robot.liftSubsystem.intakeCommand);
         liftOverrideZeroButton.whenPressed(
             new ConditionalCommand(override, new SimpleRequiredCommand<>(robot.liftSubsystem, LiftSubsystem::setNewZero))
         );
@@ -120,6 +116,6 @@ public class ControlSingle {
             )
         );
         liftMedium.whenPressed(robot.liftSubsystem, LiftSubsystem::midPole);
-        liftHigh.whenPressed(new LiftHighJunctionCommand(robot.liftSubsystem));
+        liftHigh.whenPressed(robot.liftSubsystem.highCommand);
     }
 }

@@ -5,6 +5,7 @@ import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.Range;
+import com.technototes.library.command.SimpleRequiredCommand;
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.logger.Log;
 import com.technototes.library.logger.Loggable;
@@ -64,6 +65,11 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
 
     private double voltage;
 
+    // Commands to use/reuse:
+    public SimpleRequiredCommand<LiftSubsystem> collectCommand;
+    public SimpleRequiredCommand<LiftSubsystem> highCommand;
+    public SimpleRequiredCommand<LiftSubsystem> intakeCommand;
+
     private void init(EncodedMotor<DcMotorEx> lm, EncodedMotor<DcMotorEx> rm, double volts) {
         voltage = volts;
         _leftMotor = lm;
@@ -72,6 +78,10 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
         rightPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
         leftPidController = new PIDFController(PID, 0, 0, 0, (x, y) -> 0.1);
         setNewZero();
+        // Create the commands for reuse:
+        collectCommand = new SimpleRequiredCommand<>(this, LiftSubsystem::collect);
+        highCommand = new SimpleRequiredCommand<>(this, LiftSubsystem::highPole);
+        intakeCommand = new SimpleRequiredCommand<>(this, LiftSubsystem::intakePos);
     }
 
     // For the left side, positive is *down*

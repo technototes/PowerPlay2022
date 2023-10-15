@@ -13,7 +13,6 @@ import org.firstinspires.ftc.twenty403.command.VisionCommand;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.twenty403.command.autonomous.right.AutoRightParkingSelectionFullCycleCommand;
-import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.controls.ControlSingle;
 
 @Autonomous(name = "Right Full Cycle")
@@ -34,7 +33,7 @@ public class RightFullCycle extends CommandOpMode {
         CommandScheduler.scheduleForState(
                 new SequentialCommandGroup(
                     //new TurboCommand(robot.drivebaseSubsystem),
-                    new ClawCloseCommand(robot.clawSubsystem),
+                    robot.clawSubsystem.closeCommand,
                     new AutoRightParkingSelectionFullCycleCommand(
                         robot,
                         () -> this.getOpModeRuntime()
@@ -46,8 +45,8 @@ public class RightFullCycle extends CommandOpMode {
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
             CommandScheduler
                 .scheduleInit(
-                    new ClawCloseCommand(robot.clawSubsystem)
-                        .andThen(new VisionCommand(robot.visionSystem))
+                    robot.clawSubsystem.closeCommand
+                    .andThen(new VisionCommand(robot.visionSystem))
                 );
         }
     }

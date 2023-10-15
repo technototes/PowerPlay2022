@@ -10,10 +10,6 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Function;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
-import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
-import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftIntakeCommand;
 
 // autonomous for right
 // parks in left position
@@ -26,7 +22,7 @@ public class AutoRightFullCycle extends SequentialCommandGroup {
         DoubleSupplier currOpModeRunTime
     ) {
         super(
-            new ClawCloseCommand(r.clawSubsystem),
+            r.clawSubsystem.closeCommand,
             new TrajectorySequenceCommand(
                 r.drivebaseSubsystem,
                 AutoConstants.Right.START_TO_W_JUNCTION
@@ -34,10 +30,10 @@ public class AutoRightFullCycle extends SequentialCommandGroup {
                 .alongWith(
                     new SequentialCommandGroup(
                         new WaitCommand(0.2),
-                        new LiftHighJunctionCommand(r.liftSubsystem)
+                        r.liftSubsystem.highCommand
                     )
                 ),
-            new ClawOpenCommand(r.clawSubsystem),
+            r.clawSubsystem.openCommand,
             new AutoRightSingleCycleOne(r),
             new AutoRightSingleCycleTwo(r),
             new AutoRightSingleCycleTwo(r),
@@ -45,7 +41,7 @@ public class AutoRightFullCycle extends SequentialCommandGroup {
             //new AutoRightSingleCycleOne(r),
             //new AutoRightSingleCycleOne(r),
             new TrajectorySequenceCommand(r.drivebaseSubsystem, parkingDestination)
-                .alongWith(new LiftIntakeCommand(r.liftSubsystem))
+                .alongWith(r.liftSubsystem.intakeCommand)
             //new SlowCommand(r.drivebaseSubsystem)
         );
         // new AutoRightSingleCycle(drivebaseSubsystem, liftSubsystem, clawSubsystem),
