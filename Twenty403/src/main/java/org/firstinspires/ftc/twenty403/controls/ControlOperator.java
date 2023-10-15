@@ -1,23 +1,16 @@
 package org.firstinspires.ftc.twenty403.controls;
 
 import com.technototes.library.command.ConditionalCommand;
+import com.technototes.library.command.SimpleRequiredCommand;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
 import org.firstinspires.ftc.twenty403.Robot;
-import org.firstinspires.ftc.twenty403.command.claw.ClawAutoCloseToggleCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftDownCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftGroundJunctionCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
 import org.firstinspires.ftc.twenty403.command.lift.LiftIntakeCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftLowJunctionCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftMidJunctionCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftMoveDownOverrideCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftMoveUpOverrideCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftSetZeroCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
+import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
+import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 
 public class ControlOperator {
 
@@ -65,35 +58,35 @@ public class ControlOperator {
     }
 
     public void bindLiftControls() {
-        liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
-        liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
+        liftUpButton.whenPressed(robot.liftSubsystem, LiftSubsystem::moveUp);
+        liftDownButton.whenPressed(robot.liftSubsystem, LiftSubsystem::moveDown);
         liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));
         liftHighOrOverrideZero.whenPressed(
             new ConditionalCommand(
                 override,
-                new LiftSetZeroCommand(robot.liftSubsystem),
-                new LiftHighJunctionCommand(robot.liftSubsystem)
+                new SimpleRequiredCommand<>(robot.liftSubsystem, LiftSubsystem::setNewZero),
+                new SimpleRequiredCommand<>(robot.liftSubsystem, LiftSubsystem::highPole)
             )
         );
         liftMediumOrToggleAutoClose.whenPressed(
             new ConditionalCommand(
                 override,
-                new ClawAutoCloseToggleCommand(robot.clawSubsystem),
-                new LiftMidJunctionCommand(robot.liftSubsystem)
+                new SimpleRequiredCommand<>(robot.clawSubsystem, ClawSubsystem::toggleAutoClose),
+                new SimpleRequiredCommand<>(robot.liftSubsystem, LiftSubsystem::midPole)
             )
         );
         liftGroundOrOverrideDown.whenPressed(
             new ConditionalCommand(
                 override,
-                new LiftMoveDownOverrideCommand(robot.liftSubsystem),
-                new LiftGroundJunctionCommand(robot.liftSubsystem)
+                new SimpleRequiredCommand<>(robot.liftSubsystem, LiftSubsystem::moveDown_OVERRIDE),
+                new SimpleRequiredCommand<>(robot.liftSubsystem, LiftSubsystem::groundJunction)
             )
         );
         liftLowOrOverrideUp.whenPressed(
             new ConditionalCommand(
                 override,
-                new LiftMoveUpOverrideCommand(robot.liftSubsystem),
-                new LiftLowJunctionCommand(robot.liftSubsystem)
+                new SimpleRequiredCommand<>(robot.liftSubsystem, LiftSubsystem::moveUp_OVERRIDE),
+                new SimpleRequiredCommand<>(robot.liftSubsystem, LiftSubsystem::lowPole)
             )
         );
     }

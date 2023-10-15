@@ -1,27 +1,16 @@
 package org.firstinspires.ftc.twenty403.controls;
 
-import android.service.quicksettings.Tile;
-import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.control.CommandButton;
-import com.technototes.library.control.CommandButton;
-import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
-import com.technototes.library.control.Stick;
-import com.technototes.library.structure.CommandOpMode;
-import com.technototes.path.command.TrajectorySequenceCommand;
+
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.VisionDuringTeleCommand;
-import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
-import org.firstinspires.ftc.twenty403.command.claw.ClawAutoCloseToggleCommand;
 import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
-import org.firstinspires.ftc.twenty403.command.drive.ResetGyroCommand;
-import org.firstinspires.ftc.twenty403.command.drive.SlowCommand;
-import org.firstinspires.ftc.twenty403.command.drive.TileAbortCommand;
 import org.firstinspires.ftc.twenty403.command.drive.TileMoveCommand;
 import org.firstinspires.ftc.twenty403.command.drive.TileMoving;
-import org.firstinspires.ftc.twenty403.command.drive.TurboCommand;
+import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline;
 
 public class ControlDriver {
@@ -84,15 +73,15 @@ public class ControlDriver {
                     visionPipeline
                 )
             );
-        turboButton.whenPressed(new TurboCommand(robot.drivebaseSubsystem));
-        turboButton.whenReleased(new SlowCommand(robot.drivebaseSubsystem));
-        resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
+        turboButton.whenPressed(robot.drivebaseSubsystem::fast);
+        turboButton.whenReleased(robot.drivebaseSubsystem::slow);
+        resetGyroButton.whenPressed(robot.drivebaseSubsystem::setExternalHeading, 0.0);
 
         tileRight.whenPressed(new TileMoveCommand(robot, TileMoving.Right));
         tileLeft.whenPressed(new TileMoveCommand(robot, TileMoving.Left));
         tileUp.whenPressed(new TileMoveCommand(robot, TileMoving.Up));
         tileDown.whenPressed(new TileMoveCommand(robot, TileMoving.Down));
-        tileAbort.whenPressed(new TileAbortCommand(robot));
+        tileAbort.whenPressed(robot.drivebaseSubsystem::requestCancelled);
     }
 
     public void bindVisionCommand() {
@@ -100,6 +89,6 @@ public class ControlDriver {
     }
 
     public void bindClawControls() {
-        clawToggleAutoCloseButton.whenPressed(new ClawAutoCloseToggleCommand(robot.clawSubsystem));
+        clawToggleAutoCloseButton.whenPressed(robot.clawSubsystem, ClawSubsystem::toggleAutoClose);
     }
 }

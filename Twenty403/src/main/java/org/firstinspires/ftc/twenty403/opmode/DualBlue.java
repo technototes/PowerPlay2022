@@ -10,7 +10,6 @@ import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
-import org.firstinspires.ftc.twenty403.command.drive.ResetGyroCommand;
 import org.firstinspires.ftc.twenty403.controls.ControlDriver;
 import org.firstinspires.ftc.twenty403.controls.ControlOperator;
 
@@ -32,7 +31,6 @@ public class DualBlue extends CommandOpMode {
         controlsOperator = new ControlOperator(codriverGamepad, robot);
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Right.TELESTART.toPose());
         CommandScheduler
-
-            .scheduleForState(new ResetGyroCommand(robot.drivebaseSubsystem), OpModeState.INIT);
+            .scheduleForState(robot.drivebaseSubsystem::setExternalHeading, 0.0, OpModeState.INIT);
     }
 }

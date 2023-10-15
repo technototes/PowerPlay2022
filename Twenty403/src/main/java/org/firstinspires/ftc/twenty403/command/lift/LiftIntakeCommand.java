@@ -1,10 +1,19 @@
 package org.firstinspires.ftc.twenty403.command.lift;
 
+import com.technototes.library.command.Command;
+
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 
-public class LiftIntakeCommand extends LiftHeightCommand {
+public class LiftIntakeCommand implements Command {
+
+    LiftSubsystem lift;
 
     public LiftIntakeCommand(LiftSubsystem ls) {
-        super(ls, JunctionHeight.Intake);
+        lift = ls;
+        addRequirements(lift);
+    }
+
+    public void execute() {
+        lift.intakePos();
     }
 }

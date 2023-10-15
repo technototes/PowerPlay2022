@@ -1,10 +1,18 @@
 package org.firstinspires.ftc.twenty403.command.lift;
 
+import com.technototes.library.command.Command;
+
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 
-public class LiftHighJunctionCommand extends LiftHeightCommand {
+public class LiftHighJunctionCommand implements Command {
+
+    LiftSubsystem lift;
 
     public LiftHighJunctionCommand(LiftSubsystem ls) {
-        super(ls, JunctionHeight.High);
+        lift = ls;
+        addRequirements(lift);
+    }
+    public void execute() {
+        lift.highPole();
     }
 }

@@ -14,8 +14,6 @@ import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.twenty403.command.autonomous.right.AutoRightParkingSelectionFullCycleCommand;
 import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
-import org.firstinspires.ftc.twenty403.command.drive.AutoSpeedCommand;
-import org.firstinspires.ftc.twenty403.command.drive.TurboCommand;
 import org.firstinspires.ftc.twenty403.controls.ControlSingle;
 
 @Autonomous(name = "Right Full Cycle")
