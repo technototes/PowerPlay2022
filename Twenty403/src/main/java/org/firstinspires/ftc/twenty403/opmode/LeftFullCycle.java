@@ -9,7 +9,6 @@ import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
-import org.firstinspires.ftc.twenty403.command.VisionCommand;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.twenty403.command.autonomous.left.AutoLeftParkingSelectionFullCycleCommand;
@@ -48,7 +47,7 @@ public class LeftFullCycle extends CommandOpMode {
             CommandScheduler
                 .scheduleInit(
                     robot.clawSubsystem.closeCommand
-                    .andThen(new VisionCommand(robot.visionSystem))
+                    .andThen(robot.visionSystem.runVision)
                 );
         }
     }

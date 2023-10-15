@@ -8,9 +8,9 @@ public class AutoLeftParkingSelectionPreLoadCommand extends ChoiceCommand {
 
     public AutoLeftParkingSelectionPreLoadCommand(Robot r) {
         super(
-            new Pair<>(r.visionSystem.visionPipeline::left, new AutoLeftPreLoadLeft(r)),
-            new Pair<>(r.visionSystem.visionPipeline::middle, new AutoLeftPreLoadMiddle(r)),
-            new Pair<>(r.visionSystem.visionPipeline::right, new AutoLeftPreLoadRight(r))
+            new Pair<>(r.visionSystem::left, new AutoLeftPreLoadLeft(r)),
+            new Pair<>(r.visionSystem::middle, new AutoLeftPreLoadMiddle(r)),
+            new Pair<>(r.visionSystem::right, new AutoLeftPreLoadRight(r))
         );
     }
 }

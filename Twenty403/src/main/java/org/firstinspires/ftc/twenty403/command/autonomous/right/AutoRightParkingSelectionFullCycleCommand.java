@@ -14,7 +14,7 @@ public class AutoRightParkingSelectionFullCycleCommand extends ChoiceCommand {
     ) {
         super(
             new Pair<>(
-                robot.visionSystem.visionPipeline::left,
+                robot.visionSystem::left,
                 new AutoRightFullCycle(
                     robot,
                     AutoConstants.Right.W_JUNCTION_TO_LEFT_PARK,
@@ -22,7 +22,7 @@ public class AutoRightParkingSelectionFullCycleCommand extends ChoiceCommand {
                 )
             ),
             new Pair<>(
-                robot.visionSystem.visionPipeline::middle,
+                robot.visionSystem::middle,
                 new AutoRightFullCycle(
                     robot,
                     AutoConstants.Right.W_JUNCTION_TO_MIDDLE_PARK,
@@ -30,7 +30,7 @@ public class AutoRightParkingSelectionFullCycleCommand extends ChoiceCommand {
                 )
             ),
             new Pair<>(
-                robot.visionSystem.visionPipeline::right,
+                robot.visionSystem::right,
                 new AutoRightFullCycle(
                     robot,
                     AutoConstants.Right.W_JUNCTION_TO_RIGHT_PARK,

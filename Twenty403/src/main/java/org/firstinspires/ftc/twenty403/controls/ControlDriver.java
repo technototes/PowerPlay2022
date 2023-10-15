@@ -6,11 +6,9 @@ import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
 
 import org.firstinspires.ftc.twenty403.Robot;
-import org.firstinspires.ftc.twenty403.command.VisionDuringTeleCommand;
 import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
 import org.firstinspires.ftc.twenty403.command.drive.TileMoveCommand;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
-import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline;
 
 public class ControlDriver {
 
@@ -22,13 +20,11 @@ public class ControlDriver {
     public CommandButton resetGyroButton, driveStraight, turboButton, autoAlign;
     public CommandButton clawToggleAutoCloseButton;
     public CommandButton override;
-    VisionPipeline visionPipeline;
 
     public ControlDriver(CommandGamepad g, Robot r) {
         this.robot = r;
         gamepad = g;
         override = g.leftTrigger.getAsButton(0.5);
-        visionPipeline = robot.visionSystem.visionPipeline;
 
         AssignNamedControllerButton();
 
@@ -37,9 +33,6 @@ public class ControlDriver {
         }
         if (Robot.RobotConstant.CLAW_CONNECTED) {
             bindClawControls();
-        }
-        if (Robot.RobotConstant.CAMERA_CONNECTED) {
-            bindVisionCommand();
         }
     }
 
@@ -68,8 +61,7 @@ public class ControlDriver {
                     driveLeftStick,
                     driveRightStick,
                     driveStraight,
-                    autoAlign,
-                    visionPipeline
+                    autoAlign
                 )
             );
         turboButton.whenPressed(robot.drivebaseSubsystem::fast);
@@ -81,10 +73,6 @@ public class ControlDriver {
         tileUp.whenPressed(new TileMoveCommand(robot, TileMoveCommand.TileMoving.Up));
         tileDown.whenPressed(new TileMoveCommand(robot, TileMoveCommand.TileMoving.Down));
         tileAbort.whenPressed(robot.drivebaseSubsystem::requestCancelled);
-    }
-
-    public void bindVisionCommand() {
-        gamepad.ps_share.whenPressed(new VisionDuringTeleCommand(robot.visionSystem));
     }
 
     public void bindClawControls() {

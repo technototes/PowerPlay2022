@@ -8,9 +8,9 @@ public class AutoLeftParkingSelectionCycleCommand extends ChoiceCommand {
 
     public AutoLeftParkingSelectionCycleCommand(Robot r) {
         super(
-            new Pair<>(r.visionSystem.visionPipeline::left, new AutoLeftCycleLeft(r)),
-            new Pair<>(r.visionSystem.visionPipeline::middle, new AutoLeftCycleMiddle(r)),
-            new Pair<>(r.visionSystem.visionPipeline::right, new AutoLeftCycleRight(r))
+            new Pair<>(r.visionSystem::left, new AutoLeftCycleLeft(r)),
+            new Pair<>(r.visionSystem::middle, new AutoLeftCycleMiddle(r)),
+            new Pair<>(r.visionSystem::right, new AutoLeftCycleRight(r))
         );
     }
 }
