@@ -9,7 +9,6 @@ import org.firstinspires.ftc.twenty403.Robot;
 import org.firstinspires.ftc.twenty403.command.VisionDuringTeleCommand;
 import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
 import org.firstinspires.ftc.twenty403.command.drive.TileMoveCommand;
-import org.firstinspires.ftc.twenty403.command.drive.TileMoving;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.VisionPipeline;
 
@@ -77,10 +76,10 @@ public class ControlDriver {
         turboButton.whenReleased(robot.drivebaseSubsystem::slow);
         resetGyroButton.whenPressed(robot.drivebaseSubsystem::setExternalHeading, 0.0);
 
-        tileRight.whenPressed(new TileMoveCommand(robot, TileMoving.Right));
-        tileLeft.whenPressed(new TileMoveCommand(robot, TileMoving.Left));
-        tileUp.whenPressed(new TileMoveCommand(robot, TileMoving.Up));
-        tileDown.whenPressed(new TileMoveCommand(robot, TileMoving.Down));
+        tileRight.whenPressed(new TileMoveCommand(robot, TileMoveCommand.TileMoving.Right));
+        tileLeft.whenPressed(new TileMoveCommand(robot, TileMoveCommand.TileMoving.Left));
+        tileUp.whenPressed(new TileMoveCommand(robot, TileMoveCommand.TileMoving.Up));
+        tileDown.whenPressed(new TileMoveCommand(robot, TileMoveCommand.TileMoving.Down));
         tileAbort.whenPressed(robot.drivebaseSubsystem::requestCancelled);
     }
 
