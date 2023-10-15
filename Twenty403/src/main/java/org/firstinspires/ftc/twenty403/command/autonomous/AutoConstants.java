@@ -7,6 +7,7 @@ import java.util.function.Function;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.technototes.path.geometry.ConfigurablePose;
+import com.technototes.path.trajectorysequence.TrajectoryPath;
 import com.technototes.path.trajectorysequence.TrajectorySequence;
 import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
 
@@ -48,112 +49,32 @@ public class AutoConstants {
         public static ConfigurablePose TERMINAL = new ConfigurablePose(61, -64, toRadians(180));
         // These are 'trajectory pieces' which should be named like this:
         // {STARTING_POSITION}_TO_{ENDING_POSITION}
-        public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
-                TELESTART_TO_FORWARD_MOVE =
-                b -> b.apply(TELESTART.toPose())
-                        .lineToLinearHeading(FORWARD_MOVE.toPose())
-                        .build(),
-                TELESTART_TO_BACKWARD_MOVE =
-                        b -> b.apply(TELESTART.toPose())
-                                .lineToLinearHeading(BACKWARD_MOVE.toPose())
-                                .build(),
-                TELESTART_TO_LEFT_MOVE =
-                        b -> b.apply(TELESTART.toPose())
-                                .lineToLinearHeading(LEFT_MOVE.toPose())
-                                .build(),
-                TELESTART_TO_RIGHT_MOVE =
-                        b -> b.apply(TELESTART.toPose())
-                                .lineToLinearHeading(RIGHT_MOVE.toPose())
-                                .build(),
+        public static final TrajectoryPath
+                TELESTART_TO_FORWARD_MOVE = TrajectoryPath.lineToLinearHeading(TELESTART, FORWARD_MOVE),
+                TELESTART_TO_BACKWARD_MOVE = TrajectoryPath.lineToLinearHeading(TELESTART, BACKWARD_MOVE),
+                TELESTART_TO_LEFT_MOVE = TrajectoryPath.lineToLinearHeading(TELESTART, LEFT_MOVE),
+                TELESTART_TO_RIGHT_MOVE = TrajectoryPath.lineToLinearHeading(TELESTART, RIGHT_MOVE);
         //Testing Straights
-        START_TO_STRAIGHT =
-                b -> b.apply(START.toPose())
-                        .lineTo(STRAIGHT.toPose().vec())
-                        .build(),
-                STRAIGHT_TO_START =
-                        b -> b.apply(STRAIGHT.toPose())
-                                .lineTo(START.toPose().vec())
-                                .build(),
-                START_TO_LEFTSIDE =
-                        b -> b.apply(START.toPose())
-                                .lineTo(LEFTSIDE.toPose().vec())
-                                .build(),
-                LEFTSIDE_TO_START =
-                        b -> b.apply(LEFTSIDE.toPose())
-                                .lineTo(START.toPose().vec())
-                                .build(),
-
-        START_TO_W_JUNCTION =
-                b -> b.apply(START.toPose())
-                        .lineToLinearHeading(BETWEEN_START_W_JUNCTION.toPose())
-                        .lineToLinearHeading(W_JUNCTION_ONE.toPose())
-                        .build(),
-                W_JUNCTION_TO_STACK_ONE =
-                        b -> b.apply(W_JUNCTION_ONE.toPose())
-                                .lineToLinearHeading(BETWEEN_W_JUNCTION_STACK.toPose())
-                                .lineToLinearHeading(STACK_ONE.toPose())
-                                .build(),
-                W_JUNCTION_TO_STACK_TWO =
-                        b -> b.apply(W_JUNCTION_TWO.toPose())
-                                .lineToLinearHeading(BETWEEN_W_JUNCTION_STACK.toPose())
-                                .lineToLinearHeading(STACK_TWO.toPose())
-                                .build(),
-                W_JUNCTION_TO_STACK_THREE =
-                        b -> b.apply(W_JUNCTION_THREE.toPose())
-                                .lineToLinearHeading(BETWEEN_W_JUNCTION_STACK.toPose())
-                                .lineToLinearHeading(STACK_THREE.toPose())
-                                .build(),
-                STACK_TO_W_JUNCTION_ONE =
-                        b -> b.apply(STACK_ONE.toPose())
-                                .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
-                                .lineToLinearHeading(W_JUNCTION_ONE.toPose())
-                                .build(),
-                STACK_TO_W_JUNCTION_TWO =
-                        b -> b.apply(STACK_TWO.toPose())
-                                .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
-                                .lineToLinearHeading(W_JUNCTION_TWO.toPose())
-                                .build(),
-                STACK_TO_W_JUNCTION_THREE =
-                        b -> b.apply(STACK_THREE.toPose())
-                                .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
-                                .lineToLinearHeading(W_JUNCTION_THREE.toPose())
-                                .build(),
-                W_JUNCTION_TO_LEFT_PARK =
-                        b -> b.apply(W_JUNCTION_THREE.toPose())
-                                .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
-                                .lineToLinearHeading(LEFT.toPose())
-                                .build(),
-                W_JUNCTION_TO_MIDDLE_PARK =
-                        b -> b.apply(W_JUNCTION_THREE.toPose())
-                                .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
-                                .lineToLinearHeading(MIDDLE.toPose())
-                                .build(),
-                W_JUNCTION_TO_RIGHT_PARK =
-                        b -> b.apply(W_JUNCTION_THREE.toPose())
-                                .lineToLinearHeading(BETWEEN_STACK_W_JUNCTION.toPose())
-                                .lineToLinearHeading(RIGHT.toPose())
-                                .build(),
-
-
-        START_TO_LEFT_PARK =
-                b -> b.apply(START.toPose())
-                        //.lineToLinearHeading(TERMINAL.toPose())
-                        .lineToLinearHeading(BETWEEN_START_LEFT.toPose())
-                        .lineToLinearHeading(LEFT.toPose())
-                        .build(),
-                START_TO_MIDDLE_PARK =
-                        b -> b.apply(START.toPose())
-                                //.lineToLinearHeading(TERMINAL.toPose())
-                                //.lineToLinearHeading(START.toPose())
-                                .lineToLinearHeading(MIDDLE.toPose())
-                                .build(),
-                START_TO_RIGHT_PARK =
-                        b -> b.apply(START.toPose())
-                                //.lineToLinearHeading(TERMINAL.toPose())
-                                .lineToLinearHeading(BETWEEN_START_RIGHT.toPose())
-                                .lineToLinearHeading(RIGHT.toPose())
-                                .build();
-
+        public static final TrajectoryPath
+                START_TO_STRAIGHT = TrajectoryPath.lineTo(START, STRAIGHT),
+                STRAIGHT_TO_START = TrajectoryPath.lineTo(STRAIGHT, START),
+                START_TO_LEFTSIDE = TrajectoryPath.lineTo(START, LEFTSIDE),
+                LEFTSIDE_TO_START = TrajectoryPath.lineTo(LEFTSIDE, START);
+        public static final TrajectoryPath
+                START_TO_W_JUNCTION = TrajectoryPath.linesToLinearHeadings(START, BETWEEN_START_W_JUNCTION, W_JUNCTION_ONE),
+                W_JUNCTION_TO_STACK_ONE = TrajectoryPath.linesToLinearHeadings(W_JUNCTION_ONE, BETWEEN_W_JUNCTION_STACK, STACK_ONE),
+                W_JUNCTION_TO_STACK_TWO = TrajectoryPath.linesToLinearHeadings(W_JUNCTION_TWO, BETWEEN_W_JUNCTION_STACK, STACK_TWO),
+                W_JUNCTION_TO_STACK_THREE = TrajectoryPath.linesToLinearHeadings(W_JUNCTION_THREE, BETWEEN_W_JUNCTION_STACK, STACK_THREE),
+                STACK_TO_W_JUNCTION_ONE = TrajectoryPath.linesToLinearHeadings(STACK_ONE, BETWEEN_STACK_W_JUNCTION, W_JUNCTION_ONE),
+                STACK_TO_W_JUNCTION_TWO = TrajectoryPath.linesToLinearHeadings(STACK_TWO, BETWEEN_STACK_W_JUNCTION, W_JUNCTION_TWO),
+                STACK_TO_W_JUNCTION_THREE = TrajectoryPath.linesToLinearHeadings(STACK_THREE, BETWEEN_STACK_W_JUNCTION, W_JUNCTION_THREE),
+                W_JUNCTION_TO_LEFT_PARK = TrajectoryPath.linesToLinearHeadings(W_JUNCTION_THREE, BETWEEN_STACK_W_JUNCTION, LEFT),
+                W_JUNCTION_TO_MIDDLE_PARK = TrajectoryPath.linesToLinearHeadings(W_JUNCTION_THREE, BETWEEN_STACK_W_JUNCTION, MIDDLE),
+                W_JUNCTION_TO_RIGHT_PARK = TrajectoryPath.linesToLinearHeadings(W_JUNCTION_THREE, BETWEEN_STACK_W_JUNCTION, RIGHT);
+        public static final TrajectoryPath
+                START_TO_LEFT_PARK = TrajectoryPath.linesToLinearHeadings(START, /* TERMINAL, */ BETWEEN_START_LEFT, LEFT),
+                START_TO_MIDDLE_PARK = TrajectoryPath.linesToLinearHeadings(START, /* TERMINAL, START, */ MIDDLE),
+                START_TO_RIGHT_PARK = TrajectoryPath.linesToLinearHeadings(START, /* TERMINAL, */ BETWEEN_START_RIGHT, RIGHT);
 
     }
 
