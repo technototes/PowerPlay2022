@@ -75,13 +75,13 @@ public class ControlsDriver {
                 .scheduleJoystick(new MecanumDriveCommand(robot.mecanumDriveSubsystem, gamepad.leftStick, gamepad.rightStick));
         gamepad.leftStickButton.whenPressed(new ApplyTurboModeCommand(robot.mecanumDriveSubsystem));
         gamepad.rightStickButton.whenPressed(new ApplyTurboModeCommand(robot.mecanumDriveSubsystem));
-        gamepad.x.whenPressed(new ResetGyroCommand(robot.mecanumDriveSubsystem, gamepad));
+        gamepad.ps_cross.whenPressed(new ResetGyroCommand(robot.mecanumDriveSubsystem, gamepad));
     }
 
     public void bindVisionCommand(){
         CommandScheduler
                 .getInstance()
-                .scheduleForState(new VisionDuringTeleCommand(robot.visionSubsystem, gamepad.share), CommandOpMode.OpModeState.RUN);
+                .scheduleForState(new VisionDuringTeleCommand(robot.visionSubsystem, gamepad.ps_share), CommandOpMode.OpModeState.RUN);
     }
 
     public void bindDriverClawControls() {
@@ -90,9 +90,9 @@ public class ControlsDriver {
     }
 
     public void bindDriverArmControls() {
-        gamepad.square.whenPressed(new ArmScoreCommand(robot.armSubsystem));
-        gamepad.triangle.whenPressed(new ArmUpwardCommand(robot.armSubsystem));
-        gamepad.circle.whenPressed(new ArmIntakeCommand(robot.armSubsystem));
+        gamepad.ps_square.whenPressed(new ArmScoreCommand(robot.armSubsystem));
+        gamepad.ps_triangle.whenPressed(new ArmUpwardCommand(robot.armSubsystem));
+        gamepad.ps_circle.whenPressed(new ArmIntakeCommand(robot.armSubsystem));
     }
 
     public void bindDriverLiftControls() {

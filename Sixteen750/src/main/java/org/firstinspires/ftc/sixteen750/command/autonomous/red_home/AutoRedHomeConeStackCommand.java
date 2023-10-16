@@ -5,10 +5,10 @@ import org.firstinspires.ftc.sixteen750.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 
 import com.technototes.library.command.SequentialCommandGroup;
-import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
+import com.technototes.path.subsystem.PathingMecanumDrivebaseSubsystem;
 
 public class AutoRedHomeConeStackCommand extends SequentialCommandGroup {
-    public AutoRedHomeConeStackCommand(MecanumDrivebaseSubsystem driveSubsystem, LiftSubsystem liftSubsystem, ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem) {
+    public AutoRedHomeConeStackCommand(PathingMecanumDrivebaseSubsystem driveSubsystem, LiftSubsystem liftSubsystem, ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem) {
         super();
     }
 }

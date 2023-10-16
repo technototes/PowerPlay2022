@@ -3,14 +3,14 @@ package org.firstinspires.ftc.twenty403.command.autonomous;
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.path.command.TrajectorySequenceCommand;
-import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
+import com.technototes.path.subsystem.PathingMecanumDrivebaseSubsystem;
 
 public class AutoTestDrivebaseCommand extends SequentialCommandGroup {
 
     // public static ConfigurablePose TEST_START = new ConfigurablePose(0, 0, 0);
     // public static ConfigurablePose TEST_END = new ConfigurablePose(0, 10, 0);
 
-    public AutoTestDrivebaseCommand(MecanumDrivebaseSubsystem drive) {
+    public AutoTestDrivebaseCommand(PathingMecanumDrivebaseSubsystem drive) {
         super(
             new TrajectorySequenceCommand(drive, AutoConstants.Right.START_TO_W_JUNCTION),
             new TrajectorySequenceCommand(drive, AutoConstants.Right.W_JUNCTION_TO_STACK_ONE),

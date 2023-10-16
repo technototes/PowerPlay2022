@@ -8,10 +8,10 @@ import org.firstinspires.ftc.sixteen750.subsystem.LiftSubsystem;
 
 import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.path.command.TrajectorySequenceCommand;
-import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
+import com.technototes.path.subsystem.PathingMecanumDrivebaseSubsystem;
 
 public class AutoRedAwayGroup extends SequentialCommandGroup {
-    public AutoRedAwayGroup(MecanumDrivebaseSubsystem drive, LiftSubsystem lift, ArmSubsystem arm, ClawSubsystem claw) {
+    public AutoRedAwayGroup(PathingMecanumDrivebaseSubsystem drive, LiftSubsystem lift, ArmSubsystem arm, ClawSubsystem claw) {
         super();
     }
 }

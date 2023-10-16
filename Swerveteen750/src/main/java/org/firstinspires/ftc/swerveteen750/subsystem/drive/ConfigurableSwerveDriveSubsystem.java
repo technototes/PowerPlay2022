@@ -25,7 +25,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
-import com.outoftheboxrobotics.photoncore.PhotonCore;
+// import com.outoftheboxrobotics.photoncore.PhotonCore;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
@@ -273,9 +273,11 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
         trajectorySequenceRunner = new TrajectorySequenceRunner(follower, HEADING_PID);
 
         //photon funnies
+        /*
         PhotonCore.enable();
         PhotonCore.CONTROL_HUB.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
         PhotonCore.experimental.setMaximumParallelCommands(MAX_PARALLEL_COMMANDS);
+        */
     }
     public static double LFkStatic = 0.07;
     public static double LRkStatic = 0.06;
@@ -404,7 +406,7 @@ public class ConfigurableSwerveDriveSubsystem extends SwerveDrive {
             logLine.append(m.getServoPower() + ", ");
         }
         System.out.println(logLine.toString());
-        PhotonCore.CONTROL_HUB.clearBulkCache();
+        // PhotonCore.CONTROL_HUB.clearBulkCache();
     }
 
     public void update() {
