@@ -50,7 +50,7 @@ public class DriveMotorTest extends LinearOpMode {
         ElapsedTime time = new ElapsedTime();
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            double pos = time.seconds() * MotorScales.SPEED % 16.0;
+            double pos = (time.seconds() * MotorScales.SPEED) % 16.0;
             double power = 0;
             if (pos < 4.0) {
                 power = pos / 4.0;

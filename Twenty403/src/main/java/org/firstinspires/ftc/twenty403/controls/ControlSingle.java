@@ -2,14 +2,12 @@ package org.firstinspires.ftc.twenty403.controls;
 
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.command.ConditionalCommand;
-import com.technototes.library.command.SimpleRequiredCommand;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
-
 import org.firstinspires.ftc.twenty403.Robot;
+import org.firstinspires.ftc.twenty403.command.Commands;
 import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
-import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
 
 public class ControlSingle {
 
@@ -70,51 +68,51 @@ public class ControlSingle {
     }
 
     public void bindDriveControls() {
-        CommandScheduler
-                .scheduleJoystick(
-                        new DriveCommand(
-                                robot.drivebaseSubsystem,
-                                driveLeftStick,
-                                driveRightStick,
-                                driveStraight,
-                                watchButton)
-                );
+        CommandScheduler.scheduleJoystick(
+            new DriveCommand(
+                robot.drivebaseSubsystem,
+                driveLeftStick,
+                driveRightStick,
+                driveStraight,
+                watchButton
+            )
+        );
         turboButton.whenPressed(robot.drivebaseSubsystem::fast);
         turboButton.whenReleased(robot.drivebaseSubsystem::slow);
         // TODO: We probably want buttons to reset the Gyro...
-        resetGyroButton.whenPressed(robot.drivebaseSubsystem::setExternalHeading, 0.0);
+        resetGyroButton.whenPressed(Commands.Drive.zeroHeading(robot.drivebaseSubsystem));
     }
 
     public void bindClawControls() {
         // TODO: Name & Bind claw controls
-        clawOpenButton.whenPressed(robot.clawSubsystem.openCommand);
-        clawCloseButton.whenReleased(robot.clawSubsystem.closeCommand);
+        clawOpenButton.whenPressed(Commands.Claw.open(robot.clawSubsystem));
+        clawCloseButton.whenReleased(Commands.Claw.close(robot.clawSubsystem));
     }
 
     public void bindLiftControls() {
         // TODO: Name & Bind lift controls
-        liftUpButton.whenPressed(robot.liftSubsystem, LiftSubsystem::moveUp);
-        liftDownButton.whenPressed(robot.liftSubsystem, LiftSubsystem::moveDown);
-        liftIntakePos.whenPressed(robot.liftSubsystem.intakeCommand);
+        liftUpButton.whenPressed(Commands.Lift.moveUp(robot.liftSubsystem));
+        liftDownButton.whenPressed(Commands.Lift.moveDown(robot.liftSubsystem));
+        liftIntakePos.whenPressed(Commands.Lift.intake(robot.liftSubsystem));
         liftOverrideZeroButton.whenPressed(
-                new ConditionalCommand(override, new SimpleRequiredCommand<>(robot.liftSubsystem, LiftSubsystem::setNewZero))
+            new ConditionalCommand(override, Commands.Lift.setNewZero(robot.liftSubsystem))
         );
 
         liftGroundOrOverrideDown.whenPressed(
-                new ConditionalCommand(
-                        override,
-                        new SimpleRequiredCommand<>(robot.liftSubsystem, LiftSubsystem::moveDown_OVERRIDE),
-                        new SimpleRequiredCommand<>(robot.liftSubsystem, LiftSubsystem::groundJunction)
-                )
+            new ConditionalCommand(
+                override,
+                Commands.Lift.moveDown_OVERRIDE(robot.liftSubsystem),
+                Commands.Lift.groundJunction(robot.liftSubsystem)
+            )
         );
         liftLowOrOverrideUp.whenPressed(
-                new ConditionalCommand(
-                        override,
-                        new SimpleRequiredCommand<>(robot.liftSubsystem, LiftSubsystem::moveUp_OVERRIDE),
-                        new SimpleRequiredCommand<>(robot.liftSubsystem, LiftSubsystem::lowPole)
-                )
+            new ConditionalCommand(
+                override,
+                Commands.Lift.moveUp_OVERRIDE(robot.liftSubsystem),
+                Commands.Lift.lowJunction(robot.liftSubsystem)
+            )
         );
-        liftMedium.whenPressed(robot.liftSubsystem, LiftSubsystem::midPole);
-        liftHigh.whenPressed(robot.liftSubsystem.highCommand);
+        liftMedium.whenPressed(Commands.Lift.midJunction(robot.liftSubsystem));
+        liftHigh.whenPressed(Commands.Lift.highJunction(robot.liftSubsystem));
     }
 }

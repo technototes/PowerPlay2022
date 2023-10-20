@@ -8,7 +8,6 @@ import com.technototes.library.util.Alliance;
 import com.technototes.vision.HSVRange;
 import com.technototes.vision.hardware.Camera;
 import com.technototes.vision.subsystem.BasicVisionSubsystem;
-
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
@@ -18,6 +17,7 @@ public class VisionSubsystem extends BasicVisionSubsystem implements Loggable {
 
     @Config
     public static class VisionConstants {
+
         public static int CAM_WIDTH = 320;
         public static int CAM_HEIGHT = 240;
         public static OpenCvCameraRotation ROTATION = OpenCvCameraRotation.UPRIGHT;
@@ -34,8 +34,10 @@ public class VisionSubsystem extends BasicVisionSubsystem implements Loggable {
     }
 
     public static class Rects {
+
         @Config
         public static class Red {
+
             public static int RX = 10;
             public static int RY = 20;
             public static int RW = 25;
@@ -49,6 +51,7 @@ public class VisionSubsystem extends BasicVisionSubsystem implements Loggable {
 
         @Config
         public static class Blue {
+
             public static int RX = 15;
             public static int RY = 25;
             public static int RW = 25;
@@ -148,7 +151,14 @@ public class VisionSubsystem extends BasicVisionSubsystem implements Loggable {
             return;
         }
         // These are the color ranges we're looking for
-        HSVRange cyan = new HSVRange(VisionConstants.CYAN, VisionConstants.HUE_RANGE, VisionConstants.SAT_LO, VisionConstants.SAT_HI, VisionConstants.VAL_LO, VisionConstants.VAL_HI);
+        HSVRange cyan = new HSVRange(
+            VisionConstants.CYAN,
+            VisionConstants.HUE_RANGE,
+            VisionConstants.SAT_LO,
+            VisionConstants.SAT_HI,
+            VisionConstants.VAL_LO,
+            VisionConstants.VAL_HI
+        );
         HSVRange yellow = cyan.newHue(VisionConstants.YELLOW, VisionConstants.HUE_RANGE);
         HSVRange magenta = cyan.newHue(VisionConstants.MAGENTA, VisionConstants.HUE_RANGE);
 
@@ -180,6 +190,7 @@ public class VisionSubsystem extends BasicVisionSubsystem implements Loggable {
     }
 
     public class VisCommand implements com.technototes.library.command.Command {
+
         public VisCommand() {
             addRequirements(VisionSubsystem.this);
         }
@@ -201,6 +212,5 @@ public class VisionSubsystem extends BasicVisionSubsystem implements Loggable {
         public void end(boolean cancel) {
             stopVisionPipeline();
         }
-
     }
 }

@@ -28,14 +28,13 @@ public class LeftPreLoad extends CommandOpMode {
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware, Alliance.NONE, StartingPosition.LEFT);
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Left.START.toPose());
-        CommandScheduler
-            .scheduleForState(
-                new SequentialCommandGroup(
-                    new AutoLeftParkingSelectionPreLoadCommand(robot),
-                    CommandScheduler::terminateOpMode
-                ),
-                CommandOpMode.OpModeState.RUN
-            );
+        CommandScheduler.scheduleForState(
+            new SequentialCommandGroup(
+                new AutoLeftParkingSelectionPreLoadCommand(robot),
+                CommandScheduler::terminateOpMode
+            ),
+            CommandOpMode.OpModeState.RUN
+        );
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
             CommandScheduler.scheduleInit(robot.visionSystem.runVision);
         }

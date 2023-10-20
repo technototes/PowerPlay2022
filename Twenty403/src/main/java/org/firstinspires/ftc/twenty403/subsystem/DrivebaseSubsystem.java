@@ -49,7 +49,7 @@ public class DrivebaseSubsystem
             20,
             0,
             3,
-            MecanumConstants.getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV)
+            MecanumConstants.getMotorVelocityF((MAX_RPM / 60) * TICKS_PER_REV)
         );
 
         @WheelRadius

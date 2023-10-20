@@ -30,20 +30,19 @@ public class RoadRunnerTest extends CommandOpMode {
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware, Alliance.NONE, StartingPosition.RIGHT);
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Right.START.toPose());
-        CommandScheduler
-            .scheduleForState(
-                new SequentialCommandGroup(
-                    new TrajectorySequenceCommand(
-                        robot.drivebaseSubsystem,
-                        AutoConstants.Right.START_TO_LEFTSIDE
-                    ),
-                    new TrajectorySequenceCommand(
-                        robot.drivebaseSubsystem,
-                        AutoConstants.Right.LEFTSIDE_TO_START
-                    )
+        CommandScheduler.scheduleForState(
+            new SequentialCommandGroup(
+                new TrajectorySequenceCommand(
+                    robot.drivebaseSubsystem,
+                    AutoConstants.Right.START_TO_LEFTSIDE
                 ),
-                CommandOpMode.OpModeState.RUN
-            );
+                new TrajectorySequenceCommand(
+                    robot.drivebaseSubsystem,
+                    AutoConstants.Right.LEFTSIDE_TO_START
+                )
+            ),
+            CommandOpMode.OpModeState.RUN
+        );
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
+import org.firstinspires.ftc.twenty403.command.Commands;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.twenty403.command.autonomous.left.AutoLeftParkingSelectionFullCycleCommand;
@@ -29,26 +30,19 @@ public class LeftFullCycle extends CommandOpMode {
         robot = new Robot(hardware, Alliance.NONE, StartingPosition.LEFT);
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Left.START.toPose());
         // ElapsedTimeHelper timeout = new ElapsedTimeHelper(() -> this.getOpModeRuntime(), 25);
-        CommandScheduler
-
-            .scheduleForState(
-                new SequentialCommandGroup(
-                    //new TurboCommand(robot.drivebaseSubsystem),
-                    robot.clawSubsystem.closeCommand,
-                    new AutoLeftParkingSelectionFullCycleCommand(
-                        robot,
-                        () -> this.getOpModeRuntime()
-                    ),
-                    CommandScheduler::terminateOpMode
-                ),
-                CommandOpMode.OpModeState.RUN
-            );
+        CommandScheduler.scheduleForState(
+            new SequentialCommandGroup(
+                //new TurboCommand(robot.drivebaseSubsystem),
+                Commands.Claw.close(robot.clawSubsystem),
+                new AutoLeftParkingSelectionFullCycleCommand(robot, () -> this.getOpModeRuntime()),
+                CommandScheduler::terminateOpMode
+            ),
+            CommandOpMode.OpModeState.RUN
+        );
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
-            CommandScheduler
-                .scheduleInit(
-                    robot.clawSubsystem.closeCommand
-                    .andThen(robot.visionSystem.runVision)
-                );
+            CommandScheduler.scheduleInit(
+                Commands.Claw.close(robot.clawSubsystem).andThen(robot.visionSystem.runVision)
+            );
         }
     }
 }

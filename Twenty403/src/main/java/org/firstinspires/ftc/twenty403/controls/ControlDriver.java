@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.twenty403.controls;
 
+import com.technototes.library.command.Command;
 import com.technototes.library.command.CommandScheduler;
 import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
-
 import org.firstinspires.ftc.twenty403.Robot;
+import org.firstinspires.ftc.twenty403.command.Commands;
 import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
 import org.firstinspires.ftc.twenty403.command.drive.TileMoveCommand;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
@@ -54,28 +55,27 @@ public class ControlDriver {
     }
 
     public void bindDriveControls() {
-        CommandScheduler
-            .scheduleJoystick(
-                new DriveCommand(
-                    robot.drivebaseSubsystem,
-                    driveLeftStick,
-                    driveRightStick,
-                    driveStraight,
-                    autoAlign
-                )
-            );
-        turboButton.whenPressed(robot.drivebaseSubsystem::fast);
-        turboButton.whenReleased(robot.drivebaseSubsystem::slow);
-        resetGyroButton.whenPressed(robot.drivebaseSubsystem::setExternalHeading, 0.0);
+        CommandScheduler.scheduleJoystick(
+            new DriveCommand(
+                robot.drivebaseSubsystem,
+                driveLeftStick,
+                driveRightStick,
+                driveStraight,
+                autoAlign
+            )
+        );
+        turboButton.whenPressed(Commands.Drive.fast(robot.drivebaseSubsystem));
+        turboButton.whenReleased(Commands.Drive.slow(robot.drivebaseSubsystem));
+        resetGyroButton.whenPressed(Commands.Drive.zeroHeading(robot.drivebaseSubsystem));
 
         tileRight.whenPressed(new TileMoveCommand(robot, TileMoveCommand.TileMoving.Right));
         tileLeft.whenPressed(new TileMoveCommand(robot, TileMoveCommand.TileMoving.Left));
         tileUp.whenPressed(new TileMoveCommand(robot, TileMoveCommand.TileMoving.Up));
         tileDown.whenPressed(new TileMoveCommand(robot, TileMoveCommand.TileMoving.Down));
-        tileAbort.whenPressed(robot.drivebaseSubsystem::requestCancelled);
+        tileAbort.whenPressed(Commands.Drive.cancelTileRequest(robot.drivebaseSubsystem));
     }
 
     public void bindClawControls() {
-        clawToggleAutoCloseButton.whenPressed(robot.clawSubsystem, ClawSubsystem::toggleAutoClose);
+        clawToggleAutoCloseButton.whenPressed(Commands.Claw.toggleAutoClose(robot.clawSubsystem));
     }
 }

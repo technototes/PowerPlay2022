@@ -46,10 +46,6 @@ public class ClawSubsystem implements Subsystem, Loggable {
     // Should we automatically close the claw if we detect a cone?
     private boolean autoClose;
 
-    // Commands we're going to reuse a whole bunch:
-    public SimpleRequiredCommand<ClawSubsystem> openCommand;
-    public SimpleRequiredCommand<ClawSubsystem> closeCommand;
-
     public ClawSubsystem(LiftSubsystem lift, Servo claw, ColorDistanceSensor s, Alliance a) {
         liftSubsystem = lift;
         _clawServo = claw;
@@ -58,8 +54,6 @@ public class ClawSubsystem implements Subsystem, Loggable {
         isHardware = true;
         autoClose = true;
         servoSet = false;
-        openCommand = new SimpleRequiredCommand<>(this, ClawSubsystem::open);
-        closeCommand = new SimpleRequiredCommand<>(this, ClawSubsystem::close);
     }
 
     // Non-functional subsystem constructor
@@ -108,10 +102,9 @@ public class ClawSubsystem implements Subsystem, Loggable {
         return (
             servoSet &&
             //Math.abs(curPos - CLOSE_SERVO_POSITION) < Math.abs(curPos - OPEN_SERVO_POSITION)
-            (
-                curPos <= CLOSE_SERVO_POSITION + autoCloseDeadzone
-                /*&& curPos >= CLOSE_SERVO_POSITION - autoCloseDeadzone*/
-            )
+            (curPos <=
+                CLOSE_SERVO_POSITION +
+                    autoCloseDeadzone/*&& curPos >= CLOSE_SERVO_POSITION - autoCloseDeadzone*/)
         );
     }
 

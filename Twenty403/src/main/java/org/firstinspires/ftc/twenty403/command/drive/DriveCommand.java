@@ -9,7 +9,6 @@ import com.technototes.library.logger.Loggable;
 import com.technototes.library.util.MathUtils;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
-
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 
 public class DriveCommand implements Command, Loggable {

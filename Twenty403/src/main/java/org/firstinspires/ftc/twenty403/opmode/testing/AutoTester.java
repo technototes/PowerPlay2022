@@ -26,8 +26,7 @@ public class AutoTester extends CommandOpMode {
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware, Alliance.BLUE, StartingPosition.RIGHT);
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Right.START.toPose());
-        CommandScheduler
-            .scheduleForState(new AutoLeftTest(robot), CommandOpMode.OpModeState.RUN);
+        CommandScheduler.scheduleForState(new AutoLeftTest(robot), CommandOpMode.OpModeState.RUN);
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
             CommandScheduler.scheduleInit(robot.visionSystem.runVision);
         }

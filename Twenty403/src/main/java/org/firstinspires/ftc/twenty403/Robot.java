@@ -7,8 +7,8 @@ import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.twenty403.subsystem.ClawSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.DrivebaseSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.LiftSubsystem;
-import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
 import org.firstinspires.ftc.twenty403.subsystem.OdoSubsystem;
+import org.firstinspires.ftc.twenty403.subsystem.VisionSubsystem;
 
 public class Robot implements Loggable {
 

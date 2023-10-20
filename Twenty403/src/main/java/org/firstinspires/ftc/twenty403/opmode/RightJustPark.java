@@ -28,14 +28,13 @@ public class RightJustPark extends CommandOpMode {
         hardware = new Hardware(hardwareMap);
         robot = new Robot(hardware, Alliance.NONE, StartingPosition.RIGHT);
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Right.START.toPose());
-        CommandScheduler
-            .scheduleForState(
-                new SequentialCommandGroup(
-                    new AutoRightParkingSelectionJustParkCommand(robot),
-                    CommandScheduler::terminateOpMode
-                ),
-                CommandOpMode.OpModeState.RUN
-            );
+        CommandScheduler.scheduleForState(
+            new SequentialCommandGroup(
+                new AutoRightParkingSelectionJustParkCommand(robot),
+                CommandScheduler::terminateOpMode
+            ),
+            CommandOpMode.OpModeState.RUN
+        );
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
             CommandScheduler.scheduleInit(robot.visionSystem.runVision);
         }

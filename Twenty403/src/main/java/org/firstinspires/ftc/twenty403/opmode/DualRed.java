@@ -8,6 +8,7 @@ import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
+import org.firstinspires.ftc.twenty403.command.Commands;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.twenty403.controls.ControlDriver;
@@ -30,7 +31,9 @@ public class DualRed extends CommandOpMode {
         controlsDriver = new ControlDriver(driverGamepad, robot);
         controlsOperator = new ControlOperator(codriverGamepad, robot);
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Right.TELESTART.toPose());
-        CommandScheduler
-            .scheduleForState(robot.drivebaseSubsystem::setExternalHeading, 0.0, OpModeState.INIT);
+        CommandScheduler.scheduleForState(
+            Commands.Drive.zeroHeading(robot.drivebaseSubsystem),
+            OpModeState.INIT
+        );
     }
 }

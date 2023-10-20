@@ -4,6 +4,7 @@ import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.command.WaitCommand;
 import com.technototes.path.command.TrajectorySequenceCommand;
 import org.firstinspires.ftc.twenty403.Robot;
+import org.firstinspires.ftc.twenty403.command.Commands;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
 
 public class AutoRightPreLoadLeft extends SequentialCommandGroup {
@@ -14,8 +15,8 @@ public class AutoRightPreLoadLeft extends SequentialCommandGroup {
                 r.drivebaseSubsystem,
                 AutoConstants.Right.START_TO_W_JUNCTION
             )
-                .alongWith(r.liftSubsystem.highCommand),
-            r.clawSubsystem.openCommand,
+                .alongWith(Commands.Lift.highJunction(r.liftSubsystem)),
+            Commands.Claw.open(r.clawSubsystem),
             new TrajectorySequenceCommand(
                 r.drivebaseSubsystem,
                 AutoConstants.Right.W_JUNCTION_TO_LEFT_PARK
@@ -23,7 +24,7 @@ public class AutoRightPreLoadLeft extends SequentialCommandGroup {
                 .alongWith(
                     new SequentialCommandGroup(
                         new WaitCommand(0.6),
-                        r.liftSubsystem.intakeCommand
+                        Commands.Lift.intake(r.liftSubsystem)
                     )
                 )
         );
