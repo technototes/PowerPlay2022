@@ -97,71 +97,18 @@ public class AutoConstants {
         public static ConfigurablePose BETWEEN_START_RIGHT = new ConfigurablePose(-14, -60, toRadians(90));
         public static ConfigurablePose TERMINAL = new ConfigurablePose(-61, -64, toRadians(180));
 
-        public static final Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence>
-                START_TO_E_JUNCTION =
-                b -> b.apply(START.toPose())
-                        .lineToLinearHeading(BETWEEN_START_E_JUNCTION.toPose())
-                        .lineToLinearHeading(E_JUNCTION.toPose())
-                        .build(),
-                E_JUNCTION_TO_STACK =
-                        b -> b.apply(E_JUNCTION.toPose())
-                                .lineToLinearHeading(BETWEEN_E_JUNCTION_STACK.toPose())
-                                .lineToLinearHeading(STACK.toPose())
-                                .build(),
-                STACK_TO_E_JUNCTION =
-                        b -> b.apply(STACK.toPose())
-                                .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
-                                .lineToLinearHeading(E_JUNCTION.toPose())
-                                .build(),
-                STACK_TO_E_JUNCTION_TWO =
-                        b -> b.apply(STACK.toPose())
-                                .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
-                                .lineToLinearHeading(E_JUNCTION_2.toPose())
-                                .build(),
-                E_JUNCTION_TO_STACK_TWO =
-                        b -> b.apply(E_JUNCTION_2.toPose())
-                                .lineToLinearHeading(BETWEEN_E_JUNCTION_STACK.toPose())
-                                .lineToLinearHeading(STACK2.toPose())
-                                .build(),
-                E_JUNCTION_TO_LEFT_PARK =
-                        b -> b.apply(E_JUNCTION.toPose())
-                                .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
-                                .lineToLinearHeading(LEFT.toPose())
-                                .build(),
-                E_JUNCTION_TO_MIDDLE_PARK =
-                        b -> b.apply(E_JUNCTION.toPose())
-                                .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
-                                .lineToLinearHeading(MIDDLE.toPose())
-                                .build(),
-                E_JUNCTION_TO_RIGHT_PARK =
-                        b -> b.apply(E_JUNCTION.toPose())
-                                .lineToLinearHeading(BETWEEN_STACK_E_JUNCTION.toPose())
-                                .lineToLinearHeading(RIGHT.toPose())
-                                .build(),
-                LEFT_1_2 =
-                        b -> b.apply(LEFT.toPose())
-                                .lineToLinearHeading(LEFT2.toPose())
-                                .lineToLinearHeading(LEFT.toPose())
-                                .build(),
-
-        START_TO_LEFT_PARK =
-                b -> b.apply(START.toPose())
-                        //.lineToLinearHeading(TERMINAL.toPose())
-                        .lineToLinearHeading(BETWEEN_START_LEFT.toPose())
-                        .lineToLinearHeading(LEFT.toPose())
-                        .build(),
-                START_TO_MIDDLE_PARK =
-                        b -> b.apply(START.toPose())
-                                //.lineToLinearHeading(TERMINAL.toPose())
-                                //.lineToLinearHeading(START.toPose())
-                                .lineToLinearHeading(MIDDLE.toPose())
-                                .build(),
-
-        START_TO_RIGHT_PARK =
-                b -> b.apply(START.toPose())
-                        //.lineToLinearHeading(TERMINAL.toPose())
-                        .lineToLinearHeading(BETWEEN_START_RIGHT.toPose())
-                        .lineToLinearHeading(RIGHT.toPose())
-                        .build();
+        public static final TrajectoryPath
+                START_TO_E_JUNCTION = TrajectoryPath.linesToLinearHeadings(START, BETWEEN_START_E_JUNCTION, E_JUNCTION),
+                E_JUNCTION_TO_STACK = TrajectoryPath.linesToLinearHeadings(E_JUNCTION, BETWEEN_E_JUNCTION_STACK, STACK),
+                STACK_TO_E_JUNCTION = TrajectoryPath.linesToLinearHeadings(STACK, BETWEEN_STACK_E_JUNCTION, E_JUNCTION),
+                STACK_TO_E_JUNCTION_TWO = TrajectoryPath.linesToLinearHeadings(STACK, BETWEEN_STACK_E_JUNCTION, E_JUNCTION_2),
+                E_JUNCTION_TO_STACK_TWO = TrajectoryPath.linesToLinearHeadings(E_JUNCTION_2, BETWEEN_E_JUNCTION_STACK, STACK2),
+                E_JUNCTION_TO_LEFT_PARK = TrajectoryPath.linesToLinearHeadings(E_JUNCTION, BETWEEN_STACK_E_JUNCTION, LEFT),
+                E_JUNCTION_TO_MIDDLE_PARK = TrajectoryPath.linesToLinearHeadings(E_JUNCTION, BETWEEN_STACK_E_JUNCTION, MIDDLE),
+                E_JUNCTION_TO_RIGHT_PARK = TrajectoryPath.linesToLinearHeadings(E_JUNCTION, BETWEEN_STACK_E_JUNCTION, RIGHT),
+                LEFT_1_2 = TrajectoryPath.linesToLinearHeadings(LEFT, LEFT2, LEFT),
+                START_TO_LEFT_PARK = TrajectoryPath.linesToLinearHeadings(START, BETWEEN_START_LEFT, LEFT),
+                START_TO_MIDDLE_PARK = TrajectoryPath.lineToLinearHeading(START, MIDDLE),
+                START_TO_RIGHT_PARK = TrajectoryPath.linesToLinearHeadings(START, BETWEEN_START_RIGHT, RIGHT);
     }
 }

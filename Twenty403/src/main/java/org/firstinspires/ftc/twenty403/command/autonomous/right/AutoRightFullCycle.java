@@ -32,10 +32,7 @@ public class AutoRightFullCycle extends SequentialCommandGroup {
                 AutoConstants.Right.START_TO_W_JUNCTION
             )
                 .alongWith(
-                    new SequentialCommandGroup(
-                        new WaitCommand(0.2),
-                        Commands.Lift.highJunction(r.liftSubsystem)
-                    )
+                    new WaitCommand(0.2).andThen(Commands.Lift.highJunction(r.liftSubsystem))
                 ),
             Commands.Claw.open(r.clawSubsystem),
             new AutoRightSingleCycleOne(r),

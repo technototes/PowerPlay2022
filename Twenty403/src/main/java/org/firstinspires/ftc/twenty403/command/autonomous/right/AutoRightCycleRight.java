@@ -14,27 +14,25 @@ public class AutoRightCycleRight extends SequentialCommandGroup {
                 r.drivebaseSubsystem,
                 AutoConstants.Right.START_TO_W_JUNCTION
             )
-                .alongWith(
-                    Commands.Lift.highJunction(r.liftSubsystem),
-                    Commands.Claw.open(r.clawSubsystem),
-                    new TrajectorySequenceCommand(
-                        r.drivebaseSubsystem,
-                        AutoConstants.Right.W_JUNCTION_TO_STACK_ONE
-                    )
-                        .alongWith(Commands.Lift.collect(r.liftSubsystem)),
-                    Commands.Claw.close(r.clawSubsystem),
-                    new TrajectorySequenceCommand(
-                        r.drivebaseSubsystem,
-                        AutoConstants.Right.STACK_TO_W_JUNCTION_ONE
-                    )
-                        .alongWith(Commands.Lift.highJunction(r.liftSubsystem)),
-                    Commands.Claw.open(r.clawSubsystem),
-                    new TrajectorySequenceCommand(
-                        r.drivebaseSubsystem,
-                        AutoConstants.Right.W_JUNCTION_TO_RIGHT_PARK
-                    )
-                        .alongWith(Commands.Lift.collect(r.liftSubsystem))
-                )
+                .alongWith(Commands.Lift.highJunction(r.liftSubsystem)),
+            Commands.Claw.open(r.clawSubsystem),
+            new TrajectorySequenceCommand(
+                r.drivebaseSubsystem,
+                AutoConstants.Right.W_JUNCTION_TO_STACK_ONE
+            )
+                .alongWith(Commands.Lift.collect(r.liftSubsystem)),
+            Commands.Claw.close(r.clawSubsystem),
+            new TrajectorySequenceCommand(
+                r.drivebaseSubsystem,
+                AutoConstants.Right.STACK_TO_W_JUNCTION_ONE
+            )
+                .alongWith(Commands.Lift.highJunction(r.liftSubsystem)),
+            Commands.Claw.open(r.clawSubsystem),
+            new TrajectorySequenceCommand(
+                r.drivebaseSubsystem,
+                AutoConstants.Right.W_JUNCTION_TO_RIGHT_PARK
+            )
+                .alongWith(Commands.Lift.collect(r.liftSubsystem))
         );
     }
 }

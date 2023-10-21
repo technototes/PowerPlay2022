@@ -75,12 +75,12 @@ public class Commands {
 
     public static class Claw {
 
-        public static Command open(ClawSubsystem clawSubsystem) {
-            return new SimpleRequiredCommand<>(clawSubsystem, ClawSubsystem::open);
+        public static Command open(ClawSubsystem claw) {
+            return new SimpleRequiredCommand<>(claw, ClawSubsystem::open);
         }
 
-        public static Command close(ClawSubsystem clawSubsystem) {
-            return new SimpleRequiredCommand<>(clawSubsystem, ClawSubsystem::close);
+        public static Command close(ClawSubsystem claw) {
+            return new SimpleRequiredCommand<>(claw, ClawSubsystem::close);
         }
 
         public static Command toggleAutoClose(ClawSubsystem claw) {
