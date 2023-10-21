@@ -8,9 +8,9 @@ public class AutoLeftParkingSelectionJustParkCommand extends ChoiceCommand {
 
     public AutoLeftParkingSelectionJustParkCommand(Robot r) {
         super(
-            new Pair<>(r.visionSystem.visionPipeline::left, new AutoLeftParkLeft(r)),
-            new Pair<>(r.visionSystem.visionPipeline::middle, new AutoLeftParkMiddle(r)),
-            new Pair<>(r.visionSystem.visionPipeline::right, new AutoLeftParkRight(r))
+            new Pair<>(r.visionSystem::left, new AutoLeftParkLeft(r)),
+            new Pair<>(r.visionSystem::middle, new AutoLeftParkMiddle(r)),
+            new Pair<>(r.visionSystem::right, new AutoLeftParkRight(r))
         );
     }
 }

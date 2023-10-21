@@ -4,11 +4,8 @@ import com.technototes.library.command.SequentialCommandGroup;
 import com.technototes.library.command.WaitCommand;
 import com.technototes.path.command.TrajectorySequenceCommand;
 import org.firstinspires.ftc.twenty403.Robot;
+import org.firstinspires.ftc.twenty403.command.Commands;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
-import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
-import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftCollectCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
 
 public class AutoLeftSingleCycle extends SequentialCommandGroup {
 
@@ -21,16 +18,16 @@ public class AutoLeftSingleCycle extends SequentialCommandGroup {
                 .alongWith(
                     new SequentialCommandGroup(
                         new WaitCommand(0.4),
-                        new LiftCollectCommand(r.liftSubsystem)
+                        Commands.Lift.collect(r.liftSubsystem)
                     )
                 ),
-            new ClawCloseCommand(r.clawSubsystem),
+            Commands.Claw.close(r.clawSubsystem),
             new TrajectorySequenceCommand(
                 r.drivebaseSubsystem,
                 AutoConstants.Left.STACK_TO_E_JUNCTION
             )
-                .alongWith(new LiftHighJunctionCommand(r.liftSubsystem)),
-            new ClawOpenCommand(r.clawSubsystem)
+                .alongWith(Commands.Lift.highJunction(r.liftSubsystem)),
+            Commands.Claw.open(r.clawSubsystem)
         );
     }
 }

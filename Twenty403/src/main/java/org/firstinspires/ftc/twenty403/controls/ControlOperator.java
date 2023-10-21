@@ -5,19 +5,7 @@ import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
 import org.firstinspires.ftc.twenty403.Robot;
-import org.firstinspires.ftc.twenty403.command.claw.ClawAutoCloseToggleCommand;
-import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
-import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftDownCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftGroundJunctionCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftIntakeCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftLowJunctionCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftMidJunctionCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftMoveDownOverrideCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftMoveUpOverrideCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftSetZeroCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
+import org.firstinspires.ftc.twenty403.command.Commands;
 
 public class ControlOperator {
 
@@ -60,40 +48,40 @@ public class ControlOperator {
     }
 
     public void bindClawControls() {
-        clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-        clawCloseButton.whenReleased(new ClawCloseCommand(robot.clawSubsystem));
+        clawOpenButton.whenPressed(Commands.Claw.open(robot.clawSubsystem));
+        clawCloseButton.whenReleased(Commands.Claw.close(robot.clawSubsystem));
     }
 
     public void bindLiftControls() {
-        liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
-        liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
-        liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));
+        liftUpButton.whenPressed(Commands.Lift.moveUp(robot.liftSubsystem));
+        liftDownButton.whenPressed(Commands.Lift.moveDown(robot.liftSubsystem));
+        liftIntakePos.whenPressed(Commands.Lift.intake(robot.liftSubsystem));
         liftHighOrOverrideZero.whenPressed(
             new ConditionalCommand(
                 override,
-                new LiftSetZeroCommand(robot.liftSubsystem),
-                new LiftHighJunctionCommand(robot.liftSubsystem)
+                Commands.Lift.setNewZero(robot.liftSubsystem),
+                Commands.Lift.highJunction(robot.liftSubsystem)
             )
         );
         liftMediumOrToggleAutoClose.whenPressed(
             new ConditionalCommand(
                 override,
-                new ClawAutoCloseToggleCommand(robot.clawSubsystem),
-                new LiftMidJunctionCommand(robot.liftSubsystem)
+                Commands.Claw.toggleAutoClose(robot.clawSubsystem),
+                Commands.Lift.midJunction(robot.liftSubsystem)
             )
         );
         liftGroundOrOverrideDown.whenPressed(
             new ConditionalCommand(
                 override,
-                new LiftMoveDownOverrideCommand(robot.liftSubsystem),
-                new LiftGroundJunctionCommand(robot.liftSubsystem)
+                Commands.Lift.moveDown_OVERRIDE(robot.liftSubsystem),
+                Commands.Lift.groundJunction(robot.liftSubsystem)
             )
         );
         liftLowOrOverrideUp.whenPressed(
             new ConditionalCommand(
                 override,
-                new LiftMoveUpOverrideCommand(robot.liftSubsystem),
-                new LiftLowJunctionCommand(robot.liftSubsystem)
+                Commands.Lift.moveUp_OVERRIDE(robot.liftSubsystem),
+                Commands.Lift.lowJunction(robot.liftSubsystem)
             )
         );
     }

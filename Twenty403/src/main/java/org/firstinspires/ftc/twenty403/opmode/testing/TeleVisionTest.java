@@ -5,12 +5,10 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.technototes.library.command.CommandScheduler;
-import com.technototes.library.logger.Loggable;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
-import org.firstinspires.ftc.twenty403.command.VisionCommand;
 import org.firstinspires.ftc.twenty403.command.autonomous.StartingPosition;
 import org.firstinspires.ftc.twenty403.controls.ControlDriver;
 import org.firstinspires.ftc.twenty403.controls.ControlOperator;
@@ -38,7 +36,7 @@ public class TeleVisionTest extends CommandOpMode {
         // I don't think we want to do this, as it stops the pipeline 'after init' and that
         // may be triggered *after* we start the pipeline when we 'upon start'.
         if (false && Robot.RobotConstant.CAMERA_CONNECTED) {
-            CommandScheduler.getInstance().scheduleInit(new VisionCommand(robot.visionSystem));
+            CommandScheduler.scheduleInit(robot.visionSystem.runVision);
         }
     }
 
@@ -57,8 +55,5 @@ public class TeleVisionTest extends CommandOpMode {
             String.format("%f, %f", gamepad1.right_stick_x, gamepad1.right_stick_y)
         );
         telemetry.addData("PoseEstimate", robot.drivebaseSubsystem.getPoseEstimate());
-        telemetry.addData("Vis State: ", robot.visionSystem.visionPipeline.activeMode.toString());
-        telemetry.addData("Junction X: ", robot.visionSystem.visionPipeline.junctionX);
-        telemetry.addData("Junction Y: ", robot.visionSystem.visionPipeline.junctionY);
     }
 }

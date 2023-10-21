@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.twenty403.subsystem;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.technototes.library.command.Command;
+import com.technototes.library.command.SimpleRequiredCommand;
 import com.technototes.library.hardware.sensor.ColorDistanceSensor;
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.logger.Log;
@@ -100,10 +102,9 @@ public class ClawSubsystem implements Subsystem, Loggable {
         return (
             servoSet &&
             //Math.abs(curPos - CLOSE_SERVO_POSITION) < Math.abs(curPos - OPEN_SERVO_POSITION)
-            (
-                curPos <= CLOSE_SERVO_POSITION + autoCloseDeadzone
-                /*&& curPos >= CLOSE_SERVO_POSITION - autoCloseDeadzone*/
-            )
+            (curPos <=
+                CLOSE_SERVO_POSITION +
+                    autoCloseDeadzone/*&& curPos >= CLOSE_SERVO_POSITION - autoCloseDeadzone*/)
         );
     }
 
@@ -119,8 +120,8 @@ public class ClawSubsystem implements Subsystem, Loggable {
             ) {
                 close();
                 ///this.wait(.2);
-                //CommandScheduler.getInstance().schedule(new ClawAutoCloseWithLift(this,liftSubsystem));
-                //CommandScheduler.getInstance().scheduleOnce(new ClawAutoCloseWithLift(this, liftSubsystem));
+                //CommandScheduler.schedule(new ClawAutoCloseWithLift(this,liftSubsystem));
+                //CommandScheduler.scheduleOnce(new ClawAutoCloseWithLift(this, liftSubsystem));
             }
         }
     }

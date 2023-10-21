@@ -58,7 +58,7 @@ public class OdoSubsystem implements Subsystem, Loggable {
         // cone stack is on the left
         if (leftDistance > 36 || rightDistance > 36) {
             return -123.4;
-        } else return (Math.cos(angle) * (leftDistance + rightDistance) / 2);
+        } else return ((Math.cos(angle) * (leftDistance + rightDistance)) / 2);
     }
 
     //Gray = Math.abs(Red - Blue) < 50;

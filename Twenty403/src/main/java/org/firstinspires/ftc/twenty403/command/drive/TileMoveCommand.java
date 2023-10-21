@@ -1,10 +1,7 @@
 package org.firstinspires.ftc.twenty403.command.drive;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.technototes.library.command.Command;
-import com.technototes.path.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.twenty403.Robot;
-import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
 
 public class TileMoveCommand implements Command {
 
@@ -35,5 +32,12 @@ public class TileMoveCommand implements Command {
                 robot.drivebaseSubsystem.requestTrajectoryMove(24, 0, 0);
                 break;
         }
+    }
+
+    public enum TileMoving {
+        Up,
+        Down,
+        Left,
+        Right,
     }
 }

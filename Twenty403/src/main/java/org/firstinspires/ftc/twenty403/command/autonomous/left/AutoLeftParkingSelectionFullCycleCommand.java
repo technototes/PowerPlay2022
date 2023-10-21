@@ -11,7 +11,7 @@ public class AutoLeftParkingSelectionFullCycleCommand extends ChoiceCommand {
     public AutoLeftParkingSelectionFullCycleCommand(Robot robot, DoubleSupplier currOpModeRunTime) {
         super(
             new Pair<>(
-                robot.visionSystem.visionPipeline::left,
+                robot.visionSystem::left,
                 new AutoLeftFullCycle(
                     robot,
                     AutoConstants.Left.E_JUNCTION_TO_LEFT_PARK,
@@ -19,7 +19,7 @@ public class AutoLeftParkingSelectionFullCycleCommand extends ChoiceCommand {
                 )
             ),
             new Pair<>(
-                robot.visionSystem.visionPipeline::middle,
+                robot.visionSystem::middle,
                 new AutoLeftFullCycle(
                     robot,
                     AutoConstants.Left.E_JUNCTION_TO_MIDDLE_PARK,
@@ -27,7 +27,7 @@ public class AutoLeftParkingSelectionFullCycleCommand extends ChoiceCommand {
                 )
             ),
             new Pair<>(
-                robot.visionSystem.visionPipeline::right,
+                robot.visionSystem::right,
                 new AutoLeftFullCycle(
                     robot,
                     AutoConstants.Left.E_JUNCTION_TO_RIGHT_PARK,

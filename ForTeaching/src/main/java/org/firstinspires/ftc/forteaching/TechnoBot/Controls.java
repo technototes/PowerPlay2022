@@ -7,15 +7,9 @@ import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
 import com.technototes.library.util.Alliance;
-import org.firstinspires.ftc.forteaching.TechnoBot.Commands.CloseClawCommand;
-import org.firstinspires.ftc.forteaching.TechnoBot.Commands.LiftDownCommand;
-import org.firstinspires.ftc.forteaching.TechnoBot.Commands.LiftUpCommand;
+
+import org.firstinspires.ftc.forteaching.TechnoBot.Commands.Commands;
 import org.firstinspires.ftc.forteaching.TechnoBot.Commands.MecDriveCommand;
-import org.firstinspires.ftc.forteaching.TechnoBot.Commands.OpenClawCommand;
-import org.firstinspires.ftc.forteaching.TechnoBot.Commands.Operations;
-import org.firstinspires.ftc.forteaching.TechnoBot.Commands.TestEncodedMotorCommand;
-import org.firstinspires.ftc.forteaching.TechnoBot.Commands.TestMotorCommand;
-import org.firstinspires.ftc.forteaching.TechnoBot.Commands.TestServoCommand;
 
 public class Controls {
 
@@ -94,65 +88,52 @@ public class Controls {
     }
 
     public void bindClawControls() {
-        openClaw.whenPressed(new OpenClawCommand(robot.clawSubsystem));
-        closeClaw.whenPressed(new CloseClawCommand(robot.clawSubsystem));
+        openClaw.whenPressed(Commands.Claw.open(robot.clawSubsystem));
+        closeClaw.whenPressed(Commands.Claw.close(robot.clawSubsystem));
     }
 
     public void bindLiftControls() {
-        liftUp.whenPressed(new LiftUpCommand(robot.liftSubsystem));
-        liftDown.whenPressed(new LiftDownCommand(robot.liftSubsystem));
+        liftUp.whenPressed(Commands.Lift.moveUp(robot.liftSubsystem));
+        liftDown.whenPressed(Commands.Lift.moveDown(robot.liftSubsystem));
     }
 
     // Joysticks require a "scheduleJoystick" thing, so the commands are invoked all the time
     private void bindDrivebaseControls() {
         CommandScheduler
-            .getInstance()
-            .scheduleJoystick(
-                // new TankDriveCommand(robot.tankDriveBase, leftTankStick, rightTankStick, snapToAngle)
-                new MecDriveCommand(robot.mecanumDrivebase, leftMecDriveStick, rightMecDriveStick)
-            );
-    }
 
-    // Silly helpers to make the code more succinct below
-    private TestEncodedMotorCommand MakeEncCommand(Operations op) {
-        return new TestEncodedMotorCommand(robot.encodedMotorSubsystem, op);
-    }
-
-    private TestMotorCommand MakeMotorCommand(Operations op) {
-        return new TestMotorCommand(robot.movementTestingSubsystem, op);
-    }
-
-    private TestServoCommand MakeServoCommand(Operations op) {
-        return new TestServoCommand(robot.movementTestingSubsystem, op);
+                .scheduleJoystick(
+                        // new TankDriveCommand(robot.tankDriveBase, leftTankStick, rightTankStick, snapToAngle)
+                        new MecDriveCommand(robot.mecanumDrivebase, leftMecDriveStick, rightMecDriveStick)
+                );
     }
 
     private void bindTesterControls() {
-        encMotorTestUp.whenPressed(MakeEncCommand(Operations.Increase));
-        encMotorTestDown.whenPressed(MakeEncCommand(Operations.Decrease));
+        encMotorTestUp.whenPressed(Commands.MotorAsServo.increaseEncMotor(robot.encodedMotorSubsystem));
+        encMotorTestDown.whenPressed(Commands.MotorAsServo.decreaseEncMotor(robot.encodedMotorSubsystem));
 
-        motorTestUp.whenPressed(MakeMotorCommand(Operations.Increase));
-        motorTestDown.whenPressed(MakeMotorCommand(Operations.Decrease));
+        motorTestUp.whenPressed(Commands.MovementTesting.incMotorSpeed(robot.movementTestingSubsystem));
+        motorTestDown.whenPressed(Commands.MovementTesting.decMotorSpeed(robot.movementTestingSubsystem));
 
-        servoTestUp.whenPressed(MakeServoCommand(Operations.Increase));
-        servoTestDown.whenPressed(MakeServoCommand(Operations.Decrease));
+        servoTestUp.whenPressed(Commands.MovementTesting.incServoSpeed(robot.movementTestingSubsystem));
+        servoTestDown.whenPressed(Commands.MovementTesting.decServoSpeed(robot.movementTestingSubsystem));
 
         // For this stuff, ParallelCommandGroups or SequentialCommandGroups both work the same
         // For command that take "time" you parallel command groups (as they will run at the same
         // time as the other commands) but if you want "do A, then do B, then do C" you should
         // use a sequential command group
         stop.whenPressed(
-            new ParallelCommandGroup(
-                MakeEncCommand(Operations.Stop),
-                MakeMotorCommand(Operations.Stop),
-                MakeServoCommand(Operations.Stop)
-            )
+                new ParallelCommandGroup(
+                        Commands.MovementTesting.neutralMotorSpeed(robot.movementTestingSubsystem),
+                        Commands.MovementTesting.neutralServoSpeed(robot.movementTestingSubsystem),
+                        Commands.MotorAsServo.stop(robot.encodedMotorSubsystem)
+                )
         );
         halt.whenPressed(
-            new ParallelCommandGroup(
-                MakeMotorCommand(Operations.Halt),
-                MakeEncCommand(Operations.Halt),
-                MakeServoCommand(Operations.Halt)
-            )
+                new ParallelCommandGroup(
+                        Commands.MovementTesting.brakeMotor(robot.movementTestingSubsystem),
+                        Commands.MovementTesting.neutralServoSpeed(robot.movementTestingSubsystem),
+                        Commands.MotorAsServo.halt(robot.encodedMotorSubsystem)
+                )
         );
     }
 }

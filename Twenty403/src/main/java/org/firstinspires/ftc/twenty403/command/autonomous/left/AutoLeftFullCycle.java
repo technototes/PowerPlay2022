@@ -9,23 +9,21 @@ import com.technototes.path.trajectorysequence.TrajectorySequenceBuilder;
 import java.util.function.DoubleSupplier;
 import java.util.function.Function;
 import org.firstinspires.ftc.twenty403.Robot;
+import org.firstinspires.ftc.twenty403.command.Commands;
 import org.firstinspires.ftc.twenty403.command.autonomous.AutoConstants;
-import org.firstinspires.ftc.twenty403.command.autonomous.right.AutoRightSingleCycleOne;
-import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
-import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
-import org.firstinspires.ftc.twenty403.command.drive.SlowCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftIntakeCommand;
 
 public class AutoLeftFullCycle extends SequentialCommandGroup {
 
     public AutoLeftFullCycle(
         Robot r,
-        Function<Function<Pose2d, TrajectorySequenceBuilder>, TrajectorySequence> parkingDestination,
+        Function<
+            Function<Pose2d, TrajectorySequenceBuilder>,
+            TrajectorySequence
+        > parkingDestination,
         DoubleSupplier currOpModeRunTime
     ) {
         super(
-            new ClawCloseCommand(r.clawSubsystem),
+            Commands.Claw.close(r.clawSubsystem),
             new TrajectorySequenceCommand(
                 r.drivebaseSubsystem,
                 AutoConstants.Left.START_TO_E_JUNCTION
@@ -33,10 +31,10 @@ public class AutoLeftFullCycle extends SequentialCommandGroup {
                 .alongWith(
                     new SequentialCommandGroup(
                         new WaitCommand(0.2),
-                        new LiftHighJunctionCommand(r.liftSubsystem)
+                        Commands.Lift.highJunction(r.liftSubsystem)
                     )
                 ),
-            new ClawOpenCommand(r.clawSubsystem),
+            Commands.Claw.open(r.clawSubsystem),
             new AutoLeftSingleCycle(r),
             new AutoLeftSingleCycleTwo(r),
             new AutoLeftSingleCycleTwo(r),
@@ -44,7 +42,7 @@ public class AutoLeftFullCycle extends SequentialCommandGroup {
             //new AutoRightSingleCycleOne(r),
             //new AutoRightSingleCycleOne(r),
             new TrajectorySequenceCommand(r.drivebaseSubsystem, parkingDestination)
-                .alongWith(new LiftIntakeCommand(r.liftSubsystem))
+                .alongWith(Commands.Lift.intake(r.liftSubsystem))
             //new SlowCommand(r.drivebaseSubsystem)
         );
         // new AutoRightSingleCycle(drivebaseSubsystem, liftSubsystem, clawSubsystem),

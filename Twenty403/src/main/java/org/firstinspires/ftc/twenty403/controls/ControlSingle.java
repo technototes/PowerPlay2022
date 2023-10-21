@@ -6,22 +6,8 @@ import com.technototes.library.control.CommandButton;
 import com.technototes.library.control.CommandGamepad;
 import com.technototes.library.control.Stick;
 import org.firstinspires.ftc.twenty403.Robot;
-import org.firstinspires.ftc.twenty403.command.claw.ClawCloseCommand;
-import org.firstinspires.ftc.twenty403.command.claw.ClawOpenCommand;
+import org.firstinspires.ftc.twenty403.command.Commands;
 import org.firstinspires.ftc.twenty403.command.drive.DriveCommand;
-import org.firstinspires.ftc.twenty403.command.drive.ResetGyroCommand;
-import org.firstinspires.ftc.twenty403.command.drive.SlowCommand;
-import org.firstinspires.ftc.twenty403.command.drive.TurboCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftDownCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftGroundJunctionCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftHighJunctionCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftIntakeCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftLowJunctionCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftMidJunctionCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftMoveDownOverrideCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftMoveUpOverrideCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftSetZeroCommand;
-import org.firstinspires.ftc.twenty403.command.lift.LiftUpCommand;
 
 public class ControlSingle {
 
@@ -82,54 +68,51 @@ public class ControlSingle {
     }
 
     public void bindDriveControls() {
-        CommandScheduler
-            .getInstance()
-            .scheduleJoystick(
-                new DriveCommand(
-                    robot.drivebaseSubsystem,
-                    driveLeftStick,
-                    driveRightStick,
-                    driveStraight,
-                    watchButton,
-                    robot.visionSystem.visionPipeline
-                )
-            );
-        turboButton.whenPressed(new TurboCommand(robot.drivebaseSubsystem));
-        turboButton.whenReleased(new SlowCommand(robot.drivebaseSubsystem));
+        CommandScheduler.scheduleJoystick(
+            new DriveCommand(
+                robot.drivebaseSubsystem,
+                driveLeftStick,
+                driveRightStick,
+                driveStraight,
+                watchButton
+            )
+        );
+        turboButton.whenPressed(robot.drivebaseSubsystem::fast);
+        turboButton.whenReleased(robot.drivebaseSubsystem::slow);
         // TODO: We probably want buttons to reset the Gyro...
-        resetGyroButton.whenPressed(new ResetGyroCommand(robot.drivebaseSubsystem));
+        resetGyroButton.whenPressed(Commands.Drive.zeroHeading(robot.drivebaseSubsystem));
     }
 
     public void bindClawControls() {
         // TODO: Name & Bind claw controls
-        clawOpenButton.whenPressed(new ClawOpenCommand(robot.clawSubsystem));
-        clawCloseButton.whenReleased(new ClawCloseCommand(robot.clawSubsystem));
+        clawOpenButton.whenPressed(Commands.Claw.open(robot.clawSubsystem));
+        clawCloseButton.whenReleased(Commands.Claw.close(robot.clawSubsystem));
     }
 
     public void bindLiftControls() {
         // TODO: Name & Bind lift controls
-        liftUpButton.whenPressed(new LiftUpCommand(robot.liftSubsystem));
-        liftDownButton.whenPressed(new LiftDownCommand(robot.liftSubsystem));
-        liftIntakePos.whenPressed(new LiftIntakeCommand(robot.liftSubsystem));
+        liftUpButton.whenPressed(Commands.Lift.moveUp(robot.liftSubsystem));
+        liftDownButton.whenPressed(Commands.Lift.moveDown(robot.liftSubsystem));
+        liftIntakePos.whenPressed(Commands.Lift.intake(robot.liftSubsystem));
         liftOverrideZeroButton.whenPressed(
-            new ConditionalCommand(override, new LiftSetZeroCommand(robot.liftSubsystem))
+            new ConditionalCommand(override, Commands.Lift.setNewZero(robot.liftSubsystem))
         );
 
         liftGroundOrOverrideDown.whenPressed(
             new ConditionalCommand(
                 override,
-                new LiftMoveDownOverrideCommand(robot.liftSubsystem),
-                new LiftGroundJunctionCommand(robot.liftSubsystem)
+                Commands.Lift.moveDown_OVERRIDE(robot.liftSubsystem),
+                Commands.Lift.groundJunction(robot.liftSubsystem)
             )
         );
         liftLowOrOverrideUp.whenPressed(
             new ConditionalCommand(
                 override,
-                new LiftMoveUpOverrideCommand(robot.liftSubsystem),
-                new LiftLowJunctionCommand(robot.liftSubsystem)
+                Commands.Lift.moveUp_OVERRIDE(robot.liftSubsystem),
+                Commands.Lift.lowJunction(robot.liftSubsystem)
             )
         );
-        liftMedium.whenPressed(new LiftMidJunctionCommand(robot.liftSubsystem));
-        liftHigh.whenPressed(new LiftHighJunctionCommand(robot.liftSubsystem));
+        liftMedium.whenPressed(Commands.Lift.midJunction(robot.liftSubsystem));
+        liftHigh.whenPressed(Commands.Lift.highJunction(robot.liftSubsystem));
     }
 }
