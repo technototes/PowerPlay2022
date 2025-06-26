@@ -3,7 +3,7 @@ package org.firstinspires.ftc.swerveteen750.opmode.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.technototes.library.hardware2.HardwareBuilder;
+import com.technototes.library.hardware.HardwareDevice;
 
 import org.firstinspires.ftc.swerveteen750.Hardware;
 import org.firstinspires.ftc.swerveteen750.Robot;
@@ -16,7 +16,7 @@ public class SketchyMecanumDriveMode extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        HardwareBuilder.initMap(hardwareMap);
+        HardwareDevice.initMap(hardwareMap);
         Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.M_DRIVE_ONLY);
         SimpleMecanumDriveSubsystem drive = new SimpleMecanumDriveSubsystem(hardware);
         drive.setEncoderZero();

@@ -38,7 +38,7 @@ public class RegularMecanumDrive extends CommandOpMode {
         coDriverControls = new ControlsCoDriver(codriverGamepad, robot, Robot.SubsystemCombo.DEFAULT);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         if (Robot.RobotConstant.CAMERA_ENABLED) {
-            CommandScheduler.getInstance().scheduleInit(new VisionCommand(robot.visionSubsystem));
+            CommandScheduler.scheduleInit(new VisionCommand(robot.visionSubsystem));
         }
     }
 

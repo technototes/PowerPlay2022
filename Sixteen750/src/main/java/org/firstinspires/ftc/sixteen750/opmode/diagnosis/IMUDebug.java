@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import com.technototes.library.hardware2.HardwareBuilder;
+import com.technototes.library.hardware.HardwareDevice;
 import com.technototes.library.util.Alliance;
 
 
@@ -27,7 +27,7 @@ public class IMUDebug extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        HardwareBuilder.initMap(hardwareMap);
+        HardwareDevice.initMap(hardwareMap);
         hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DEFAULT);
         //Robot robot = new Robot(hardware, Robot.SubsystemCombo.DEFAULT, Alliance.NONE, StartingPosition.NEUTRAL);
 

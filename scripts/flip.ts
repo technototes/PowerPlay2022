@@ -11,43 +11,56 @@
  * the ForTeaching, RoadRunner Quick Start and any other 'bot' subdirs that we
  * may not want to build in the heat of competition work.
  *
- * "yarn libflip" will, from a normal repo, enable you to build & link with
+ * "bun libflip" will, from a normal repo, enable you to build & link with
  * a local copy of TechnoLib in <root>\TechnoLib. Once you're done, run
- * "yarn libflip" again, and it will restore the dependency on the publicly
+ * "bun libflip" again, and it will restore the dependency on the publicly
  * released copy of TechnoLib
  */
 
-const { readFile, writeFile } = require('fs/promises');
-const { argv } = require('process');
+import { promises } from 'fs';
+import { argv } from 'process';
 
+const { readFile, writeFile } = promises;
+
+type FileList = {
+  key: string;
+  files: string[];
+};
+
+const technoLib: FileList = {
+  key: 'TechnoLibLocal',
+  files: [
+    'LearnBot/build.gradle',
+    'Sixteen750/build.gradle',
+    'Ptechnodactyl/build.gradle',
+    'Hoops/build.gradle',
+    'Twenty403/build.gradle',
+    'build.dependencies.gradle',
+    'settings.gradle',
+  ],
+};
+const botList: FileList = {
+  key: 'BUILD ALL BOTS',
+  files: ['settings.gradle', 'build.gradle'],
+};
+const meepList: FileList = {
+  key: 'MeepMeepLocal',
+  files: ['MeepMeepTesting/build.gradle', 'settings.gradle'],
+};
 // This is a map of keys (the argument to call flip.js with) to objects that
 // are a name (the tag at the end of the comment) and an array of files to
 // scan & process
-const fileList = new Map([
-  [
-    'lib',
-    {
-      name: 'TechnoLibLocal',
-      files: [
-        'ForTeaching/build.gradle',
-        'Sixteen750/build.gradle',
-        'Swerveteen750/build.gradle',
-        'Twenty403/build.gradle',
-        'build.dependencies.gradle',
-        'settings.gradle',
-      ],
-    },
-  ],
-  [
-    'bot',
-    { name: 'BUILD ALL BOTS', files: ['settings.gradle', 'build.gradle'] },
-  ],
+const fileList = new Map<string, FileList>([
+  ['lib', technoLib],
+  ['bot', botList],
+  ['meepmeep', meepList],
+  ['meep', meepList],
 ]);
 
 // For any line that ends with '// FLIP: id',
 // toggle the line comment 'status'
-function toggleLine(lineFull, str) {
-  const commentMarker = '// FLIP: ' + str;
+function toggleLine(lineFull: string, id: string) {
+  const commentMarker = '// FLIP: ' + id;
   const line = lineFull.trimEnd();
   // If the line doesn't end with the comment marker, don't change it at all
   if (!line.endsWith(commentMarker)) {
@@ -65,11 +78,11 @@ function toggleLine(lineFull, str) {
 }
 
 // Read the file, flip the comments for lines with markers, the write it back
-async function toggleFile(file, str) {
+async function toggleFile(file: string, key: string) {
   try {
     const contents = await readFile(file, 'utf-8');
     const resultArray = contents.split('\n');
-    const toggled = resultArray.map((elem) => toggleLine(elem, str));
+    const toggled = resultArray.map((elem) => toggleLine(elem, key));
     await writeFile(file, toggled.join('\n'));
   } catch (e) {
     // Some file access problem :(
@@ -78,14 +91,16 @@ async function toggleFile(file, str) {
   }
 }
 
-async function toggleLinesWithComments(arg) {
-  const elem = fileList.get(arg);
+async function toggleLinesWithComments(arg: string) {
+  const elem: FileList | undefined = fileList.get(arg);
   if (elem === undefined) {
-    throw Error("Only use this script with the 'lib' or 'bot' argument");
+    throw Error(
+      'This script only understands :' + [...fileList.keys()].join(', '),
+    );
   }
-  let { name: str, files } = elem;
+  let { key, files } = elem;
   for (let filename of files) {
-    await toggleFile(filename, str);
+    await toggleFile(filename, key);
   }
 }
 

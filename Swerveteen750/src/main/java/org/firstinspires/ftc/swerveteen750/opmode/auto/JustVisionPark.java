@@ -4,7 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.technototes.library.hardware2.HardwareBuilder;
+import com.technototes.library.hardware.HardwareDevice;
 import com.technototes.library.util.Alliance;
 
 import org.firstinspires.ftc.swerveteen750.Hardware;
@@ -22,7 +22,7 @@ public class JustVisionPark extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        HardwareBuilder.initMap(hardwareMap);
+        HardwareDevice.initMap(hardwareMap);
         Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.VISION_M_DRIVE);
         SimpleMecanumDriveSubsystem drive = new SimpleMecanumDriveSubsystem(hardware);
         drive.setEncoderZero();

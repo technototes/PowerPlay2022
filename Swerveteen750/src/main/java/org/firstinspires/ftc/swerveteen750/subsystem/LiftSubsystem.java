@@ -118,7 +118,7 @@ public class LiftSubsystem implements Subsystem, Supplier<Double>, Loggable {
     }
 
     public double leftDelta() {
-        return leftPidController.getTargetPosition() - leftMotor.getDevice().getCurrentPosition();
+        return leftPidController.getTargetPosition() - leftMotor.getRawMotor(DcMotorEx.class).getCurrentPosition();
     }
 
     public boolean isLeftAtTarget() {

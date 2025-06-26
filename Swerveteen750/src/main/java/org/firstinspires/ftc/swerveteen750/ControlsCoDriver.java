@@ -67,9 +67,9 @@ public class ControlsCoDriver {
 
         gamepad.rightStickButton.whenPressed(new ResetLiftZeroCommand(robot.liftSubsystem, gamepad));
 
-        gamepad.triangle.whenPressed(new TurretFrontCommand(robot.liftSubsystem));
-        gamepad.square.whenPressed(new TurretLeftCommand(robot.liftSubsystem));
-        gamepad.cross.whenPressed(new TurretRearCommand(robot.liftSubsystem));
+        gamepad.ps_triangle.whenPressed(new TurretFrontCommand(robot.liftSubsystem));
+        gamepad.ps_square.whenPressed(new TurretLeftCommand(robot.liftSubsystem));
+        gamepad.ps_cross.whenPressed(new TurretRearCommand(robot.liftSubsystem));
 
         // using left stick for turret control instead
 //        gamepad.leftBumper.whenPressed(new IncrementTurretDownCommand(robot.liftSubsystem));

@@ -11,6 +11,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
@@ -49,7 +50,7 @@ public class LiftMotorTest extends CommandOpMode {
         }
         telemetry.addData("Left Lift Motor Target Position", robot.liftSubsystem.getLeftTargetPos());
         telemetry.addData("Left Lift Motor Current Position", robot.liftSubsystem.getLeftPos());
-        telemetry.addData("Left lift Motor Encoder", hardware.leftLiftMotor.getDevice().getCurrentPosition());
+        telemetry.addData("Left lift Motor Encoder", hardware.leftLiftMotor.getRawMotor(DcMotorEx.class).getCurrentPosition());
         telemetry.update();
     }
 }

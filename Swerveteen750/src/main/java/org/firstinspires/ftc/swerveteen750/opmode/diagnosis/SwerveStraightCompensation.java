@@ -3,7 +3,7 @@ package org.firstinspires.ftc.swerveteen750.opmode.diagnosis;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.technototes.library.hardware2.HardwareBuilder;
+import com.technototes.library.hardware.HardwareDevice;
 
 import org.firstinspires.ftc.swerveteen750.Hardware;
 import org.firstinspires.ftc.swerveteen750.Robot;
@@ -18,7 +18,7 @@ public class SwerveStraightCompensation extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        HardwareBuilder.initMap(hardwareMap);
+        HardwareDevice.initMap(hardwareMap);
         Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.S_DRIVE_ONLY);
 
         AnotherSwerveModule leftFrontModule = new AnotherSwerveModule(hardware.leftFrontMotorQ, hardware.leftFrontServo, hardware.leftFrontEncoder, ConfigurableSwerveDriveSubsystem.LF_SERVO_ROTATION_PID_COEF, null, ConfigurableSwerveDriveSubsystem.LFkStatic);

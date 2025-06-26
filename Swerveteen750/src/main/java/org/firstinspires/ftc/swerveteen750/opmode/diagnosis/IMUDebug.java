@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.swerveteen750.opmode.diagnosis;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.swerveteen750.Hardware;
 import org.firstinspires.ftc.swerveteen750.Robot;
@@ -12,7 +13,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import com.technototes.library.hardware2.HardwareBuilder;
+import com.technototes.library.hardware.HardwareDevice;
 
 
 @Disabled
@@ -26,7 +27,7 @@ public class IMUDebug extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        HardwareBuilder.initMap(hardwareMap);
+        HardwareDevice.initMap(hardwareMap);
         hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.DEFAULT);
         //Robot robot = new Robot(hardware, Robot.SubsystemCombo.DEFAULT, Alliance.NONE, StartingPosition.NEUTRAL);
 
@@ -48,6 +49,6 @@ public class IMUDebug extends LinearOpMode {
                 Math.toDegrees(o.firstAngle),
                 Math.toDegrees(o.secondAngle),
                 Math.toDegrees(o.thirdAngle),
-                hardware.imu.gyroHeadingInDegrees());
+                hardware.imu.getHeading(AngleUnit.DEGREES));
     }
 }

@@ -3,7 +3,7 @@ package org.firstinspires.ftc.sixteen750.opmode.auto;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.technototes.library.hardware2.HardwareBuilder;
+import com.technototes.library.hardware.HardwareDevice;
 
 import org.firstinspires.ftc.sixteen750.Hardware;
 import org.firstinspires.ftc.sixteen750.Robot;
@@ -16,7 +16,7 @@ public class JustParkLeft extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        HardwareBuilder.initMap(hardwareMap);
+        HardwareDevice.initMap(hardwareMap);
         Hardware hardware = new Hardware(hardwareMap, Robot.SubsystemCombo.M_DRIVE_ONLY);
         SimpleMecanumDriveSubsystem drive = new SimpleMecanumDriveSubsystem(hardware);
         drive.setEncoderZero();

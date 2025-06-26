@@ -3,6 +3,7 @@ package org.firstinspires.ftc.swerveteen750.opmode.diagnosis;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.technototes.library.structure.CommandOpMode;
 
 import org.firstinspires.ftc.swerveteen750.Hardware;
@@ -22,7 +23,7 @@ public class LiftEncoderTest extends CommandOpMode {
     @Override
     public void runLoop() {
         telemetry.addData("Left Lift Motor Encoder", hardware.leftLiftMotor.getEncoder().getPosition()); // for just read encoder without the PID Controller running
-        telemetry.addData("Left lift motor position", hardware.leftLiftMotor.getDevice().getCurrentPosition());
+        telemetry.addData("Left lift motor position", hardware.leftLiftMotor.getRawMotor(DcMotorEx.class).getCurrentPosition());
         telemetry.update();
     }
 }
