@@ -71,19 +71,18 @@ public class ControlSingle {
         clawOpenButton = gamepad.rightBumper;
         clawCloseButton = gamepad.leftBumper;
 
-        liftMedium = gamepad.circle;
-        liftHigh = gamepad.triangle;
+        liftMedium = gamepad.ps_circle;
+        liftHigh = gamepad.ps_triangle;
 
-        liftGroundOrOverrideDown = gamepad.cross;
-        liftLowOrOverrideUp = gamepad.square;
-        liftOverrideZeroButton = gamepad.triangle;
-        watchButton = gamepad.options;
+        liftGroundOrOverrideDown = gamepad.ps_cross;
+        liftLowOrOverrideUp = gamepad.ps_square;
+        liftOverrideZeroButton = gamepad.ps_triangle;
+        watchButton = gamepad.ps_options;
         // TODO: Identify other controls for
     }
 
     public void bindDriveControls() {
         CommandScheduler
-            .getInstance()
             .scheduleJoystick(
                 new DriveCommand(
                     robot.drivebaseSubsystem,

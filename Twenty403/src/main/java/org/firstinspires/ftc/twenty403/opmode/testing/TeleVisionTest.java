@@ -38,7 +38,7 @@ public class TeleVisionTest extends CommandOpMode {
         // I don't think we want to do this, as it stops the pipeline 'after init' and that
         // may be triggered *after* we start the pipeline when we 'upon start'.
         if (false && Robot.RobotConstant.CAMERA_CONNECTED) {
-            CommandScheduler.getInstance().scheduleInit(new VisionCommand(robot.visionSystem));
+            CommandScheduler.scheduleInit(new VisionCommand(robot.visionSystem));
         }
     }
 

@@ -18,7 +18,7 @@ public class AutoLeftTest extends SequentialCommandGroup {
             )
                 .alongWith(new LiftHighJunctionCommand(r.liftSubsystem)),
             new ClawOpenCommand(r.clawSubsystem),
-            CommandScheduler.getInstance()::terminateOpMode
+            CommandScheduler::terminateOpMode
         );
     }
 }

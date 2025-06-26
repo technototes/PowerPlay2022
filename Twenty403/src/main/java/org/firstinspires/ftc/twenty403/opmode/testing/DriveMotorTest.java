@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.technototes.library.hardware.HardwareDevice;
 import com.technototes.library.util.Alliance;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.twenty403.Hardware;
 import org.firstinspires.ftc.twenty403.Robot;
@@ -85,7 +87,7 @@ public class DriveMotorTest extends LinearOpMode {
             Math.toDegrees(o.firstAngle),
             Math.toDegrees(o.secondAngle),
             Math.toDegrees(o.thirdAngle),
-            hardware.imu.gyroHeadingInDegrees()
+            hardware.imu.getHeading(AngleUnit.DEGREES)
         );
     }
 }

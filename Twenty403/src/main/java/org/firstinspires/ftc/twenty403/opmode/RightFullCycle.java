@@ -34,7 +34,6 @@ public class RightFullCycle extends CommandOpMode {
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Right.START.toPose());
         // ElapsedTimeHelper timeout = new ElapsedTimeHelper(() -> this.getOpModeRuntime(), 25);
         CommandScheduler
-            .getInstance()
             .scheduleForState(
                 new SequentialCommandGroup(
                     //new TurboCommand(robot.drivebaseSubsystem),
@@ -43,13 +42,12 @@ public class RightFullCycle extends CommandOpMode {
                         robot,
                         () -> this.getOpModeRuntime()
                     ),
-                    CommandScheduler.getInstance()::terminateOpMode
+                    CommandScheduler::terminateOpMode
                 ),
                 CommandOpMode.OpModeState.RUN
             );
         if (Robot.RobotConstant.CAMERA_CONNECTED) {
             CommandScheduler
-                .getInstance()
                 .scheduleInit(
                     new ClawCloseCommand(robot.clawSubsystem)
                         .andThen(new VisionCommand(robot.visionSystem))

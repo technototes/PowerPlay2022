@@ -24,7 +24,7 @@ public class AutoLeftParkMiddle extends SequentialCommandGroup {
                 r.drivebaseSubsystem,
                 AutoConstants.Left.START_TO_MIDDLE_PARK
             ),
-            CommandScheduler.getInstance()::terminateOpMode
+            CommandScheduler::terminateOpMode
         );
     }
 }

@@ -32,7 +32,6 @@ public class DualBlue extends CommandOpMode {
         controlsOperator = new ControlOperator(codriverGamepad, robot);
         robot.drivebaseSubsystem.setPoseEstimate(AutoConstants.Right.TELESTART.toPose());
         CommandScheduler
-            .getInstance()
             .scheduleForState(new ResetGyroCommand(robot.drivebaseSubsystem), OpModeState.INIT);
     }
 }

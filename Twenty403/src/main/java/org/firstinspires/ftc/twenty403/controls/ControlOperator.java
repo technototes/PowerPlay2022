@@ -53,10 +53,10 @@ public class ControlOperator {
         clawOpenButton = gamepad.rightBumper;
         clawCloseButton = gamepad.leftBumper;
 
-        liftMediumOrToggleAutoClose = gamepad.circle;
-        liftHighOrOverrideZero = gamepad.triangle;
-        liftGroundOrOverrideDown = gamepad.cross;
-        liftLowOrOverrideUp = gamepad.square;
+        liftMediumOrToggleAutoClose = gamepad.ps_circle;
+        liftHighOrOverrideZero = gamepad.ps_triangle;
+        liftGroundOrOverrideDown = gamepad.ps_cross;
+        liftLowOrOverrideUp = gamepad.ps_square;
     }
 
     public void bindClawControls() {
