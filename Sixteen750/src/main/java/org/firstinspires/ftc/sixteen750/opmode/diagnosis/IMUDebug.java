@@ -49,6 +49,6 @@ public class IMUDebug extends LinearOpMode {
                 Math.toDegrees(o.firstAngle),
                 Math.toDegrees(o.secondAngle),
                 Math.toDegrees(o.thirdAngle),
-                hardware.imu.gyroHeadingInDegrees());
+                hardware.imu.getHeadingInDegrees());
     }
 }

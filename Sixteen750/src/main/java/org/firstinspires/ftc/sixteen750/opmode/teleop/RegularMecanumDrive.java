@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.technototes.library.structure.CommandOpMode;
 import com.technototes.library.util.Alliance;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.sixteen750.ControlsCoDriver;
 import org.firstinspires.ftc.sixteen750.ControlsDriver;
 import org.firstinspires.ftc.sixteen750.Hardware;
@@ -46,7 +47,7 @@ public class RegularMecanumDrive extends CommandOpMode {
         telemetry.addData("Right Stick X", gamepad1.right_stick_x);
         telemetry.addData("Right Stick Y", gamepad1.right_stick_y);
         telemetry.addData("PoseEstimate", robot.mecanumDriveSubsystem.getPoseEstimate());
-        telemetry.addData("IMU Heading:", hardware.imu.gyroHeadingInDegrees());
-        telemetry.addData("IMU info:", hardware.imu.getDevice().getRobotYawPitchRollAngles());
+        telemetry.addData("IMU Heading:", hardware.imu.getHeading(AngleUnit.DEGREES));
+        telemetry.addData("IMU info:", hardware.imu.getAngularOrientation());
     }
 }

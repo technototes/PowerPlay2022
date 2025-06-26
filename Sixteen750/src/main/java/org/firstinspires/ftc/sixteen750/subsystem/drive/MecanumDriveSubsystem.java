@@ -7,11 +7,11 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.sensor.IMU;
 import com.technototes.path.subsystem.MecanumConstants;
-import com.technototes.path.subsystem.MecanumDrivebaseSubsystem;
+import com.technototes.path.subsystem.PathingMecanumDrivebaseSubsystem;
 
 import java.util.function.Supplier;
 
-public class MecanumDriveSubsystem extends MecanumDrivebaseSubsystem implements Supplier<Pose2d> {
+public class MecanumDriveSubsystem extends PathingMecanumDrivebaseSubsystem implements Supplier<Pose2d> {
     // TODO: create DriveConstants
 
     public abstract static class MecanumDriveConstants implements MecanumConstants {
